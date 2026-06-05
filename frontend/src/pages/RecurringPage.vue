@@ -7,7 +7,7 @@
     <div id="tour-recurring-list" class="table-card">
       <div class="table-responsive">
         <table class="table table-hover mb-0">
-          <thead><tr><th>Description</th><th>Type</th><th>Amount</th><th>Frequency</th><th>Next Due</th><th>Status</th><th>Actions</th></tr></thead>
+          <thead><tr><th>Description</th><th>Amount</th><th>Frequency</th><th>Next Due</th><th>Status</th><th>Actions</th></tr></thead>
           <tbody>
             <tr v-if="loading">
               <td colspan="7" class="text-center py-4">
@@ -20,7 +20,6 @@
             <template v-else>
               <tr v-for="r in items" :key="r.id">
                 <td>{{ r.description || r.category?.name || '-' }}</td>
-                <td><span class="badge" :class="'badge-' + r.type">{{ r.type }}</span></td>
                 <td class="fw-semibold">{{ formatCurrency(r.amount) }}</td>
                 <td><span class="badge bg-info">{{ r.frequency }}</span></td>
                 <td>{{ r.next_due_date }}</td>
@@ -49,14 +48,6 @@
           <div class="modal-body">
             <div v-if="formError" class="alert alert-danger small">{{ formError }}</div>
             <div class="mb-3">
-              <label class="form-label">Type</label>
-              <select v-model="form.type" class="form-select">
-                <option value="" disabled>- Type -</option>
-                <option value="income">Income</option>
-                <option value="expense">Expense</option>
-              </select>
-            </div>
-            <div class="mb-3">
               <label class="form-label">Member</label>
               <select v-model="form.member_id" class="form-select">
                 <option value="" disabled>- Member -</option>
@@ -74,12 +65,7 @@
               <label class="form-label">Category</label>
               <select v-model="form.category_id" class="form-select">
                 <option value="" disabled>- Category -</option>
-                <optgroup label="Income Categories" v-if="groupedCategories.income.length">
-                  <option v-for="c in groupedCategories.income" :key="c.id" :value="c.id">{{ c.name }}</option>
-                </optgroup>
-                <optgroup label="Expense Categories" v-if="groupedCategories.expense.length">
-                  <option v-for="c in groupedCategories.expense" :key="c.id" :value="c.id">{{ c.name }}</option>
-                </optgroup>
+                <option v-for="c in groupedCategories.expense" :key="c.id" :value="c.id">{{ c.name }}</option>
               </select>
             </div>
             <div class="mb-3">
@@ -179,14 +165,14 @@ async function fetchData() {
 
 function openCreate() {
   editingId.value = null;
-  form.value = { type: '', member_id: '', account_id: '', category_id: '', amount: '', description: '', frequency: '', next_due_date: '', end_date: '' };
+  form.value = { type: 'expense', member_id: '', account_id: '', category_id: '', amount: '', description: '', frequency: '', next_due_date: '', end_date: '' };
   formError.value = '';
   showModal.value = true;
 }
 
 function openEdit(r) {
   editingId.value = r.id;
-  form.value = { type: r.type, member_id: r.member?.id, account_id: r.account?.id, category_id: r.category?.id, amount: r.amount, description: r.description || '', frequency: r.frequency, next_due_date: r.next_due_date_raw, end_date: r.end_date || '' };
+  form.value = { type: 'expense', member_id: r.member_id || '', account_id: r.account_id || '', category_id: r.category_id || '', amount: r.amount, description: r.description || '', frequency: r.frequency, next_due_date: r.next_due_date_raw, end_date: r.end_date || '' };
   formError.value = '';
   showModal.value = true;
 }
