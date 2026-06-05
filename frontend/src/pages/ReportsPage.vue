@@ -176,16 +176,16 @@ async function loadCharts() {
 
     const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-    const pieData = (d.category_breakdown || []).map(x => ({
+    const pieData = (d.category_breakdown || []).map((x, i) => ({
       category: x.category_name,
       total: x.total,
-      color: x.color || '#667eea'
+      color: x.color || `hsl(${(i * 137.5) % 360}, 70%, 55%)`
     }));
 
-    const memberData = (d.member_breakdown || []).map(x => ({
+    const memberData = (d.member_breakdown || []).map((x, i) => ({
       member: x.member_name,
       total: x.total,
-      color: x.color || '#17a2b8' // Fallback color, or generate dynamically
+      color: x.color || `hsl(${((i + 3) * 137.5) % 360}, 75%, 45%)`
     }));
 
     const barData = (d.six_month_trend || []).map(x => ({

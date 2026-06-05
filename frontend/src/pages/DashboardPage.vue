@@ -211,10 +211,10 @@ async function updateCharts(d) {
 
   const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-  const pieData = (d.category_breakdown || []).map(x => ({
+  const pieData = (d.category_breakdown || []).map((x, i) => ({
     category: x.category_name,
     total: x.total,
-    color: x.color || '#667eea'
+    color: x.color || `hsl(${(i * 137.5) % 360}, 70%, 55%)`
   }));
 
   const barData = (d.six_month_trend || []).map(x => ({
