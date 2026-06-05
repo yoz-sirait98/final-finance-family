@@ -1,0 +1,642 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+:root {
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 70px;
+  --navbar-height: 60px;
+  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  --transition-speed: 0.3s;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #f0f2f5;
+  color: #333;
+  overflow-x: hidden;
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--sidebar-width);
+  height: 100vh;
+  background: linear-gradient(180deg, #1e1e2f 0%, #2d2d44 100%);
+  color: #c2c7d0;
+  z-index: 1040;
+  transition: width var(--transition-speed) ease;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar.collapsed {
+  width: var(--sidebar-collapsed-width);
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  min-height: var(--navbar-height);
+  gap: 12px;
+}
+
+.sidebar-brand .brand-icon {
+  font-size: 1.5rem;
+  color: #667eea;
+  flex-shrink: 0;
+}
+
+.sidebar-brand .brand-text {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: opacity var(--transition-speed);
+}
+
+.sidebar.collapsed .brand-text,
+.sidebar.collapsed .nav-text,
+.sidebar.collapsed .sidebar-section-title {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 12px 0;
+  overflow-y: auto;
+}
+
+.sidebar-section-title {
+  padding: 12px 20px 4px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: #6c757d;
+  white-space: nowrap;
+  transition: opacity var(--transition-speed);
+}
+
+.nav-item {
+  margin: 2px 8px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  color: #c2c7d0;
+  text-decoration: none;
+  border-radius: 8px;
+  gap: 12px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+
+.nav-link.router-link-active,
+.nav-link.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.nav-link i {
+  font-size: 1.15rem;
+  width: 24px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.nav-text {
+  transition: opacity var(--transition-speed);
+  white-space: nowrap;
+}
+
+/* ===== Top Navbar ===== */
+.top-navbar {
+  position: fixed;
+  top: 0;
+  left: var(--sidebar-width);
+  right: 0;
+  height: var(--navbar-height);
+  background: #fff;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 1030;
+  transition: left var(--transition-speed) ease;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.sidebar.collapsed ~ .top-navbar,
+.top-navbar.sidebar-collapsed {
+  left: var(--sidebar-collapsed-width);
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  color: #6c757d;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.toggle-btn:hover {
+  background: #f0f2f5;
+}
+
+/* ===== Main Content ===== */
+.main-content {
+  margin-left: var(--sidebar-width);
+  margin-top: var(--navbar-height);
+  padding: 24px;
+  min-height: calc(100vh - var(--navbar-height));
+  transition: margin-left var(--transition-speed) ease;
+}
+
+.main-content.sidebar-collapsed {
+  margin-left: var(--sidebar-collapsed-width);
+}
+
+/* ===== Cards ===== */
+.stat-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--card-shadow);
+  border: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+.stat-card .stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: #fff;
+}
+
+.stat-card .stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e1e2f;
+}
+
+.stat-card .stat-label {
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+
+/* ===== Chart Cards ===== */
+.chart-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--card-shadow);
+  border: none;
+}
+
+.chart-card h6 {
+  font-weight: 600;
+  color: #1e1e2f;
+  margin-bottom: 16px;
+}
+
+/* ===== Tables ===== */
+.table-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+  border: none;
+  overflow: hidden;
+}
+
+.table-card .card-header {
+  background: #fff;
+  border-bottom: 1px solid #e9ecef;
+  padding: 16px 20px;
+}
+
+.table thead th {
+  background: #f8f9fa;
+  border-bottom: 2px solid #e9ecef;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #6c757d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.table td {
+  vertical-align: middle;
+  font-size: 0.9rem;
+}
+
+/* ===== Badges ===== */
+.badge-income {
+  background: rgba(40, 167, 69, 0.1);
+  color: #28a745;
+}
+
+.badge-expense {
+  background: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+}
+
+.badge-transfer {
+  background: rgba(13, 110, 253, 0.1);
+  color: #0d6efd;
+}
+
+/* ===== Modals ===== */
+.modal-content {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+  border-bottom: 1px solid #e9ecef;
+  padding: 16px 24px;
+}
+
+.modal-body {
+  padding: 24px;
+}
+
+.modal-footer {
+  border-top: 1px solid #e9ecef;
+  padding: 16px 24px;
+}
+
+/* ===== Buttons ===== */
+.btn-primary-gradient {
+  background: var(--primary-gradient);
+  border: none;
+  color: #fff;
+  font-weight: 500;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.btn-primary-gradient:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  color: #fff;
+}
+
+/* ===== Forms ===== */
+.form-control:focus,
+.form-select:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
+}
+
+/* ===== Progress Bars ===== */
+.progress {
+  border-radius: 8px;
+  height: 8px;
+  background: #e9ecef;
+}
+
+.progress-bar {
+  border-radius: 8px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 991.98px) {
+  .sidebar {
+    transform: translateX(-100%);
+    width: var(--sidebar-width) !important;
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1035;
+  }
+
+  .sidebar-overlay.active {
+    display: block;
+  }
+
+  .top-navbar {
+    left: 0 !important;
+  }
+
+  .main-content {
+    margin-left: 0 !important;
+  }
+}
+
+/* ===== Page Header ===== */
+.page-header {
+  margin-bottom: 24px;
+}
+
+.page-header h4 {
+  font-weight: 700;
+  color: #1e1e2f;
+}
+
+.page-header p {
+  color: #6c757d;
+  margin-bottom: 0;
+}
+
+/* ===== Toast Notification ===== */
+.toast-container {
+  position: fixed;
+  top: 80px;
+  right: 24px;
+  z-index: 9999;
+}
+
+/* ===== Loading ===== */
+.loading-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease;
+}
+
+/* ===== Vue-Native Modals (no Bootstrap JS needed) ===== */
+.vue-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: fadeIn 0.15s ease;
+}
+
+.vue-modal {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: fadeIn 0.2s ease;
+}
+
+/* ===== Vue-Native Dropdowns (no Bootstrap JS needed) ===== */
+.vue-dropdown {
+  position: relative;
+}
+
+.vue-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  z-index: 9999;
+  padding: 6px 0;
+  min-width: 180px;
+}
+
+.vue-dropdown-header {
+  padding: 8px 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #6c757d;
+  border-bottom: 1px solid #e9ecef;
+  margin-bottom: 4px;
+}
+
+.vue-dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  color: #333;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.vue-dropdown-item:hover {
+  background: #f8f9fa;
+  color: #333;
+}
+
+.vue-dropdown-item.text-danger:hover {
+  background: rgba(220, 53, 69, 0.06);
+  color: #dc3545;
+}
+
+.vue-dropdown-divider {
+  height: 1px;
+  background: #e9ecef;
+  margin: 4px 0;
+}
+
+.sidebar-nav::-webkit-scrollbar {
+  width: 4px;
+}
+.sidebar-nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+.sidebar-nav::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.1);
+  border-radius: 4px;
+}
+
+/* ===== Tour Help Button ===== */
+.tour-help-btn {
+  font-size: 1.1rem;
+  color: #667eea !important;
+  position: relative;
+}
+
+.tour-help-btn:hover {
+  background: rgba(102, 126, 234, 0.1) !important;
+  color: #764ba2 !important;
+}
+
+.tour-help-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+  box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.5);
+  animation: tour-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes tour-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4); }
+  50%       { box-shadow: 0 0 0 6px rgba(102, 126, 234, 0); }
+}
+
+/* ===== Driver.js Custom Theme ===== */
+
+/* Popover box */
+.driver-popover.ff-tour-popover {
+  background: linear-gradient(135deg, #1e1e2f 0%, #2a2a45 100%);
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  border-radius: 14px;
+  color: #fff;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(102, 126, 234, 0.2);
+  max-width: 340px;
+  padding: 0;
+}
+
+/* Title */
+.driver-popover.ff-tour-popover .driver-popover-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  padding: 18px 20px 6px;
+  border-bottom: none;
+  background: transparent;
+}
+
+/* Description */
+.driver-popover.ff-tour-popover .driver-popover-description {
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 0 20px 16px;
+  line-height: 1.6;
+}
+
+/* Footer (progress + buttons) */
+.driver-popover.ff-tour-popover .driver-popover-footer {
+  padding: 10px 20px 16px;
+  gap: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 0 0 14px 14px;
+}
+
+/* Progress text */
+.driver-popover.ff-tour-popover .driver-popover-progress-text {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.78rem;
+}
+
+/* Navigation buttons */
+.driver-popover.ff-tour-popover button {
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Previous button */
+.driver-popover.ff-tour-popover .driver-popover-prev-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.driver-popover.ff-tour-popover .driver-popover-prev-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+}
+
+/* Next / Done button */
+.driver-popover.ff-tour-popover .driver-popover-next-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.driver-popover.ff-tour-popover .driver-popover-next-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+}
+
+/* Close (X) button */
+.driver-popover.ff-tour-popover .driver-popover-close-btn {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 1.1rem;
+  top: 12px;
+  right: 14px;
+  background: transparent;
+  padding: 2px 6px;
+}
+
+.driver-popover.ff-tour-popover .driver-popover-close-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Arrow color to match dark popover */
+.driver-popover.ff-tour-popover .driver-popover-arrow-side-left.driver-popover-arrow {
+  border-right-color: #1e1e2f;
+}
+.driver-popover.ff-tour-popover .driver-popover-arrow-side-right.driver-popover-arrow {
+  border-left-color: #1e1e2f;
+}
+.driver-popover.ff-tour-popover .driver-popover-arrow-side-top.driver-popover-arrow {
+  border-bottom-color: #1e1e2f;
+}
+.driver-popover.ff-tour-popover .driver-popover-arrow-side-bottom.driver-popover-arrow {
+  border-top-color: #1e1e2f;
+}
+
+/* Highlighted element ring */
+.driver-active .driver-overlay {
+  border-radius: 8px;
+}

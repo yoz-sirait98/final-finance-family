@@ -1,0 +1,66 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class RecurringTransaction extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'member_id',
+        'account_id',
+        'category_id',
+        'type',
+        'amount',
+        'description',
+        'frequency',
+        'next_due_date',
+        'end_date',
+        'is_active',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'amount' => 'decimal:2',
+            'next_due_date' => 'date',
+            'end_date' => 'date',
+            'is_active' => 'boolean',
+        ];
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function member(): BelongsTo
+    {
+        return $this->belongsTo(Member::class);
+    }
+
+    public function account(): BelongsTo
+    {
+        return $this->belongsTo(Account::class);
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
+
+    public function scopeDue($query)
+    {
+        return $query->where('next_due_date', '<=', now()->toDateString());
+    }
+}
