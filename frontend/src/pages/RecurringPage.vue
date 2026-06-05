@@ -135,7 +135,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useTour } from '../composables/useTour';
 import { recurringTourSteps } from '../tours/recurringTour';
-import api from '../services/api';
+import { recurringService } from '../services/recurringService';
 import { memberService } from '../services/memberService';
 import { accountService } from '../services/accountService';
 import { categoryService } from '../services/categoryService';
@@ -165,7 +165,7 @@ const toast = useToastStore();
 async function fetchData() {
   loading.value = true;
   try {
-    const { data } = await api.get('/recurring-transactions');
+    const { data } = await recurringService.list();
     items.value = data.data;
   } finally {
     loading.value = false;
@@ -190,10 +190,10 @@ async function save() {
   formError.value = '';
   try {
     if (editingId.value) {
-      await api.put(`/recurring-transactions/${editingId.value}`, form.value);
+      await recurringService.update(editingId.value, form.value);
       toast.success('Recurring transaction updated');
     } else {
-      await api.post('/recurring-transactions', form.value);
+      await recurringService.create(form.value);
       toast.success('Recurring transaction created');
     }
     showModal.value = false;
@@ -212,7 +212,7 @@ function confirmDelete(r) {
 async function doDelete() {
   if (!deletingItem.value) return;
   try {
-    await api.delete(`/recurring-transactions/${deletingItem.value.id}`);
+    await recurringService.delete(deletingItem.value.id);
     toast.success('Recurring transaction deleted');
     showDeleteModal.value = false;
     deletingItem.value = null;
