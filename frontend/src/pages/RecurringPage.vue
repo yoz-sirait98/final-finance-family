@@ -51,6 +51,7 @@
             <div class="mb-3">
               <label class="form-label">Type</label>
               <select v-model="form.type" class="form-select">
+                <option value="" disabled>- Type -</option>
                 <option value="income">Income</option>
                 <option value="expense">Expense</option>
               </select>
@@ -58,19 +59,21 @@
             <div class="mb-3">
               <label class="form-label">Member</label>
               <select v-model="form.member_id" class="form-select">
+                <option value="" disabled>- Member -</option>
                 <option v-for="m in members" :key="m.id" :value="m.id">{{ m.name }}</option>
               </select>
             </div>
             <div class="mb-3">
               <label class="form-label">Account</label>
               <select v-model="form.account_id" class="form-select">
+                <option value="" disabled>- Account -</option>
                 <option v-for="a in accounts" :key="a.id" :value="a.id">{{ a.name }}</option>                
               </select>
             </div>
             <div class="mb-3">
               <label class="form-label">Category</label>
               <select v-model="form.category_id" class="form-select">
-                <option value="">-- No Category --</option>
+                <option value="" disabled>- Category -</option>
                 <optgroup label="Income Categories" v-if="groupedCategories.income.length">
                   <option v-for="c in groupedCategories.income" :key="c.id" :value="c.id">{{ c.name }}</option>
                 </optgroup>
@@ -90,6 +93,7 @@
             <div class="mb-3">
               <label class="form-label">Frequency</label>
               <select v-model="form.frequency" class="form-select">
+                <option value="" disabled>- Frequency -</option>
                 <option value="weekly">Weekly</option>
                 <option value="monthly">Monthly</option>
                 <option value="yearly">Yearly</option>
@@ -155,7 +159,7 @@ const groupedCategories = computed(() => {
 });
 const loading = ref(true);
 const editingId = ref(null);
-const form = ref({ type: 'expense', member_id: '', account_id: '', category_id: '', amount: 0, description: '', frequency: 'monthly', next_due_date: '', end_date: '' });
+const form = ref({ type: '', member_id: '', account_id: '', category_id: '', amount: '', description: '', frequency: '', next_due_date: '', end_date: '' });
 const formError = ref('');
 
 const showModal = ref(false);
@@ -175,7 +179,7 @@ async function fetchData() {
 
 function openCreate() {
   editingId.value = null;
-  form.value = { type: 'expense', member_id: members.value[0]?.id || '', account_id: accounts.value[0]?.id || '', category_id: categories.value[0]?.id || '', amount: 0, description: '', frequency: 'monthly', next_due_date: '', end_date: '' };
+  form.value = { type: '', member_id: '', account_id: '', category_id: '', amount: '', description: '', frequency: '', next_due_date: '', end_date: '' };
   formError.value = '';
   showModal.value = true;
 }

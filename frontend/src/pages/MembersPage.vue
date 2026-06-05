@@ -39,6 +39,7 @@
             <div class="mb-3">
               <label class="form-label">Role</label>
               <select v-model="form.role" class="form-select" required>
+                <option value="" disabled>- Role -</option>
                 <option value="father">Father</option>
                 <option value="mother">Mother</option>
                 <option value="child">Child</option>
@@ -79,7 +80,7 @@ import { useToastStore } from '../stores/toast';
 
 const members = ref([]);
 const editingId = ref(null);
-const form = ref({ name: '', role: 'child' });
+const form = ref({ name: '', role: '' });
 const formError = ref('');
 
 const showModal = ref(false);
@@ -94,7 +95,7 @@ async function fetchData() {
 
 function openCreate() {
   editingId.value = null;
-  form.value = { name: '', role: 'child' };
+  form.value = { name: '', role: '' };
   formError.value = '';
   showModal.value = true;
 }

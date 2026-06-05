@@ -56,6 +56,7 @@
             <div class="mb-3">
               <label class="form-label">Type</label>
               <select v-model="form.type" class="form-select" required>
+                <option value="" disabled>- Type -</option>
                 <option value="income">Income</option>
                 <option value="expense">Expense</option>
               </select>
@@ -103,7 +104,7 @@ import { useToastStore } from '../stores/toast';
 
 const categories = ref([]);
 const editingId = ref(null);
-const form = ref({ name: '', type: 'expense', color: '#6c757d', icon: '' });
+const form = ref({ name: '', type: '', color: '#6c757d', icon: '' });
 const formError = ref('');
 
 const showModal = ref(false);
@@ -121,7 +122,7 @@ async function fetchData() {
 
 function openCreate() {
   editingId.value = null;
-  form.value = { name: '', type: 'expense', color: '#6c757d', icon: '' };
+  form.value = { name: '', type: '', color: '#6c757d', icon: '' };
   formError.value = '';
   showModal.value = true;
 }

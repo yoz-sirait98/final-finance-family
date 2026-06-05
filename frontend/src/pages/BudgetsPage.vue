@@ -47,7 +47,7 @@
             <div class="mb-3">
               <label class="form-label">Category</label>
               <select v-model="form.category_id" class="form-select" required>
-                <option value="">-- Select Category --</option>
+                <option value="" disabled>- Category -</option>
                 <option v-for="c in expenseCategories" :key="'cat-'+c.id" :value="c.id">{{ c.name }}</option>
               </select>
             </div>
@@ -153,9 +153,6 @@ function openCreate() {
   editingId.value = null;
   formError.value = '';
   const newState = initialFormState();
-  if (expenseCategories.value.length > 0) {
-    newState.category_id = expenseCategories.value[0].id;
-  }
   form.value = newState;
   showModal.value = true;
 }

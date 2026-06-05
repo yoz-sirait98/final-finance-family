@@ -153,6 +153,7 @@
             <div class="mb-3">
               <label class="form-label">Type</label>
               <select v-model="form.type" class="form-select" required>
+                <option value="" disabled>- Type -</option>
                 <option value="income">Income</option>
                 <option value="expense">Expense</option>
               </select>
@@ -160,12 +161,14 @@
             <div class="mb-3">
               <label class="form-label">Member</label>
               <select v-model="form.member_id" class="form-select" required>
+                <option value="" disabled>- Member -</option>
                 <option v-for="m in members" :key="m.id" :value="m.id">{{ m.name }}</option>
               </select>
             </div>
             <div class="mb-3">
               <label class="form-label">Account</label>
               <select v-model="form.account_id" class="form-select" required>
+                <option value="" disabled>- Account -</option>
                 <optgroup v-for="(group, type) in groupedAccounts" :key="type" :label="type">
                   <option v-for="a in group" :key="a.id" :value="a.id">{{ a.name }}</option>
                 </optgroup>
@@ -174,7 +177,7 @@
             <div class="mb-3">
               <label class="form-label">Category</label>
               <select v-model="form.category_id" class="form-select">
-                <option value="">None</option>
+                <option value="">- Category -</option>
                 <option v-for="c in filteredCategories" :key="c.id" :value="c.id">{{ c.name }}</option>
               </select>
             </div>
@@ -215,22 +218,25 @@
             <div class="mb-3">
               <label class="form-label">Member</label>
               <select v-model="transferForm.member_id" class="form-select" required>
+                <option value="" disabled>- Member -</option>
                 <option v-for="m in members" :key="m.id" :value="m.id">{{ m.name }}</option>
               </select>
             </div>
             <div class="mb-3">
               <label class="form-label">From Account</label>
               <select v-model="transferForm.from_account_id" class="form-select" required>
+                <option value="" disabled>- From Account -</option>
                 <optgroup v-for="(group, type) in groupedAccounts" :key="type" :label="type">
-                  <option v-for="a in group" :key="a.id" :value="a.id">{{ a.name }} ({{ formatCurrency(a.balance) }})</option>
+                  <option v-for="a in group" :key="a.id" :value="a.id">{{ a.name }} ({{ formatCurrency(a.balance + a.initial_balance) }})</option>
                 </optgroup>
               </select>
             </div>
             <div class="mb-3">
               <label class="form-label">To Account</label>
               <select v-model="transferForm.to_account_id" class="form-select" required>
+                <option value="" disabled>- To Account -</option>
                 <optgroup v-for="(group, type) in groupedAccounts" :key="type" :label="type">
-                  <option v-for="a in group" :key="a.id" :value="a.id">{{ a.name }}</option>
+                  <option v-for="a in group" :key="a.id" :value="a.id" :disabled="a.id === transferForm.from_account_id">{{ a.name }} ({{ formatCurrency(a.balance + a.initial_balance) }})</option>
                 </optgroup>
               </select>
             </div>
@@ -368,7 +374,7 @@ const filters = ref({
   sort_by: 'transaction_date', sort_dir: 'desc', page: 1, per_page: 15,
 });
 
-const form = ref({ type: 'expense', member_id: '', account_id: '', category_id: '', amount: '', transaction_date: todayISO(), description: '' });
+const form = ref({ type: '', member_id: '', account_id: '', category_id: '', amount: '', transaction_date: todayISO(), description: '' });
 const transferForm = ref({ member_id: '', from_account_id: '', to_account_id: '', amount: '', transaction_date: todayISO(), description: '' });
 
 const groupedAccounts = computed(() => {
@@ -435,7 +441,7 @@ function resetFilters() {
 
 function openCreate() {
   editingId.value = null;
-  form.value = { type: 'expense', member_id: members.value[0]?.id || '', account_id: accounts.value[0]?.id || '', category_id: '', amount: '', transaction_date: todayISO(), description: '' };
+  form.value = { type: '', member_id: '', account_id: '', category_id: '', amount: '', transaction_date: todayISO(), description: '' };
   formError.value = '';
   showTxModal.value = true;
 }
@@ -549,7 +555,7 @@ async function doDelete() {
 }
 
 function openTransfer() {
-  transferForm.value = { member_id: members.value[0]?.id || '', from_account_id: accounts.value[0]?.id || '', to_account_id: '', amount: '', transaction_date: todayISO(), description: '' };
+  transferForm.value = { member_id: '', from_account_id: '', to_account_id: '', amount: '', transaction_date: todayISO(), description: '' };
   transferError.value = '';
   showTransferModal.value = true;
 }

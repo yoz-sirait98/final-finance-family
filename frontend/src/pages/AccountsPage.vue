@@ -43,6 +43,7 @@
             <div class="mb-3">
               <label class="form-label">Type</label>
               <select v-model="form.type" class="form-select" required>
+                <option value="" disabled>- Type -</option>
                 <option value="bank">Bank</option>
                 <option value="cash">Cash</option>
                 <option value="ewallet">E-Wallet</option>
@@ -95,7 +96,7 @@ import { useToastStore } from '../stores/toast';
 
 const accounts = ref([]);
 const editingId = ref(null);
-const form = ref({ name: '', type: 'bank', initial_balance: 0, icon: 'bi-bank' });
+const form = ref({ name: '', type: '', initial_balance: 0, icon: 'bi-bank' });
 const formError = ref('');
 let originalInitialBalance = 0;
 let originalBalance = 0;
@@ -112,7 +113,7 @@ async function fetchData() {
 
 function openCreate() {
   editingId.value = null;
-  form.value = { name: '', type: 'bank', initial_balance: 0, icon: 'bi-bank' };
+  form.value = { name: '', type: '', initial_balance: 0, icon: 'bi-bank' };
   formError.value = '';
   showModal.value = true;
 }
