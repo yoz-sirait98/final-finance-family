@@ -13,3 +13,9 @@
 - `[x]` Task 11: Frontend Realtime Implementation
 - `[x]` Task 12: GitHub Pages Hash Router
 - `[x]` Task 13: Final Testing & Validation
+- `[x]` Task 14: Dynamic Golden Ratio Chart Colors
+- `[x]` Task 15: Historical Net Worth Dynamic Algorithm
+- `[x]` Task 16: Fix Budget Alert Sync (80%)
+- `[x]` Task 17: Enforce Expense-Only Recurring Transactions
+- `[x]` Task 18: Data Hydration Fixes for UI Dropdowns
+- `[x]` Task 19: PG Cron NULL Description Bugfix
