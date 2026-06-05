@@ -51,4 +51,11 @@ router.beforeEach((to, from, next) => {
   }
 });
 
+// Handle lazy-loaded chunk errors (happens when a new version is deployed while user has app open)
+router.onError((error, to) => {
+  if (error.message.includes('Failed to fetch dynamically imported module') || error.name === 'ChunkLoadError' || error.message.includes('Importing a module script failed')) {
+    window.location.href = to.fullPath;
+  }
+});
+
 export default router;
