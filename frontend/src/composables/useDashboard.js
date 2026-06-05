@@ -11,6 +11,7 @@ export function useDashboard(month, year) {
       });
       return data.data;
     },
-    staleTime: 5 * 60 * 1000,
+    staleTime: 0, // 0 prevents caching old data when navigating back after inserting transactions
+    refetchOnMount: true,
   });
 }
