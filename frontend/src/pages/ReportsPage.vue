@@ -185,7 +185,7 @@ async function loadCharts() {
     const memberData = (d.member_breakdown || []).map(x => ({
       member: x.member_name,
       total: x.total,
-      color: '#17a2b8' // Fallback color, or generate dynamically
+      color: x.color || '#17a2b8' // Fallback color, or generate dynamically
     }));
 
     const barData = (d.six_month_trend || []).map(x => ({
