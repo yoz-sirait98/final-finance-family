@@ -9,7 +9,7 @@
 
     <!-- Sidebar -->
     <aside class="sidebar" :class="{ collapsed: sidebarCollapsed, 'mobile-open': mobileOpen }">
-      <div class="sidebar-brand">
+      <div class="sidebar-brand" @dblclick="router.push('/gem')" style="cursor: pointer;" title="Double click for a surprise!">
         <i class="bi bi-wallet2 brand-icon"></i>
         <span class="brand-text">Family Finance</span>
       </div>
