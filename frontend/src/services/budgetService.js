@@ -58,8 +58,18 @@ export const budgetService = {
     return { data: { data: budgets } };
   },
   alerts: async () => {
-    // Return empty for now as requested
-    return { data: { data: [] } };
+    try {
+      const d = new Date();
+      // Fetch the budgets for the current month
+      const { data } = await budgetService.list({ month: d.getMonth() + 1, year: d.getFullYear() });
+      const budgets = data.data || [];
+      // Filter for budgets that have exceeded their threshold (spent > amount)
+      const alerts = budgets.filter(b => b.is_over_threshold);
+      return { data: { data: alerts } };
+    } catch (e) {
+      console.error('Failed to fetch budget alerts:', e);
+      return { data: { data: [] } };
+    }
   },
   checkGuardrail: async (categoryId, amount, date) => {
     const family_id = useAuthStore().familyId;
