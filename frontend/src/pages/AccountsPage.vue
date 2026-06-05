@@ -97,6 +97,8 @@ const accounts = ref([]);
 const editingId = ref(null);
 const form = ref({ name: '', type: 'bank', initial_balance: 0, icon: 'bi-bank' });
 const formError = ref('');
+let originalInitialBalance = 0;
+let originalBalance = 0;
 
 const showModal = ref(false);
 const showDeleteModal = ref(false);
@@ -118,6 +120,8 @@ function openCreate() {
 function openEdit(a) {
   editingId.value = a.id;
   form.value = { name: a.name, type: a.type, icon: a.icon || '', initial_balance: a.initial_balance ?? 0 };
+  originalInitialBalance = a.initial_balance ?? 0;
+  originalBalance = a.balance ?? 0;
   formError.value = '';
   showModal.value = true;
 }
@@ -125,11 +129,18 @@ function openEdit(a) {
 async function save() {
   formError.value = '';
   try {
+    const payload = { ...form.value };
+    payload.initial_balance = payload.initial_balance || 0;
+    
     if (editingId.value) {
-      await accountService.update(editingId.value, form.value);
+      if (payload.initial_balance !== originalInitialBalance) {
+        payload.balance = originalBalance + (payload.initial_balance - originalInitialBalance);
+      }
+      await accountService.update(editingId.value, payload);
       toast.success('Account updated successfully');
     } else {
-      await accountService.create(form.value);
+      payload.balance = payload.initial_balance;
+      await accountService.create(payload);
       toast.success('Account created successfully');
     }
     showModal.value = false;
