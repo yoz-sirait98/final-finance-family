@@ -1,46 +1,75 @@
 import { defineStore } from 'pinia';
-import { authService } from '../services/authService';
+import { supabase } from '../lib/supabase';
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
-    user: JSON.parse(localStorage.getItem('auth_user') || 'null'),
-    token: localStorage.getItem('auth_token') || null,
+    user: null,
+    session: null,
+    initialized: false
   }),
 
   getters: {
-    isAuthenticated: (state) => !!state.token,
-    userName: (state) => state.user?.name || '',
+    isAuthenticated: (state) => !!state.session,
+    userName: (state) => state.user?.full_name || state.user?.name || '',
+    familyId: (state) => state.user?.family_id || null,
   },
 
   actions: {
+    async initialize() {
+      if (this.initialized) return;
+      
+      const { data: { session } } = await supabase.auth.getSession();
+      this.session = session;
+      
+      if (session) {
+        await this.fetchProfile(session.user.id);
+      }
+      
+      // Listen to auth changes (e.g., login, logout across tabs)
+      supabase.auth.onAuthStateChange((_event, session) => {
+        this.session = session;
+        if (session && (!this.user || this.user.id !== session.user.id)) {
+           this.fetchProfile(session.user.id);
+        } else if (!session) {
+           this.user = null;
+        }
+      });
+      
+      this.initialized = true;
+    },
+
     async register(data) {
-      const response = await authService.register(data);
-      this.token = response.data.token;
-      this.user = response.data.user;
-      localStorage.setItem('auth_token', response.data.token);
-      localStorage.setItem('auth_user', JSON.stringify(response.data.user));
+      const { error } = await supabase.auth.signUp({
+        email: data.email,
+        password: data.password,
+        options: {
+          data: {
+            full_name: data.name
+          }
+        }
+      });
+      if (error) throw error;
     },
 
     async login(credentials) {
-      const { data } = await authService.login(credentials);
-      this.token = data.token;
-      this.user = data.user;
-      localStorage.setItem('auth_token', data.token);
-      localStorage.setItem('auth_user', JSON.stringify(data.user));
+      const { error } = await supabase.auth.signInWithPassword({
+        email: credentials.email,
+        password: credentials.password
+      });
+      if (error) throw error;
     },
 
-    async fetchProfile() {
-      const { data } = await authService.profile();
-      this.user = data.data;
-      localStorage.setItem('auth_user', JSON.stringify(data.data));
+    async fetchProfile(userId) {
+      const { data, error } = await supabase.from('profiles').select('*').eq('id', userId).single();
+      if (!error && data) {
+        this.user = data;
+      }
     },
 
     async logout() {
-      try { await authService.logout(); } catch {}
-      this.token = null;
+      await supabase.auth.signOut();
       this.user = null;
-      localStorage.removeItem('auth_token');
-      localStorage.removeItem('auth_user');
+      this.session = null;
     },
   },
 });

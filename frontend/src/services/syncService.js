@@ -1,5 +1,5 @@
 import { get, set, update, del, entries } from 'idb-keyval';
-import api from './api';
+import { transactionService } from './transactionService';
 
 const SYNC_STORE = 'offline_transactions';
 
@@ -8,7 +8,6 @@ export const syncService = {
     const id = `temp_${Date.now()}`;
     await set(id, { ...transaction, id, _status: 'pending' });
     
-    // Register background sync if supported
     if ('serviceWorker' in navigator && 'SyncManager' in window) {
       const sw = await navigator.serviceWorker.ready;
       try {
@@ -32,7 +31,7 @@ export const syncService = {
           delete payload.id;
           delete payload._status;
 
-          await api.post('/transactions', payload);
+          await transactionService.create(payload);
           await del(key);
         } catch (error) {
           console.error(`Failed to sync transaction ${key}`, error);

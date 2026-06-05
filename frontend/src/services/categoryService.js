@@ -1,9 +1,2 @@
-import api from './api';
-
-export const categoryService = {
-  list: (type) => api.get('/categories', { params: { type } }),
-  show: (id) => api.get(`/categories/${id}`),
-  create: (data) => api.post('/categories', data),
-  update: (id, data) => api.put(`/categories/${id}`, data),
-  delete: (id) => api.delete(`/categories/${id}`),
-};
+import { createCrudService } from './crud';
+export const categoryService = createCrudService('categories');
