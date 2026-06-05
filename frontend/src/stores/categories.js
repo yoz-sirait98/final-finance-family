@@ -16,7 +16,7 @@ export const useCategoryStore = defineStore('categories', {
     async fetchCategories(type) {
       this.loading = true;
       try {
-        const { data } = await categoryService.list(type);
+        const { data } = await categoryService.list(type ? { type } : {});
         this.categories = data.data;
       } finally {
         this.loading = false;

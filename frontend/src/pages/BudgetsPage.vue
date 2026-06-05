@@ -142,7 +142,7 @@ async function fetchData() {
 
 async function fetchCategories() {
   try {
-    const { data } = await categoryService.list('expense');
+    const { data } = await categoryService.list({ type: 'expense' });
     expenseCategories.value = data.data || [];
   } catch (error) {
     console.error("Failed to fetch categories", error);
