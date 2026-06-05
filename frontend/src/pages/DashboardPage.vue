@@ -199,19 +199,33 @@ async function updateCharts(d) {
   if (lineInstance) { lineInstance.destroy(); lineInstance = null; }
   if (netWorthInstance) { netWorthInstance.destroy(); netWorthInstance = null; }
 
-  // Summary
-  summary.value = d.summary ?? summary.value;
+  // Map Supabase RPC format to Dashboard format
+  summary.value = {
+    total_balance: d.total_balance || 0,
+    monthly_income: d.monthly_income || 0,
+    monthly_expense: d.monthly_expense || 0,
+    monthly_net: d.monthly_net || 0
+  };
 
-  // Override total_balance from live net worth calculation
-  if (d.net_worth_current !== undefined) summary.value.total_balance = d.net_worth_current;
+  insights.value = d.insights || [];
 
-  // Insights
-  insights.value = d.insights ?? [];
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-  const pieData      = d.expense_by_category ?? [];
-  const barData      = d.income_vs_expense   ?? [];
-  const lineData     = d.expense_trend       ?? [];
-  const netWorthData = d.net_worth_history   ?? [];
+  const pieData = (d.category_breakdown || []).map(x => ({
+    category: x.category_name,
+    total: x.total,
+    color: x.color || '#667eea'
+  }));
+
+  const barData = (d.six_month_trend || []).map(x => ({
+    month: `${monthNames[x.month - 1]} ${x.year}`,
+    income: x.income,
+    expense: x.expense
+  }));
+  const lineData = barData; // Expense trend uses the same data
+
+  // Provide empty data for missing elements from the old format
+  const netWorthData = [];
 
   hasPieData.value      = pieData.length > 0;
   hasBarData.value      = barData.some(x => x.income > 0 || x.expense > 0);
