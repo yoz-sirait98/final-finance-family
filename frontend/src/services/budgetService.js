@@ -63,8 +63,8 @@ export const budgetService = {
       // Fetch the budgets for the current month
       const { data } = await budgetService.list({ month: d.getMonth() + 1, year: d.getFullYear() });
       const budgets = data.data || [];
-      // Filter for budgets that have exceeded their threshold (spent > amount)
-      const alerts = budgets.filter(b => b.is_over_threshold);
+      // Filter for budgets that are at 80% capacity or higher
+      const alerts = budgets.filter(b => b.percentage >= 80);
       return { data: { data: alerts } };
     } catch (e) {
       console.error('Failed to fetch budget alerts:', e);
