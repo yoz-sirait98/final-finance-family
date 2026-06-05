@@ -48,7 +48,7 @@ export const budgetService = {
            spent,
            percentage,
            remaining: b.amount - spent,
-           is_over_threshold: percentage > 100
+           is_over_threshold: percentage >= 80
          };
       });
 
