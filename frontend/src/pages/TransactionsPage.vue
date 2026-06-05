@@ -475,9 +475,10 @@ async function saveTransaction() {
   // Budget pre-check: only for new expenses with a category
   if (!editingId.value && form.value.type === 'expense' && form.value.category_id) {
     try {
-      const { data } = await budgetService.list();
+      const now = new Date(form.value.transaction_date);
+      const { data } = await budgetService.list({ month: now.getMonth() + 1, year: now.getFullYear() });
       const budgets = data.data || [];
-      const now = new Date();
+      
       const budget = budgets.find(
         b => b.category?.id === form.value.category_id &&
              b.month === now.getMonth() + 1 &&
