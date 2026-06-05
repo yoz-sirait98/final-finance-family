@@ -172,13 +172,33 @@ async function loadCharts() {
 
   try {
     const res = await dashboardService.reports(params);
-    const { expense_by_category: pieData, expense_by_member: memberData, income_vs_expense: barData, expense_trend: lineData } = res.data.data;
+    const d = res.data.data;
+
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    const pieData = (d.category_breakdown || []).map(x => ({
+      category: x.category_name,
+      total: x.total,
+      color: x.color || '#667eea'
+    }));
+
+    const memberData = (d.member_breakdown || []).map(x => ({
+      member: x.member_name,
+      total: x.total,
+      color: '#17a2b8' // Fallback color, or generate dynamically
+    }));
+
+    const barData = (d.six_month_trend || []).map(x => ({
+      month: `${monthNames[x.month - 1]} ${x.year}`,
+      income: x.income,
+      expense: x.expense
+    }));
 
     chartData.value = {
-      pie:    pieData    ?? [],
-      member: memberData ?? [],
-      bar:    barData    ?? [],
-      line:   lineData   ?? [],
+      pie:    pieData,
+      member: memberData,
+      bar:    barData,
+      line:   barData, // Line chart uses the same trend data
     };
 
     hasPieData.value    = chartData.value.pie.length > 0;

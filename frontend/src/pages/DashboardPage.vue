@@ -224,8 +224,19 @@ async function updateCharts(d) {
   }));
   const lineData = barData; // Expense trend uses the same data
 
-  // Provide empty data for missing elements from the old format
+  // Calculate Net Worth Growth backwards from current total balance
+  let currentBalance = summary.value.total_balance;
   const netWorthData = [];
+  
+  for (let i = barData.length - 1; i >= 0; i--) {
+    const monthData = barData[i];
+    netWorthData.unshift({
+      month: monthData.month,
+      balance: currentBalance
+    });
+    const netIncome = monthData.income - monthData.expense;
+    currentBalance = currentBalance - netIncome;
+  }
 
   hasPieData.value      = pieData.length > 0;
   hasBarData.value      = barData.some(x => x.income > 0 || x.expense > 0);
@@ -274,8 +285,8 @@ async function updateCharts(d) {
     netWorthInstance = new Chart(netWorthChart.value, {
       type: 'line',
       data: {
-        labels: netWorthData.map(d => new Date(d.recorded_at).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })),
-        datasets: [{ label: 'Net Worth', data: netWorthData.map(d => d.total_balance), borderColor: '#667eea', backgroundColor: 'rgba(102,126,234,0.1)', fill: true, tension: 0.4, pointRadius: 4, pointBackgroundColor: '#667eea' }],
+        labels: netWorthData.map(d => d.month),
+        datasets: [{ label: 'Net Worth', data: netWorthData.map(d => d.balance), borderColor: '#667eea', backgroundColor: 'rgba(102,126,234,0.1)', fill: true, tension: 0.4, pointRadius: 4, pointBackgroundColor: '#667eea' }],
       },
       options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: false } } },
     });
