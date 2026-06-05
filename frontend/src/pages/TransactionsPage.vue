@@ -480,7 +480,7 @@ async function saveTransaction() {
       const budgets = data.data || [];
       
       const budget = budgets.find(
-        b => b.category?.id === form.value.category_id &&
+        b => String(b.category_id) === String(form.value.category_id) &&
              b.month === now.getMonth() + 1 &&
              b.year  === now.getFullYear()
       );
