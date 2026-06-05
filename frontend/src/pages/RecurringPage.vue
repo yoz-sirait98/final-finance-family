@@ -180,11 +180,16 @@ function openEdit(r) {
 async function save() {
   formError.value = '';
   try {
+    const payload = { ...form.value };
+    if (!payload.end_date) {
+      payload.end_date = null;
+    }
+    
     if (editingId.value) {
-      await recurringService.update(editingId.value, form.value);
+      await recurringService.update(editingId.value, payload);
       toast.success('Recurring transaction updated');
     } else {
-      await recurringService.create(form.value);
+      await recurringService.create(payload);
       toast.success('Recurring transaction created');
     }
     showModal.value = false;
