@@ -106,7 +106,7 @@
                 <span class="badge" :class="'badge-' + tx.type">{{ tx.type }}</span>
               </td>
               <td class="fw-semibold" :class="tx.type === 'income' ? 'text-success' : 'text-danger'">
-                {{ tx.type === 'income' ? '+' : '-' }}{{ tx.amount_formatted }}
+                {{ tx.type === 'income' ? '+' : '-' }}{{ formatCurrency(tx.amount) }}
               </td>
               <td>{{ tx.description || '-' }}</td>
               <td>
@@ -222,7 +222,7 @@
               <label class="form-label">From Account</label>
               <select v-model="transferForm.from_account_id" class="form-select" required>
                 <optgroup v-for="(group, type) in groupedAccounts" :key="type" :label="type">
-                  <option v-for="a in group" :key="a.id" :value="a.id">{{ a.name }} ({{ a.balance_formatted }})</option>
+                  <option v-for="a in group" :key="a.id" :value="a.id">{{ a.name }} ({{ formatCurrency(a.balance) }})</option>
                 </optgroup>
               </select>
             </div>
@@ -263,7 +263,7 @@
           <button type="button" class="btn-close" @click="showDeleteModal = false"></button>
         </div>
         <div class="modal-body">
-          <p class="mb-0">Are you sure you want to delete <strong>{{ deletingTx?.description || deletingTx?.amount_formatted }}</strong>? This cannot be undone.</p>
+          <p class="mb-0">Are you sure you want to delete <strong>{{ deletingTx?.description || formatCurrency(deletingTx?.amount) }}</strong>? This cannot be undone.</p>
         </div>
         <div class="modal-footer border-0 pt-0">
           <button class="btn btn-secondary" @click="showDeleteModal = false">Cancel</button>
@@ -324,6 +324,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useTour } from '../composables/useTour';
 import { transactionsTourSteps } from '../tours/transactionsTour';
+import { formatCurrency } from '../utils/format';
 import { transactionService } from '../services/transactionService';
 import { memberService } from '../services/memberService';
 import { accountService } from '../services/accountService';

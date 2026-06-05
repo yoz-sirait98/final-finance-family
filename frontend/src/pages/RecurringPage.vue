@@ -21,7 +21,7 @@
               <tr v-for="r in items" :key="r.id">
                 <td>{{ r.description || r.category?.name || '-' }}</td>
                 <td><span class="badge" :class="'badge-' + r.type">{{ r.type }}</span></td>
-                <td class="fw-semibold">{{ r.amount_formatted }}</td>
+                <td class="fw-semibold">{{ formatCurrency(r.amount) }}</td>
                 <td><span class="badge bg-info">{{ r.frequency }}</span></td>
                 <td>{{ r.next_due_date }}</td>
                 <td><span class="badge" :class="r.is_active ? 'bg-success' : 'bg-secondary'">{{ r.is_active ? 'Active' : 'Inactive' }}</span></td>
@@ -135,6 +135,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useTour } from '../composables/useTour';
 import { recurringTourSteps } from '../tours/recurringTour';
+import { formatCurrency } from '../utils/format';
 import { recurringService } from '../services/recurringService';
 import { memberService } from '../services/memberService';
 import { accountService } from '../services/accountService';

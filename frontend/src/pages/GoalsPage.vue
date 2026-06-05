@@ -20,8 +20,8 @@
             </span>
           </div>
           <div class="d-flex justify-content-between small text-muted mb-1">
-            <span>{{ g.current_amount_formatted }}</span>
-            <span>{{ g.target_amount_formatted }}</span>
+            <span>{{ formatCurrency(g.current_amount) }}</span>
+            <span>{{ formatCurrency(g.target_amount) }}</span>
           </div>
           <div class="progress mb-2" style="height:10px">
             <div class="progress-bar bg-primary" :style="{ width: g.progress_percentage + '%' }"></div>
@@ -133,6 +133,7 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useTour } from '../composables/useTour';
 import { goalsTourSteps } from '../tours/goalsTour';
+import { formatCurrency } from '../utils/format';
 import { goalService } from '../services/goalService';
 import { accountService } from '../services/accountService';
 import { useToastStore } from '../stores/toast';

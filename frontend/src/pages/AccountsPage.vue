@@ -16,8 +16,8 @@
               <small class="text-muted text-uppercase">{{ acc.type }}</small>
             </div>
           </div>
-          <div class="stat-value mb-2">{{ acc.balance_formatted }}</div>
-          <div v-if="acc.initial_balance_formatted" class="small text-muted mb-2">Opening: {{ acc.initial_balance_formatted }}</div>
+          <div class="stat-value mb-2">{{ formatCurrency(acc.balance) }}</div>
+          <div v-if="acc.initial_balance" class="small text-muted mb-2">Opening: {{ formatCurrency(acc.initial_balance) }}</div>
           <div class="d-flex gap-1">
             <button class="btn btn-sm btn-outline-primary" @click="openEdit(acc)"><i class="bi bi-pencil"></i></button>
             <button class="btn btn-sm btn-outline-danger" @click="confirmDelete(acc)"><i class="bi bi-trash"></i></button>
@@ -89,6 +89,7 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useTour } from '../composables/useTour';
 import { accountsTourSteps } from '../tours/accountsTour';
+import { formatCurrency } from '../utils/format';
 import { accountService } from '../services/accountService';
 import { useToastStore } from '../stores/toast';
 
