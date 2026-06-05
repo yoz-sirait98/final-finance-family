@@ -6,8 +6,8 @@
         <div class="stat-card">
           <h6 class="fw-bold mb-3"><i class="bi bi-person me-2"></i>Profile</h6>
           <div v-if="authStore.user">
-            <div class="mb-2"><strong>Name:</strong> {{ authStore.user.name }}</div>
-            <div class="mb-2"><strong>Email:</strong> {{ authStore.user.email }}</div>
+            <div class="mb-2"><strong>Name:</strong> {{ authStore.userName }}</div>
+            <div class="mb-2"><strong>Email:</strong> {{ authStore.session?.user?.email }}</div>
           </div>
         </div>
       </div>
