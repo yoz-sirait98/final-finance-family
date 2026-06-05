@@ -7,9 +7,9 @@ Direktori ini berisi dashboard **Single Page Application (SPA)** untuk sistem Fa
 *   **Bundler**: Vite
 *   **Routing**: Vue Router
 *   **State Management**: Pinia
-*   **HTTP Client**: Axios
+*   **Backend Client**: `@supabase/supabase-js`
 *   **UI/Styling**: CSS standar yang memanfaatkan grid dan utility classes dari Bootstrap 5
-*   **Data Visualization**: Chart.js yang dibungkus dengan `vue-chartjs`
+*   **Data Visualization**: Chart.js yang dibungkus dengan `vue-chartjs` dengan Dynamic Golden Ratio Colors
 
 ## Setup Pengembangan Lokal
 
@@ -21,10 +21,11 @@ Direktori ini berisi dashboard **Single Page Application (SPA)** untuk sistem Fa
     ```
 
 2.  **Pengaturan Environment:**
-    Buat file `.env` pada root direktori `frontend/` untuk menunjuk ke Laravel Backend API.
+    Buat file `.env` pada root direktori `frontend/` untuk terhubung ke Supabase.
 
     ```env
-    VITE_API_URL=http://localhost:8000/api
+    VITE_SUPABASE_URL=https://your-project-id.supabase.co
+    VITE_SUPABASE_ANON_KEY=your-anon-key
     ```
 
 3.  **Menjalankan dev server:**
@@ -56,7 +57,7 @@ Pola standar yang digunakan di sini adalah:
   - Notifikasi Toast real-time (`toast.js`)
   - State notifikasi peringatan anggaran/bell (`budget.js`)
 
-Pemanggilan API dilakukan langsung di dalam komponen secara berurutan menggunakan layer service Axios yang telah diabstraksi (`frontend/src/services/*`). Fitur *Promise.all* diimplementasikan secara ekstensif pada rendering dashboard untuk mengeliminasi latensi.
+Pemanggilan database dilakukan langsung di dalam komponen secara berurutan menggunakan layer service tersentralisasi (`frontend/src/services/*`) yang membungkus SDK `@supabase/supabase-js`. Eksekusi fungsi *RPC (Remote Procedure Call)* tingkat lanjut digunakan untuk mengeliminasi latensi saat mengambil rangkuman Dashboard secara besar-besaran.
 
 ### Eksport Laporan Client-Side
 Fungsi unduh laporan analitik bulanan ke **PDF** (menggunakan `jsPDF` + `jspdf-autotable`) maupun **CSV** dilakukan murni eksplisit dengan 100% Javascript di sisi *browser* untuk mencegah kelebihan muatan di sisi *backend*. 
