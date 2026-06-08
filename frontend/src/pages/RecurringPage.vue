@@ -27,6 +27,7 @@
                 <td>
                   <div class="btn-group btn-group-sm">
                     <button class="btn btn-outline-primary" @click="openEdit(r)"><i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-outline-warning" @click="toggleActive(r)"><i class="bi bi-toggle-on"></i></button>
                     <button class="btn btn-outline-danger" @click="confirmDelete(r)"><i class="bi bi-trash"></i></button>
                   </div>
                 </td>
@@ -195,8 +196,18 @@ async function save() {
     showModal.value = false;
     fetchData();
   } catch(e) {
-    formError.value = e.response?.data?.message || 'Error occurred';
+    formError.value = e.message || 'Error occurred';
     toast.error(formError.value);
+  }
+}
+
+async function toggleActive(r) {
+  try {
+    await recurringService.update(r.id, { is_active: !r.is_active });
+    toast.success('Recurring status updated');
+    fetchData();
+  } catch (e) {
+    toast.error(e.message || 'Error toggling status');
   }
 }
 
@@ -214,7 +225,7 @@ async function doDelete() {
     deletingItem.value = null;
     fetchData();
   } catch(e) {
-    toast.error(e.response?.data?.message || 'Failed to delete recurring transaction');
+    toast.error(e.message || 'Failed to delete recurring transaction');
   }
 }
 

@@ -201,7 +201,7 @@ async function save() {
     showModal.value = false;
     fetchData();
   } catch(e) {
-    formError.value = e.response?.data?.message || 'Error occurred';
+    formError.value = e.message || 'Error occurred';
     toast.error(formError.value);
   } finally {
     saving.value = false;
@@ -216,7 +216,7 @@ async function doContribute() {
     showContributeModal.value = false;
     fetchData();
   } catch(e) {
-    toast.error(e.response?.data?.message || 'Error contributing');
+    toast.error(e.message || 'Error contributing');
   } finally {
     saving.value = false;
   }
@@ -237,7 +237,7 @@ async function doDelete() {
     deletingItem.value = null;
     fetchData();
   } catch(e) {
-    toast.error(e.response?.data?.message || 'Failed to delete goal');
+    toast.error(e.message || 'Failed to delete goal');
   } finally {
     deleting.value = false;
   }
