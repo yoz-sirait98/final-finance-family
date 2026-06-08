@@ -10,7 +10,7 @@
       </button>
     </div>
     <div id="tour-accounts-list" class="row g-3">
-      <div v-for="acc in accounts" :key="acc.id" class="col-md-4 col-lg-3">
+      <div v-for="acc in accounts" :key="acc.id" class="col-md-6 col-lg-4">
         <div class="stat-card">
           <div class="d-flex align-items-center gap-2 mb-2">
             <div class="stat-icon" style="background:linear-gradient(135deg,#667eea,#764ba2);width:40px;height:40px;font-size:1rem">
@@ -23,7 +23,7 @@
               </small>
             </div>
           </div>
-          <div class="stat-value mb-2">{{ formatCurrency(acc.balance) }}</div>
+          <div class="stat-value mb-2" :title="formatCurrency(acc.balance)">{{ formatCurrency(acc.balance) }}</div>
           <div v-if="acc.initial_balance" class="small text-muted mb-2">
             {{ $t('accounts.balancePlaceholder') }}: {{ formatCurrency(acc.initial_balance) }}
           </div>

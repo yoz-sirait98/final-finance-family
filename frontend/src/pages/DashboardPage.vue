@@ -40,7 +40,7 @@
           <div class="d-flex align-items-center justify-content-between">
             <div>
               <div class="stat-label">{{ $t('dashboard.totalBalance') }}</div>
-              <div class="stat-value">{{ formatRupiah(summary.total_balance) }}</div>
+              <div class="stat-value" :title="formatRupiah(summary.total_balance)">{{ formatRupiah(summary.total_balance) }}</div>
             </div>
             <div class="stat-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">
               <i class="bi bi-wallet2"></i>
@@ -53,7 +53,7 @@
           <div class="d-flex align-items-center justify-content-between">
             <div>
               <div class="stat-label">{{ $t('dashboard.monthlyIncome', { period: currentMonthLabel }) }}</div>
-              <div class="stat-value text-success">{{ formatRupiah(summary.monthly_income) }}</div>
+              <div class="stat-value text-success" :title="formatRupiah(summary.monthly_income)">{{ formatRupiah(summary.monthly_income) }}</div>
             </div>
             <div class="stat-icon" style="background: linear-gradient(135deg, #28a745, #20c997);">
               <i class="bi bi-arrow-down-circle"></i>
@@ -66,7 +66,7 @@
           <div class="d-flex align-items-center justify-content-between">
             <div>
               <div class="stat-label">{{ $t('dashboard.monthlyExpense', { period: currentMonthLabel }) }}</div>
-              <div class="stat-value text-danger">{{ formatRupiah(summary.monthly_expense) }}</div>
+              <div class="stat-value text-danger" :title="formatRupiah(summary.monthly_expense)">{{ formatRupiah(summary.monthly_expense) }}</div>
             </div>
             <div class="stat-icon" style="background: linear-gradient(135deg, #dc3545, #e83e8c);">
               <i class="bi bi-arrow-up-circle"></i>
@@ -79,7 +79,7 @@
           <div class="d-flex align-items-center justify-content-between">
             <div>
               <div class="stat-label">{{ $t('dashboard.monthlyNet', { period: currentMonthLabel }) }}</div>
-              <div class="stat-value" :class="summary.monthly_net >= 0 ? 'text-success' : 'text-danger'">
+              <div class="stat-value" :class="summary.monthly_net >= 0 ? 'text-success' : 'text-danger'" :title="formatRupiah(summary.monthly_net)">
                 {{ formatRupiah(summary.monthly_net) }}
               </div>
             </div>
