@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.agents/
+graphify-out/
+
+*
+!frontend/
+!frontend/src/
+!frontend/src/**
+!supabase/
+!supabase/**
+!docs/
+!docs/**
