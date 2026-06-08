@@ -35,6 +35,15 @@ Repositori ini menggunakan struktur **monorepo** yang berisi aplikasi frontend d
 8.  **Eksport Laporan (_Client-Side_)**: Unduh laporan keuangan ke format **CSV** dan **PDF** terstruktur langsung dari browser.
 9.  **Keamanan Berlapis (RLS)**: Row Level Security memastikan data satu keluarga terisolasi secara sempurna dan tidak bisa diakses oleh keluarga lain.
 
+## Setup AI Assistant (Graphify)
+
+Repositori ini telah dikonfigurasi secara mendalam untuk menggunakan [Graphify](https://github.com/safishamsi/graphify) guna membangun *knowledge graph* arsitektur kode. Ini memungkinkan asisten AI (seperti Google Antigravity, Cursor, atau Claude) menavigasi codebase dengan instan tanpa menghabiskan banyak token API.
+
+**Untuk Developer Baru yang Meng-clone Repo Ini:**
+1. Anda tidak perlu membangun *graph* dari awal! Kami sudah meng-commit folder `graphify-out/` sebagai *map* bawaan. AI Anda akan langsung membacanya.
+2. Silakan install tool CLI Graphify di komputer Anda jika belum ada (misal dengan `pipx install "graphifyy[gemini]"`).
+3. Jalankan `graphify hook install` di folder project ini. Hal ini akan memasang Git hook (`post-commit`) sehingga setiap kali Anda melakukan commit kode baru, Graphify akan otomatis mengupdate peta kode di latar belakang (tanpa biaya API).
+
 ## Roadmap Deployment
 
 Aplikasi ini menggunakan arsitektur _BaaS (Backend-as-a-Service)_ berbasis Supabase. 
