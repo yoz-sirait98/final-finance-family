@@ -308,6 +308,7 @@
     "onProgress": "Sedang Berjalan",
     "done": "Selesai",
     "noPlans": "Belum ada rencana belanja.",
+    "zeroPriceWarning": "Semua barang harus memiliki harga. Silakan isi harga atau hapus barang yang batal dibeli.",
     "validation": {
       "name": "Silakan masukkan nama barang."
     }

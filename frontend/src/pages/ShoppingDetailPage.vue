@@ -165,12 +165,14 @@ import { accountService } from '../services/accountService';
 import { categoryService } from '../services/categoryService';
 import { useAuthStore } from '../stores/auth';
 import { useToastStore } from '../stores/toast';
+import { useLocaleStore } from '../stores/locale';
 import { supabase } from '../lib/supabase';
 
 const route = useRoute();
 const router = useRouter();
 const authStore = useAuthStore();
 const toast = useToastStore();
+const localeStore = useLocaleStore();
 
 const planId = route.params.id;
 const plan = ref(null);
@@ -273,9 +275,8 @@ function openCheckoutModal() {
   // Validate prices
   const missingPrices = items.value.some(i => !i.price || parseFloat(i.price) <= 0);
   if (missingPrices) {
-    if(!confirm('Some items have 0 price. Continue checkout?')) {
-        return;
-    }
+    toast.warning(localeStore.t('shopping.zeroPriceWarning') || 'All items must have a price. Please fill the price or delete the item.');
+    return;
   }
   
   if (plan.value?.created_by) {

@@ -308,6 +308,7 @@
     "onProgress": "On Progress",
     "done": "Done",
     "noPlans": "No shopping plans found.",
+    "zeroPriceWarning": "All items must have a price. Please fill the price or delete the item if not bought.",
     "validation": {
       "name": "Please enter an item name."
     }
