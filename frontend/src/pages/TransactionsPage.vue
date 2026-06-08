@@ -107,8 +107,8 @@
               <td>
                 <span class="badge" :class="'badge-' + tx.type">{{ $t('common.' + tx.type) }}</span>
               </td>
-              <td class="fw-semibold" :class="tx.type === 'income' ? 'text-success' : 'text-danger'">
-                {{ tx.type === 'income' ? '+' : '-' }}{{ formatCurrency(tx.amount) }}
+              <td class="fw-semibold" :class="getAmountClass(tx)">
+                {{ formatAmountWithSign(tx) }}
               </td>
               <td>{{ tx.description || '-' }}</td>
               <td>
@@ -373,6 +373,16 @@ const budgetConfirmData = ref({});
 function fmt(n) {
   const sign = n < 0 ? '-' : '';
   return sign + 'Rp ' + Math.abs(Number(n)).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
+
+function getAmountClass(tx) {
+  return tx.type === 'income' || (tx.type === 'transfer' && tx.amount > 0) ? 'text-success' : 'text-danger';
+}
+
+function formatAmountWithSign(tx) {
+  const isIncoming = tx.type === 'income' || (tx.type === 'transfer' && tx.amount > 0);
+  const sign = isIncoming ? '+' : '-';
+  return `${sign}${formatCurrency(Math.abs(tx.amount))}`;
 }
 
 const filters = ref({
