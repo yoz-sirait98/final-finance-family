@@ -42,5 +42,26 @@ export const goalService = {
     });
 
     return { data: { data: enriched } };
+  },
+  contribute: async (id, payload) => {
+    const { data: goal, error: fetchError } = await supabase
+      .from('saving_goals')
+      .select('current_amount')
+      .eq('id', id)
+      .single();
+
+    if (fetchError) throw fetchError;
+
+    const newAmount = Number(goal.current_amount || 0) + Number(payload.amount || 0);
+
+    const { data, error } = await supabase
+      .from('saving_goals')
+      .update({ current_amount: newAmount })
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return { data };
   }
 };
