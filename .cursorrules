@@ -16,3 +16,8 @@ Welcome, AI Agent! Please adhere strictly to the following instructions when wor
 - **Auto-Commit and Push**: Ensure changes are added and committed to git as tasks are completed.
 - **Push Conditional on Approval**: Always auto-push code updates to the remote git branch (`git push`), but **ONLY after receiving explicit approval from the user** for the proposed changes. Do not push unapproved code.
 - **Interactive Approval**: When requesting approval to push to git, the agent **MUST** use the `ask_question` tool to present an interactive UI button (e.g., "Approve Push" / "Skip") to the user. Do not ask for typed text approval.
+
+## 4. Graphify Knowledge Graph
+- **Mandatory Querying**: For any architectural, structural, or codebase-wide questions, you MUST utilize the Graphify knowledge graph instead of raw grepping.
+- Follow the instructions located in `.agents/rules/graphify.md` and use the `graphify query "<question>"` command to navigate the project.
+- **Auto-Update**: If you create or modify files, be sure to run `graphify update .` to keep the AST graph current for other agents.
