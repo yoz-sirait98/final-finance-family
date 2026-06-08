@@ -54,6 +54,10 @@
               <label class="form-label">Target Amount (Rp)</label>
               <input v-model.number="form.target_amount" type="number" class="form-control" min="1" required />
             </div>
+            <div class="mb-3" v-if="editingId">
+              <label class="form-label">Current Progress</label>
+              <input type="text" class="form-control bg-light" :value="formatCurrency(editingGoal?.current_amount || 0)" disabled readonly />
+            </div>
             <div class="mb-3">
               <label class="form-label">Link to Account (Optional)</label>
               <select v-model="form.account_id" class="form-select">
