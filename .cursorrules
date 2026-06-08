@@ -14,8 +14,7 @@ Welcome, AI Agent! Please adhere strictly to the following instructions when wor
 
 ## 3. Git Operations & Push Policy
 - **Auto-Commit and Push**: Ensure changes are added and committed to git as tasks are completed.
-- **Push Conditional on Approval**: Always auto-push code updates to the remote git branch (`git push`), but **ONLY after receiving explicit approval from the user** for the proposed changes. Do not push unapproved code.
-- **Interactive Approval**: When requesting approval to push to git, the agent **MUST** use the `ask_question` tool to present an interactive UI button (e.g., "Approve Push" / "Skip") to the user. Do not ask for typed text approval.
+- **Push Conditional on Approval**: Always auto-push code updates to the remote git branch (`git push`). The IDE will automatically intercept the terminal command and prompt the user for 1-click approval. Do NOT use a separate `ask_question` tool to ask for permission beforehand, as it causes a redundant two-step confirmation.
 
 ## 4. Graphify Knowledge Graph
 - **Mandatory Querying**: For any architectural, structural, or codebase-wide questions, you MUST utilize the Graphify knowledge graph instead of raw grepping.
