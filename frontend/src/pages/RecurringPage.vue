@@ -49,8 +49,8 @@
           <div class="modal-body">
             <div v-if="formError" class="alert alert-danger small">{{ formError }}</div>
             <div class="mb-3">
-              <label class="form-label">Member</label>
-              <select v-model="form.member_id" class="form-select">
+              <label class="form-label" for="recMember">Member</label>
+              <select id="recMember" name="member_id" v-model="form.member_id" class="form-select">
                 <option value="" disabled>- Member -</option>
                 <template v-for="m in members" :key="m.id">
                   <option v-if="m.is_active || m.id === form.member_id" :value="m.id">{{ m.name }}{{ !m.is_active ? ' (Inactive)' : '' }}</option>
@@ -58,30 +58,30 @@
               </select>
             </div>
             <div class="mb-3">
-              <label class="form-label">Account</label>
-              <select v-model="form.account_id" class="form-select">
+              <label class="form-label" for="recAccount">Account</label>
+              <select id="recAccount" name="account_id" v-model="form.account_id" class="form-select">
                 <option value="" disabled>- Account -</option>
                 <option v-for="a in accounts" :key="a.id" :value="a.id">{{ a.name }}</option>                
               </select>
             </div>
             <div class="mb-3">
-              <label class="form-label">Category</label>
-              <select v-model="form.category_id" class="form-select">
+              <label class="form-label" for="recCategory">Category</label>
+              <select id="recCategory" name="category_id" v-model="form.category_id" class="form-select">
                 <option value="" disabled>- Category -</option>
                 <option v-for="c in groupedCategories.expense" :key="c.id" :value="c.id">{{ c.name }}</option>
               </select>
             </div>
             <div class="mb-3">
-              <label class="form-label">Amount (Rp)</label>
-              <input v-model.number="form.amount" type="number" class="form-control" min="1" required />
+              <label class="form-label" for="recAmount">Amount (Rp)</label>
+              <input id="recAmount" name="amount" v-model.number="form.amount" type="number" class="form-control" min="1" required />
             </div>
             <div class="mb-3">
-              <label class="form-label">Description</label>
-              <input v-model="form.description" class="form-control" />
+              <label class="form-label" for="recDesc">Description</label>
+              <input id="recDesc" name="description" v-model="form.description" class="form-control" />
             </div>
             <div class="mb-3">
-              <label class="form-label">Frequency</label>
-              <select v-model="form.frequency" class="form-select">
+              <label class="form-label" for="recFreq">Frequency</label>
+              <select id="recFreq" name="frequency" v-model="form.frequency" class="form-select">
                 <option value="" disabled>- Frequency -</option>
                 <option value="weekly">Weekly</option>
                 <option value="monthly">Monthly</option>
@@ -89,12 +89,12 @@
               </select>
             </div>
             <div class="mb-3">
-              <label class="form-label">Next Due Date</label>
-              <input v-model="form.next_due_date" type="date" class="form-control" required />
+              <label class="form-label" for="recNextDate">Next Due Date</label>
+              <input id="recNextDate" name="next_due_date" v-model="form.next_due_date" type="date" class="form-control" required />
             </div>
             <div class="mb-3">
-              <label class="form-label">End Date (optional)</label>
-              <input v-model="form.end_date" type="date" class="form-control" />
+              <label class="form-label" for="recEndDate">End Date (optional)</label>
+              <input id="recEndDate" name="end_date" v-model="form.end_date" type="date" class="form-control" />
             </div>
           </div>
           <div class="modal-footer">

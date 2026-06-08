@@ -17,10 +17,12 @@
 
         <form @submit.prevent="handleLogin">
           <div class="mb-3">
-            <label class="form-label fw-semibold">Email</label>
+            <label class="form-label fw-semibold" for="loginEmail">Email</label>
             <div class="input-group">
               <span class="input-group-text"><i class="bi bi-envelope"></i></span>
               <input
+                id="loginEmail"
+                name="email"
                 v-model="form.email"
                 type="email"
                 class="form-control"
@@ -32,10 +34,12 @@
           </div>
 
           <div class="mb-4">
-            <label class="form-label fw-semibold">Password</label>
+            <label class="form-label fw-semibold" for="loginPassword">Password</label>
             <div class="input-group">
               <span class="input-group-text"><i class="bi bi-lock"></i></span>
               <input
+                id="loginPassword"
+                name="password"
                 v-model="form.password"
                 :type="showPassword ? 'text' : 'password'"
                 class="form-control"

@@ -153,16 +153,16 @@
           <div class="modal-body">
             <div v-if="formError" class="alert alert-danger small">{{ formError }}</div>
             <div class="mb-3">
-              <label class="form-label">Type</label>
-              <select v-model="form.type" class="form-select" required>
+              <label class="form-label" for="txType">Type</label>
+              <select id="txType" name="type" v-model="form.type" class="form-select" required>
                 <option value="" disabled>- Type -</option>
                 <option value="income">Income</option>
                 <option value="expense">Expense</option>
               </select>
             </div>
             <div class="mb-3">
-              <label class="form-label">Member</label>
-              <select v-model="form.member_id" class="form-select" required>
+              <label class="form-label" for="txMember">Member</label>
+              <select id="txMember" name="member_id" v-model="form.member_id" class="form-select" required>
                 <option value="" disabled>- Member -</option>
                 <template v-for="m in members" :key="m.id">
                   <option v-if="m.is_active || m.id === form.member_id" :value="m.id">{{ m.name }}{{ !m.is_active ? ' (Inactive)' : '' }}</option>
@@ -170,8 +170,8 @@
               </select>
             </div>
             <div class="mb-3">
-              <label class="form-label">Account</label>
-              <select v-model="form.account_id" class="form-select" required>
+              <label class="form-label" for="txAccount">Account</label>
+              <select id="txAccount" name="account_id" v-model="form.account_id" class="form-select" required>
                 <option value="" disabled>- Account -</option>
                 <optgroup v-for="(group, type) in groupedAccounts" :key="type" :label="type">
                   <option v-for="a in group" :key="a.id" :value="a.id">{{ a.name }}</option>
@@ -179,23 +179,23 @@
               </select>
             </div>
             <div class="mb-3">
-              <label class="form-label">Category</label>
-              <select v-model="form.category_id" class="form-select">
+              <label class="form-label" for="txCategory">Category</label>
+              <select id="txCategory" name="category_id" v-model="form.category_id" class="form-select">
                 <option value="">- Category -</option>
                 <option v-for="c in filteredCategories" :key="c.id" :value="c.id">{{ c.name }}</option>
               </select>
             </div>
             <div class="mb-3">
-              <label class="form-label">Amount (Rp)</label>
-              <input v-model.number="form.amount" type="number" class="form-control" min="1" required />
+              <label class="form-label" for="txAmount">Amount (Rp)</label>
+              <input id="txAmount" name="amount" v-model.number="form.amount" type="number" class="form-control" min="1" required />
             </div>
             <div class="mb-3">
-              <label class="form-label">Date</label>
-              <input v-model="form.transaction_date" type="date" class="form-control" required />
+              <label class="form-label" for="txDate">Date</label>
+              <input id="txDate" name="transaction_date" v-model="form.transaction_date" type="date" class="form-control" required />
             </div>
             <div class="mb-3">
-              <label class="form-label">Description</label>
-              <input v-model="form.description" type="text" class="form-control" />
+              <label class="form-label" for="txDesc">Description</label>
+              <input id="txDesc" name="description" v-model="form.description" type="text" class="form-control" />
             </div>
           </div>
           <div class="modal-footer">
@@ -220,8 +220,8 @@
           <div class="modal-body">
             <div v-if="transferError" class="alert alert-danger small">{{ transferError }}</div>
             <div class="mb-3">
-              <label class="form-label">Member</label>
-              <select v-model="transferForm.member_id" class="form-select" required>
+              <label class="form-label" for="tfMember">Member</label>
+              <select id="tfMember" name="member_id" v-model="transferForm.member_id" class="form-select" required>
                 <option value="" disabled>- Member -</option>
                 <template v-for="m in members" :key="m.id">
                   <option v-if="m.is_active || m.id === transferForm.member_id" :value="m.id">{{ m.name }}{{ !m.is_active ? ' (Inactive)' : '' }}</option>
@@ -229,8 +229,8 @@
               </select>
             </div>
             <div class="mb-3">
-              <label class="form-label">From Account</label>
-              <select v-model="transferForm.from_account_id" class="form-select" required>
+              <label class="form-label" for="tfFrom">From Account</label>
+              <select id="tfFrom" name="from_account_id" v-model="transferForm.from_account_id" class="form-select" required>
                 <option value="" disabled>- From Account -</option>
                 <optgroup v-for="(group, type) in groupedAccounts" :key="type" :label="type">
                   <option v-for="a in group" :key="a.id" :value="a.id">{{ a.name }} ({{ formatCurrency(a.balance + a.initial_balance) }})</option>
@@ -238,8 +238,8 @@
               </select>
             </div>
             <div class="mb-3">
-              <label class="form-label">To Account</label>
-              <select v-model="transferForm.to_account_id" class="form-select" required>
+              <label class="form-label" for="tfTo">To Account</label>
+              <select id="tfTo" name="to_account_id" v-model="transferForm.to_account_id" class="form-select" required>
                 <option value="" disabled>- To Account -</option>
                 <optgroup v-for="(group, type) in groupedAccounts" :key="type" :label="type">
                   <option v-for="a in group" :key="a.id" :value="a.id" :disabled="a.id === transferForm.from_account_id">{{ a.name }} ({{ formatCurrency(a.balance + a.initial_balance) }})</option>
@@ -247,16 +247,16 @@
               </select>
             </div>
             <div class="mb-3">
-              <label class="form-label">Amount (Rp)</label>
-              <input v-model.number="transferForm.amount" type="number" class="form-control" min="1" required />
+              <label class="form-label" for="tfAmount">Amount (Rp)</label>
+              <input id="tfAmount" name="amount" v-model.number="transferForm.amount" type="number" class="form-control" min="1" required />
             </div>
             <div class="mb-3">
-              <label class="form-label">Date</label>
-              <input v-model="transferForm.transaction_date" type="date" class="form-control" required />
+              <label class="form-label" for="tfDate">Date</label>
+              <input id="tfDate" name="transaction_date" v-model="transferForm.transaction_date" type="date" class="form-control" required />
             </div>
             <div class="mb-3">
-              <label class="form-label">Description</label>
-              <input v-model="transferForm.description" type="text" class="form-control" placeholder="Transfer note" />
+              <label class="form-label" for="tfDesc">Description</label>
+              <input id="tfDesc" name="description" v-model="transferForm.description" type="text" class="form-control" placeholder="Transfer note" />
             </div>
           </div>
           <div class="modal-footer">
