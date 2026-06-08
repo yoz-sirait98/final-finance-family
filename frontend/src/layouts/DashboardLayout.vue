@@ -161,6 +161,8 @@
     <main class="main-content" :class="{ 'sidebar-collapsed': sidebarCollapsed }">
       <router-view />
     </main>
+
+    <GoalNotificationModal />
   </div>
 </template>
 
@@ -170,6 +172,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useAuthStore } from '../stores/auth';
 import { useBudgetStore } from '../stores/budgets';
 import { useTourStore } from '../stores/tour';
+import GoalNotificationModal from '../components/GoalNotificationModal.vue';
 
 const route = useRoute();
 const router = useRouter();

@@ -15,7 +15,7 @@
               <div v-if="g.account_id" class="badge bg-info mt-1 mb-1 me-1"><i class="bi bi-link-45deg"></i> {{ g.account_name }}</div>
               <small class="text-muted d-block">{{ g.deadline || 'No deadline' }}</small>
             </div>
-            <span class="badge" :class="g.status === 'active' ? 'bg-primary' : g.status === 'completed' ? 'bg-success' : 'bg-secondary'">
+            <span class="badge" :class="g.status === 'active' ? 'bg-primary' : g.status === 'completed' ? 'bg-success' : g.status === 'inactive' ? 'bg-warning text-dark' : 'bg-secondary'">
               {{ g.status }}
             </span>
           </div>
@@ -65,6 +65,15 @@
             <div class="mb-3">
               <label class="form-label">Deadline</label>
               <input v-model="form.deadline" type="date" class="form-control" />
+            </div>
+            <div class="mb-3" v-if="editingId">
+              <label class="form-label">Status</label>
+              <select v-model="form.status" class="form-select">
+                <option value="active">Active</option>
+                <option value="completed">Completed</option>
+                <option value="cancelled">Cancelled</option>
+                <option value="inactive">Inactive</option>
+              </select>
             </div>
           </div>
           <div class="modal-footer">
@@ -141,7 +150,7 @@ import { useToastStore } from '../stores/toast';
 const goals = ref([]);
 const accounts = ref([]);
 const editingId = ref(null);
-const form = ref({ name: '', target_amount: 0, deadline: '' });
+const form = ref({ name: '', target_amount: 0, deadline: '', status: 'active' });
 const formError = ref('');
 
 const showModal = ref(false);
@@ -163,14 +172,14 @@ async function fetchData() {
 
 function openCreate() {
   editingId.value = null;
-  form.value = { name: '', target_amount: 0, deadline: '', account_id: '' };
+  form.value = { name: '', target_amount: 0, deadline: '', account_id: '', status: 'active' };
   formError.value = '';
   showModal.value = true;
 }
 
 function openEdit(g) {
   editingId.value = g.id;
-  form.value = { name: g.name, target_amount: g.target_amount, deadline: g.deadline_raw || '', account_id: g.account_id || '' };
+  form.value = { name: g.name, target_amount: g.target_amount, deadline: g.deadline_raw || '', account_id: g.account_id || '', status: g.status || 'active' };
   formError.value = '';
   showModal.value = true;
 }
@@ -190,6 +199,7 @@ async function save() {
       target_amount: form.value.target_amount,
       deadline: form.value.deadline || null,
       account_id: form.value.account_id || null,
+      status: form.value.status,
     };
     if (editingId.value) {
       await goalService.update(editingId.value, payload);
