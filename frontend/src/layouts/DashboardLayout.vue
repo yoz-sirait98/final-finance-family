@@ -270,15 +270,15 @@ async function refreshAlerts() {
 
 async function fetchPendingShopping() {
   if (!authStore.familyId) return;
-  const { count } = await supabase.from('shopping_items').select('*', { count: 'exact', head: true })
-    .eq('status', 'needed').eq('family_id', authStore.familyId);
+  const { count } = await supabase.from('shopping_plans').select('*', { count: 'exact', head: true })
+    .eq('status', 'progress').eq('family_id', authStore.familyId);
   pendingShoppingCount.value = count || 0;
 }
 
 function setupShoppingRealtime() {
   if (!authStore.familyId) return;
   shoppingSub = supabase.channel('dashboard_shopping')
-    .on('postgres_changes', { event: '*', schema: 'public', table: 'shopping_items', filter: `family_id=eq.${authStore.familyId}` }, () => {
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'shopping_plans', filter: `family_id=eq.${authStore.familyId}` }, () => {
       fetchPendingShopping();
     }).subscribe();
 }

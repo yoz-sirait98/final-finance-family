@@ -113,7 +113,7 @@
               <td>{{ tx.description || '-' }}</td>
               <td>
                 <div class="btn-group btn-group-sm">
-                  <button v-if="tx.shopping_items && tx.shopping_items.length" class="btn btn-outline-info" @click="openReceipt(tx)" title="View Receipt"><i class="bi bi-receipt"></i></button>
+                  <button v-if="tx.shopping_plans && tx.shopping_plans.length" class="btn btn-outline-info" @click="goToShoppingDetail(tx.shopping_plans[0].id)" title="View Shopping Plan"><i class="bi bi-cart"></i></button>
                   <button class="btn btn-outline-success" @click="openDuplicate(tx)" title="Duplicate"><i class="bi bi-copy"></i></button>
                   <button class="btn btn-outline-primary" @click="openEdit(tx)" :title="$t('common.edit')"><i class="bi bi-pencil"></i></button>
                   <button class="btn btn-outline-danger" @click="confirmDelete(tx)" :title="$t('common.delete')"><i class="bi bi-trash"></i></button>
@@ -330,32 +330,12 @@
       </div>
     </div>
 
-    <!-- ===== Receipt Modal ===== -->
-    <div v-if="showReceiptModal" class="vue-modal-backdrop" @mousedown.self="showReceiptModal = false">
-      <div class="vue-modal">
-        <div class="modal-header border-0 pb-0">
-          <h5 class="modal-title fw-bold"><i class="bi bi-receipt me-2"></i>Itemized Receipt</h5>
-          <button type="button" class="btn-close" @click="showReceiptModal = false"></button>
-        </div>
-        <div class="modal-body">
-          <div class="list-group list-group-flush" v-if="receiptTx">
-            <div v-for="item in receiptTx.shopping_items" :key="item.id" class="list-group-item d-flex justify-content-between align-items-center px-0">
-              <span>{{ item.name }}</span>
-              <span class="fw-semibold">Rp {{ parseFloat(item.price).toLocaleString('id-ID') }}</span>
-            </div>
-            <div class="list-group-item d-flex justify-content-between align-items-center px-0 mt-3 border-top pt-3">
-              <span class="fw-bold">Total Transacted</span>
-              <span class="fw-bold text-danger">Rp {{ parseFloat(receiptTx.amount).toLocaleString('id-ID') }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { useRouter } from 'vue-router';
 import { useTour } from '../composables/useTour';
 import { transactionsTourSteps } from '../tours/transactionsTour';
 import { formatCurrency } from '../utils/format';
@@ -393,12 +373,10 @@ const budgetStore = useBudgetStore();
 const showBudgetConfirm = ref(false);
 const budgetConfirmData = ref({});
 
-const showReceiptModal = ref(false);
-const receiptTx = ref(null);
+const router = useRouter();
 
-function openReceipt(tx) {
-  receiptTx.value = tx;
-  showReceiptModal.value = true;
+function goToShoppingDetail(planId) {
+  router.push(`/shopping/${planId}`);
 }
 
 function fmt(n) {

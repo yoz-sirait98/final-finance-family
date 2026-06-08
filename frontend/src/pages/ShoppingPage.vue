@@ -5,170 +5,87 @@
         <h4>{{ $t('shopping.title') }}</h4>
         <p class="text-muted mb-0">{{ $t('shopping.subtitle') }}</p>
       </div>
-      <button class="btn btn-primary-gradient" @click="openAdd">
-        <i class="bi bi-cart-plus me-1"></i>{{ $t('shopping.addItem') }}
+      <button class="btn btn-primary-gradient" @click="openAddPlan">
+        <i class="bi bi-plus-lg me-1"></i>{{ $t('shopping.createPlan') || 'Create Plan' }}
       </button>
     </div>
 
-    <!-- Tabs -->
+    <!-- Tabs for Plans -->
     <ul class="nav nav-pills mb-4">
       <li class="nav-item">
-        <a class="nav-link" :class="{active: activeTab === 'needed'}" href="#" @click.prevent="activeTab = 'needed'">
-          <i class="bi bi-card-checklist me-1"></i>{{ $t('shopping.toBuy') }}
-          <span v-if="neededItems.length" class="badge bg-danger ms-1">{{ neededItems.length }}</span>
+        <a class="nav-link" :class="{active: activeTab === 'progress'}" href="#" @click.prevent="activeTab = 'progress'">
+          <i class="bi bi-list-task me-1"></i>{{ $t('shopping.onProgress') || 'On Progress' }}
+          <span v-if="progressPlans.length" class="badge bg-danger ms-1">{{ progressPlans.length }}</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" :class="{active: activeTab === 'bought'}" href="#" @click.prevent="activeTab = 'bought'">
-          <i class="bi bi-check2-circle me-1"></i>{{ $t('shopping.bought') }}
+        <a class="nav-link" :class="{active: activeTab === 'done'}" href="#" @click.prevent="activeTab = 'done'">
+          <i class="bi bi-check2-circle me-1"></i>{{ $t('shopping.done') || 'Done' }}
         </a>
       </li>
     </ul>
 
-    <!-- Needed Items Tab -->
-    <div v-if="activeTab === 'needed'">
-      <div v-if="neededItems.length === 0" class="text-center text-muted py-5">
-        <i class="bi bi-basket text-light" style="font-size: 3rem;"></i>
-        <p class="mt-3">{{ $t('shopping.noItems') }}</p>
+    <!-- Plans List -->
+    <div class="row g-3">
+      <div v-if="filteredPlans.length === 0" class="col-12 text-center text-muted py-5">
+        <i class="bi bi-card-checklist text-light" style="font-size: 3rem;"></i>
+        <p class="mt-3">{{ $t('shopping.noPlans') || 'No shopping plans found.' }}</p>
       </div>
-      <div v-else>
-        <div class="list-group mb-4 shadow-sm border-0">
-          <label v-for="item in neededItems" :key="item.id" class="list-group-item d-flex justify-content-between align-items-center border-light py-3">
-            <div class="d-flex align-items-center gap-3">
-              <input type="checkbox" class="form-check-input mt-0" style="width: 1.5em; height: 1.5em;" :value="item.id" v-model="selectedItems" />
-              <div>
-                <h6 class="mb-0 fw-bold">{{ item.name }}</h6>
-                <small class="text-muted">
-                  {{ $t('shopping.addedBy') }} {{ item.added_by_profile?.full_name || '?' }}
-                </small>
-              </div>
+      <div v-for="plan in filteredPlans" :key="plan.id" class="col-md-6 col-lg-4">
+        <div class="card h-100 shadow-sm border-0 plan-card" @click="goToDetail(plan.id)">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <h5 class="card-title fw-bold mb-0 text-primary">{{ plan.location }}</h5>
+              <span class="badge" :class="plan.status === 'done' ? 'bg-success' : 'bg-warning text-dark'">
+                {{ plan.status === 'done' ? ($t('shopping.done') || 'Done') : ($t('shopping.onProgress') || 'On Progress') }}
+              </span>
             </div>
-            <div class="d-flex align-items-center gap-3">
-              <!-- Inline Price Edit -->
-              <div class="input-group input-group-sm" style="width: 130px;">
-                <span class="input-group-text border-0 bg-light text-muted">Rp</span>
-                <input type="number" class="form-control border-light" v-model="item.price" @change="updatePrice(item)" :placeholder="$t('shopping.pricePlaceholder')" />
-              </div>
-              <button class="btn btn-sm btn-outline-danger border-0" @click.stop="confirmDelete(item)"><i class="bi bi-trash"></i></button>
-            </div>
-          </label>
-        </div>
-        
-        <!-- Checkout Actions -->
-        <div class="card bg-white border-0 shadow-sm" v-if="selectedItems.length > 0">
-          <div class="card-body d-flex justify-content-between align-items-center">
-            <div>
-              <span class="text-muted d-block" style="font-size: 0.85rem;">{{ selectedItems.length }} items selected</span>
-              <h5 class="mb-0 fw-bold text-primary">Rp {{ selectedTotal.toLocaleString('id-ID') }}</h5>
-            </div>
-            <button class="btn btn-success px-4 rounded-pill shadow-sm" @click="openCheckoutModal">
-              <i class="bi bi-cart-check me-2"></i>{{ $t('shopping.checkout') }}
+            <p class="text-muted small mb-2">
+              <i class="bi bi-calendar3 me-1"></i> {{ new Date(plan.created_at).toLocaleDateString() }}
+            </p>
+            <p class="text-muted small mb-0">
+              <i class="bi bi-person me-1"></i> {{ plan.created_by_member?.name || 'Unknown' }}
+            </p>
+          </div>
+          <div class="card-footer bg-white border-light d-flex justify-content-between align-items-center">
+            <span v-if="plan.status === 'done' && plan.transaction" class="fw-bold text-danger">
+              Rp {{ parseFloat(plan.transaction.amount || 0).toLocaleString('id-ID') }}
+            </span>
+            <span v-else class="text-muted small">Tap to view items</span>
+            <button class="btn btn-sm btn-outline-danger border-0" @click.stop="confirmDeletePlan(plan)">
+              <i class="bi bi-trash"></i>
             </button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Bought Items Tab -->
-    <div v-if="activeTab === 'bought'">
-      <div v-if="boughtItems.length === 0" class="text-center text-muted py-5">
-        <i class="bi bi-receipt text-light" style="font-size: 3rem;"></i>
-        <p class="mt-3">{{ $t('shopping.noItems') }}</p>
-      </div>
-      <div v-else class="list-group shadow-sm border-0">
-        <div v-for="item in boughtItems" :key="item.id" class="list-group-item d-flex justify-content-between align-items-center bg-light border-white py-3">
-          <div>
-            <h6 class="mb-0 text-muted text-decoration-line-through">{{ item.name }}</h6>
-            <small class="text-muted">
-              Txn: {{ item.transaction?.description || 'Unknown' }}
-            </small>
-          </div>
-          <div class="d-flex align-items-center gap-3">
-            <div class="input-group input-group-sm" style="width: 130px;">
-              <span class="input-group-text border-0 bg-white">Rp</span>
-              <input type="number" class="form-control border-0 bg-white fw-bold" v-model="item.price" @change="updatePrice(item)" title="Updating this updates the transaction automatically" />
-            </div>
-            <button class="btn btn-sm btn-outline-danger border-0" @click.stop="confirmDelete(item)"><i class="bi bi-trash"></i></button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Add Item Modal -->
+    <!-- Create Plan Modal -->
     <div v-if="showAddModal" class="vue-modal-backdrop" @mousedown.self="showAddModal = false">
       <div class="vue-modal">
         <div class="modal-header border-0 pb-0">
-          <h5 class="modal-title fw-bold">{{ $t('shopping.addItem') }}</h5>
+          <h5 class="modal-title fw-bold">{{ $t('shopping.createPlan') || 'Create Shopping Plan' }}</h5>
           <button type="button" class="btn-close" @click="showAddModal = false"></button>
         </div>
-        <form @submit.prevent="saveItem">
+        <form @submit.prevent="savePlan">
           <div class="modal-body">
             <div class="mb-3">
-              <label class="form-label">{{ $t('common.name') }}</label>
-              <input v-model="itemForm.name" class="form-control" :placeholder="$t('shopping.itemPlaceholder')" required autofocus />
+              <label class="form-label">{{ $t('shopping.location') || 'Shopping Location' }}</label>
+              <input v-model="planForm.location" class="form-control" placeholder="e.g. Supermarket, Mall..." required autofocus />
             </div>
             <div class="mb-3">
-              <label class="form-label">{{ $t('shopping.price') }} (Opsional)</label>
-              <div class="input-group">
-                <span class="input-group-text">Rp</span>
-                <input type="number" v-model="itemForm.price" class="form-control" />
-              </div>
+              <label class="form-label">{{ $t('common.member') }} (Created By)</label>
+              <select v-model="planForm.created_by" class="form-select" required>
+                <option value="" disabled>- {{ $t('transactions.selectMember') }} -</option>
+                <option v-for="m in members" :key="m.id" :value="m.id">{{ m.name }}</option>
+              </select>
             </div>
           </div>
           <div class="modal-footer border-0 pt-0">
             <button type="button" class="btn btn-secondary" @click="showAddModal = false">{{ $t('common.cancel') }}</button>
-            <button type="submit" class="btn btn-primary-gradient">{{ $t('common.save') }}</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- Checkout Modal -->
-    <div v-if="showCheckoutModal" class="vue-modal-backdrop" @mousedown.self="showCheckoutModal = false">
-      <div class="vue-modal">
-        <div class="modal-header border-0 pb-0">
-          <h5 class="modal-title fw-bold">{{ $t('shopping.checkoutConfirm') }}</h5>
-          <button type="button" class="btn-close" @click="showCheckoutModal = false"></button>
-        </div>
-        <form @submit.prevent="processCheckout">
-          <div class="modal-body">
-            <div class="alert alert-success d-flex align-items-center py-2 mb-4 border-0">
-              <i class="bi bi-info-circle-fill me-2 fs-5"></i>
-              <div>
-                Memproses <strong>{{ selectedItems.length }}</strong> barang dengan total <strong>Rp {{ selectedTotal.toLocaleString('id-ID') }}</strong>.
-              </div>
-            </div>
-            
-            <div class="mb-3">
-              <label class="form-label">{{ $t('common.description') }}</label>
-              <input v-model="checkoutForm.description" class="form-control" required />
-            </div>
-            <div class="mb-3">
-              <label class="form-label">{{ $t('common.date') }}</label>
-              <input type="date" v-model="checkoutForm.transaction_date" class="form-control" required />
-            </div>
-            <div class="row g-2 mb-3">
-                <div class="col-6">
-                  <label class="form-label">{{ $t('common.account') }}</label>
-                  <select v-model="checkoutForm.account_id" class="form-select" required>
-                    <option value="" disabled>- {{ $t('transactions.selectAccount') }} -</option>
-                    <option v-for="a in accounts" :key="a.id" :value="a.id">{{ a.name }} (Rp {{ parseFloat(a.balance).toLocaleString('id-ID') }})</option>
-                  </select>
-                </div>
-                <div class="col-6">
-                  <label class="form-label">{{ $t('common.category') }}</label>
-                  <select v-model="checkoutForm.category_id" class="form-select" required>
-                    <option value="" disabled>- {{ $t('transactions.selectCategory') }} -</option>
-                    <option v-for="c in categories" :key="c.id" :value="c.id">{{ c.name }}</option>
-                  </select>
-                </div>
-            </div>
-          </div>
-          <div class="modal-footer border-0 pt-0">
-            <button type="button" class="btn btn-secondary" @click="showCheckoutModal = false">{{ $t('common.cancel') }}</button>
-            <button type="submit" class="btn btn-success" :disabled="isCheckingOut">
-              <span v-if="isCheckingOut" class="spinner-border spinner-border-sm me-2"></span>
-              {{ $t('shopping.checkout') }}
+            <button type="submit" class="btn btn-primary-gradient" :disabled="saving">
+              <span v-if="saving" class="spinner-border spinner-border-sm me-2"></span>
+              {{ $t('common.save') }}
             </button>
           </div>
         </form>
@@ -180,95 +97,77 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
-import { shoppingService } from '../services/shoppingService';
-import { accountService } from '../services/accountService';
-import { categoryService } from '../services/categoryService';
+import { useRouter } from 'vue-router';
+import { shoppingPlanService } from '../services/shoppingPlanService';
+import { memberService } from '../services/memberService';
 import { useAuthStore } from '../stores/auth';
 import { useToastStore } from '../stores/toast';
 import { useLocaleStore } from '../stores/locale';
 import { supabase } from '../lib/supabase';
 
-const items = ref([]);
-const accounts = ref([]);
-const categories = ref([]);
-const activeTab = ref('needed');
-const selectedItems = ref([]);
+const plans = ref([]);
+const members = ref([]);
+const activeTab = ref('progress');
+const saving = ref(false);
 
 const showAddModal = ref(false);
-const itemForm = ref({ name: '', price: '' });
-
-const showCheckoutModal = ref(false);
-const checkoutForm = ref({ description: 'Groceries', transaction_date: new Date().toISOString().split('T')[0], account_id: '', category_id: '' });
-const isCheckingOut = ref(false);
+const planForm = ref({ location: '', created_by: '' });
 
 const authStore = useAuthStore();
 const toast = useToastStore();
 const localeStore = useLocaleStore();
+const router = useRouter();
 
-const neededItems = computed(() => items.value.filter(i => i.status === 'needed'));
-const boughtItems = computed(() => items.value.filter(i => i.status === 'bought'));
-
-const selectedTotal = computed(() => {
-  return items.value
-    .filter(i => selectedItems.value.includes(i.id))
-    .reduce((sum, item) => sum + (parseFloat(item.price) || 0), 0);
-});
+const progressPlans = computed(() => plans.value.filter(p => p.status === 'progress'));
+const donePlans = computed(() => plans.value.filter(p => p.status === 'done'));
+const filteredPlans = computed(() => activeTab.value === 'progress' ? progressPlans.value : donePlans.value);
 
 let subscription;
 
 async function fetchData() {
   try {
-    const { data } = await shoppingService.list();
-    items.value = data.data;
+    const { data } = await shoppingPlanService.list();
+    plans.value = data.data;
   } catch (e) {
-    toast.error('Failed to load shopping list');
+    toast.error('Failed to load shopping plans');
   }
 }
 
-async function fetchDropdowns() {
-  const [accRes, catRes] = await Promise.all([
-    accountService.list({ is_active: true }),
-    categoryService.list({ type: 'expense' })
-  ]);
-  accounts.value = accRes.data.data;
-  categories.value = catRes.data.data;
+async function fetchMembers() {
+  try {
+    const { data } = await memberService.list();
+    members.value = data.data;
+  } catch(e) {}
 }
 
-function openAdd() {
-  itemForm.value = { name: '', price: '' };
+function openAddPlan() {
+  planForm.value = { location: '', created_by: '' };
   showAddModal.value = true;
 }
 
-async function saveItem() {
+async function savePlan() {
+  saving.value = true;
   try {
-    await shoppingService.create({
-      name: itemForm.value.name,
-      price: itemForm.value.price || 0,
-      added_by: authStore.user.id
+    await shoppingPlanService.create({
+      location: planForm.value.location,
+      created_by: planForm.value.created_by,
+      status: 'progress'
     });
     showAddModal.value = false;
     toast.success(localeStore.t('common.success'));
     fetchData(); 
   } catch (e) {
     toast.error(e.response?.data?.message || e.message);
+  } finally {
+    saving.value = false;
   }
 }
 
-async function updatePrice(item) {
-  try {
-    await shoppingService.update(item.id, { price: item.price });
-    toast.success('Harga diperbarui');
-  } catch (e) {
-    toast.error('Gagal memperbarui harga');
-    fetchData(); // revert
-  }
-}
-
-async function confirmDelete(item) {
+async function confirmDeletePlan(plan) {
   if (confirm(localeStore.t('common.confirmDelete'))) {
     try {
-      await shoppingService.delete(item.id);
-      selectedItems.value = selectedItems.value.filter(id => id !== item.id);
+      await shoppingPlanService.delete(plan.id);
+      toast.success(localeStore.t('common.success'));
       fetchData();
     } catch (e) {
       toast.error('Gagal menghapus');
@@ -276,40 +175,14 @@ async function confirmDelete(item) {
   }
 }
 
-function openCheckoutModal() {
-  checkoutForm.value.description = `Belanja: ${items.value.filter(i => selectedItems.value.includes(i.id)).map(i => i.name).join(', ')}`;
-  if (checkoutForm.value.description.length > 255) {
-    checkoutForm.value.description = checkoutForm.value.description.substring(0, 252) + '...';
-  }
-  showCheckoutModal.value = true;
-}
-
-async function processCheckout() {
-  isCheckingOut.value = true;
-  try {
-    const payload = {
-      ...checkoutForm.value,
-      amount: selectedTotal.value,
-      member_id: null 
-    };
-    
-    await shoppingService.checkout(selectedItems.value, payload);
-    toast.success(localeStore.t('shopping.checkoutSuccess'));
-    showCheckoutModal.value = false;
-    selectedItems.value = [];
-    activeTab.value = 'bought';
-    fetchData();
-  } catch (e) {
-    toast.error('Checkout gagal');
-  } finally {
-    isCheckingOut.value = false;
-  }
+function goToDetail(planId) {
+  router.push(`/shopping/${planId}`);
 }
 
 function setupRealtime() {
   subscription = supabase
-    .channel('public:shopping_items')
-    .on('postgres_changes', { event: '*', schema: 'public', table: 'shopping_items', filter: `family_id=eq.${authStore.familyId}` }, () => {
+    .channel('public:shopping_plans')
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'shopping_plans', filter: `family_id=eq.${authStore.familyId}` }, () => {
       fetchData();
     })
     .subscribe();
@@ -317,7 +190,7 @@ function setupRealtime() {
 
 onMounted(() => {
   fetchData();
-  fetchDropdowns();
+  fetchMembers();
   setupRealtime();
 });
 
@@ -329,10 +202,12 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-.shopping-page .list-group-item {
-    transition: all 0.2s;
+.plan-card {
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
-.shopping-page .list-group-item:hover {
-    background-color: #f8f9fa !important;
+.plan-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
 }
 </style>
