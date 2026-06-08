@@ -1,130 +1,191 @@
-# Indonesian Language Mode Integration
+# Family Finance Architecture & Integration Plans
 
-This plan outlines the strategy to add full multi-language (English and Indonesian) support to the Family Finance Vue 3 frontend application, allowing seamless translation of all views, charts, tours, and notifications.
-
-## User Review Required
-
-> [!IMPORTANT]
-> **Custom Lightweight Store vs. `vue-i18n` library**:
-> We propose using a lightweight custom reactive store (`useLocaleStore`) for translation.
-> - **Why?** It avoids adding external dependency overhead to Vite, prevents potential package compatibility issues with Vue 3.5+, and allows us to easily translate complex dynamic structures like standard arrays (e.g., the interactive guide tours and backend validation messages).
-> - **How it works:** We will define translations in `en.json` and `id.json`, create a simple store to track state, and register a global `$t` function in `main.js` so templates can use it natively.
-> 
-> If you prefer standard `vue-i18n`, please let us know. Otherwise, we will proceed with this robust custom solution.
-
-> [!NOTE]
-> **Scope of Translation**:
-> All page text, labels, placeholders, buttons, toasts, and the step-by-step onboarding tours will be fully translated. Backend database schema data (e.g., actual category names like "Food" created by users in the database) will remain as entered, but predefined UI labels and templates will be fully localized.
-
-## Open Questions
-
-> [!IMPORTANT]
-> 1. **Floating Language Toggle on Auth Pages**: Do you agree with adding a premium floating toggle (e.g. `EN | ID`) on the top right of the Login/Register screens?
-> 2. **Chart Labels**: Chart labels (like dataset names "Income" vs. "Expense") will be dynamically translated based on the active language. Is that alignment correct?
+This document combines the implementation plans for the major architectural milestones of the Family Finance application: the Serverless Migration (Laravel to Supabase) and the Indonesian Language Mode Integration.
 
 ---
 
-## Proposed Changes
+# Part 1 — Family Finance Architecture Migration: Laravel to Supabase (Completed)
 
-### 1. Translation System Core (Dependencies & Stores)
+This section outlines the complete strategy that was executed to migrate the Family Finance Management System from a Laravel + Vue 3 architecture to a Serverless Supabase + Vue 3 (GitHub Pages) architecture.
 
-We will build a simple, clean localization layer utilizing Pinia and standard Vue reactivity.
+## Phase 1 — Project Discovery Report
 
-#### [NEW] [en.json](file:///c:/Projects/final-finance-family/frontend/src/locales/en.json)
-- Define all English strings categorized by context (auth, nav, dashboard, categories, budgets, goals, recurring, reports, settings, members, tours, common).
+### 1. Current System Architecture
+- **Frontend**: Vue 3 SPA using Composition API, Vite, Pinia, Vue Router, and Bootstrap 5. Hosted on GitHub Pages (`yjsfinance.my.id`). Client-side features include PDF/CSV generation, interactive charts (Chart.js), and a guided tour (driver.js).
+- **Backend**: Laravel 11/12 REST API providing business logic, validation, and Sanctum token-based authentication. Hosted on Render via Docker.
+- **Database**: Currently using PostgreSQL hosted on Supabase (`db.bgauaxdtkiubfklllepf.supabase.co`), but all business logic resides in the Laravel layer. The schema relies on `user_id` to separate data per user/family.
 
-#### [NEW] [id.json](file:///c:/Projects/final-finance-family/frontend/src/locales/id.json)
-- Define corresponding Indonesian translations for all keys.
+### 2. Feature Inventory
+- Authentication (Email/Password, Sanctum tokens)
+- Member Management (Role-based: Father, Mother, Child)
+- Account/Wallet Management (Bank, Cash, E-Wallet)
+- Category Management (Income, Expense)
+- Transaction Management (Income, Expense, Transfers)
+- Budgeting with interactive Guardrail warnings
+- Saving Goals with "Linked Pockets" (syncing to physical accounts)
+- Recurring Transactions (Weekly, Monthly, Yearly)
+- Dashboard Analytics (Trends, Income vs Expense, Net Worth)
+- Activity Logs / Audit Trail (Tracking entity Create, Update, Delete)
+- Client-side Report Generation (CSV, PDF)
 
-#### [NEW] [locale.js](file:///c:/Projects/final-finance-family/frontend/src/stores/locale.js)
-- Pinia store that:
-  - Holds `currentLocale` state (persisted via `localStorage`, default `'en'`).
-  - Implements a reactive `t(key, params)` helper mapping dot-notation strings to locale values.
-  - Implements `setLocale(lang)` to change language dynamically.
+### 3. Business Rules Inventory
+- **Family Ownership**: Currently driven by `user_id` as the primary account. The migration requires explicit `family_id` ownership across all tables (users -> families -> members -> transactions).
+- **Account Balance Integrity**: Balances must update atomically when a transaction is created, updated, or deleted. Transfers must update two accounts simultaneously.
+- **Budget Guardrail**: Transactions exceeding a category's budget return a structured JSON response (not a hard database error) so the frontend can prompt the user for confirmation.
+- **Goal Pocket Synchronization**: Saving goals linked to an `account_id` must automatically sync their `current_amount` when the account balance changes.
+- **Activity Logging**: Every CUD operation on core entities must log the action, entity, user, and `before_data`/`after_data` in JSONB format.
+- **Realtime**: The frontend must react to database changes instantly via Supabase Realtime (no manual polling).
+- **Recurring Transactions**: Must automatically generate new transactions when due, without duplicating, and advance the `next_due_date`.
 
-#### [MODIFY] [main.js](file:///c:/Projects/final-finance-family/frontend/src/main.js)
-- Register `localeStore.t` as a global helper (`app.config.globalProperties.$t`) so templates can use `$t('key')` directly without manual import.
+### 4. Dependencies Inventory
+- **Frontend**: `vue`, `vue-router`, `pinia`, `axios`, `@tanstack/vue-query`, `bootstrap`, `bootstrap-icons`, `chart.js`, `jspdf`, `jspdf-autotable`, `driver.js`, `idb-keyval`.
+- **Backend (to be retired)**: Laravel framework, Sanctum.
+- **New Backend (Supabase)**: `@supabase/supabase-js`, `pg_cron` (Postgres extension).
 
----
+### 5. Risks
+- **Data Integrity during Transition**: Moving balance calculations from PHP to Postgres PL/pgSQL triggers carries the risk of silent bugs if edge cases (like updating a transaction's amount *and* account simultaneously) are not handled correctly.
+- **Budget Guardrail via SQL**: Standard Postgres functions throw exceptions. We need a way to validate budgets and return structured JSON via an RPC call instead of standard `INSERT`, or handle the guardrail logic directly in the Edge/RPC layer before insertion.
+- **GitHub Pages Routing**: Replacing the current 404 fallback with Vue Hash Router (recommended) will change URLs (e.g., `/#/dashboard`).
+- **Data Migration**: Existing data uses `user_id`. We must seamlessly migrate this to the new `family_id` structure without breaking relations.
 
-### 2. UI Layout & Switcher Integration
-
-We will provide seamless language selection toggles across the application.
-
-#### [MODIFY] [DashboardLayout.vue](file:///c:/Projects/final-finance-family/frontend/src/layouts/DashboardLayout.vue)
-- Add a dropdown or selector button in the top navbar (next to the profile menu) showing the current active flag/language.
-- Localize sidebar navigation items.
-
-#### [MODIFY] [LoginPage.vue](file:///c:/Projects/final-finance-family/frontend/src/pages/LoginPage.vue)
-- Add floating pill switcher (`EN | ID`) at the top right of the viewport.
-- Localize card text, validation messages, inputs, and placeholders.
-
-#### [MODIFY] [RegisterPage.vue](file:///c:/Projects/final-finance-family/frontend/src/pages/RegisterPage.vue)
-- Add floating pill switcher at the top right of the viewport.
-- Localize fields, placeholders, error toasts, and signup options.
-
-#### [MODIFY] [SettingsPage.vue](file:///c:/Projects/final-finance-family/frontend/src/pages/SettingsPage.vue)
-- Add a "Language Preference" section in the settings panel with a select dropdown.
-- Localize the profile detail list and password update form.
-
----
-
-### 3. Pages & Features Localization
-
-Each page's text templates and options will be modified to use the `$t()` global helper.
-
-#### [MODIFY] [DashboardPage.vue](file:///c:/Projects/final-finance-family/frontend/src/pages/DashboardPage.vue)
-- Localize page titles, cards, labels, and helper texts.
-- Dynamically translate month names, chart labels (Income, Expense, Net Worth), and AI insights headings.
-
-#### [MODIFY] [TransactionsPage.vue](file:///c:/Projects/final-finance-family/frontend/src/pages/TransactionsPage.vue)
-- Localize transaction filters, action buttons, table columns, edit modals, type tabs, and placeholder labels.
-
-#### [MODIFY] [AccountsPage.vue](file:///c:/Projects/final-finance-family/frontend/src/pages/AccountsPage.vue)
-- Localize card details, table metrics, and wallet create/edit forms.
-
-#### [MODIFY] [BudgetsPage.vue](file:///c:/Projects/final-finance-family/frontend/src/pages/BudgetsPage.vue)
-- Localize guardrails, metrics, warnings, and settings forms.
-
-#### [MODIFY] [CategoriesPage.vue](file:///c:/Projects/final-finance-family/frontend/src/pages/CategoriesPage.vue)
-- Localize parent category selectors, type tags, and CRUD dialogs.
-
-#### [MODIFY] [GoalsPage.vue](file:///c:/Projects/final-finance-family/frontend/src/pages/GoalsPage.vue)
-- Localize goal status values (`active`, `completed`, `cancelled`, `inactive`) and edit panel.
-
-#### [MODIFY] [RecurringPage.vue](file:///c:/Projects/final-finance-family/frontend/src/pages/RecurringPage.vue)
-- Localize intervals, next due dates, and alerts.
-
-#### [MODIFY] [MembersPage.vue](file:///c:/Projects/final-finance-family/frontend/src/pages/MembersPage.vue)
-- Localize roles (Father, Mother, Child), active toggles, and invites.
-
-#### [MODIFY] [ReportsPage.vue](file:///c:/Projects/final-finance-family/frontend/src/pages/ReportsPage.vue)
-- Localize PDF/CSV download layouts, parameters, summary statistics, and headers.
-
-#### [MODIFY] [GoalNotificationModal.vue](file:///c:/Projects/final-finance-family/frontend/src/components/GoalNotificationModal.vue)
-- Localize popups, reminder triggers, and action headers.
+### 6. Migration Complexity Assessment
+**HIGH**. This is a complete architectural paradigm shift. We are moving from imperative application-layer logic to declarative database-layer logic (RLS, Triggers, RPC).
 
 ---
 
-### 4. Interactive Tours & Utilities
+## Phase 2 — Migration Task Breakdown
 
-We will translate user guide steps and standard components.
+| Task | Objective | Estimated Complexity | Dependencies |
+|------|-----------|----------------------|--------------|
+| **01: Supabase Setup & Schema** | Design new Postgres schema with `family_id`, UUIDs, and foreign keys. | Medium | None |
+| **02: Auth & Profiles** | Setup Supabase Auth, trigger for profile/family creation on signup. | Low | Task 01 |
+| **03: Row Level Security** | Write strict RLS policies isolating data by `family_id`. | High | Task 01, 02 |
+| **04: Balance & Transfer Engine** | PL/pgSQL triggers for `accounts.balance` updates on `transactions` CUD. | High | Task 01 |
+| **05: Goal Sync Engine** | PL/pgSQL triggers to sync `saving_goals` with linked `accounts`. | Medium | Task 04 |
+| **06: Activity Logging Engine** | PL/pgSQL trigger to capture `before`/`after` JSONB to `activity_logs`. | Medium | Task 01 |
+| **07: Budget Guardrail RPC** | Create `check_budget_guardrail()` RPC returning JSON for frontend checks. | Medium | Task 01 |
+| **08: Dashboard Analytics RPC** | Move complex aggregations (trends, pie charts) to SQL Views / RPC. | Medium | Task 01 |
+| **09: Recurring Transactions** | Configure `pg_cron` or Edge Function to process recurring txns hourly. | High | Task 04 |
+| **10: Frontend Auth & Supabase JS** | Replace Axios/Sanctum with `@supabase/supabase-js`. Update Pinia auth. | Medium | Task 02 |
+| **11: Frontend Stores & Services** | Refactor all API calls to use Supabase client. | High | Task 10, Schema |
+| **12: Frontend Realtime** | Subscribe to Supabase Realtime in Pinia stores to auto-update UI. | Medium | Task 11 |
+| **13: GitHub Pages Hash Router** | Switch Vue Router to `createWebHashHistory()` for static hosting stability. | Low | None |
+| **14: Data Migration Script** | SQL script to map old `user_id` data to new `family_id` structure. | High | Schema |
 
-#### [MODIFY] [useTour.js](file:///c:/Projects/final-finance-family/frontend/src/composables/useTour.js)
-- Update standard driver.js navigation controls (`Next`, `Back`, `Done`) based on the active locale.
-- Translate popover titles and descriptions on-the-fly using the store's translator.
+---
 
-#### [MODIFY] [tours/*.js](file:///c:/Projects/final-finance-family/frontend/src/tours/dashboardTour.js)
-- Update all 7 tour step files (accounts, budgets, dashboard, goals, recurring, reports, transactions) to define translation key paths rather than hardcoded English strings.
+## Phase 3 — Implementation Plan (Proposed Changes)
+
+### [Task 01 & 02] Database Schema & Auth Setup
+
+#### [NEW] `supabase/migrations/000001_core_schema.sql`
+- Create tables: `families`, `profiles`, `members`, `accounts`, `categories`, `transactions`, `budgets`, `saving_goals`, `recurring_transactions`, `activity_logs`, `notifications`.
+- Use UUIDs for `families` and `profiles`. Use `auth.users` for authentication.
+- Add `family_id` to every table.
+- Create trigger: `on_auth_user_created` to automatically create a `families` and `profiles` row when a user signs up.
+
+### [Task 03] Row Level Security (RLS)
+
+#### [NEW] `supabase/migrations/000002_rls_policies.sql`
+- Enable RLS on all tables.
+- Create policies using `(select family_id from profiles where id = auth.uid())` to ensure users only see their family's data.
+
+### [Task 04 & 05 & 06] PostgreSQL Triggers (The Core Engine)
+
+#### [NEW] `supabase/migrations/000003_business_logic_triggers.sql`
+- **`update_account_balance()`**: Trigger on `transactions` (AFTER INSERT, UPDATE, DELETE). Atomically updates `accounts.balance`. Handles transfer logic internally.
+- **`sync_goal_pocket()`**: Trigger on `accounts` (AFTER UPDATE). Updates `saving_goals.current_amount` if linked.
+- **`log_activity()`**: Trigger on all main tables (AFTER INSERT, UPDATE, DELETE) to write to `activity_logs`.
+
+### [Task 07 & 08] RPC Functions & Views
+
+#### [NEW] `supabase/migrations/000004_rpc_and_views.sql`
+- **`check_budget_guardrail(p_category_id, p_amount, p_date)`**: Returns `{ allowed, exceeded, remaining_budget, projected_balance }`.
+- **`get_dashboard_summary(p_family_id, p_month, p_year)`**: Returns aggregated data for the charts to replace the old Laravel DashboardService.
+
+### [Task 09] Recurring Transactions (Cron)
+
+#### [NEW] `supabase/migrations/000005_cron_jobs.sql`
+- **`process_recurring_transactions()`**: Function to find due transactions, insert them, and update `next_due_date`.
+- Enable `pg_cron` to run this hourly.
+
+### [Task 10-12] Frontend Refactor
+
+#### [MODIFY] `frontend/package.json`
+- Install `@supabase/supabase-js`. Remove `axios`.
+
+#### [NEW] `frontend/src/lib/supabase.js`
+- Initialize Supabase client.
+
+#### [MODIFY] `frontend/src/stores/*` & `frontend/src/services/*`
+- Rip out axios. Replace with `supabase.from().select()`.
+- Implement `supabase.channel('custom-all-channel').on('postgres_changes', ...).subscribe()` in Pinia stores to achieve realtime reactivity.
+
+#### [MODIFY] `frontend/src/router/index.js`
+- Switch from HTML5 history to Hash history for GitHub pages.
 
 ---
 
 ## Verification Plan
 
+### Automated / Database Verification
+- For Tasks 1-9: Raw SQL tests simulating user signup, transaction insertion, and verifying that triggers correctly update account balances, sync goals, and create activity logs.
+
 ### Manual Verification
-1. Run the server locally using `npm run dev`.
-2. Navigate to `/login` and switch between English and Indonesian. Verify the entire page translates immediately.
-3. Authenticate and verify that the language selector works from the top navbar.
-4. Navigate through each page (Dashboard, Transactions, Budgets, Settings, etc.) and check that all text content, charts, modals, and tables switch correctly.
-5. Replay the guide tour on the Dashboard and confirm that the tour cards and navigation buttons are fully in Indonesian when Indonesian is selected.
-6. Verify settings preference preserves language choice across page reloads.
+- Verify that Login/Signup works via Supabase Auth.
+- Verify that adding an expense updates the Dashboard instantly (Realtime).
+- Verify the Budget Guardrail modal appears exactly as it did before.
+
+## Phase 4 — Post-Migration Polish (Completed)
+
+After the core migration, several UI and analytical enhancements were completed:
+1. **Dynamic Golden Ratio Colors**: All Chart.js pie and doughnut charts now mathematically generate distinct colors based on the golden ratio, preventing color collisions.
+2. **Historical Net Worth**: A dynamic rolling algorithm computes the last 6 months of historical net worth by calculating backward from the current total balance using the monthly net income.
+3. **Synchronized Budget Alerts**: The global notification bell and UI progress bars strictly trigger at `80%` capacity, syncing perfectly.
+4. **Expense-Only Recurring Page**: Restricted the Recurring transactions exclusively to expenses, hiding income categories and hardcoding types to avoid data entry errors.
+5. **Data Hydration Bugfixes**: Fixed missing relations (`category_name`, `account_name`) in the Recurring and Goals dashboards by overriding the base CRUD `list()` methods with enriched Supabase join queries.
+6. **PG Cron Descriptions**: Pushed Migration 000009 to fix a concatenation bug that caused automated transactions to have `null` descriptions.
+
+> [!NOTE]
+> **MIGRATION COMPLETE**
+> The application has been fully migrated to Supabase Serverless Architecture. All migration tasks are completed.
+
+---
+
+# Part 2 — Indonesian Language Mode Integration (Completed)
+
+This plan outlines the strategy that was executed to add full multi-language (English and Indonesian) support to the Family Finance Vue 3 frontend application, allowing seamless translation of all views, charts, tours, and notifications.
+
+## Implementation Details
+
+### 1. Translation System Core (Dependencies & Stores)
+A simple, clean localization layer was built utilizing Pinia and standard Vue reactivity.
+
+- **[NEW] [en.json](file:///c:/Projects/final-finance-family/frontend/src/locales/en.json)**: Contains English strings categorized by context (auth, nav, dashboard, categories, budgets, goals, recurring, reports, settings, members, tours, common).
+- **[NEW] [id.json](file:///c:/Projects/final-finance-family/frontend/src/locales/id.json)**: Contains corresponding Indonesian translations.
+- **[NEW] [locale.js](file:///c:/Projects/final-finance-family/frontend/src/stores/locale.js)**: Persists active language selection in `localStorage`, updates HTML accessibility attributes, and handles key resolution with parameter interpolation.
+- **[MODIFY] [main.js](file:///c:/Projects/final-finance-family/frontend/src/main.js)**: Configures and registers `$t` as a global helper for the application.
+
+### 2. UI Layout & Switcher Integration
+Language toggles have been integrated seamlessly across the front-end layout:
+- **[MODIFY] [DashboardLayout.vue](file:///c:/Projects/final-finance-family/frontend/src/layouts/DashboardLayout.vue)**: Integrates language switcher next to the profile menu and dynamically updates sidebar elements.
+- **[MODIFY] [LoginPage.vue](file:///c:/Projects/final-finance-family/frontend/src/pages/LoginPage.vue)** & **[RegisterPage.vue](file:///c:/Projects/final-finance-family/frontend/src/pages/RegisterPage.vue)**: Feature a beautiful floating selector (`EN | ID`).
+- **[MODIFY] [SettingsPage.vue](file:///c:/Projects/final-finance-family/frontend/src/pages/SettingsPage.vue)**: Implements language settings.
+
+### 3. Pages & Features Localization
+All main templates have been updated to call the `$t()` global helper:
+- **[MODIFY] [DashboardPage.vue](file:///c:/Projects/final-finance-family/frontend/src/pages/DashboardPage.vue)**: Watches language changes and refreshes Month names and Chart labels dynamically.
+- **[MODIFY] [TransactionsPage.vue](file:///c:/Projects/final-finance-family/frontend/src/pages/TransactionsPage.vue)**, **[AccountsPage.vue](file:///c:/Projects/final-finance-family/frontend/src/pages/AccountsPage.vue)**, **[BudgetsPage.vue](file:///c:/Projects/final-finance-family/frontend/src/pages/BudgetsPage.vue)**, **[CategoriesPage.vue](file:///c:/Projects/final-finance-family/frontend/src/pages/CategoriesPage.vue)**, **[GoalsPage.vue](file:///c:/Projects/final-finance-family/frontend/src/pages/GoalsPage.vue)**, **[RecurringPage.vue](file:///c:/Projects/final-finance-family/frontend/src/pages/RecurringPage.vue)**, **[MembersPage.vue](file:///c:/Projects/final-finance-family/frontend/src/pages/MembersPage.vue)**, **[ReportsPage.vue](file:///c:/Projects/final-finance-family/frontend/src/pages/ReportsPage.vue)**.
+- **[MODIFY] [GoalNotificationModal.vue](file:///c:/Projects/final-finance-family/frontend/src/components/GoalNotificationModal.vue)**.
+
+### 4. Interactive Tours & Utilities
+- **[MODIFY] [useTour.js](file:///c:/Projects/final-finance-family/frontend/src/composables/useTour.js)**: Maps the button labels (`Next`, `Back`, `Done`) and dynamically fetches localized titles and descriptions based on active language.
+- **[MODIFY] [tours/*.js](file:///c:/Projects/final-finance-family/frontend/src/tours/)**: Converted all hardcoded English string elements to key strings matching JSON schema paths.
+
+## Verification Plan
+
+### Manual Verification
+1. Navigate to `/login` and switch languages to verify dynamic translation.
+2. Authenticate and select languages via the top navbar dropdown menu to see layout translations.
+3. Test settings language persistence.
+4. Launch interactive tours to verify the localized step details.
