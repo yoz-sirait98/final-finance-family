@@ -37,10 +37,12 @@ Repositori ini menggunakan struktur **monorepo** yang berisi aplikasi frontend d
 
 ## Roadmap Deployment
 
-Aplikasi ini menggunakan arsitektur _BaaS (Backend-as-a-Service)_ berbasis Supabase.
+Aplikasi ini menggunakan arsitektur _BaaS (Backend-as-a-Service)_ berbasis Supabase. 
+
+**Panduan Lengkap:** 👉 **[Lihat Panduan Konfigurasi & Integrasi Supabase](docs/supabase-setup-guide.md)**
 
 1. Database dan Backend dapat langsung dideploy ke project Supabase menggunakan Supabase CLI (`npx supabase db push`).
-2. Frontend dapat dideploy ke layanan _static hosting_ manapun (seperti Vercel, Netlify, atau Cloudflare Pages) dengan konfigurasi environment `VITE_SUPABASE_URL` dan `VITE_SUPABASE_ANON_KEY`.
+2. Frontend dapat dideploy ke layanan _static hosting_ manapun (seperti Vercel, Netlify, atau Cloudflare Pages) dengan konfigurasi environment `VITE_SUPABASE_URL` dan `VITE_SUPABASE_PUBLISHABLE_KEY`.
 
 ## Tangkapan Layar (Screenshots)
 
