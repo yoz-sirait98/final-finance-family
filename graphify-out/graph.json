@@ -860,7 +860,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "locales_en",
-      "community": 7,
+      "community": 29,
       "norm_label": "en.json"
     },
     {
@@ -1170,7 +1170,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "locales_en_common_type",
-      "community": 10,
+      "community": 9,
       "norm_label": "type"
     },
     {
@@ -1180,7 +1180,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "locales_en_common_income",
-      "community": 13,
+      "community": 17,
       "norm_label": "income"
     },
     {
@@ -1190,7 +1190,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "locales_en_common_expense",
-      "community": 13,
+      "community": 17,
       "norm_label": "expense"
     },
     {
@@ -1200,7 +1200,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "locales_en_common_transfer",
-      "community": 13,
+      "community": 17,
       "norm_label": "transfer"
     },
     {
@@ -1430,7 +1430,7 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "locales_en_auth",
-      "community": 4,
+      "community": 35,
       "norm_label": "auth"
     },
     {
@@ -1440,7 +1440,7 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "locales_en_auth_login",
-      "community": 4,
+      "community": 35,
       "norm_label": "login"
     },
     {
@@ -1450,7 +1450,7 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "locales_en_login_title",
-      "community": 4,
+      "community": 35,
       "norm_label": "title"
     },
     {
@@ -1470,7 +1470,7 @@
       "source_location": "L64",
       "_origin": "ast",
       "id": "locales_en_login_email",
-      "community": 4,
+      "community": 35,
       "norm_label": "email"
     },
     {
@@ -1480,7 +1480,7 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "locales_en_login_emailplaceholder",
-      "community": 4,
+      "community": 35,
       "norm_label": "emailplaceholder"
     },
     {
@@ -1490,7 +1490,7 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "locales_en_login_password",
-      "community": 4,
+      "community": 35,
       "norm_label": "password"
     },
     {
@@ -1500,7 +1500,7 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "locales_en_login_passwordplaceholder",
-      "community": 4,
+      "community": 35,
       "norm_label": "passwordplaceholder"
     },
     {
@@ -1510,7 +1510,7 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "locales_en_login_signin",
-      "community": 4,
+      "community": 35,
       "norm_label": "signin"
     },
     {
@@ -1520,7 +1520,7 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "locales_en_login_signingin",
-      "community": 4,
+      "community": 35,
       "norm_label": "signingin"
     },
     {
@@ -1530,7 +1530,7 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "locales_en_login_newhere",
-      "community": 4,
+      "community": 35,
       "norm_label": "newhere"
     },
     {
@@ -1540,7 +1540,7 @@
       "source_location": "L71",
       "_origin": "ast",
       "id": "locales_en_login_createaccount",
-      "community": 4,
+      "community": 35,
       "norm_label": "createaccount"
     },
     {
@@ -1550,7 +1550,7 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "locales_en_login_failed",
-      "community": 4,
+      "community": 35,
       "norm_label": "failed"
     },
     {
@@ -1870,7 +1870,7 @@
       "source_location": "L108",
       "_origin": "ast",
       "id": "locales_en_dashboard_period",
-      "community": 76,
+      "community": 17,
       "norm_label": "period"
     },
     {
@@ -1890,7 +1890,7 @@
       "source_location": "L110",
       "_origin": "ast",
       "id": "locales_en_dashboard_insights",
-      "community": 76,
+      "community": 17,
       "norm_label": "insights"
     },
     {
@@ -2580,7 +2580,7 @@
       "source_location": "L164",
       "_origin": "ast",
       "id": "locales_en_transactions_validation",
-      "community": 27,
+      "community": 85,
       "norm_label": "validation"
     },
     {
@@ -2590,7 +2590,7 @@
       "source_location": "L165",
       "_origin": "ast",
       "id": "locales_en_validation_amount",
-      "community": 27,
+      "community": 85,
       "norm_label": "amount"
     },
     {
@@ -2600,7 +2600,7 @@
       "source_location": "L166",
       "_origin": "ast",
       "id": "locales_en_validation_category",
-      "community": 27,
+      "community": 85,
       "norm_label": "category"
     },
     {
@@ -2610,7 +2610,7 @@
       "source_location": "L167",
       "_origin": "ast",
       "id": "locales_en_validation_account",
-      "community": 27,
+      "community": 85,
       "norm_label": "account"
     },
     {
@@ -2620,7 +2620,7 @@
       "source_location": "L168",
       "_origin": "ast",
       "id": "locales_en_validation_member",
-      "community": 27,
+      "community": 85,
       "norm_label": "member"
     },
     {
@@ -2630,7 +2630,7 @@
       "source_location": "L169",
       "_origin": "ast",
       "id": "locales_en_validation_transfersame",
-      "community": 27,
+      "community": 85,
       "norm_label": "transfersame"
     },
     {
@@ -2640,7 +2640,7 @@
       "source_location": "L172",
       "_origin": "ast",
       "id": "locales_en_accounts",
-      "community": 13,
+      "community": 9,
       "norm_label": "accounts"
     },
     {
@@ -2650,7 +2650,7 @@
       "source_location": "L173",
       "_origin": "ast",
       "id": "locales_en_accounts_title",
-      "community": 13,
+      "community": 9,
       "norm_label": "title"
     },
     {
@@ -2660,7 +2660,7 @@
       "source_location": "L174",
       "_origin": "ast",
       "id": "locales_en_accounts_subtitle",
-      "community": 13,
+      "community": 9,
       "norm_label": "subtitle"
     },
     {
@@ -2670,7 +2670,7 @@
       "source_location": "L175",
       "_origin": "ast",
       "id": "locales_en_accounts_addaccount",
-      "community": 13,
+      "community": 9,
       "norm_label": "addaccount"
     },
     {
@@ -2680,7 +2680,7 @@
       "source_location": "L176",
       "_origin": "ast",
       "id": "locales_en_accounts_editaccount",
-      "community": 13,
+      "community": 9,
       "norm_label": "editaccount"
     },
     {
@@ -2690,7 +2690,7 @@
       "source_location": "L177",
       "_origin": "ast",
       "id": "locales_en_accounts_accountname",
-      "community": 13,
+      "community": 9,
       "norm_label": "accountname"
     },
     {
@@ -2700,7 +2700,7 @@
       "source_location": "L178",
       "_origin": "ast",
       "id": "locales_en_accounts_accountnameplaceholder",
-      "community": 13,
+      "community": 9,
       "norm_label": "accountnameplaceholder"
     },
     {
@@ -2710,7 +2710,7 @@
       "source_location": "L179",
       "_origin": "ast",
       "id": "locales_en_accounts_type",
-      "community": 10,
+      "community": 9,
       "norm_label": "type"
     },
     {
@@ -2720,7 +2720,7 @@
       "source_location": "L180",
       "_origin": "ast",
       "id": "locales_en_type_bank",
-      "community": 10,
+      "community": 9,
       "norm_label": "bank"
     },
     {
@@ -2730,7 +2730,7 @@
       "source_location": "L181",
       "_origin": "ast",
       "id": "locales_en_type_cash",
-      "community": 10,
+      "community": 9,
       "norm_label": "cash"
     },
     {
@@ -2740,7 +2740,7 @@
       "source_location": "L182",
       "_origin": "ast",
       "id": "locales_en_type_e_wallet",
-      "community": 10,
+      "community": 9,
       "norm_label": "e_wallet"
     },
     {
@@ -2750,7 +2750,7 @@
       "source_location": "L184",
       "_origin": "ast",
       "id": "locales_en_accounts_balance",
-      "community": 13,
+      "community": 17,
       "norm_label": "balance"
     },
     {
@@ -2760,7 +2760,7 @@
       "source_location": "L185",
       "_origin": "ast",
       "id": "locales_en_accounts_balanceplaceholder",
-      "community": 13,
+      "community": 9,
       "norm_label": "balanceplaceholder"
     },
     {
@@ -2770,7 +2770,7 @@
       "source_location": "L186",
       "_origin": "ast",
       "id": "locales_en_accounts_walletdetails",
-      "community": 13,
+      "community": 9,
       "norm_label": "walletdetails"
     },
     {
@@ -2940,7 +2940,7 @@
       "source_location": "L205",
       "_origin": "ast",
       "id": "locales_en_budgets_validation",
-      "community": 27,
+      "community": 85,
       "norm_label": "validation"
     },
     {
@@ -2950,7 +2950,7 @@
       "source_location": "L207",
       "_origin": "ast",
       "id": "locales_en_validation_limit",
-      "community": 27,
+      "community": 85,
       "norm_label": "limit"
     },
     {
@@ -2960,7 +2960,7 @@
       "source_location": "L208",
       "_origin": "ast",
       "id": "locales_en_validation_threshold",
-      "community": 27,
+      "community": 85,
       "norm_label": "threshold"
     },
     {
@@ -2970,7 +2970,7 @@
       "source_location": "L211",
       "_origin": "ast",
       "id": "locales_en_categories",
-      "community": 85,
+      "community": 27,
       "norm_label": "categories"
     },
     {
@@ -2980,7 +2980,7 @@
       "source_location": "L212",
       "_origin": "ast",
       "id": "locales_en_categories_title",
-      "community": 85,
+      "community": 27,
       "norm_label": "title"
     },
     {
@@ -2990,7 +2990,7 @@
       "source_location": "L213",
       "_origin": "ast",
       "id": "locales_en_categories_subtitle",
-      "community": 85,
+      "community": 27,
       "norm_label": "subtitle"
     },
     {
@@ -3000,7 +3000,7 @@
       "source_location": "L214",
       "_origin": "ast",
       "id": "locales_en_categories_addcategory",
-      "community": 85,
+      "community": 27,
       "norm_label": "addcategory"
     },
     {
@@ -3010,7 +3010,7 @@
       "source_location": "L215",
       "_origin": "ast",
       "id": "locales_en_categories_editcategory",
-      "community": 85,
+      "community": 27,
       "norm_label": "editcategory"
     },
     {
@@ -3020,7 +3020,7 @@
       "source_location": "L216",
       "_origin": "ast",
       "id": "locales_en_categories_icon",
-      "community": 85,
+      "community": 27,
       "norm_label": "icon"
     },
     {
@@ -3030,7 +3030,7 @@
       "source_location": "L217",
       "_origin": "ast",
       "id": "locales_en_categories_color",
-      "community": 85,
+      "community": 27,
       "norm_label": "color"
     },
     {
@@ -3050,7 +3050,7 @@
       "source_location": "L223",
       "_origin": "ast",
       "id": "locales_en_goals",
-      "community": 7,
+      "community": 10,
       "norm_label": "goals"
     },
     {
@@ -3060,7 +3060,7 @@
       "source_location": "L224",
       "_origin": "ast",
       "id": "locales_en_goals_title",
-      "community": 7,
+      "community": 10,
       "norm_label": "title"
     },
     {
@@ -3070,7 +3070,7 @@
       "source_location": "L225",
       "_origin": "ast",
       "id": "locales_en_goals_subtitle",
-      "community": 7,
+      "community": 10,
       "norm_label": "subtitle"
     },
     {
@@ -3080,7 +3080,7 @@
       "source_location": "L226",
       "_origin": "ast",
       "id": "locales_en_goals_addgoal",
-      "community": 7,
+      "community": 10,
       "norm_label": "addgoal"
     },
     {
@@ -3090,7 +3090,7 @@
       "source_location": "L227",
       "_origin": "ast",
       "id": "locales_en_goals_editgoal",
-      "community": 7,
+      "community": 10,
       "norm_label": "editgoal"
     },
     {
@@ -3100,7 +3100,7 @@
       "source_location": "L228",
       "_origin": "ast",
       "id": "locales_en_goals_targetamount",
-      "community": 7,
+      "community": 10,
       "norm_label": "targetamount"
     },
     {
@@ -3110,7 +3110,7 @@
       "source_location": "L229",
       "_origin": "ast",
       "id": "locales_en_goals_targetamountplaceholder",
-      "community": 7,
+      "community": 10,
       "norm_label": "targetamountplaceholder"
     },
     {
@@ -3120,7 +3120,7 @@
       "source_location": "L230",
       "_origin": "ast",
       "id": "locales_en_goals_currentamount",
-      "community": 7,
+      "community": 10,
       "norm_label": "currentamount"
     },
     {
@@ -3130,7 +3130,7 @@
       "source_location": "L231",
       "_origin": "ast",
       "id": "locales_en_goals_deadline",
-      "community": 7,
+      "community": 10,
       "norm_label": "deadline"
     },
     {
@@ -3140,7 +3140,7 @@
       "source_location": "L232",
       "_origin": "ast",
       "id": "locales_en_goals_linkedaccount",
-      "community": 7,
+      "community": 10,
       "norm_label": "linkedaccount"
     },
     {
@@ -3150,7 +3150,7 @@
       "source_location": "L233",
       "_origin": "ast",
       "id": "locales_en_goals_linkedaccountinfo",
-      "community": 7,
+      "community": 10,
       "norm_label": "linkedaccountinfo"
     },
     {
@@ -3160,7 +3160,7 @@
       "source_location": "L234",
       "_origin": "ast",
       "id": "locales_en_goals_selectaccount",
-      "community": 7,
+      "community": 10,
       "norm_label": "selectaccount"
     },
     {
@@ -3170,7 +3170,7 @@
       "source_location": "L235",
       "_origin": "ast",
       "id": "locales_en_goals_completedmanuallyerror",
-      "community": 7,
+      "community": 10,
       "norm_label": "completedmanuallyerror"
     },
     {
@@ -3320,7 +3320,7 @@
       "source_location": "L254",
       "_origin": "ast",
       "id": "locales_en_recurring_validation",
-      "community": 27,
+      "community": 85,
       "norm_label": "validation"
     },
     {
@@ -3330,7 +3330,7 @@
       "source_location": "L259",
       "_origin": "ast",
       "id": "locales_en_validation_interval",
-      "community": 27,
+      "community": 85,
       "norm_label": "interval"
     },
     {
@@ -3340,7 +3340,7 @@
       "source_location": "L260",
       "_origin": "ast",
       "id": "locales_en_validation_nextdue",
-      "community": 27,
+      "community": 85,
       "norm_label": "nextdue"
     },
     {
@@ -3704,10 +3704,70 @@
       "norm_label": "checkoutsuccess"
     },
     {
-      "label": "validation",
+      "label": "createPlan",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
       "source_location": "L306",
+      "_origin": "ast",
+      "id": "locales_en_shopping_createplan",
+      "community": 27,
+      "norm_label": "createplan"
+    },
+    {
+      "label": "location",
+      "file_type": "code",
+      "source_file": "frontend/src/locales/en.json",
+      "source_location": "L307",
+      "_origin": "ast",
+      "id": "locales_en_shopping_location",
+      "community": 27,
+      "norm_label": "location"
+    },
+    {
+      "label": "onProgress",
+      "file_type": "code",
+      "source_file": "frontend/src/locales/en.json",
+      "source_location": "L308",
+      "_origin": "ast",
+      "id": "locales_en_shopping_onprogress",
+      "community": 27,
+      "norm_label": "onprogress"
+    },
+    {
+      "label": "done",
+      "file_type": "code",
+      "source_file": "frontend/src/locales/en.json",
+      "source_location": "L309",
+      "_origin": "ast",
+      "id": "locales_en_shopping_done",
+      "community": 27,
+      "norm_label": "done"
+    },
+    {
+      "label": "noPlans",
+      "file_type": "code",
+      "source_file": "frontend/src/locales/en.json",
+      "source_location": "L310",
+      "_origin": "ast",
+      "id": "locales_en_shopping_noplans",
+      "community": 27,
+      "norm_label": "noplans"
+    },
+    {
+      "label": "zeroPriceWarning",
+      "file_type": "code",
+      "source_file": "frontend/src/locales/en.json",
+      "source_location": "L311",
+      "_origin": "ast",
+      "id": "locales_en_shopping_zeropricewarning",
+      "community": 27,
+      "norm_label": "zeropricewarning"
+    },
+    {
+      "label": "validation",
+      "file_type": "code",
+      "source_file": "frontend/src/locales/en.json",
+      "source_location": "L312",
       "_origin": "ast",
       "id": "locales_en_shopping_validation",
       "community": 27,
@@ -3717,17 +3777,17 @@
       "label": "tours",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L310",
+      "source_location": "L316",
       "_origin": "ast",
       "id": "locales_en_tours",
-      "community": 7,
+      "community": 29,
       "norm_label": "tours"
     },
     {
       "label": "btn",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L311",
+      "source_location": "L317",
       "_origin": "ast",
       "id": "locales_en_tours_btn",
       "community": 94,
@@ -3737,7 +3797,7 @@
       "label": "next",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L312",
+      "source_location": "L318",
       "_origin": "ast",
       "id": "locales_en_btn_next",
       "community": 94,
@@ -3747,7 +3807,7 @@
       "label": "prev",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L313",
+      "source_location": "L319",
       "_origin": "ast",
       "id": "locales_en_btn_prev",
       "community": 94,
@@ -3757,7 +3817,7 @@
       "label": "done",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L314",
+      "source_location": "L320",
       "_origin": "ast",
       "id": "locales_en_btn_done",
       "community": 94,
@@ -3767,17 +3827,17 @@
       "label": "progress",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L316",
+      "source_location": "L322",
       "_origin": "ast",
       "id": "locales_en_tours_progress",
-      "community": 7,
+      "community": 29,
       "norm_label": "progress"
     },
     {
       "label": "dashboard",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L317",
+      "source_location": "L323",
       "_origin": "ast",
       "id": "locales_en_tours_dashboard",
       "community": 76,
@@ -3787,27 +3847,27 @@
       "label": "title",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L319",
+      "source_location": "L325",
       "_origin": "ast",
       "id": "locales_en_period_title",
-      "community": 76,
+      "community": 17,
       "norm_label": "title"
     },
     {
       "label": "description",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L320",
+      "source_location": "L326",
       "_origin": "ast",
       "id": "locales_en_period_description",
-      "community": 76,
+      "community": 17,
       "norm_label": "description"
     },
     {
       "label": "balance",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L322",
+      "source_location": "L328",
       "_origin": "ast",
       "id": "locales_en_dashboard_balance",
       "community": 76,
@@ -3817,7 +3877,7 @@
       "label": "title",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L323",
+      "source_location": "L329",
       "_origin": "ast",
       "id": "locales_en_balance_title",
       "community": 76,
@@ -3827,7 +3887,7 @@
       "label": "description",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L324",
+      "source_location": "L330",
       "_origin": "ast",
       "id": "locales_en_balance_description",
       "community": 76,
@@ -3837,7 +3897,7 @@
       "label": "income",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L326",
+      "source_location": "L332",
       "_origin": "ast",
       "id": "locales_en_dashboard_income",
       "community": 76,
@@ -3847,7 +3907,7 @@
       "label": "title",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L327",
+      "source_location": "L333",
       "_origin": "ast",
       "id": "locales_en_income_title",
       "community": 76,
@@ -3857,7 +3917,7 @@
       "label": "description",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L328",
+      "source_location": "L334",
       "_origin": "ast",
       "id": "locales_en_income_description",
       "community": 76,
@@ -3867,7 +3927,7 @@
       "label": "expense",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L330",
+      "source_location": "L336",
       "_origin": "ast",
       "id": "locales_en_dashboard_expense",
       "community": 76,
@@ -3877,7 +3937,7 @@
       "label": "title",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L331",
+      "source_location": "L337",
       "_origin": "ast",
       "id": "locales_en_expense_title",
       "community": 76,
@@ -3887,7 +3947,7 @@
       "label": "description",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L332",
+      "source_location": "L338",
       "_origin": "ast",
       "id": "locales_en_expense_description",
       "community": 76,
@@ -3897,87 +3957,87 @@
       "label": "net",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L334",
+      "source_location": "L340",
       "_origin": "ast",
       "id": "locales_en_dashboard_net",
-      "community": 13,
+      "community": 17,
       "norm_label": "net"
     },
     {
       "label": "title",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L335",
+      "source_location": "L341",
       "_origin": "ast",
       "id": "locales_en_net_title",
-      "community": 13,
+      "community": 17,
       "norm_label": "title"
     },
     {
       "label": "description",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L336",
+      "source_location": "L342",
       "_origin": "ast",
       "id": "locales_en_net_description",
-      "community": 13,
+      "community": 17,
       "norm_label": "description"
     },
     {
       "label": "title",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L339",
+      "source_location": "L345",
       "_origin": "ast",
       "id": "locales_en_insights_title",
-      "community": 76,
+      "community": 17,
       "norm_label": "title"
     },
     {
       "label": "description",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L340",
+      "source_location": "L346",
       "_origin": "ast",
       "id": "locales_en_insights_description",
-      "community": 76,
+      "community": 17,
       "norm_label": "description"
     },
     {
       "label": "charts",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L342",
+      "source_location": "L348",
       "_origin": "ast",
       "id": "locales_en_dashboard_charts",
-      "community": 95,
+      "community": 76,
       "norm_label": "charts"
     },
     {
       "label": "title",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L343",
+      "source_location": "L349",
       "_origin": "ast",
       "id": "locales_en_charts_title",
-      "community": 95,
+      "community": 76,
       "norm_label": "title"
     },
     {
       "label": "description",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L344",
+      "source_location": "L350",
       "_origin": "ast",
       "id": "locales_en_charts_description",
-      "community": 95,
+      "community": 76,
       "norm_label": "description"
     },
     {
       "label": "transactions",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L347",
+      "source_location": "L353",
       "_origin": "ast",
       "id": "locales_en_tours_transactions",
       "community": 82,
@@ -3987,37 +4047,37 @@
       "label": "header",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L348",
+      "source_location": "L354",
       "_origin": "ast",
       "id": "locales_en_transactions_header",
-      "community": 82,
+      "community": 13,
       "norm_label": "header"
     },
     {
       "label": "title",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L349",
+      "source_location": "L355",
       "_origin": "ast",
       "id": "locales_en_header_title",
-      "community": 82,
+      "community": 13,
       "norm_label": "title"
     },
     {
       "label": "description",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L350",
+      "source_location": "L356",
       "_origin": "ast",
       "id": "locales_en_header_description",
-      "community": 82,
+      "community": 13,
       "norm_label": "description"
     },
     {
       "label": "add",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L352",
+      "source_location": "L358",
       "_origin": "ast",
       "id": "locales_en_transactions_add",
       "community": 79,
@@ -4027,7 +4087,7 @@
       "label": "title",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L353",
+      "source_location": "L359",
       "_origin": "ast",
       "id": "locales_en_add_title",
       "community": 79,
@@ -4037,7 +4097,7 @@
       "label": "description",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L354",
+      "source_location": "L360",
       "_origin": "ast",
       "id": "locales_en_add_description",
       "community": 79,
@@ -4047,7 +4107,7 @@
       "label": "transfer",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L356",
+      "source_location": "L362",
       "_origin": "ast",
       "id": "locales_en_transactions_transfer",
       "community": 82,
@@ -4057,7 +4117,7 @@
       "label": "title",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L357",
+      "source_location": "L363",
       "_origin": "ast",
       "id": "locales_en_transfer_title",
       "community": 82,
@@ -4067,7 +4127,7 @@
       "label": "description",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L358",
+      "source_location": "L364",
       "_origin": "ast",
       "id": "locales_en_transfer_description",
       "community": 82,
@@ -4077,7 +4137,7 @@
       "label": "filters",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L360",
+      "source_location": "L366",
       "_origin": "ast",
       "id": "locales_en_transactions_filters",
       "community": 82,
@@ -4087,7 +4147,7 @@
       "label": "title",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L361",
+      "source_location": "L367",
       "_origin": "ast",
       "id": "locales_en_filters_title",
       "community": 82,
@@ -4097,7 +4157,7 @@
       "label": "description",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L362",
+      "source_location": "L368",
       "_origin": "ast",
       "id": "locales_en_filters_description",
       "community": 82,
@@ -4107,37 +4167,37 @@
       "label": "table",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L364",
+      "source_location": "L370",
       "_origin": "ast",
       "id": "locales_en_transactions_table",
-      "community": 13,
+      "community": 82,
       "norm_label": "table"
     },
     {
       "label": "title",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L365",
+      "source_location": "L371",
       "_origin": "ast",
       "id": "locales_en_table_title",
-      "community": 13,
+      "community": 82,
       "norm_label": "title"
     },
     {
       "label": "description",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L366",
+      "source_location": "L372",
       "_origin": "ast",
       "id": "locales_en_table_description",
-      "community": 13,
+      "community": 82,
       "norm_label": "description"
     },
     {
       "label": "accounts",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L369",
+      "source_location": "L375",
       "_origin": "ast",
       "id": "locales_en_tours_accounts",
       "community": 79,
@@ -4147,17 +4207,17 @@
       "label": "header",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L370",
+      "source_location": "L376",
       "_origin": "ast",
       "id": "locales_en_accounts_header",
-      "community": 82,
+      "community": 13,
       "norm_label": "header"
     },
     {
       "label": "add",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L374",
+      "source_location": "L380",
       "_origin": "ast",
       "id": "locales_en_accounts_add",
       "community": 79,
@@ -4167,7 +4227,7 @@
       "label": "list",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L378",
+      "source_location": "L384",
       "_origin": "ast",
       "id": "locales_en_accounts_list",
       "community": 79,
@@ -4177,7 +4237,7 @@
       "label": "title",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L379",
+      "source_location": "L385",
       "_origin": "ast",
       "id": "locales_en_list_title",
       "community": 79,
@@ -4187,7 +4247,7 @@
       "label": "description",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L380",
+      "source_location": "L386",
       "_origin": "ast",
       "id": "locales_en_list_description",
       "community": 79,
@@ -4197,7 +4257,7 @@
       "label": "budgets",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L383",
+      "source_location": "L389",
       "_origin": "ast",
       "id": "locales_en_tours_budgets",
       "community": 79,
@@ -4207,17 +4267,17 @@
       "label": "header",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L384",
+      "source_location": "L390",
       "_origin": "ast",
       "id": "locales_en_budgets_header",
-      "community": 82,
+      "community": 13,
       "norm_label": "header"
     },
     {
       "label": "add",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L388",
+      "source_location": "L394",
       "_origin": "ast",
       "id": "locales_en_budgets_add",
       "community": 79,
@@ -4227,7 +4287,7 @@
       "label": "list",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L392",
+      "source_location": "L398",
       "_origin": "ast",
       "id": "locales_en_budgets_list",
       "community": 79,
@@ -4237,47 +4297,47 @@
       "label": "alerts",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L396",
+      "source_location": "L402",
       "_origin": "ast",
       "id": "locales_en_budgets_alerts",
-      "community": 21,
+      "community": 79,
       "norm_label": "alerts"
     },
     {
       "label": "title",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L397",
+      "source_location": "L403",
       "_origin": "ast",
       "id": "locales_en_alerts_title",
-      "community": 21,
+      "community": 79,
       "norm_label": "title"
     },
     {
       "label": "description",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L398",
+      "source_location": "L404",
       "_origin": "ast",
       "id": "locales_en_alerts_description",
-      "community": 21,
+      "community": 79,
       "norm_label": "description"
     },
     {
       "label": "goals",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L401",
+      "source_location": "L407",
       "_origin": "ast",
       "id": "locales_en_tours_goals",
-      "community": 13,
+      "community": 29,
       "norm_label": "goals"
     },
     {
       "label": "header",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L402",
+      "source_location": "L408",
       "_origin": "ast",
       "id": "locales_en_goals_header",
       "community": 13,
@@ -4287,27 +4347,27 @@
       "label": "add",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L406",
+      "source_location": "L412",
       "_origin": "ast",
       "id": "locales_en_goals_add",
-      "community": 13,
+      "community": 17,
       "norm_label": "add"
     },
     {
       "label": "list",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L410",
+      "source_location": "L416",
       "_origin": "ast",
       "id": "locales_en_goals_list",
-      "community": 13,
+      "community": 79,
       "norm_label": "list"
     },
     {
       "label": "recurring",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L415",
+      "source_location": "L421",
       "_origin": "ast",
       "id": "locales_en_tours_recurring",
       "community": 79,
@@ -4317,17 +4377,17 @@
       "label": "header",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L416",
+      "source_location": "L422",
       "_origin": "ast",
       "id": "locales_en_recurring_header",
-      "community": 79,
+      "community": 13,
       "norm_label": "header"
     },
     {
       "label": "add",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L420",
+      "source_location": "L426",
       "_origin": "ast",
       "id": "locales_en_recurring_add",
       "community": 79,
@@ -4337,7 +4397,7 @@
       "label": "list",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L424",
+      "source_location": "L430",
       "_origin": "ast",
       "id": "locales_en_recurring_list",
       "community": 79,
@@ -4347,27 +4407,27 @@
       "label": "reports",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L429",
+      "source_location": "L435",
       "_origin": "ast",
       "id": "locales_en_tours_reports",
-      "community": 82,
+      "community": 29,
       "norm_label": "reports"
     },
     {
       "label": "header",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L430",
+      "source_location": "L436",
       "_origin": "ast",
       "id": "locales_en_reports_header",
-      "community": 82,
+      "community": 13,
       "norm_label": "header"
     },
     {
       "label": "filters",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L434",
+      "source_location": "L440",
       "_origin": "ast",
       "id": "locales_en_reports_filters",
       "community": 82,
@@ -4377,17 +4437,17 @@
       "label": "charts",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L438",
+      "source_location": "L444",
       "_origin": "ast",
       "id": "locales_en_reports_charts",
-      "community": 95,
+      "community": 76,
       "norm_label": "charts"
     },
     {
       "label": "export",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L442",
+      "source_location": "L448",
       "_origin": "ast",
       "id": "locales_en_reports_export",
       "community": 29,
@@ -4397,7 +4457,7 @@
       "label": "title",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L443",
+      "source_location": "L449",
       "_origin": "ast",
       "id": "locales_en_export_title",
       "community": 29,
@@ -4407,7 +4467,7 @@
       "label": "description",
       "file_type": "code",
       "source_file": "frontend/src/locales/en.json",
-      "source_location": "L444",
+      "source_location": "L450",
       "_origin": "ast",
       "id": "locales_en_export_description",
       "community": 29,
@@ -5000,7 +5060,7 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "locales_id_auth_login",
-      "community": 35,
+      "community": 5,
       "norm_label": "login"
     },
     {
@@ -5010,7 +5070,7 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "locales_id_login_title",
-      "community": 35,
+      "community": 5,
       "norm_label": "title"
     },
     {
@@ -5030,7 +5090,7 @@
       "source_location": "L64",
       "_origin": "ast",
       "id": "locales_id_login_email",
-      "community": 35,
+      "community": 5,
       "norm_label": "email"
     },
     {
@@ -5040,7 +5100,7 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "locales_id_login_emailplaceholder",
-      "community": 35,
+      "community": 5,
       "norm_label": "emailplaceholder"
     },
     {
@@ -5050,7 +5110,7 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "locales_id_login_password",
-      "community": 35,
+      "community": 5,
       "norm_label": "password"
     },
     {
@@ -5060,7 +5120,7 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "locales_id_login_passwordplaceholder",
-      "community": 35,
+      "community": 5,
       "norm_label": "passwordplaceholder"
     },
     {
@@ -5070,7 +5130,7 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "locales_id_login_signin",
-      "community": 35,
+      "community": 5,
       "norm_label": "signin"
     },
     {
@@ -5080,7 +5140,7 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "locales_id_login_signingin",
-      "community": 35,
+      "community": 5,
       "norm_label": "signingin"
     },
     {
@@ -5090,7 +5150,7 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "locales_id_login_newhere",
-      "community": 35,
+      "community": 5,
       "norm_label": "newhere"
     },
     {
@@ -5100,7 +5160,7 @@
       "source_location": "L71",
       "_origin": "ast",
       "id": "locales_id_login_createaccount",
-      "community": 35,
+      "community": 5,
       "norm_label": "createaccount"
     },
     {
@@ -5110,7 +5170,7 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "locales_id_login_failed",
-      "community": 35,
+      "community": 5,
       "norm_label": "failed"
     },
     {
@@ -6200,7 +6260,7 @@
       "source_location": "L172",
       "_origin": "ast",
       "id": "locales_id_accounts",
-      "community": 11,
+      "community": 15,
       "norm_label": "accounts"
     },
     {
@@ -6210,7 +6270,7 @@
       "source_location": "L173",
       "_origin": "ast",
       "id": "locales_id_accounts_title",
-      "community": 11,
+      "community": 15,
       "norm_label": "title"
     },
     {
@@ -6220,7 +6280,7 @@
       "source_location": "L174",
       "_origin": "ast",
       "id": "locales_id_accounts_subtitle",
-      "community": 11,
+      "community": 15,
       "norm_label": "subtitle"
     },
     {
@@ -6230,7 +6290,7 @@
       "source_location": "L175",
       "_origin": "ast",
       "id": "locales_id_accounts_addaccount",
-      "community": 11,
+      "community": 15,
       "norm_label": "addaccount"
     },
     {
@@ -6240,7 +6300,7 @@
       "source_location": "L176",
       "_origin": "ast",
       "id": "locales_id_accounts_editaccount",
-      "community": 11,
+      "community": 15,
       "norm_label": "editaccount"
     },
     {
@@ -6250,7 +6310,7 @@
       "source_location": "L177",
       "_origin": "ast",
       "id": "locales_id_accounts_accountname",
-      "community": 11,
+      "community": 15,
       "norm_label": "accountname"
     },
     {
@@ -6260,7 +6320,7 @@
       "source_location": "L178",
       "_origin": "ast",
       "id": "locales_id_accounts_accountnameplaceholder",
-      "community": 11,
+      "community": 15,
       "norm_label": "accountnameplaceholder"
     },
     {
@@ -6320,7 +6380,7 @@
       "source_location": "L185",
       "_origin": "ast",
       "id": "locales_id_accounts_balanceplaceholder",
-      "community": 11,
+      "community": 15,
       "norm_label": "balanceplaceholder"
     },
     {
@@ -6330,7 +6390,7 @@
       "source_location": "L186",
       "_origin": "ast",
       "id": "locales_id_accounts_walletdetails",
-      "community": 11,
+      "community": 15,
       "norm_label": "walletdetails"
     },
     {
@@ -7264,10 +7324,70 @@
       "norm_label": "checkoutsuccess"
     },
     {
-      "label": "validation",
+      "label": "createPlan",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
       "source_location": "L306",
+      "_origin": "ast",
+      "id": "locales_id_shopping_createplan",
+      "community": 75,
+      "norm_label": "createplan"
+    },
+    {
+      "label": "location",
+      "file_type": "code",
+      "source_file": "frontend/src/locales/id.json",
+      "source_location": "L307",
+      "_origin": "ast",
+      "id": "locales_id_shopping_location",
+      "community": 75,
+      "norm_label": "location"
+    },
+    {
+      "label": "onProgress",
+      "file_type": "code",
+      "source_file": "frontend/src/locales/id.json",
+      "source_location": "L308",
+      "_origin": "ast",
+      "id": "locales_id_shopping_onprogress",
+      "community": 75,
+      "norm_label": "onprogress"
+    },
+    {
+      "label": "done",
+      "file_type": "code",
+      "source_file": "frontend/src/locales/id.json",
+      "source_location": "L309",
+      "_origin": "ast",
+      "id": "locales_id_shopping_done",
+      "community": 75,
+      "norm_label": "done"
+    },
+    {
+      "label": "noPlans",
+      "file_type": "code",
+      "source_file": "frontend/src/locales/id.json",
+      "source_location": "L310",
+      "_origin": "ast",
+      "id": "locales_id_shopping_noplans",
+      "community": 75,
+      "norm_label": "noplans"
+    },
+    {
+      "label": "zeroPriceWarning",
+      "file_type": "code",
+      "source_file": "frontend/src/locales/id.json",
+      "source_location": "L311",
+      "_origin": "ast",
+      "id": "locales_id_shopping_zeropricewarning",
+      "community": 75,
+      "norm_label": "zeropricewarning"
+    },
+    {
+      "label": "validation",
+      "file_type": "code",
+      "source_file": "frontend/src/locales/id.json",
+      "source_location": "L312",
       "_origin": "ast",
       "id": "locales_id_shopping_validation",
       "community": 75,
@@ -7277,7 +7397,7 @@
       "label": "tours",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L310",
+      "source_location": "L316",
       "_origin": "ast",
       "id": "locales_id_tours",
       "community": 39,
@@ -7287,7 +7407,7 @@
       "label": "btn",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L311",
+      "source_location": "L317",
       "_origin": "ast",
       "id": "locales_id_tours_btn",
       "community": 96,
@@ -7297,7 +7417,7 @@
       "label": "next",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L312",
+      "source_location": "L318",
       "_origin": "ast",
       "id": "locales_id_btn_next",
       "community": 96,
@@ -7307,7 +7427,7 @@
       "label": "prev",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L313",
+      "source_location": "L319",
       "_origin": "ast",
       "id": "locales_id_btn_prev",
       "community": 96,
@@ -7317,7 +7437,7 @@
       "label": "done",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L314",
+      "source_location": "L320",
       "_origin": "ast",
       "id": "locales_id_btn_done",
       "community": 96,
@@ -7327,7 +7447,7 @@
       "label": "progress",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L316",
+      "source_location": "L322",
       "_origin": "ast",
       "id": "locales_id_tours_progress",
       "community": 39,
@@ -7337,7 +7457,7 @@
       "label": "dashboard",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L317",
+      "source_location": "L323",
       "_origin": "ast",
       "id": "locales_id_tours_dashboard",
       "community": 80,
@@ -7347,7 +7467,7 @@
       "label": "title",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L319",
+      "source_location": "L325",
       "_origin": "ast",
       "id": "locales_id_period_title",
       "community": 80,
@@ -7357,7 +7477,7 @@
       "label": "description",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L320",
+      "source_location": "L326",
       "_origin": "ast",
       "id": "locales_id_period_description",
       "community": 80,
@@ -7367,7 +7487,7 @@
       "label": "balance",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L322",
+      "source_location": "L328",
       "_origin": "ast",
       "id": "locales_id_dashboard_balance",
       "community": 80,
@@ -7377,7 +7497,7 @@
       "label": "title",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L323",
+      "source_location": "L329",
       "_origin": "ast",
       "id": "locales_id_balance_title",
       "community": 80,
@@ -7387,7 +7507,7 @@
       "label": "description",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L324",
+      "source_location": "L330",
       "_origin": "ast",
       "id": "locales_id_balance_description",
       "community": 80,
@@ -7397,7 +7517,7 @@
       "label": "income",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L326",
+      "source_location": "L332",
       "_origin": "ast",
       "id": "locales_id_dashboard_income",
       "community": 80,
@@ -7407,7 +7527,7 @@
       "label": "title",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L327",
+      "source_location": "L333",
       "_origin": "ast",
       "id": "locales_id_income_title",
       "community": 80,
@@ -7417,7 +7537,7 @@
       "label": "description",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L328",
+      "source_location": "L334",
       "_origin": "ast",
       "id": "locales_id_income_description",
       "community": 80,
@@ -7427,7 +7547,7 @@
       "label": "expense",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L330",
+      "source_location": "L336",
       "_origin": "ast",
       "id": "locales_id_dashboard_expense",
       "community": 80,
@@ -7437,7 +7557,7 @@
       "label": "title",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L331",
+      "source_location": "L337",
       "_origin": "ast",
       "id": "locales_id_expense_title",
       "community": 80,
@@ -7447,7 +7567,7 @@
       "label": "description",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L332",
+      "source_location": "L338",
       "_origin": "ast",
       "id": "locales_id_expense_description",
       "community": 80,
@@ -7457,7 +7577,7 @@
       "label": "net",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L334",
+      "source_location": "L340",
       "_origin": "ast",
       "id": "locales_id_dashboard_net",
       "community": 15,
@@ -7467,7 +7587,7 @@
       "label": "title",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L335",
+      "source_location": "L341",
       "_origin": "ast",
       "id": "locales_id_net_title",
       "community": 15,
@@ -7477,7 +7597,7 @@
       "label": "description",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L336",
+      "source_location": "L342",
       "_origin": "ast",
       "id": "locales_id_net_description",
       "community": 15,
@@ -7487,7 +7607,7 @@
       "label": "title",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L339",
+      "source_location": "L345",
       "_origin": "ast",
       "id": "locales_id_insights_title",
       "community": 80,
@@ -7497,7 +7617,7 @@
       "label": "description",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L340",
+      "source_location": "L346",
       "_origin": "ast",
       "id": "locales_id_insights_description",
       "community": 80,
@@ -7507,7 +7627,7 @@
       "label": "charts",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L342",
+      "source_location": "L348",
       "_origin": "ast",
       "id": "locales_id_dashboard_charts",
       "community": 88,
@@ -7517,7 +7637,7 @@
       "label": "title",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L343",
+      "source_location": "L349",
       "_origin": "ast",
       "id": "locales_id_charts_title",
       "community": 88,
@@ -7527,7 +7647,7 @@
       "label": "description",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L344",
+      "source_location": "L350",
       "_origin": "ast",
       "id": "locales_id_charts_description",
       "community": 88,
@@ -7537,47 +7657,47 @@
       "label": "transactions",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L347",
+      "source_location": "L353",
       "_origin": "ast",
       "id": "locales_id_tours_transactions",
-      "community": 39,
+      "community": 87,
       "norm_label": "transactions"
     },
     {
       "label": "header",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L348",
+      "source_location": "L354",
       "_origin": "ast",
       "id": "locales_id_transactions_header",
-      "community": 39,
+      "community": 87,
       "norm_label": "header"
     },
     {
       "label": "title",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L349",
+      "source_location": "L355",
       "_origin": "ast",
       "id": "locales_id_header_title",
-      "community": 39,
+      "community": 88,
       "norm_label": "title"
     },
     {
       "label": "description",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L350",
+      "source_location": "L356",
       "_origin": "ast",
       "id": "locales_id_header_description",
-      "community": 39,
+      "community": 88,
       "norm_label": "description"
     },
     {
       "label": "add",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L352",
+      "source_location": "L358",
       "_origin": "ast",
       "id": "locales_id_transactions_add",
       "community": 39,
@@ -7587,7 +7707,7 @@
       "label": "title",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L353",
+      "source_location": "L359",
       "_origin": "ast",
       "id": "locales_id_add_title",
       "community": 39,
@@ -7597,7 +7717,7 @@
       "label": "description",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L354",
+      "source_location": "L360",
       "_origin": "ast",
       "id": "locales_id_add_description",
       "community": 39,
@@ -7607,97 +7727,97 @@
       "label": "transfer",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L356",
+      "source_location": "L362",
       "_origin": "ast",
       "id": "locales_id_transactions_transfer",
-      "community": 39,
+      "community": 87,
       "norm_label": "transfer"
     },
     {
       "label": "title",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L357",
+      "source_location": "L363",
       "_origin": "ast",
       "id": "locales_id_transfer_title",
-      "community": 39,
+      "community": 87,
       "norm_label": "title"
     },
     {
       "label": "description",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L358",
+      "source_location": "L364",
       "_origin": "ast",
       "id": "locales_id_transfer_description",
-      "community": 39,
+      "community": 87,
       "norm_label": "description"
     },
     {
       "label": "filters",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L360",
+      "source_location": "L366",
       "_origin": "ast",
       "id": "locales_id_transactions_filters",
-      "community": 28,
+      "community": 87,
       "norm_label": "filters"
     },
     {
       "label": "title",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L361",
+      "source_location": "L367",
       "_origin": "ast",
       "id": "locales_id_filters_title",
-      "community": 28,
+      "community": 87,
       "norm_label": "title"
     },
     {
       "label": "description",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L362",
+      "source_location": "L368",
       "_origin": "ast",
       "id": "locales_id_filters_description",
-      "community": 28,
+      "community": 87,
       "norm_label": "description"
     },
     {
       "label": "table",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L364",
+      "source_location": "L370",
       "_origin": "ast",
       "id": "locales_id_transactions_table",
-      "community": 15,
+      "community": 87,
       "norm_label": "table"
     },
     {
       "label": "title",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L365",
+      "source_location": "L371",
       "_origin": "ast",
       "id": "locales_id_table_title",
-      "community": 15,
+      "community": 87,
       "norm_label": "title"
     },
     {
       "label": "description",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L366",
+      "source_location": "L372",
       "_origin": "ast",
       "id": "locales_id_table_description",
-      "community": 15,
+      "community": 87,
       "norm_label": "description"
     },
     {
       "label": "accounts",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L369",
+      "source_location": "L375",
       "_origin": "ast",
       "id": "locales_id_tours_accounts",
       "community": 39,
@@ -7707,7 +7827,7 @@
       "label": "header",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L370",
+      "source_location": "L376",
       "_origin": "ast",
       "id": "locales_id_accounts_header",
       "community": 39,
@@ -7717,7 +7837,7 @@
       "label": "add",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L374",
+      "source_location": "L380",
       "_origin": "ast",
       "id": "locales_id_accounts_add",
       "community": 39,
@@ -7727,57 +7847,57 @@
       "label": "list",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L378",
+      "source_location": "L384",
       "_origin": "ast",
       "id": "locales_id_accounts_list",
-      "community": 87,
+      "community": 39,
       "norm_label": "list"
     },
     {
       "label": "title",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L379",
+      "source_location": "L385",
       "_origin": "ast",
       "id": "locales_id_list_title",
-      "community": 87,
+      "community": 39,
       "norm_label": "title"
     },
     {
       "label": "description",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L380",
+      "source_location": "L386",
       "_origin": "ast",
       "id": "locales_id_list_description",
-      "community": 87,
+      "community": 39,
       "norm_label": "description"
     },
     {
       "label": "budgets",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L383",
+      "source_location": "L389",
       "_origin": "ast",
       "id": "locales_id_tours_budgets",
-      "community": 87,
+      "community": 39,
       "norm_label": "budgets"
     },
     {
       "label": "header",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L384",
+      "source_location": "L390",
       "_origin": "ast",
       "id": "locales_id_budgets_header",
-      "community": 39,
+      "community": 88,
       "norm_label": "header"
     },
     {
       "label": "add",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L388",
+      "source_location": "L394",
       "_origin": "ast",
       "id": "locales_id_budgets_add",
       "community": 39,
@@ -7787,47 +7907,47 @@
       "label": "list",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L392",
+      "source_location": "L398",
       "_origin": "ast",
       "id": "locales_id_budgets_list",
-      "community": 87,
+      "community": 39,
       "norm_label": "list"
     },
     {
       "label": "alerts",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L396",
+      "source_location": "L402",
       "_origin": "ast",
       "id": "locales_id_budgets_alerts",
-      "community": 87,
+      "community": 23,
       "norm_label": "alerts"
     },
     {
       "label": "title",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L397",
+      "source_location": "L403",
       "_origin": "ast",
       "id": "locales_id_alerts_title",
-      "community": 87,
+      "community": 23,
       "norm_label": "title"
     },
     {
       "label": "description",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L398",
+      "source_location": "L404",
       "_origin": "ast",
       "id": "locales_id_alerts_description",
-      "community": 87,
+      "community": 23,
       "norm_label": "description"
     },
     {
       "label": "goals",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L401",
+      "source_location": "L407",
       "_origin": "ast",
       "id": "locales_id_tours_goals",
       "community": 15,
@@ -7837,7 +7957,7 @@
       "label": "header",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L402",
+      "source_location": "L408",
       "_origin": "ast",
       "id": "locales_id_goals_header",
       "community": 15,
@@ -7847,7 +7967,7 @@
       "label": "add",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L406",
+      "source_location": "L412",
       "_origin": "ast",
       "id": "locales_id_goals_add",
       "community": 15,
@@ -7857,7 +7977,7 @@
       "label": "list",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L410",
+      "source_location": "L416",
       "_origin": "ast",
       "id": "locales_id_goals_list",
       "community": 15,
@@ -7867,7 +7987,7 @@
       "label": "recurring",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L415",
+      "source_location": "L421",
       "_origin": "ast",
       "id": "locales_id_tours_recurring",
       "community": 39,
@@ -7877,17 +7997,17 @@
       "label": "header",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L416",
+      "source_location": "L422",
       "_origin": "ast",
       "id": "locales_id_recurring_header",
-      "community": 39,
+      "community": 88,
       "norm_label": "header"
     },
     {
       "label": "add",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L420",
+      "source_location": "L426",
       "_origin": "ast",
       "id": "locales_id_recurring_add",
       "community": 39,
@@ -7897,47 +8017,47 @@
       "label": "list",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L424",
+      "source_location": "L430",
       "_origin": "ast",
       "id": "locales_id_recurring_list",
-      "community": 87,
+      "community": 39,
       "norm_label": "list"
     },
     {
       "label": "reports",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L429",
+      "source_location": "L435",
       "_origin": "ast",
       "id": "locales_id_tours_reports",
-      "community": 39,
+      "community": 88,
       "norm_label": "reports"
     },
     {
       "label": "header",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L430",
+      "source_location": "L436",
       "_origin": "ast",
       "id": "locales_id_reports_header",
-      "community": 39,
+      "community": 88,
       "norm_label": "header"
     },
     {
       "label": "filters",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L434",
+      "source_location": "L440",
       "_origin": "ast",
       "id": "locales_id_reports_filters",
-      "community": 28,
+      "community": 87,
       "norm_label": "filters"
     },
     {
       "label": "charts",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L438",
+      "source_location": "L444",
       "_origin": "ast",
       "id": "locales_id_reports_charts",
       "community": 88,
@@ -7947,7 +8067,7 @@
       "label": "export",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L442",
+      "source_location": "L448",
       "_origin": "ast",
       "id": "locales_id_reports_export",
       "community": 28,
@@ -7957,7 +8077,7 @@
       "label": "title",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L443",
+      "source_location": "L449",
       "_origin": "ast",
       "id": "locales_id_export_title",
       "community": 28,
@@ -7967,7 +8087,7 @@
       "label": "description",
       "file_type": "code",
       "source_file": "frontend/src/locales/id.json",
-      "source_location": "L444",
+      "source_location": "L450",
       "_origin": "ast",
       "id": "locales_id_export_description",
       "community": 28,
@@ -8184,16 +8304,6 @@
       "norm_label": "shoppingdetailpage.vue"
     },
     {
-      "label": "if()",
-      "file_type": "code",
-      "source_file": "frontend/src/pages/ShoppingDetailPage.vue",
-      "source_location": "L274",
-      "_origin": "ast",
-      "id": "pages_shoppingdetailpage_if",
-      "community": 89,
-      "norm_label": "if()"
-    },
-    {
       "label": "ShoppingPage.vue",
       "file_type": "code",
       "source_file": "frontend/src/pages/ShoppingPage.vue",
@@ -8330,7 +8440,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_categoryservice",
-      "community": 85,
+      "community": 27,
       "norm_label": "categoryservice.js"
     },
     {
@@ -8340,7 +8450,7 @@
       "source_location": "L2",
       "_origin": "ast",
       "id": "services_categoryservice_categoryservice",
-      "community": 85,
+      "community": 27,
       "norm_label": "categoryservice"
     },
     {
@@ -8640,7 +8750,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "stores_categories",
-      "community": 85,
+      "community": 27,
       "norm_label": "categories.js"
     },
     {
@@ -8650,7 +8760,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "stores_categories_usecategorystore",
-      "community": 85,
+      "community": 27,
       "norm_label": "usecategorystore"
     },
     {
@@ -11432,9 +11542,9 @@
       "source_file": "frontend/src/services/shoppingPlanService.js",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_shoppingplanservice",
-      "target": "lib_supabase",
-      "confidence_score": 1.0
+      "target": "lib_supabase"
     },
     {
       "relation": "imports_from",
@@ -11542,9 +11652,9 @@
       "source_file": "frontend/src/services/shoppingPlanService.js",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_shoppingplanservice",
-      "target": "lib_supabase_supabase",
-      "confidence_score": 1.0
+      "target": "lib_supabase_supabase"
     },
     {
       "relation": "imports",
@@ -16074,6 +16184,26 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/locales/en.json",
+      "source_location": "L306",
+      "weight": 1.0,
+      "source": "locales_en_shopping",
+      "target": "locales_en_shopping_createplan",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/locales/en.json",
+      "source_location": "L309",
+      "weight": 1.0,
+      "source": "locales_en_shopping",
+      "target": "locales_en_shopping_done",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/locales/en.json",
       "source_location": "L298",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -16084,11 +16214,41 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/locales/en.json",
+      "source_location": "L307",
+      "weight": 1.0,
+      "source": "locales_en_shopping",
+      "target": "locales_en_shopping_location",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/locales/en.json",
       "source_location": "L301",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "locales_en_shopping",
       "target": "locales_en_shopping_noitems"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/locales/en.json",
+      "source_location": "L310",
+      "weight": 1.0,
+      "source": "locales_en_shopping",
+      "target": "locales_en_shopping_noplans",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/locales/en.json",
+      "source_location": "L308",
+      "weight": 1.0,
+      "source": "locales_en_shopping",
+      "target": "locales_en_shopping_onprogress",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -16149,6 +16309,16 @@
       "confidence_score": 1.0,
       "source": "locales_en_shopping",
       "target": "locales_en_shopping_validation"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/locales/en.json",
+      "source_location": "L311",
+      "weight": 1.0,
+      "source": "locales_en_shopping",
+      "target": "locales_en_shopping_zeropricewarning",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -21555,6 +21725,26 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/locales/id.json",
+      "source_location": "L306",
+      "weight": 1.0,
+      "source": "locales_id_shopping",
+      "target": "locales_id_shopping_createplan",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/locales/id.json",
+      "source_location": "L309",
+      "weight": 1.0,
+      "source": "locales_id_shopping",
+      "target": "locales_id_shopping_done",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/locales/id.json",
       "source_location": "L298",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -21565,11 +21755,41 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/locales/id.json",
+      "source_location": "L307",
+      "weight": 1.0,
+      "source": "locales_id_shopping",
+      "target": "locales_id_shopping_location",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/locales/id.json",
       "source_location": "L301",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "locales_id_shopping",
       "target": "locales_id_shopping_noitems"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/locales/id.json",
+      "source_location": "L310",
+      "weight": 1.0,
+      "source": "locales_id_shopping",
+      "target": "locales_id_shopping_noplans",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/locales/id.json",
+      "source_location": "L308",
+      "weight": 1.0,
+      "source": "locales_id_shopping",
+      "target": "locales_id_shopping_onprogress",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -21630,6 +21850,16 @@
       "confidence_score": 1.0,
       "source": "locales_id_shopping",
       "target": "locales_id_shopping_validation"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/locales/id.json",
+      "source_location": "L311",
+      "weight": 1.0,
+      "source": "locales_id_shopping",
+      "target": "locales_id_shopping_zeropricewarning",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -22849,22 +23079,12 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "frontend/src/pages/ShoppingDetailPage.vue",
-      "source_location": "L274",
-      "weight": 1.0,
-      "source": "pages_shoppingdetailpage",
-      "target": "pages_shoppingdetailpage_if",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/TransactionsPage.vue",
       "source_location": "L553",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "pages_transactionspage",
-      "target": "pages_transactionspage_if",
-      "confidence_score": 1.0
+      "target": "pages_transactionspage_if"
     },
     {
       "relation": "contains",
@@ -23184,9 +23404,9 @@
       "source_file": "frontend/src/services/shoppingPlanService.js",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_shoppingplanservice",
-      "target": "services_crud",
-      "confidence_score": 1.0
+      "target": "services_crud"
     },
     {
       "relation": "imports_from",
@@ -23250,9 +23470,9 @@
       "source_file": "frontend/src/services/shoppingPlanService.js",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_shoppingplanservice",
-      "target": "services_crud_createcrudservice",
-      "confidence_score": 1.0
+      "target": "services_crud_createcrudservice"
     },
     {
       "relation": "imports",
@@ -23408,9 +23628,9 @@
       "source_file": "frontend/src/services/shoppingPlanService.js",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_shoppingplanservice",
-      "target": "services_shoppingplanservice_crud",
-      "confidence_score": 1.0
+      "target": "services_shoppingplanservice_crud"
     },
     {
       "relation": "contains",
@@ -23418,9 +23638,9 @@
       "source_file": "frontend/src/services/shoppingPlanService.js",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_shoppingplanservice",
-      "target": "services_shoppingplanservice_shoppingplanservice",
-      "confidence_score": 1.0
+      "target": "services_shoppingplanservice_shoppingplanservice"
     },
     {
       "relation": "imports_from",
@@ -23429,9 +23649,9 @@
       "source_file": "frontend/src/services/shoppingPlanService.js",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_shoppingplanservice",
-      "target": "stores_auth",
-      "confidence_score": 1.0
+      "target": "stores_auth"
     },
     {
       "relation": "imports",
@@ -23440,9 +23660,9 @@
       "source_file": "frontend/src/services/shoppingPlanService.js",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_shoppingplanservice",
-      "target": "stores_auth_useauthstore",
-      "confidence_score": 1.0
+      "target": "stores_auth_useauthstore"
     },
     {
       "relation": "contains",
@@ -24864,5 +25084,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "11ad2bdd2853cc5dd7e4217408a2b141c11735ab"
+  "built_at_commit": "b92e05db4655a48c968c057b3189f66243f2c9a9"
 }

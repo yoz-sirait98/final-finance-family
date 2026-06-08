@@ -80,13 +80,13 @@
     "semantic_hash": "85508e893fbc3828845498d90d86c519"
   },
   "frontend/src/locales/en.json": {
-    "mtime": 1780911836.2484822,
-    "ast_hash": "58c996347df642457f5b99a18ad33583",
+    "mtime": 1780915147.600577,
+    "ast_hash": "6ec71e398ded395db5ce2c73b4181b67",
     "semantic_hash": ""
   },
   "frontend/src/locales/id.json": {
-    "mtime": 1780911914.7410834,
-    "ast_hash": "b23a46f8a3d444a29dd2d6b4447b2b77",
+    "mtime": 1780915156.48559,
+    "ast_hash": "99585285329d22188589c3415f4322e3",
     "semantic_hash": ""
   },
   "frontend/src/main.js": {
@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "frontend/src/services/shoppingService.js": {
-    "mtime": 1780914149.4873903,
-    "ast_hash": "cc81dfb19f2985935f1cb7b8973d8f7c",
+    "mtime": 1780914814.8863099,
+    "ast_hash": "df29bfbd7a33b3b648e16e042da240e9",
     "semantic_hash": ""
   },
   "supabase/migrations/000012_shopping_items.sql": {
@@ -530,8 +530,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ShoppingDetailPage.vue": {
-    "mtime": 1780914210.6714911,
-    "ast_hash": "b00e5b59975f0080630e69cb70ddcec5",
+    "mtime": 1780915138.2616143,
+    "ast_hash": "991760f04f7b67b02dc60b5fe7897787",
     "semantic_hash": ""
   },
   "frontend/src/services/shoppingPlanService.js": {
@@ -540,8 +540,8 @@
     "semantic_hash": ""
   },
   "supabase/migrations/000013_shopping_plans_overhaul.sql": {
-    "mtime": 1780914128.8253722,
-    "ast_hash": "a609979b89e7938fb7f47ce1dfe600ef",
+    "mtime": 1780914590.3981175,
+    "ast_hash": "7697b77524bf4f0fac6fac49413befe1",
     "semantic_hash": ""
   }
 }
