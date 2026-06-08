@@ -28,3 +28,9 @@
 - `[x]` Task 23: Translate Main Pages & Modals (Dashboard, Transactions, Accounts, Budgets, Categories, Goals, Recurring, Members, Reports, modals/toasts)
 - `[x]` Task 24: Translate driver.js tours config and step definitions (`useTour.js` and `src/tours/*.js`)
 - `[x]` Task 25: Local verification and quality polish
+
+## Part 3 — Reports Page Filtering Fix
+- `[x]` Task 26: Update `get_dashboard_summary` PostgreSQL RPC signature to accept member_id and support all months
+- `[x]` Task 27: Modify `dashboardService.js` to accept and forward parameter filters to the RPC
+- `[x]` Task 28: Refactor `ReportsPage.vue` to pass raw filter states directly to the service layer
+- `[x]` Task 29: Compile/build the project and verify no syntax or module loading errors
