@@ -70,7 +70,7 @@
               <label class="form-label">Status</label>
               <select v-model="form.status" class="form-select">
                 <option value="active">Active</option>
-                <option value="completed">Completed</option>
+                <option value="completed" :disabled="editingGoal && editingGoal.current_amount < form.target_amount">Completed</option>
                 <option value="cancelled">Cancelled</option>
                 <option value="inactive">Inactive</option>
               </select>
@@ -150,6 +150,7 @@ import { useToastStore } from '../stores/toast';
 const goals = ref([]);
 const accounts = ref([]);
 const editingId = ref(null);
+const editingGoal = ref(null);
 const form = ref({ name: '', target_amount: 0, deadline: '', status: 'active' });
 const formError = ref('');
 
@@ -172,6 +173,7 @@ async function fetchData() {
 
 function openCreate() {
   editingId.value = null;
+  editingGoal.value = null;
   form.value = { name: '', target_amount: 0, deadline: '', account_id: '', status: 'active' };
   formError.value = '';
   showModal.value = true;
@@ -179,6 +181,7 @@ function openCreate() {
 
 function openEdit(g) {
   editingId.value = g.id;
+  editingGoal.value = g;
   form.value = { name: g.name, target_amount: g.target_amount, deadline: g.deadline_raw || '', account_id: g.account_id || '', status: g.status || 'active' };
   formError.value = '';
   showModal.value = true;
@@ -193,6 +196,13 @@ function openContribute(g) {
 async function save() {
   formError.value = '';
   saving.value = true;
+  
+  if (form.value.status === 'completed' && editingGoal.value && editingGoal.value.current_amount < form.value.target_amount) {
+    formError.value = "Cannot mark as completed until target amount is reached.";
+    saving.value = false;
+    return;
+  }
+
   try {
     const payload = {
       name: form.value.name,
