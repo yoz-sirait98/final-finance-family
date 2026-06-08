@@ -1,0 +1,17 @@
+# AI Agent Instructions & Repository Rules
+
+Welcome, AI Agent! Please adhere strictly to the following instructions when working in this codebase:
+
+## 1. Documentation & Artifact Lifecycle
+- **Auto-Update**: Always automatically update the relevant planning and status files whenever a code change is made. This includes:
+  - Artifact files in the conversation/brain directory (e.g. `task.md`, `implementation_plan.md`).
+  - Markdown files in the local `/docs` folder (e.g. `/docs/task.md`, `/docs/implementation_plan.md`).
+- Keep all tasks, goals, and checklists fully updated and in-sync with the current state of implementation.
+
+## 2. Walkthrough Artifacts
+- **Separate Walkthroughs**: Create a different, feature-specific Walkthrough document for each updated feature, bug fix, or iteration.
+- Do not mix unrelated updates or completely overwrite history in a single walkthrough if it spans distinct features. Use descriptive names like `/docs/walkthrough_feature_name.md` or similar to organize them.
+
+## 3. Git Operations & Push Policy
+- **Auto-Commit and Push**: Ensure changes are added and committed to git as tasks are completed.
+- **Push Conditional on Approval**: Always auto-push code updates to the remote git branch (`git push`), but **ONLY after receiving explicit approval from the user** for the proposed changes. Do not push unapproved code.
