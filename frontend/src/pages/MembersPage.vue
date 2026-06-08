@@ -120,18 +120,18 @@ async function save() {
     showModal.value = false;
     fetchData();
   } catch(e) {
-    formError.value = e.response?.data?.message || 'Error occurred';
+    formError.value = e.message || 'Error occurred';
     toast.error(formError.value);
   }
 }
 
 async function toggleActive(m) {
   try {
-    await memberService.toggleActive(m.id);
+    await memberService.update(m.id, { is_active: !m.is_active });
     toast.success('Member status updated');
     fetchData();
   } catch (e) {
-    toast.error(e.response?.data?.message || 'Error toggling status');
+    toast.error(e.message || 'Error toggling status');
   }
 }
 
@@ -149,7 +149,7 @@ async function doDelete() {
     deletingItem.value = null;
     fetchData();
   } catch (e) {
-    toast.error(e.response?.data?.message || 'Failed to delete');
+    toast.error(e.message || 'Failed to delete');
   }
 }
 
