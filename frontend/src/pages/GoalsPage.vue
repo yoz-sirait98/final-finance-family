@@ -6,10 +6,11 @@
     </div>
     <div id="tour-goals-list" class="row g-3">
       <div v-for="g in goals" :key="g.id" class="col-md-6 col-lg-4">
-        <div class="stat-card">
+        <div class="stat-card position-relative overflow-hidden" :class="{ 'goal-completed-card': g.progress_percentage >= 100 || g.status === 'completed' }">
           <div class="d-flex justify-content-between align-items-start mb-2">
             <div>
               <h6 class="fw-bold mb-0">
+                <i v-if="g.progress_percentage >= 100 || g.status === 'completed'" class="bi bi-star-fill text-warning me-1 bounce-animation"></i>
                 {{ g.name }}
               </h6>
               <div v-if="g.account_id" class="badge bg-info mt-1 mb-1 me-1"><i class="bi bi-link-45deg"></i> {{ g.account_name }}</div>
@@ -284,3 +285,80 @@ onUnmounted(() => {
   window.removeEventListener('start-goals-tour', () => startTour(goalsTourSteps));
 });
 </script>
+
+<style scoped>
+.goal-completed-card {
+  background: linear-gradient(135deg, #fffdf2 0%, #fffbf0 100%);
+  border: 1px solid #ffd700;
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.25);
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+/* Dark mode fallback for completed card */
+@media (prefers-color-scheme: dark) {
+  :global([data-theme="dark"]) .goal-completed-card {
+    background: linear-gradient(135deg, #2a2512 0%, #1f1b0a 100%);
+    border: 1px solid #c9a227;
+    box-shadow: 0 8px 25px rgba(201, 162, 39, 0.15);
+  }
+}
+
+/* Add a premium gold animated shine */
+.goal-completed-card::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255, 255, 255, 0.6) 50%, rgba(255,255,255,0) 100%);
+  transform: rotate(30deg);
+  animation: shine 4s infinite linear;
+  pointer-events: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :global([data-theme="dark"]) .goal-completed-card::after {
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255,255,255,0) 100%);
+  }
+}
+
+@keyframes shine {
+  0% { transform: translateX(-100%) rotate(30deg); }
+  20% { transform: translateX(100%) rotate(30deg); }
+  100% { transform: translateX(100%) rotate(30deg); }
+}
+
+.goal-completed-card .progress-bar {
+  background: linear-gradient(90deg, #fceabb, #f8b500) !important;
+  box-shadow: 0 0 10px rgba(248, 181, 0, 0.5);
+}
+
+.goal-completed-card .badge.bg-success, .goal-completed-card .badge.bg-primary {
+  background: linear-gradient(90deg, #fceabb, #f8b500) !important;
+  color: #6a4f00 !important;
+  box-shadow: 0 2px 5px rgba(248, 181, 0, 0.4);
+  font-weight: bold;
+}
+
+.goal-completed-card .fw-bold {
+  color: #b8860b;
+}
+
+@media (prefers-color-scheme: dark) {
+  :global([data-theme="dark"]) .goal-completed-card .fw-bold {
+    color: #e6c25e;
+  }
+}
+
+.bounce-animation {
+  display: inline-block;
+  animation: floatBounce 2s infinite ease-in-out;
+}
+
+@keyframes floatBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px) scale(1.1); }
+}
+</style>
