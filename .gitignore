@@ -4,3 +4,10 @@ dist/
 # Graphify ignored files
 graphify-out/cost.json
 graphify-out/cache/
+
+# Environment and Temporary Files
+**/.env
+**/.env.local
+**/.env.*.local
+**/.temp/
+.supabase/
