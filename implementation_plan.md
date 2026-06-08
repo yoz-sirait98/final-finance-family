@@ -10,10 +10,10 @@ This section outlines the complete strategy that was executed to migrate the Fam
 
 ## Phase 1 — Project Discovery Report
 
-### 1. Current System Architecture
+### 1. Migrated System Architecture
 - **Frontend**: Vue 3 SPA using Composition API, Vite, Pinia, Vue Router, and Bootstrap 5. Hosted on GitHub Pages (`yjsfinance.my.id`). Client-side features include PDF/CSV generation, interactive charts (Chart.js), and a guided tour (driver.js).
-- **Backend**: Laravel 11/12 REST API providing business logic, validation, and Sanctum token-based authentication. Hosted on Render via Docker.
-- **Database**: Currently using PostgreSQL hosted on Supabase (`db.bgauaxdtkiubfklllepf.supabase.co`), but all business logic resides in the Laravel layer. The schema relies on `user_id` to separate data per user/family.
+- **Backend**: Serverless architecture powered entirely by Supabase. Custom business logic, validation, and aggregations are handled via Supabase Auth, PostgreSQL Triggers, Row-Level Security (RLS) policies, database functions, and RPC endpoints. (The old Laravel REST API has been retired.)
+- **Database**: PostgreSQL hosted on Supabase, utilizing triggers and constraints to enforce core business rules. Data is isolated per family using a `family_id` column.
 
 ### 2. Feature Inventory
 - Authentication (Email/Password, Sanctum tokens)
@@ -38,9 +38,8 @@ This section outlines the complete strategy that was executed to migrate the Fam
 - **Recurring Transactions**: Must automatically generate new transactions when due, without duplicating, and advance the `next_due_date`.
 
 ### 4. Dependencies Inventory
-- **Frontend**: `vue`, `vue-router`, `pinia`, `axios`, `@tanstack/vue-query`, `bootstrap`, `bootstrap-icons`, `chart.js`, `jspdf`, `jspdf-autotable`, `driver.js`, `idb-keyval`.
-- **Backend (to be retired)**: Laravel framework, Sanctum.
-- **New Backend (Supabase)**: `@supabase/supabase-js`, `pg_cron` (Postgres extension).
+- **Frontend**: `vue`, `vue-router`, `pinia`, `@supabase/supabase-js`, `@tanstack/vue-query`, `bootstrap`, `bootstrap-icons`, `chart.js`, `jspdf`, `jspdf-autotable`, `driver.js`, `idb-keyval` (with the old `axios` package removed).
+- **Backend**: Supabase Serverless suite, PostgreSQL database with the `pg_cron` extension for scheduling automated recurring tasks.
 
 ### 5. Risks
 - **Data Integrity during Transition**: Moving balance calculations from PHP to Postgres PL/pgSQL triggers carries the risk of silent bugs if edge cases (like updating a transaction's amount *and* account simultaneously) are not handled correctly.
@@ -101,7 +100,7 @@ This section outlines the complete strategy that was executed to migrate the Fam
 
 #### [NEW] `supabase/migrations/000004_rpc_and_views.sql`
 - **`check_budget_guardrail(p_category_id, p_amount, p_date)`**: Returns `{ allowed, exceeded, remaining_budget, projected_balance }`.
-- **`get_dashboard_summary(p_family_id, p_month, p_year)`**: Returns aggregated data for the charts to replace the old Laravel DashboardService.
+- **`get_dashboard_summary(p_family_id, p_month, p_year)`**: Returns aggregated data for the charts.
 
 ### [Task 09] Recurring Transactions (Cron)
 
