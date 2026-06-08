@@ -34,3 +34,7 @@
 - `[x]` Task 27: Modify `dashboardService.js` to accept and forward parameter filters to the RPC
 - `[x]` Task 28: Refactor `ReportsPage.vue` to pass raw filter states directly to the service layer
 - `[x]` Task 29: Compile/build the project and verify no syntax or module loading errors
+
+## Part 4 — AI Assistant Graphify Integration
+- `[x]` Task 30: Install pipx and graphifyy package
+- `[x]` Task 31: Integrate Graphify skill for Antigravity assistant into `.agents` directory
