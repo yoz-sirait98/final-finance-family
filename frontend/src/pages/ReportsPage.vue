@@ -32,7 +32,7 @@
 
       <select v-model.number="selectedMember" class="form-select form-select-sm" style="width:auto" @change="loadCharts">
         <option :value="0">All Members</option>
-        <option v-for="m in members" :key="m.id" :value="m.id">{{ m.name }}</option>
+        <option v-for="m in members" :key="m.id" :value="m.id" v-if="m.is_active || m.id === selectedMember">{{ m.name }}</option>
       </select>
 
       <span class="text-muted small ms-1">— Month &amp; Member filters apply to pie charts only</span>
