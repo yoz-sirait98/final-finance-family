@@ -569,7 +569,14 @@ async function doDelete() {
   if (!deletingTx.value) return;
   deleting.value = true;
   try {
-    await transactionService.delete(deletingTx.value.id);
+    if (deletingTx.value.type === 'transfer' && deletingTx.value.transfer_id) {
+      await Promise.all([
+        transactionService.delete(deletingTx.value.id),
+        transactionService.delete(deletingTx.value.transfer_id)
+      ]);
+    } else {
+      await transactionService.delete(deletingTx.value.id);
+    }
     toast.success(localeStore.t('common.success'));
     showDeleteModal.value = false;
     deletingTx.value = null;
