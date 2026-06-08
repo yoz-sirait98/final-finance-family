@@ -43,7 +43,9 @@
           <div class="col-md-2">
             <select v-model="filters.member_id" class="form-select form-select-sm" @change="fetchData">
               <option value="">All Members</option>
-              <option v-for="m in members" :key="m.id" :value="m.id" v-if="m.is_active || m.id === filters.member_id">{{ m.name }}</option>
+              <template v-for="m in members" :key="m.id">
+                <option v-if="m.is_active || m.id === filters.member_id" :value="m.id">{{ m.name }}</option>
+              </template>
             </select>
           </div>
           <div class="col-md-2">
@@ -162,7 +164,9 @@
               <label class="form-label">Member</label>
               <select v-model="form.member_id" class="form-select" required>
                 <option value="" disabled>- Member -</option>
-                <option v-for="m in members" :key="m.id" :value="m.id" v-if="m.is_active || m.id === form.member_id">{{ m.name }}{{ !m.is_active ? ' (Inactive)' : '' }}</option>
+                <template v-for="m in members" :key="m.id">
+                  <option v-if="m.is_active || m.id === form.member_id" :value="m.id">{{ m.name }}{{ !m.is_active ? ' (Inactive)' : '' }}</option>
+                </template>
               </select>
             </div>
             <div class="mb-3">
@@ -219,7 +223,9 @@
               <label class="form-label">Member</label>
               <select v-model="transferForm.member_id" class="form-select" required>
                 <option value="" disabled>- Member -</option>
-                <option v-for="m in members" :key="m.id" :value="m.id" v-if="m.is_active || m.id === transferForm.member_id">{{ m.name }}{{ !m.is_active ? ' (Inactive)' : '' }}</option>
+                <template v-for="m in members" :key="m.id">
+                  <option v-if="m.is_active || m.id === transferForm.member_id" :value="m.id">{{ m.name }}{{ !m.is_active ? ' (Inactive)' : '' }}</option>
+                </template>
               </select>
             </div>
             <div class="mb-3">
