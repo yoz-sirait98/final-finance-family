@@ -178,8 +178,8 @@ async function loadCharts() {
   // 2. Fetch data
   const params = {
     year:      selectedYear.value,
-    month:     selectedMonth.value  || undefined,
-    member_id: selectedMember.value || undefined,
+    month:     selectedMonth.value,
+    member_id: selectedMember.value,
   };
 
   try {
