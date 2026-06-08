@@ -2,8 +2,8 @@ export const reportsTourSteps = [
   {
     element: '#tour-reports-header',
     popover: {
-      title: '📈 Reports',
-      description: 'Deep-dive into your family\'s financial data with detailed reports, charts, and exportable summaries.',
+      title: 'tours.reports.header.title',
+      description: 'tours.reports.header.description',
       side: 'bottom',
       align: 'start',
     },
@@ -11,8 +11,8 @@ export const reportsTourSteps = [
   {
     element: '#tour-reports-filters',
     popover: {
-      title: '🗓️ Date Range Filter',
-      description: 'Select a custom date range to analyze any time period. You can view weekly, monthly, quarterly, or yearly data.',
+      title: 'tours.reports.filters.title',
+      description: 'tours.reports.filters.description',
       side: 'bottom',
       align: 'start',
     },
@@ -20,8 +20,8 @@ export const reportsTourSteps = [
   {
     element: '#tour-reports-charts',
     popover: {
-      title: '📊 Visual Reports',
-      description: 'Charts give you an instant visual overview of your income vs. expenses, top spending categories, and trends over time.',
+      title: 'tours.reports.charts.title',
+      description: 'tours.reports.charts.description',
       side: 'top',
       align: 'center',
     },
@@ -29,8 +29,8 @@ export const reportsTourSteps = [
   {
     element: '#tour-reports-export',
     popover: {
-      title: '📄 Export to PDF',
-      description: 'Download a formatted PDF report of your financial data to share with your family or keep for your records.',
+      title: 'tours.reports.export.title',
+      description: 'tours.reports.export.description',
       side: 'left',
       align: 'start',
     },

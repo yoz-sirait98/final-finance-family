@@ -1,8 +1,13 @@
 <template>
   <div class="budgets-page fade-in">
     <div id="tour-budgets-header" class="page-header d-flex justify-content-between align-items-center">
-      <div><h4>Budgets</h4><p>Set budgets per category for this month</p></div>
-      <button id="tour-budgets-add-btn" class="btn btn-primary-gradient" @click="openCreate"><i class="bi bi-plus-lg me-1"></i>Set Budget</button>
+      <div>
+        <h4>{{ $t('budgets.title') }}</h4>
+        <p>{{ $t('budgets.subtitle') }}</p>
+      </div>
+      <button id="tour-budgets-add-btn" class="btn btn-primary-gradient" @click="openCreate">
+        <i class="bi bi-plus-lg me-1"></i>{{ $t('budgets.addBudget') }}
+      </button>
     </div>
     
     <div id="tour-budgets-list" class="row g-3">
@@ -16,18 +21,21 @@
             </div>
           </div>
           <div class="d-flex justify-content-between small text-muted mb-1">
-            <span>Spent: Rp {{ Number(b.spent || 0).toLocaleString('id-ID') }}</span>
-            <span>Budget: Rp {{ Number(b.amount || 0).toLocaleString('id-ID') }}</span>
+            <span>{{ $t('budgets.spent') }}: Rp {{ Number(b.spent || 0).toLocaleString('id-ID') }}</span>
+            <span>{{ $t('budgets.limit') }}: Rp {{ Number(b.amount || 0).toLocaleString('id-ID') }}</span>
           </div>
           <div class="progress mb-2">
             <div class="progress-bar" :class="b.percentage >= 80 ? 'bg-danger' : b.percentage >= 50 ? 'bg-warning' : 'bg-success'" :style="{ width: Math.min(100, b.percentage || 0) + '%' }"></div>
           </div>
           <div class="d-flex justify-content-between small">
-            <span :class="b.percentage >= 80 ? 'text-danger fw-bold' : 'text-muted'">{{ (b.percentage || 0).toFixed(1) }}% used</span>
-            <span class="text-muted">Remaining: Rp {{ Number(b.remaining || 0).toLocaleString('id-ID') }}</span>
+            <span :class="b.percentage >= 80 ? 'text-danger fw-bold' : 'text-muted'">
+              {{ $t('budgets.used', { percentage: (b.percentage || 0).toFixed(1) }) }}
+            </span>
+            <span class="text-muted">{{ $t('budgets.remaining') }}: Rp {{ Number(b.remaining || 0).toLocaleString('id-ID') }}</span>
           </div>
           <div v-if="b.is_over_threshold" class="alert alert-danger small mt-2 mb-0 py-1 px-2">
-            <i class="bi bi-exclamation-triangle me-1"></i>Budget threshold exceeded!
+            <i class="bi bi-exclamation-triangle me-1"></i>
+            {{ localeStore.currentLocale === 'id' ? 'Batas anggaran terlampaui!' : 'Budget threshold exceeded!' }}
           </div>
         </div>
       </div>
@@ -37,7 +45,7 @@
     <div v-if="showModal" class="vue-modal-backdrop" @mousedown.self="showModal = false">
       <div class="vue-modal">
         <div class="modal-header">
-          <h5 class="modal-title">{{ editingId ? 'Edit' : 'Set' }} Budget</h5>
+          <h5 class="modal-title">{{ editingId ? $t('budgets.editBudget') : $t('budgets.addBudget') }}</h5>
           <button type="button" class="btn-close" @click="showModal = false"></button>
         </div>
         <form @submit.prevent="save">
@@ -45,34 +53,34 @@
             <div v-if="formError" class="alert alert-danger small">{{ formError }}</div>
             
             <div class="mb-3">
-              <label class="form-label">Category</label>
+              <label class="form-label">{{ $t('common.category') }}</label>
               <select v-model="form.category_id" class="form-select" required>
-                <option value="" disabled>- Category -</option>
+                <option value="" disabled>- {{ $t('common.category') }} -</option>
                 <option v-for="c in expenseCategories" :key="'cat-'+c.id" :value="c.id">{{ c.name }}</option>
               </select>
             </div>
             
             <div class="mb-3">
-              <label class="form-label">Amount (Rp)</label>
+              <label class="form-label">{{ $t('common.amount') }} (Rp)</label>
               <input v-model.number="form.amount" type="number" class="form-control" min="0" required />
             </div>
             
             <div class="row">
               <div class="col-6 mb-3">
-                <label class="form-label">Month</label>
+                <label class="form-label">{{ localeStore.currentLocale === 'id' ? 'Bulan' : 'Month' }}</label>
                 <select v-model="form.month" class="form-select" required>
                   <option v-for="m in 12" :key="'m-'+m" :value="m">{{ m }}</option>
                 </select>
               </div>
               <div class="col-6 mb-3">
-                <label class="form-label">Year</label>
+                <label class="form-label">{{ localeStore.currentLocale === 'id' ? 'Tahun' : 'Year' }}</label>
                 <input v-model.number="form.year" type="number" class="form-control" required />
               </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="showModal = false">Cancel</button>
-            <button type="submit" class="btn btn-primary-gradient">Save</button>
+            <button type="button" class="btn btn-secondary" @click="showModal = false">{{ $t('common.cancel') }}</button>
+            <button type="submit" class="btn btn-primary-gradient">{{ $t('common.save') }}</button>
           </div>
         </form>
       </div>
@@ -82,15 +90,15 @@
     <div v-if="showDeleteModal" class="vue-modal-backdrop" @mousedown.self="showDeleteModal = false">
       <div class="vue-modal" style="max-width:420px">
         <div class="modal-header border-0 pb-0">
-          <h5 class="modal-title text-danger"><i class="bi bi-exclamation-triangle me-2"></i>Delete Budget</h5>
+          <h5 class="modal-title text-danger"><i class="bi bi-exclamation-triangle me-2"></i>{{ $t('common.delete') }} {{ $t('budgets.title') }}</h5>
           <button type="button" class="btn-close" @click="showDeleteModal = false"></button>
         </div>
         <div class="modal-body">
-          <p class="mb-0">Are you sure you want to delete the budget? This cannot be undone.</p>
+          <p class="mb-0">{{ $t('common.confirmDelete') }}</p>
         </div>
         <div class="modal-footer border-0 pt-0">
-          <button type="button" class="btn btn-secondary" @click="showDeleteModal = false">Cancel</button>
-          <button type="button" class="btn btn-danger" @click="doDelete">Delete</button>
+          <button type="button" class="btn btn-secondary" @click="showDeleteModal = false">{{ $t('common.cancel') }}</button>
+          <button type="button" class="btn btn-danger" @click="doDelete">{{ $t('common.delete') }}</button>
         </div>
       </div>
     </div>
@@ -105,6 +113,7 @@ import { budgetService } from '../services/budgetService';
 import { categoryService } from '../services/categoryService';
 import { useToastStore } from '../stores/toast';
 import { useBudgetStore } from '../stores/budgets';
+import { useLocaleStore } from '../stores/locale';
 
 const budgets = ref([]);
 const expenseCategories = ref([]);
@@ -116,6 +125,7 @@ const deletingItem = ref(null);
 
 const toast = useToastStore();
 const budgetStore = useBudgetStore();
+const localeStore = useLocaleStore();
 
 // Clean reactive blueprint generating fresh addresses to avoid GC tracking diff bugs.
 const initialFormState = () => {
@@ -183,16 +193,16 @@ async function save() {
   try {
     if (editingId.value) {
       await budgetService.update(editingId.value, payload);
-      toast.success('Budget updated successfully');
+      toast.success(localeStore.t('common.success'));
     } else {
       await budgetService.create(payload);
-      toast.success('Budget created successfully');
+      toast.success(localeStore.t('common.success'));
     }
     showModal.value = false;
     fetchData();
     budgetStore.fetchAlerts(); 
   } catch(e) {
-    formError.value = e.response?.data?.message || 'Error occurred while saving budget.';
+    formError.value = e.response?.data?.message || localeStore.t('common.error');
     toast.error(formError.value);
   }
 }
@@ -206,13 +216,13 @@ async function doDelete() {
   if (!deletingItem.value) return;
   try {
     await budgetService.delete(deletingItem.value.id);
-    toast.success('Budget deleted successfully');
+    toast.success(localeStore.t('common.success'));
     showDeleteModal.value = false;
     deletingItem.value = null;
     fetchData();
     budgetStore.fetchAlerts(); 
   } catch(e) {
-    toast.error(e.response?.data?.message || 'Failed to delete budget');
+    toast.error(e.response?.data?.message || localeStore.t('common.error'));
   }
 }
 

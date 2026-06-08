@@ -1,0 +1,430 @@
+{
+  "common": {
+    "save": "Simpan",
+    "cancel": "Batal",
+    "add": "Tambah",
+    "edit": "Ubah",
+    "delete": "Hapus",
+    "actions": "Aksi",
+    "loading": "Memuat...",
+    "success": "Berhasil",
+    "error": "Gagal",
+    "description": "Deskripsi",
+    "name": "Nama",
+    "amount": "Jumlah",
+    "category": "Kategori",
+    "account": "Dompet / Rekening",
+    "date": "Tanggal",
+    "status": "Status",
+    "search": "Cari",
+    "close": "Tutup",
+    "confirm": "Konfirmasi",
+    "back": "Kembali",
+    "next": "Lanjut",
+    "done": "Selesai",
+    "active": "Aktif",
+    "inactive": "Tidak Aktif",
+    "completed": "Selesai",
+    "cancelled": "Dibatalkan",
+    "view": "Lihat",
+    "none": "Tidak Ada",
+    "all": "Semua",
+    "type": "Tipe",
+    "income": "Pemasukan",
+    "expense": "Pengeluaran",
+    "transfer": "Transfer",
+    "role": "Peran",
+    "member": "Anggota",
+    "confirmDelete": "Apakah Anda yakin ingin menghapus data ini? Aksi ini tidak dapat dibatalkan."
+  },
+  "nav": {
+    "dashboard": "Dasbor",
+    "transactions": "Transaksi",
+    "accounts": "Rekening & Dompet",
+    "categories": "Kategori",
+    "budgets": "Anggaran",
+    "goals": "Target Menabung",
+    "recurring": "Transaksi Berulang",
+    "members": "Anggota Keluarga",
+    "reports": "Laporan",
+    "settings": "Pengaturan",
+    "main": "Utama",
+    "management": "Pengelolaan",
+    "analytics": "Analisis",
+    "brand": "Keuangan Keluarga",
+    "budgetAlerts": "Peringatan Anggaran",
+    "noAlerts": "Tidak ada peringatan anggaran",
+    "logout": "Keluar",
+    "replayTour": "Ulang Panduan"
+  },
+  "auth": {
+    "login": {
+      "title": "Keuangan Keluarga",
+      "subtitle": "Masuk untuk mengelola keuangan keluarga Anda",
+      "email": "Email",
+      "emailPlaceholder": "keluarga@example.com",
+      "password": "Kata Sandi",
+      "passwordPlaceholder": "Masukkan kata sandi",
+      "signIn": "Masuk",
+      "signingIn": "Sedang masuk...",
+      "newHere": "Belum punya akun?",
+      "createAccount": "Daftar akun baru",
+      "failed": "Gagal masuk. Silakan periksa kembali email & kata sandi Anda."
+    },
+    "register": {
+      "title": "Keuangan Keluarga",
+      "subtitle": "Daftar akun keluarga baru",
+      "familyName": "Nama Keluarga",
+      "familyNamePlaceholder": "contoh: Keluarga Surya",
+      "email": "Email",
+      "emailPlaceholder": "keluarga@example.com",
+      "password": "Kata Sandi",
+      "passwordPlaceholder": "Minimal 8 karakter",
+      "confirmPassword": "Konfirmasi Kata Sandi",
+      "confirmPasswordPlaceholder": "Ulangi kata sandi",
+      "createAccount": "Daftar Sekarang",
+      "creatingAccount": "Sedang mendaftarkan...",
+      "alreadyHaveAccount": "Sudah memiliki akun?",
+      "signIn": "Masuk di sini",
+      "passwordMismatch": "Kata sandi konfirmasi tidak cocok.",
+      "success": "Pendaftaran berhasil. Selamat datang!"
+    }
+  },
+  "settings": {
+    "title": "Pengaturan",
+    "subtitle": "Kelola profil dan preferensi aplikasi Anda",
+    "profile": "Profil",
+    "changePassword": "Ubah Kata Sandi",
+    "currentPassword": "Kata Sandi Saat Ini",
+    "newPassword": "Kata Sandi Baru",
+    "confirmPassword": "Konfirmasi Kata Sandi Baru",
+    "updatePassword": "Perbarui Kata Sandi",
+    "updatingPassword": "Memperbarui...",
+    "passwordSuccess": "Kata sandi berhasil diperbarui!",
+    "languagePref": "Preferensi Bahasa",
+    "selectLanguage": "Pilih Bahasa"
+  },
+  "dashboard": {
+    "period": "Periode:",
+    "periodSub": "— Grafik Pemasukan vs Pengeluaran selalu menampilkan data satu tahun penuh",
+    "insights": "Analisis Keuangan (AI)",
+    "insightsNew": "{count} baru",
+    "totalBalance": "Total Saldo",
+    "monthlyIncome": "Pemasukan — {period}",
+    "monthlyExpense": "Pengeluaran — {period}",
+    "monthlyNet": "Saldo Bersih — {period}",
+    "expenseByCategory": "Pengeluaran per Kategori",
+    "incomeVsExpense": "Pemasukan vs Pengeluaran — {year}",
+    "expenseTrend": "Tren Pengeluaran (6 Bulan Terakhir)",
+    "netWorthGrowth": "Pertumbuhan Kekayaan Bersih",
+    "noTransactions": "Belum ada transaksi recorded",
+    "noNetWorth": "Belum ada riwayat kekayaan bersih",
+    "months": {
+      "1": "Januari", "2": "Februari", "3": "Maret", "4": "April",
+      "5": "Mei", "6": "Juni", "7": "Juli", "8": "Agustus",
+      "9": "September", "10": "Oktober", "11": "November", "12": "Desember"
+    },
+    "monthsAbbr": {
+      "1": "Jan", "2": "Feb", "3": "Mar", "4": "Apr",
+      "5": "Mei", "6": "Jun", "7": "Jul", "8": "Ags",
+      "9": "Sep", "10": "Okt", "11": "Nov", "12": "Des"
+    }
+  },
+  "transactions": {
+    "title": "Daftar Transaksi",
+    "subtitle": "Pantau dan kelola arus kas keluarga Anda",
+    "addTransaction": "Tambah Transaksi",
+    "editTransaction": "Ubah Transaksi",
+    "searchPlaceholder": "Cari transaksi...",
+    "allAccounts": "Semua Rekening",
+    "allCategories": "Semua Kategori",
+    "allMembers": "Semua Anggota",
+    "clearFilters": "Hapus Filter",
+    "fromAccount": "Dari Rekening",
+    "toAccount": "Ke Rekening",
+    "amountPlaceholder": "Masukkan jumlah",
+    "datePlaceholder": "Pilih tanggal",
+    "descriptionPlaceholder": "contoh: Belanja bulanan",
+    "savingInGoal": "Masukkan ke Target Menabung?",
+    "savingGoal": "Target Menabung",
+    "savingGoalInfo": "Menghubungkan target akan memotong dana dari rekening sumber dan menyimpannya di kantong tabungan target.",
+    "selectGoal": "Pilih Target Menabung",
+    "selectCategory": "Pilih Kategori",
+    "selectAccount": "Pilih Rekening / Dompet",
+    "selectMember": "Pilih Anggota Keluarga",
+    "budgetWarning": "⚠️ Peringatan Anggaran: Anda telah menggunakan {used}% dari anggaran untuk kategori {category}.",
+    "budgetExceeded": "⚠️ Anggaran Terlampaui: Menambahkan transaksi sebesar {amount} ini akan melebihi anggaran kategori {category} sebanyak {exceeded}!",
+    "budgetExceededProceed": "Apakah Anda tetap ingin melanjutkan transaksi?",
+    "budgetLimit": "Batas Anggaran",
+    "alreadySpent": "Terpakai",
+    "thisTransaction": "Transaksi Ini",
+    "totalAfterSave": "Total Setelah Simpan",
+    "yesSaveAnyway": "Ya, tetap simpan",
+    "budgetExceededMsg": "Pengeluaran ini akan melebihi anggaran {category} Anda untuk bulan ini.",
+    "validation": {
+      "amount": "Silakan masukkan jumlah nominal yang valid.",
+      "category": "Silakan pilih kategori terlebih dahulu.",
+      "account": "Silakan pilih rekening / dompet terlebih dahulu.",
+      "member": "Silakan pilih anggota keluarga terlebih dahulu.",
+      "transferSame": "Rekening asal dan tujuan transfer tidak boleh sama."
+    }
+  },
+  "accounts": {
+    "title": "Rekening & Dompet",
+    "subtitle": "Kelola rekening bank, uang tunai, dan dompet digital Anda",
+    "addAccount": "Tambah Rekening / Dompet",
+    "editAccount": "Ubah Rekening / Dompet",
+    "accountName": "Nama Rekening / Dompet",
+    "accountNamePlaceholder": "contoh: Tabungan BCA, Uang Dompet",
+    "type": {
+      "bank": "Bank / Tabungan",
+      "cash": "Tunai",
+      "e_wallet": "Dompet Digital (E-Wallet)"
+    },
+    "balance": "Saldo",
+    "balancePlaceholder": "Saldo awal",
+    "walletDetails": "Rincian Dompet / Rekening",
+    "validation": {
+      "name": "Silakan masukkan nama rekening / dompet.",
+      "type": "Silakan pilih tipe rekening / dompet."
+    }
+  },
+  "budgets": {
+    "title": "Anggaran Kategori",
+    "subtitle": "Atur batas maksimal pengeluaran bulanan per kategori",
+    "addBudget": "Tambah Anggaran",
+    "editBudget": "Ubah Anggaran",
+    "limit": "Batas Anggaran",
+    "limitPlaceholder": "Batas pengeluaran bulanan",
+    "spent": "Terpakai",
+    "remaining": "Sisa",
+    "alertThreshold": "Batas Peringatan (%)",
+    "alertThresholdPlaceholder": "contoh: 80",
+    "used": "{percentage}% terpakai",
+    "warningLimit": "Peringatan pada {threshold}%",
+    "validation": {
+      "category": "Silakan pilih kategori terlebih dahulu.",
+      "limit": "Silakan masukkan jumlah batas anggaran yang valid.",
+      "threshold": "Silakan masukkan persentase antara 1 dan 100."
+    }
+  },
+  "categories": {
+    "title": "Kategori Keuangan",
+    "subtitle": "Kategorikan transaksi Anda dengan label khusus",
+    "addCategory": "Tambah Kategori",
+    "editCategory": "Ubah Kategori",
+    "icon": "Ikon",
+    "color": "Warna",
+    "validation": {
+      "name": "Silakan masukkan nama kategori.",
+      "type": "Silakan pilih tipe kategori."
+    }
+  },
+  "goals": {
+    "title": "Target Menabung",
+    "subtitle": "Pantau pencapaian tabungan untuk impian Anda",
+    "addGoal": "Tambah Target",
+    "editGoal": "Ubah Target",
+    "targetAmount": "Jumlah Target",
+    "targetAmountPlaceholder": "contoh: 5000000",
+    "currentAmount": "Jumlah Progres Saat Ini",
+    "deadline": "Tenggat Waktu",
+    "linkedAccount": "Rekening / Kantong Terhubung",
+    "linkedAccountInfo": "Ketika uang disetor ke atau diambil dari rekening ini, progres nominal target akan diperbarui secara otomatis.",
+    "selectAccount": "Pilih Rekening (Opsional)",
+    "completedManuallyError": "Target menabung tidak dapat ditandai selesai secara manual jika nominal target belum tercapai.",
+    "validation": {
+      "name": "Silakan masukkan nama target menabung.",
+      "target": "Silakan masukkan jumlah target nominal yang valid.",
+      "deadline": "Silakan pilih tanggal tenggat waktu."
+    }
+  },
+  "recurring": {
+    "title": "Transaksi Berulang",
+    "subtitle": "Otomatisasi pengeluaran bulanan/mingguan Anda (Khusus Pengeluaran)",
+    "addRecurring": "Tambah Pengeluaran Berulang",
+    "editRecurring": "Ubah Pengeluaran Berulang",
+    "interval": "Interval / Siklus",
+    "nextDue": "Tanggal Jatuh Tempo Berikutnya",
+    "intervals": {
+      "weekly": "Mingguan",
+      "monthly": "Bulanan",
+      "yearly": "Tahunan"
+    },
+    "validation": {
+      "name": "Silakan masukkan deskripsi pengeluaran.",
+      "category": "Silakan pilih kategori.",
+      "account": "Silakan pilih rekening.",
+      "member": "Silakan pilih anggota keluarga.",
+      "interval": "Silakan pilih interval waktu.",
+      "nextDue": "Silakan pilih tanggal mulai jatuh tempo.",
+      "amount": "Silakan masukkan jumlah nominal yang valid."
+    }
+  },
+  "members": {
+    "title": "Anggota Keluarga",
+    "subtitle": "Kelola profil anggota keluarga dan akses masuk mereka",
+    "addMember": "Tambah Anggota",
+    "editMember": "Ubah Anggota",
+    "roles": {
+      "father": "Ayah",
+      "mother": "Ibu",
+      "child": "Anak"
+    },
+    "validation": {
+      "name": "Silakan masukkan nama anggota.",
+      "role": "Silakan pilih peran."
+    }
+  },
+  "reports": {
+    "title": "Ekspor Laporan",
+    "subtitle": "Ekspor catatan transaksi keluarga Anda ke format CSV atau PDF",
+    "startDate": "Tanggal Mulai",
+    "endDate": "Tanggal Selesai",
+    "exportCsv": "Ekspor ke CSV",
+    "exportPdf": "Ekspor ke PDF",
+    "generating": "Sedang membuat...",
+    "validation": {
+      "dates": "Silakan pilih tanggal mulai dan tanggal selesai.",
+      "order": "Tanggal mulai harus sebelum atau sama dengan tanggal selesai."
+    }
+  },
+  "tours": {
+    "btn": {
+      "next": "Lanjut →",
+      "prev": "← Kembali",
+      "done": "Selesai ✓"
+    },
+    "progress": "{{current}} dari {{total}}",
+    "dashboard": {
+      "period": {
+        "title": "📅 Filter Periode",
+        "description": "Pilih bulan dan tahun untuk menyaring data dasbor Anda. Grafik dan kartu ringkasan akan diperbarui secara otomatis."
+      },
+      "balance": {
+        "title": "💰 Total Saldo",
+        "description": "Total saldo keuangan keluarga Anda di seluruh dompet/rekening terhubung, dihitung secara waktu nyata."
+      },
+      "income": {
+        "title": "📈 Pemasukan Bulanan",
+        "description": "Total pemasukan yang dicatat oleh semua anggota keluarga untuk bulan yang dipilih."
+      },
+      "expense": {
+        "title": "📉 Pengeluaran Bulanan",
+        "description": "Total pengeluaran untuk bulan yang dipilih. Pantau nilai ini agar tetap sesuai dengan rencana anggaran."
+      },
+      "net": {
+        "title": "⚖️ Saldo Bersih",
+        "description": "Pemasukan dikurangi pengeluaran. Hijau menandakan Anda menabung, merah menandakan pengeluaran melebihi pemasukan."
+      },
+      "insights": {
+        "title": "✨ Analisis AI Keuangan",
+        "description": "Tips cerdas yang dihasilkan secara otomatis dari pola transaksi Anda. Klik judul untuk membuka rekomendasi pribadi."
+      },
+      "charts": {
+        "title": "📊 Grafik & Analisis",
+        "description": "Visualisasikan pengeluaran per kategori, bandingkan pemasukan vs pengeluaran, pantau tren pengeluaran, dan ikuti grafik kekayaan bersih Anda."
+      }
+    },
+    "transactions": {
+      "header": {
+        "title": "💸 Transaksi",
+        "description": "Ini adalah pusat utama untuk mengelola semua transaksi keuangan keluarga — pemasukan, pengeluaran, dan transfer."
+      },
+      "add": {
+        "title": "➕ Tambah Transaksi",
+        "description": "Klik di sini untuk mencatat pemasukan atau pengeluaran baru. Anda dapat menetapkannya ke anggota keluarga, rekening, dan kategori."
+      },
+      "transfer": {
+        "title": "🔄 Transfer Antar Rekening",
+        "description": "Pindahkan uang antar rekening keluarga — contohnya dari rekening bank ke dompet digital."
+      },
+      "filters": {
+        "title": "🔍 Filter Pintar",
+        "description": "Saring transaksi berdasarkan tipe (pemasukan/pengeluaran), kategori, anggota, rekening, atau rentang tanggal. Gunakan kolom pencarian untuk menemukan transaksi dengan cepat."
+      },
+      "table": {
+        "title": "📋 Daftar Transaksi",
+        "description": "Semua transaksi tercantum di sini. Klik kepala kolom untuk menyortir. Gunakan tombol aksi ✏️ Ubah, 📋 Duplikat, dan 🗑️ Hapus pada setiap baris."
+      }
+    },
+    "accounts": {
+      "header": {
+        "title": "🏦 Rekening & Dompet",
+        "description": "Kelola semua rekening keuangan keluarga Anda di satu tempat — rekening bank, dompet digital, tunai, dan lainnya."
+      },
+      "add": {
+        "title": "➕ Tambah Rekening",
+        "description": "Klik di sini untuk menambah rekening baru. Pilih tipe rekening (bank, dompet digital, tunai, dll.) dan tentukan saldo awal."
+      },
+      "list": {
+        "title": "💳 Kartu Rekening",
+        "description": "Setiap kartu menampilkan nama, tipe, dan saldo rekening saat ini. Saldo diperbarui otomatis saat Anda menambah transaksi. Gunakan tombol Ubah dan Hapus untuk mengelola tiap rekening."
+      }
+    },
+    "budgets": {
+      "header": {
+        "title": "🎯 Anggaran",
+        "description": "Tetapkan batas pengeluaran bulanan untuk setiap kategori pengeluaran. Aplikasi akan memperingatkan Anda saat pengeluaran mendekati atau melebihi anggaran."
+      },
+      "add": {
+        "title": "➕ Buat Anggaran",
+        "description": "Klik di sini untuk menetapkan batas anggaran bulanan pada kategori pengeluaran. Anda dapat mengatur jumlah yang berbeda untuk bulan yang berbeda."
+      },
+      "list": {
+        "title": "📊 Kartu Anggaran",
+        "description": "Setiap kartu menampilkan batas anggaran kategori, jumlah yang telah digunakan, dan sisa anggaran. Warna akan berubah dari hijau → kuning → merah saat mendekati batas."
+      },
+      "alerts": {
+        "title": "🔔 Peringatan Anggaran",
+        "description": "Ketika ada anggaran yang melebihi batas, lencana merah akan muncul pada ikon lonceng di sini. Klik untuk melihat semua kategori yang melebihi anggaran."
+      }
+    },
+    "goals": {
+      "header": {
+        "title": "🏆 Target Menabung",
+        "description": "Tetapkan target menabung untuk keluarga Anda — dana liburan, dana darurat, barang baru, apa saja yang ingin dicapai bersama."
+      },
+      "add": {
+        "title": "➕ Tambah Target",
+        "description": "Klik di sini untuk membuat target baru. Tentukan nama, jumlah target, dan tenggat waktu. Aplikasi akan memantau progres secara otomatis."
+      },
+      "list": {
+        "title": "🎯 Kartu Target",
+        "description": "Setiap kartu menampilkan nama target, jumlah target, progres saat ini, dan tenggat waktu. Bilah kemajuan akan terisi seiring mendekati target Anda."
+      }
+    },
+    "recurring": {
+      "header": {
+        "title": "🔁 Transaksi Berulang",
+        "description": "Otomatisasi pemasukan dan pengeluaran rutin Anda — sewa, langganan, gaji, tagihan bulanan — agar tidak lupa mencatatnya."
+      },
+      "add": {
+        "title": "➕ Tambah Berulang",
+        "description": "Klik di sini untuk mengatur transaksi berulang. Tentukan jumlah, kategori, frekuensi (mingguan/bulanan/tahunan), dan tanggal mulai."
+      },
+      "list": {
+        "title": "📋 Daftar Berulang",
+        "description": "Semua transaksi berulang terdaftar di sini beserta tanggal jatuh tempo berikutnya dan frekuensi. Anda dapat menjeda, mengubah, atau menghapus item."
+      }
+    },
+    "reports": {
+      "header": {
+        "title": "📈 Laporan",
+        "description": "Analisis mendalam data keuangan keluarga Anda dengan laporan rinci, grafik, dan ringkasan yang dapat diekspor."
+      },
+      "filters": {
+        "title": "🗓️ Filter Rentang Tanggal",
+        "description": "Pilih rentang tanggal kustom untuk menganalisis periode waktu apa pun. Anda dapat melihat data mingguan, bulanan, triwulanan, atau tahunan."
+      },
+      "charts": {
+        "title": "📊 Laporan Visual",
+        "description": "Grafik memberikan ringkasan visual instan mengenai pemasukan vs pengeluaran, kategori pengeluaran teratas, dan tren dari waktu ke waktu."
+      },
+      "export": {
+        "title": "📄 Ekspor ke PDF",
+        "description": "Unduh laporan PDF terformat dari data keuangan Anda untuk dibagikan dengan keluarga atau disimpan sebagai arsip."
+      }
+    }
+  }
+}

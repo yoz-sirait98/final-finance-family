@@ -2,8 +2,8 @@ export const transactionsTourSteps = [
   {
     element: '#tour-tx-header',
     popover: {
-      title: '💸 Transactions',
-      description: 'This is your central hub for managing all family financial transactions — income, expenses, and transfers.',
+      title: 'tours.transactions.header.title',
+      description: 'tours.transactions.header.description',
       side: 'bottom',
       align: 'start',
     },
@@ -11,8 +11,8 @@ export const transactionsTourSteps = [
   {
     element: '#tour-tx-add-btn',
     popover: {
-      title: '➕ Add Transaction',
-      description: 'Click here to record a new income or expense. You can assign it to a family member, account, and category.',
+      title: 'tours.transactions.add.title',
+      description: 'tours.transactions.add.description',
       side: 'left',
       align: 'start',
     },
@@ -20,8 +20,8 @@ export const transactionsTourSteps = [
   {
     element: '#tour-tx-transfer-btn',
     popover: {
-      title: '🔄 Transfer Between Accounts',
-      description: 'Move money between your family\'s accounts — for example from your bank account to an e-wallet.',
+      title: 'tours.transactions.transfer.title',
+      description: 'tours.transactions.transfer.description',
       side: 'left',
       align: 'start',
     },
@@ -29,8 +29,8 @@ export const transactionsTourSteps = [
   {
     element: '#tour-tx-filters',
     popover: {
-      title: '🔍 Smart Filters',
-      description: 'Filter transactions by type (income/expense), category, member, account, or date range. Use the search box to find specific transactions quickly.',
+      title: 'tours.transactions.filters.title',
+      description: 'tours.transactions.filters.description',
       side: 'bottom',
       align: 'start',
     },
@@ -38,8 +38,8 @@ export const transactionsTourSteps = [
   {
     element: '#tour-tx-table',
     popover: {
-      title: '📋 Transaction List',
-      description: 'All transactions are listed here. Click the column headers to sort. Use the ✏️ Edit, 📋 Duplicate, and 🗑️ Delete action buttons on each row.',
+      title: 'tours.transactions.table.title',
+      description: 'tours.transactions.table.description',
       side: 'top',
       align: 'center',
     },

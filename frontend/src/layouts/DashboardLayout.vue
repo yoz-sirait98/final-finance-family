@@ -11,73 +11,73 @@
     <aside class="sidebar" :class="{ collapsed: sidebarCollapsed, 'mobile-open': mobileOpen }">
       <div class="sidebar-brand" @dblclick="router.push('/gem')" style="cursor: pointer;" title="Double click for a surprise!">
         <i class="bi bi-wallet2 brand-icon"></i>
-        <span class="brand-text">Family Finance</span>
+        <span class="brand-text">{{ $t('nav.brand') }}</span>
       </div>
 
       <nav class="sidebar-nav">
-        <span class="sidebar-section-title">Main</span>
+        <span class="sidebar-section-title">{{ $t('nav.main') }}</span>
         <div class="nav-item">
           <router-link to="/" class="nav-link" @click="closeMobile">
             <i class="bi bi-grid-1x2"></i>
-            <span class="nav-text">Dashboard</span>
+            <span class="nav-text">{{ $t('nav.dashboard') }}</span>
           </router-link>
         </div>
         <div class="nav-item">
           <router-link to="/transactions" class="nav-link" @click="closeMobile">
             <i class="bi bi-arrow-left-right"></i>
-            <span class="nav-text">Transactions</span>
+            <span class="nav-text">{{ $t('nav.transactions') }}</span>
           </router-link>
         </div>
         <div class="nav-item">
           <router-link to="/accounts" class="nav-link" @click="closeMobile">
             <i class="bi bi-bank"></i>
-            <span class="nav-text">Accounts</span>
+            <span class="nav-text">{{ $t('nav.accounts') }}</span>
           </router-link>
         </div>
 
-        <span class="sidebar-section-title">Management</span>
+        <span class="sidebar-section-title">{{ $t('nav.management') }}</span>
         <div class="nav-item">
           <router-link to="/categories" class="nav-link" @click="closeMobile">
             <i class="bi bi-tags"></i>
-            <span class="nav-text">Categories</span>
+            <span class="nav-text">{{ $t('nav.categories') }}</span>
           </router-link>
         </div>
         <div class="nav-item">
           <router-link to="/budgets" class="nav-link" @click="closeMobile">
             <i class="bi bi-pie-chart"></i>
-            <span class="nav-text">Budgets</span>
+            <span class="nav-text">{{ $t('nav.budgets') }}</span>
           </router-link>
         </div>
         <div class="nav-item">
           <router-link to="/goals" class="nav-link" @click="closeMobile">
             <i class="bi bi-trophy"></i>
-            <span class="nav-text">Goals</span>
+            <span class="nav-text">{{ $t('nav.goals') }}</span>
           </router-link>
         </div>
         <div class="nav-item">
           <router-link to="/recurring" class="nav-link" @click="closeMobile">
             <i class="bi bi-arrow-repeat"></i>
-            <span class="nav-text">Recurring</span>
+            <span class="nav-text">{{ $t('nav.recurring') }}</span>
           </router-link>
         </div>
         <div class="nav-item">
           <router-link to="/members" class="nav-link" @click="closeMobile">
             <i class="bi bi-people"></i>
-            <span class="nav-text">Members</span>
+            <span class="nav-text">{{ $t('nav.members') }}</span>
           </router-link>
         </div>
 
-        <span class="sidebar-section-title">Analytics</span>
+        <span class="sidebar-section-title">{{ $t('nav.analytics') }}</span>
         <div class="nav-item">
           <router-link to="/reports" class="nav-link" @click="closeMobile">
             <i class="bi bi-bar-chart-line"></i>
-            <span class="nav-text">Reports</span>
+            <span class="nav-text">{{ $t('nav.reports') }}</span>
           </router-link>
         </div>
         <div class="nav-item">
           <router-link to="/settings" class="nav-link" @click="closeMobile">
             <i class="bi bi-gear"></i>
-            <span class="nav-text">Settings</span>
+            <span class="nav-text">{{ $t('nav.settings') }}</span>
           </router-link>
         </div>
       </nav>
@@ -99,11 +99,39 @@
           id="tour-help-btn"
           class="toggle-btn tour-help-btn"
           @click="triggerTour"
-          title="Start guided tour"
-          v-tooltip="'Replay tour'"
+          :title="$t('nav.replayTour')"
+          v-tooltip="$t('nav.replayTour')"
         >
           <i class="bi bi-compass"></i>
         </button>
+
+        <!-- Language Dropdown -->
+        <div class="vue-dropdown" ref="langDropdownRef">
+          <button class="toggle-btn" @click.stop="toggleLang" title="Change Language">
+            <i class="bi bi-translate"></i>
+          </button>
+          <div v-show="langOpen" class="vue-dropdown-menu" style="min-width: 140px; right: 0">
+            <div class="vue-dropdown-header">
+              <i class="bi bi-translate me-2"></i>Language
+            </div>
+            <button
+              type="button"
+              class="vue-dropdown-item d-flex align-items-center justify-content-between w-100 border-0 bg-transparent text-start"
+              @click="changeLang('en')"
+            >
+              <span>English</span>
+              <i v-if="localeStore.currentLocale === 'en'" class="bi bi-check-lg text-success"></i>
+            </button>
+            <button
+              type="button"
+              class="vue-dropdown-item d-flex align-items-center justify-content-between w-100 border-0 bg-transparent text-start"
+              @click="changeLang('id')"
+            >
+              <span>Indonesia</span>
+              <i v-if="localeStore.currentLocale === 'id'" class="bi bi-check-lg text-success"></i>
+            </button>
+          </div>
+        </div>
 
         <!-- Budget Alerts Bell -->
         <div class="vue-dropdown" ref="bellDropdownRef">
@@ -117,10 +145,10 @@
           </button>
           <div v-show="bellOpen" class="vue-dropdown-menu" style="min-width:300px; right:0">
             <div class="vue-dropdown-header">
-              <i class="bi bi-bell me-2"></i>Budget Alerts
+              <i class="bi bi-bell me-2"></i>{{ $t('nav.budgetAlerts') }}
             </div>
             <div v-if="!budgetAlerts.length" class="vue-dropdown-item text-muted small">
-              No budget alerts
+              {{ $t('nav.noAlerts') }}
             </div>
             <a
               v-for="alert in budgetAlerts"
@@ -145,11 +173,11 @@
               {{ authStore.userName }}
             </div>
             <router-link to="/settings" class="vue-dropdown-item" @click="userOpen = false">
-              <i class="bi bi-gear me-2"></i>Settings
+              <i class="bi bi-gear me-2"></i>{{ $t('nav.settings') }}
             </router-link>
             <div class="vue-dropdown-divider"></div>
             <a class="vue-dropdown-item text-danger" href="#" @click.prevent="handleLogout">
-              <i class="bi bi-box-arrow-right me-2"></i>Logout
+              <i class="bi bi-box-arrow-right me-2"></i>{{ $t('nav.logout') }}
             </a>
           </div>
         </div>
@@ -172,6 +200,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useAuthStore } from '../stores/auth';
 import { useBudgetStore } from '../stores/budgets';
 import { useTourStore } from '../stores/tour';
+import { useLocaleStore } from '../stores/locale';
 import GoalNotificationModal from '../components/GoalNotificationModal.vue';
 
 const route = useRoute();
@@ -179,6 +208,7 @@ const router = useRouter();
 const authStore = useAuthStore();
 const budgetStore = useBudgetStore();
 const tourStore = useTourStore();
+const localeStore = useLocaleStore();
 
 // Map route names to the eventBus key used by each page
 const PAGE_TOUR_EVENTS = {
@@ -207,13 +237,20 @@ const sidebarCollapsed = ref(false);
 const mobileOpen = ref(false);
 const bellOpen = ref(false);
 const userOpen = ref(false);
+const langOpen = ref(false);
+
 const bellDropdownRef = ref(null);
 const userDropdownRef = ref(null);
+const langDropdownRef = ref(null);
 
 let pollTimer = null;
 
 const budgetAlerts = computed(() => budgetStore.alerts || []);
-const currentPageTitle = computed(() => route.name || 'Dashboard');
+const currentPageTitle = computed(() => {
+  if (!route.name) return localeStore.t('nav.dashboard');
+  const key = `nav.${route.name.toLowerCase()}`;
+  return localeStore.t(key);
+});
 
 async function refreshAlerts() {
   try {
@@ -224,11 +261,24 @@ async function refreshAlerts() {
 function toggleBell() {
   bellOpen.value = !bellOpen.value;
   userOpen.value = false;
+  langOpen.value = false;
 }
 
 function toggleUser() {
   userOpen.value = !userOpen.value;
   bellOpen.value = false;
+  langOpen.value = false;
+}
+
+function toggleLang() {
+  langOpen.value = !langOpen.value;
+  bellOpen.value = false;
+  userOpen.value = false;
+}
+
+function changeLang(lang) {
+  localeStore.setLocale(lang);
+  langOpen.value = false;
 }
 
 // Close dropdowns when clicking outside
@@ -238,6 +288,9 @@ function handleOutsideClick(e) {
   }
   if (userDropdownRef.value && !userDropdownRef.value.contains(e.target)) {
     userOpen.value = false;
+  }
+  if (langDropdownRef.value && !langDropdownRef.value.contains(e.target)) {
+    langOpen.value = false;
   }
 }
 

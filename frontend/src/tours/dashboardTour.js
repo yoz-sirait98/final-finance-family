@@ -2,8 +2,8 @@ export const dashboardTourSteps = [
   {
     element: '#tour-period-filter',
     popover: {
-      title: '📅 Period Filter',
-      description: 'Select the month and year to filter your dashboard data. Charts and summary cards will update automatically.',
+      title: 'tours.dashboard.period.title',
+      description: 'tours.dashboard.period.description',
       side: 'bottom',
       align: 'start',
     },
@@ -11,8 +11,8 @@ export const dashboardTourSteps = [
   {
     element: '#tour-stat-balance',
     popover: {
-      title: '💰 Total Balance',
-      description: 'Your family\'s total balance across all linked accounts, calculated in real time.',
+      title: 'tours.dashboard.balance.title',
+      description: 'tours.dashboard.balance.description',
       side: 'bottom',
       align: 'start',
     },
@@ -20,8 +20,8 @@ export const dashboardTourSteps = [
   {
     element: '#tour-stat-income',
     popover: {
-      title: '📈 Monthly Income',
-      description: 'Total income recorded by all family members for the selected month.',
+      title: 'tours.dashboard.income.title',
+      description: 'tours.dashboard.income.description',
       side: 'bottom',
       align: 'start',
     },
@@ -29,8 +29,8 @@ export const dashboardTourSteps = [
   {
     element: '#tour-stat-expense',
     popover: {
-      title: '📉 Monthly Expense',
-      description: 'Total expenses for the selected month. Keep an eye on this to stay within your budget.',
+      title: 'tours.dashboard.expense.title',
+      description: 'tours.dashboard.expense.description',
       side: 'bottom',
       align: 'start',
     },
@@ -38,8 +38,8 @@ export const dashboardTourSteps = [
   {
     element: '#tour-stat-net',
     popover: {
-      title: '⚖️ Net Balance',
-      description: 'Income minus expenses. Green means you\'re saving, red means you\'re spending more than you earn.',
+      title: 'tours.dashboard.net.title',
+      description: 'tours.dashboard.net.description',
       side: 'bottom',
       align: 'start',
     },
@@ -47,8 +47,8 @@ export const dashboardTourSteps = [
   {
     element: '#tour-insights',
     popover: {
-      title: '✨ AI Financial Insights',
-      description: 'Smart tips generated from your transaction patterns. Click the title to expand and view personalized recommendations.',
+      title: 'tours.dashboard.insights.title',
+      description: 'tours.dashboard.insights.description',
       side: 'bottom',
       align: 'start',
     },
@@ -56,8 +56,8 @@ export const dashboardTourSteps = [
   {
     element: '#tour-charts',
     popover: {
-      title: '📊 Charts & Analytics',
-      description: 'Visualize your spending by category, compare income vs. expense over the year, track expense trends, and monitor net worth growth over time.',
+      title: 'tours.dashboard.charts.title',
+      description: 'tours.dashboard.charts.description',
       side: 'top',
       align: 'center',
     },

@@ -3,7 +3,8 @@
     <div class="vue-modal">
       <div class="modal-header border-0 pb-0">
         <h5 class="modal-title">
-          <i class="bi bi-bell-fill text-warning me-2"></i>Goal Notifications
+          <i class="bi bi-bell-fill text-warning me-2"></i>
+          {{ localeStore.currentLocale === 'id' ? 'Notifikasi Target' : 'Goal Notifications' }}
         </h5>
         <button type="button" class="btn-close" @click="close"></button>
       </div>
@@ -17,7 +18,7 @@
         </div>
       </div>
       <div class="modal-footer border-0 pt-0">
-        <button class="btn btn-secondary" @click="close">Close</button>
+        <button class="btn btn-secondary" @click="close">{{ $t('common.close') }}</button>
       </div>
     </div>
   </div>
@@ -26,9 +27,11 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { goalService } from '../services/goalService';
+import { useLocaleStore } from '../stores/locale';
 
 const show = ref(false);
 const notifications = ref([]);
+const localeStore = useLocaleStore();
 
 function close() {
   show.value = false;
@@ -45,6 +48,7 @@ onMounted(async () => {
     const activeGoals = data.data.filter(g => g.status === 'active' && g.deadline);
 
     const newNotifications = [];
+    const isId = localeStore.currentLocale === 'id';
 
     activeGoals.forEach(g => {
       const storageKey = `goal_notified_${g.id}_${todayStr}`;
@@ -65,23 +69,31 @@ onMounted(async () => {
       if (isMet && diffDays === 0) {
         newNotifications.push({
           type: 'success',
-          title: `Target Met: ${g.name}`,
-          message: `Congratulations! You reached your target of Rp ${g.target_amount.toLocaleString()} for ${g.name} right on time!`
+          title: isId ? `Target Tercapai: ${g.name}` : `Target Met: ${g.name}`,
+          message: isId 
+            ? `Selamat! Anda berhasil mencapai target Rp ${g.target_amount.toLocaleString('id-ID')} untuk ${g.name} tepat waktu!`
+            : `Congratulations! You reached your target of Rp ${g.target_amount.toLocaleString()} for ${g.name} right on time!`
         });
         localStorage.setItem(storageKey, 'true');
       } 
       // Target Not Met -> Up to 3 days before and 3 days after
       else if (!isMet && diffDays >= -3 && diffDays <= 3) {
-        const dayWord = Math.abs(diffDays) === 1 ? 'day' : 'days';
+        const dayWord = isId ? 'hari' : (Math.abs(diffDays) === 1 ? 'day' : 'days');
         let timeMsg = '';
-        if (diffDays > 0) timeMsg = `is due in ${diffDays} ${dayWord}`;
-        else if (diffDays === 0) timeMsg = `is due today`;
-        else timeMsg = `was due ${Math.abs(diffDays)} ${dayWord} ago`;
+        if (diffDays > 0) {
+          timeMsg = isId ? `jatuh tempo dalam ${diffDays} hari` : `is due in ${diffDays} ${dayWord}`;
+        } else if (diffDays === 0) {
+          timeMsg = isId ? `jatuh tempo hari ini` : `is due today`;
+        } else {
+          timeMsg = isId ? `lewat jatuh tempo ${Math.abs(diffDays)} hari yang lalu` : `was due ${Math.abs(diffDays)} ${dayWord} ago`;
+        }
 
         newNotifications.push({
           type: 'warning',
-          title: `Goal Reminder: ${g.name}`,
-          message: `Your goal "${g.name}" ${timeMsg}. You have saved Rp ${g.current_amount.toLocaleString()} out of Rp ${g.target_amount.toLocaleString()}.`
+          title: isId ? `Pengingat Target: ${g.name}` : `Goal Reminder: ${g.name}`,
+          message: isId
+            ? `Target Anda "${g.name}" ${timeMsg}. Anda telah menabung Rp ${g.current_amount.toLocaleString('id-ID')} dari target Rp ${g.target_amount.toLocaleString('id-ID')}.`
+            : `Your goal "${g.name}" ${timeMsg}. You have saved Rp ${g.current_amount.toLocaleString()} out of Rp ${g.target_amount.toLocaleString()}.`
         });
         localStorage.setItem(storageKey, 'true');
       }

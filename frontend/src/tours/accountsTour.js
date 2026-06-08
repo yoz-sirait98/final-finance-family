@@ -2,8 +2,8 @@ export const accountsTourSteps = [
   {
     element: '#tour-accounts-header',
     popover: {
-      title: '🏦 Accounts',
-      description: 'Manage all your family\'s financial accounts in one place — bank accounts, e-wallets, cash, and more.',
+      title: 'tours.accounts.header.title',
+      description: 'tours.accounts.header.description',
       side: 'bottom',
       align: 'start',
     },
@@ -11,8 +11,8 @@ export const accountsTourSteps = [
   {
     element: '#tour-accounts-add-btn',
     popover: {
-      title: '➕ Add an Account',
-      description: 'Click here to add a new account. Choose the account type (bank, e-wallet, cash, etc.) and set the initial balance.',
+      title: 'tours.accounts.add.title',
+      description: 'tours.accounts.add.description',
       side: 'left',
       align: 'start',
     },
@@ -20,8 +20,8 @@ export const accountsTourSteps = [
   {
     element: '#tour-accounts-list',
     popover: {
-      title: '💳 Account Cards',
-      description: 'Each card shows the account name, type, and current balance. Balances update automatically as you add transactions. Use the Edit and Delete buttons to manage each account.',
+      title: 'tours.accounts.list.title',
+      description: 'tours.accounts.list.description',
       side: 'top',
       align: 'center',
     },

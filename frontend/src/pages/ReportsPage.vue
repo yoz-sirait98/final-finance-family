@@ -2,65 +2,67 @@
   <div class="reports-page fade-in">
     <div id="tour-reports-header" class="page-header d-flex justify-content-between align-items-center flex-wrap gap-2">
       <div>
-        <h4>Reports</h4>
-        <p>Financial reports and analytics</p>
+        <h4>{{ $t('reports.title') }}</h4>
+        <p>{{ $t('reports.subtitle') }}</p>
       </div>
       <!-- Export Buttons -->
       <div id="tour-reports-export" class="d-flex gap-2">
         <button class="btn btn-outline-success btn-sm" @click="exportCSV" :disabled="exporting">
-          <i class="bi bi-filetype-csv me-1"></i>Export CSV
+          <i class="bi bi-filetype-csv me-1"></i>{{ exporting ? $t('reports.generating') : $t('reports.exportCsv') }}
         </button>
         <button class="btn btn-outline-danger btn-sm" @click="exportPDF" :disabled="exporting">
           <span v-if="exporting" class="spinner-border spinner-border-sm me-1"></span>
-          <i v-else class="bi bi-filetype-pdf me-1"></i>Export PDF
+          <i v-else class="bi bi-filetype-pdf me-1"></i>{{ exporting ? $t('reports.generating') : $t('reports.exportPdf') }}
         </button>
       </div>
     </div>
 
     <!-- Filter Bar -->
     <div id="tour-reports-filters" class="d-flex align-items-center gap-2 mb-4 flex-wrap">
-      <label class="fw-semibold text-muted small me-1">Filter:</label>
+      <label class="fw-semibold text-muted small me-1">{{ localeStore.currentLocale === 'id' ? 'Saring:' : 'Filter:' }}</label>
 
       <select v-model.number="selectedYear" class="form-select form-select-sm" style="width:auto" @change="loadCharts">
         <option v-for="y in years" :key="y" :value="y">{{ y }}</option>
       </select>
 
       <select v-model.number="selectedMonth" class="form-select form-select-sm" style="width:auto" @change="loadCharts">
-        <option :value="0">All Months</option>
+        <option :value="0">{{ localeStore.currentLocale === 'id' ? 'Semua Bulan' : 'All Months' }}</option>
         <option v-for="m in months" :key="m.value" :value="m.value">{{ m.label }}</option>
       </select>
 
       <select v-model.number="selectedMember" class="form-select form-select-sm" style="width:auto" @change="loadCharts">
-        <option :value="0">All Members</option>
+        <option :value="0">{{ $t('transactions.allMembers') }}</option>
         <template v-for="m in members" :key="m.id">
           <option v-if="m.is_active || m.id === selectedMember" :value="m.id">{{ m.name }}</option>
         </template>
       </select>
 
-      <span class="text-muted small ms-1">— Month &amp; Member filters apply to pie charts only</span>
+      <span class="text-muted small ms-1">
+        {{ localeStore.currentLocale === 'id' ? '— Filter Bulan & Anggota hanya berlaku untuk grafik lingkaran saja' : '— Month & Member filters apply to pie charts only' }}
+      </span>
     </div>
 
     <!-- Pie Charts Row -->
     <div id="tour-reports-charts" class="row g-3 mb-4">
       <div class="col-lg-6">
         <div class="chart-card h-100">
-          <h6><i class="bi bi-pie-chart me-2"></i>Expense by Category</h6>
+          <h6><i class="bi bi-pie-chart me-2"></i>{{ $t('dashboard.expenseByCategory') }}</h6>
           <div v-if="hasPieData" style="position: relative; height: 300px;">
             <canvas ref="pieChart"></canvas>
           </div>
           <div v-else class="d-flex align-items-center justify-content-center text-muted" style="height: 300px;">
-            No transactions yet
+            {{ $t('dashboard.noTransactions') }}
           </div>
         </div>
       </div>
       <div class="col-lg-6">
         <div class="chart-card h-100">
-          <h6><i class="bi bi-people me-2"></i>Expense by Member</h6>
+          <h6><i class="bi bi-people me-2"></i>{{ localeStore.currentLocale === 'id' ? 'Pengeluaran per Anggota' : 'Expense by Member' }}</h6>
           <div v-if="hasMemberData" style="position: relative; height: 300px;">
             <canvas ref="memberChart"></canvas>
           </div>
           <div v-else class="d-flex align-items-center justify-content-center text-muted" style="height: 300px;">
-            No transactions yet
+            {{ $t('dashboard.noTransactions') }}
           </div>
         </div>
       </div>
@@ -70,23 +72,23 @@
     <div class="row g-3">
       <div class="col-lg-6">
         <div class="chart-card h-100">
-          <h6><i class="bi bi-bar-chart me-2"></i>Income vs Expense — {{ selectedYear }}</h6>
+          <h6><i class="bi bi-bar-chart me-2"></i>{{ $t('dashboard.incomeVsExpense', { year: selectedYear }) }}</h6>
           <div v-if="hasBarData" style="position: relative; height: 300px;">
             <canvas ref="barChart"></canvas>
           </div>
           <div v-else class="d-flex align-items-center justify-content-center text-muted" style="height: 300px;">
-            No transactions yet
+            {{ $t('dashboard.noTransactions') }}
           </div>
         </div>
       </div>
       <div class="col-lg-6">
         <div class="chart-card h-100">
-          <h6><i class="bi bi-graph-up me-2"></i>6-Month Expense Trend</h6>
+          <h6><i class="bi bi-graph-up me-2"></i>{{ $t('dashboard.expenseTrend') }}</h6>
           <div v-if="hasLineData" style="position: relative; height: 300px;">
             <canvas ref="lineChart"></canvas>
           </div>
           <div v-else class="d-flex align-items-center justify-content-center text-muted" style="height: 300px;">
-            No transactions yet
+            {{ $t('dashboard.noTransactions') }}
           </div>
         </div>
       </div>
@@ -95,7 +97,7 @@
 </template>
 
 <script setup>
-import { ref, nextTick, onMounted, onUnmounted } from 'vue';
+import { ref, computed, nextTick, onMounted, onUnmounted, watch } from 'vue';
 import { useTour } from '../composables/useTour';
 import { reportsTourSteps } from '../tours/reportsTour';
 import Chart from 'chart.js/auto';
@@ -103,6 +105,7 @@ import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { dashboardService } from '../services/dashboardService';
 import { memberService } from '../services/memberService';
+import { useLocaleStore } from '../stores/locale';
 
 // ─── Canvas Refs ──────────────────────────────────────────────────────────────
 const pieChart    = ref(null);
@@ -120,6 +123,7 @@ const hasLineData   = ref(false);
 const exporting = ref(false);
 const chartData = ref({ pie: [], member: [], bar: [], line: [] });
 const members   = ref([]);
+const localeStore = useLocaleStore();
 
 const now = new Date();
 const selectedYear   = ref(now.getFullYear());
@@ -127,14 +131,20 @@ const selectedMonth  = ref(now.getMonth() + 1);
 const selectedMember = ref(0);
 
 const years = Array.from({ length: 5 }, (_, i) => now.getFullYear() - 2 + i);
-const months = [
-  { value: 1,  label: 'January' },  { value: 2,  label: 'February' },
-  { value: 3,  label: 'March' },    { value: 4,  label: 'April' },
-  { value: 5,  label: 'May' },      { value: 6,  label: 'June' },
-  { value: 7,  label: 'July' },     { value: 8,  label: 'August' },
-  { value: 9,  label: 'September' },{ value: 10, label: 'October' },
-  { value: 11, label: 'November' }, { value: 12, label: 'December' },
-];
+const months = computed(() => [
+  { value: 1,  label: localeStore.t('dashboard.months.1') },
+  { value: 2,  label: localeStore.t('dashboard.months.2') },
+  { value: 3,  label: localeStore.t('dashboard.months.3') },
+  { value: 4,  label: localeStore.t('dashboard.months.4') },
+  { value: 5,  label: localeStore.t('dashboard.months.5') },
+  { value: 6,  label: localeStore.t('dashboard.months.6') },
+  { value: 7,  label: localeStore.t('dashboard.months.7') },
+  { value: 8,  label: localeStore.t('dashboard.months.8') },
+  { value: 9,  label: localeStore.t('dashboard.months.9') },
+  { value: 10, label: localeStore.t('dashboard.months.10') },
+  { value: 11, label: localeStore.t('dashboard.months.11') },
+  { value: 12, label: localeStore.t('dashboard.months.12') },
+]);
 
 // ─── Chart Instances ──────────────────────────────────────────────────────────
 let pieInstance, memberInstance, barInstance, lineInstance;
@@ -145,15 +155,15 @@ function fmt(n) {
 }
 function filterLabel() {
   const monthName = selectedMonth.value
-    ? months.find(m => m.value === selectedMonth.value)?.label
-    : 'All Months';
+    ? months.value.find(m => m.value === selectedMonth.value)?.label
+    : (localeStore.currentLocale === 'id' ? 'Semua Bulan' : 'All Months');
   const memberName = selectedMember.value
     ? members.value.find(m => m.id === selectedMember.value)?.name ?? 'Unknown'
-    : 'All Members';
-  return `Year: ${selectedYear.value} | Month: ${monthName} | Member: ${memberName}`;
+    : (localeStore.currentLocale === 'id' ? 'Semua Anggota' : 'All Members');
+  return `${localeStore.currentLocale === 'id' ? 'Tahun' : 'Year'}: ${selectedYear.value} | ${localeStore.currentLocale === 'id' ? 'Bulan' : 'Month'}: ${monthName} | ${localeStore.currentLocale === 'id' ? 'Anggota' : 'Member'}: ${memberName}`;
 }
 function filename(ext) {
-  const m = selectedMonth.value ? `-${months.find(m => m.value === selectedMonth.value)?.label}` : '';
+  const m = selectedMonth.value ? `-${months.value.find(m => m.value === selectedMonth.value)?.label}` : '';
   return `family-finance-report-${selectedYear.value}${m}.${ext}`;
 }
 
@@ -176,7 +186,20 @@ async function loadCharts() {
     const res = await dashboardService.reports(params);
     const d = res.data.data;
 
-    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const monthNames = [
+      localeStore.t('dashboard.monthsAbbr.1'),
+      localeStore.t('dashboard.monthsAbbr.2'),
+      localeStore.t('dashboard.monthsAbbr.3'),
+      localeStore.t('dashboard.monthsAbbr.4'),
+      localeStore.t('dashboard.monthsAbbr.5'),
+      localeStore.t('dashboard.monthsAbbr.6'),
+      localeStore.t('dashboard.monthsAbbr.7'),
+      localeStore.t('dashboard.monthsAbbr.8'),
+      localeStore.t('dashboard.monthsAbbr.9'),
+      localeStore.t('dashboard.monthsAbbr.10'),
+      localeStore.t('dashboard.monthsAbbr.11'),
+      localeStore.t('dashboard.monthsAbbr.12')
+    ];
 
     const pieData = (d.category_breakdown || []).map((x, i) => ({
       category: x.category_name,
@@ -253,8 +276,8 @@ async function loadCharts() {
       data: {
         labels: chartData.value.bar.map(d => d.month),
         datasets: [
-          { label: 'Income',  data: chartData.value.bar.map(d => d.income),  backgroundColor: '#28a745', borderRadius: 4 },
-          { label: 'Expense', data: chartData.value.bar.map(d => d.expense), backgroundColor: '#dc3545', borderRadius: 4 },
+          { label: localeStore.t('common.income'),  data: chartData.value.bar.map(d => d.income),  backgroundColor: '#28a745', borderRadius: 4 },
+          { label: localeStore.t('common.expense'), data: chartData.value.bar.map(d => d.expense), backgroundColor: '#dc3545', borderRadius: 4 },
         ],
       },
       options: {
@@ -271,7 +294,7 @@ async function loadCharts() {
       type: 'line',
       data: {
         labels: chartData.value.line.map(d => d.month),
-        datasets: [{ label: 'Expense', data: chartData.value.line.map(d => d.expense), borderColor: '#dc3545', backgroundColor: 'rgba(220,53,69,0.1)', fill: true, tension: 0.4 }],
+        datasets: [{ label: localeStore.t('common.expense'), data: chartData.value.line.map(d => d.expense), borderColor: '#dc3545', backgroundColor: 'rgba(220,53,69,0.1)', fill: true, tension: 0.4 }],
       },
       options: {
         responsive: true,
@@ -287,33 +310,34 @@ async function loadCharts() {
 async function exportCSV() {
   const lines = [];
   const sep = ',';
+  const isId = localeStore.currentLocale === 'id';
 
-  lines.push('Family Finance Report');
+  lines.push(isId ? 'Laporan Keuangan Keluarga' : 'Family Finance Report');
   lines.push(filterLabel());
   lines.push('');
 
-  lines.push('=== Expense by Category ===');
-  lines.push(['Category', 'Amount'].join(sep));
+  lines.push(isId ? '=== Pengeluaran per Kategori ===' : '=== Expense by Category ===');
+  lines.push([isId ? 'Kategori' : 'Category', isId ? 'Jumlah' : 'Amount'].join(sep));
   chartData.value.pie.forEach(r => lines.push([`"${r.category}"`, r.total].join(sep)));
-  if (!chartData.value.pie.length) lines.push('No data');
+  if (!chartData.value.pie.length) lines.push(isId ? 'Tidak ada data' : 'No data');
   lines.push('');
 
-  lines.push('=== Expense by Member ===');
-  lines.push(['Member', 'Amount'].join(sep));
+  lines.push(isId ? '=== Pengeluaran per Anggota ===' : '=== Expense by Member ===');
+  lines.push([isId ? 'Anggota' : 'Member', isId ? 'Jumlah' : 'Amount'].join(sep));
   chartData.value.member.forEach(r => lines.push([`"${r.member}"`, r.total].join(sep)));
-  if (!chartData.value.member.length) lines.push('No data');
+  if (!chartData.value.member.length) lines.push(isId ? 'Tidak ada data' : 'No data');
   lines.push('');
 
-  lines.push(`=== Income vs Expense (${selectedYear.value}) ===`);
-  lines.push(['Month', 'Income', 'Expense', 'Net'].join(sep));
+  lines.push(`=== ${isId ? 'Pemasukan vs Pengeluaran' : 'Income vs Expense'} (${selectedYear.value}) ===`);
+  lines.push([isId ? 'Bulan' : 'Month', isId ? 'Pemasukan' : 'Income', isId ? 'Pengeluaran' : 'Expense', isId ? 'Bersih' : 'Net'].join(sep));
   chartData.value.bar.forEach(r => lines.push([r.month, r.income, r.expense, r.income - r.expense].join(sep)));
-  if (!chartData.value.bar.length) lines.push('No data');
+  if (!chartData.value.bar.length) lines.push(isId ? 'Tidak ada data' : 'No data');
   lines.push('');
 
-  lines.push('=== Expense Trend (Last 6 Months) ===');
-  lines.push(['Month', 'Expense'].join(sep));
+  lines.push(isId ? '=== Tren Pengeluaran (6 Bulan Terakhir) ===' : '=== Expense Trend (Last 6 Months) ===');
+  lines.push([isId ? 'Bulan' : 'Month', isId ? 'Pengeluaran' : 'Expense'].join(sep));
   chartData.value.line.forEach(r => lines.push([`"${r.month}"`, r.expense].join(sep)));
-  if (!chartData.value.line.length) lines.push('No data');
+  if (!chartData.value.line.length) lines.push(isId ? 'Tidak ada data' : 'No data');
 
   const content = lines.join('\n');
   const name = filename('csv');
@@ -346,6 +370,7 @@ async function exportCSV() {
 // ─── PDF Export ───────────────────────────────────────────────────────────────
 async function exportPDF() {
   exporting.value = true;
+  const isId = localeStore.currentLocale === 'id';
   try {
     const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
     const pageW = doc.internal.pageSize.getWidth();
@@ -353,22 +378,22 @@ async function exportPDF() {
 
     doc.setFontSize(18);
     doc.setTextColor(40, 40, 40);
-    doc.text('Family Finance Report', pageW / 2, y, { align: 'center' });
+    doc.text(isId ? 'Laporan Keuangan Keluarga' : 'Family Finance Report', pageW / 2, y, { align: 'center' });
     y += 8;
 
     doc.setFontSize(9);
     doc.setTextColor(100);
     doc.text(filterLabel(), pageW / 2, y, { align: 'center' });
     y += 4;
-    doc.text('Generated: ' + new Date().toLocaleString('id-ID'), pageW / 2, y, { align: 'center' });
+    doc.text((isId ? 'Dibuat: ' : 'Generated: ') + new Date().toLocaleString(isId ? 'id-ID' : 'en-US'), pageW / 2, y, { align: 'center' });
     y += 8;
 
     doc.setFontSize(12); doc.setTextColor(40);
-    doc.text('Expense by Category', 14, y); y += 2;
+    doc.text(localeStore.t('dashboard.expenseByCategory'), 14, y); y += 2;
     autoTable(doc, {
       startY: y,
-      head: [['Category', 'Amount']],
-      body: chartData.value.pie.length ? chartData.value.pie.map(r => [r.category, fmt(r.total)]) : [['No data', '']],
+      head: [[isId ? 'Kategori' : 'Category', isId ? 'Jumlah' : 'Amount']],
+      body: chartData.value.pie.length ? chartData.value.pie.map(r => [r.category, fmt(r.total)]) : [[isId ? 'Tidak ada data' : 'No data', '']],
       styles: { fontSize: 10 },
       headStyles: { fillColor: [220, 53, 69] },
       columnStyles: { 1: { halign: 'right' } },
@@ -377,11 +402,11 @@ async function exportPDF() {
     y = (doc.lastAutoTable?.finalY ?? y) + 8;
 
     doc.setFontSize(12); doc.setTextColor(40);
-    doc.text('Expense by Member', 14, y); y += 2;
+    doc.text(isId ? 'Pengeluaran per Anggota' : 'Expense by Member', 14, y); y += 2;
     autoTable(doc, {
       startY: y,
-      head: [['Member', 'Amount']],
-      body: chartData.value.member.length ? chartData.value.member.map(r => [r.member, fmt(r.total)]) : [['No data', '']],
+      head: [[isId ? 'Anggota' : 'Member', isId ? 'Jumlah' : 'Amount']],
+      body: chartData.value.member.length ? chartData.value.member.map(r => [r.member, fmt(r.total)]) : [[isId ? 'Tidak ada data' : 'No data', '']],
       styles: { fontSize: 10 },
       headStyles: { fillColor: [13, 110, 253] },
       columnStyles: { 1: { halign: 'right' } },
@@ -392,12 +417,12 @@ async function exportPDF() {
     doc.addPage(); y = 15;
 
     doc.setFontSize(12); doc.setTextColor(40);
-    doc.text('Income vs Expense - ' + selectedYear.value, 14, y); y += 2;
+    doc.text((isId ? 'Pemasukan vs Pengeluaran - ' : 'Income vs Expense - ') + selectedYear.value, 14, y); y += 2;
     const barRows = chartData.value.bar.map(r => [r.month, fmt(r.income), fmt(r.expense), fmt(r.income - r.expense)]);
     autoTable(doc, {
       startY: y,
-      head: [['Month', 'Income', 'Expense', 'Net']],
-      body: barRows.length ? barRows : [['No data', '', '', '']],
+      head: [[isId ? 'Bulan' : 'Month', isId ? 'Pemasukan' : 'Income', isId ? 'Pengeluaran' : 'Expense', isId ? 'Bersih' : 'Net']],
+      body: barRows.length ? barRows : [[isId ? 'Tidak ada data' : 'No data', '', '', '']],
       styles: { fontSize: 10 },
       headStyles: { fillColor: [73, 80, 87] },
       columnStyles: { 1: { halign: 'right' }, 2: { halign: 'right' }, 3: { halign: 'right' } },
@@ -408,11 +433,11 @@ async function exportPDF() {
     y = (doc.lastAutoTable?.finalY ?? y) + 8;
 
     doc.setFontSize(12); doc.setTextColor(40);
-    doc.text('Expense Trend (Last 6 Months)', 14, y); y += 2;
+    doc.text(localeStore.t('dashboard.expenseTrend'), 14, y); y += 2;
     autoTable(doc, {
       startY: y,
-      head: [['Month', 'Expense']],
-      body: chartData.value.line.length ? chartData.value.line.map(r => [r.month, fmt(r.expense)]) : [['No data', '']],
+      head: [[isId ? 'Bulan' : 'Month', isId ? 'Pengeluaran' : 'Expense']],
+      body: chartData.value.line.length ? chartData.value.line.map(r => [r.month, fmt(r.expense)]) : [[isId ? 'Tidak ada data' : 'No data', '']],
       styles: { fontSize: 10 },
       headStyles: { fillColor: [220, 53, 69] },
       columnStyles: { 1: { halign: 'right' } },
@@ -460,6 +485,11 @@ onMounted(async () => {
   await loadCharts();
   startAutoTour(reportsTourSteps);
   window.addEventListener('start-reports-tour', () => startTour(reportsTourSteps));
+});
+
+// Re-render charts when language switches
+watch(() => localeStore.currentLocale, () => {
+  loadCharts();
 });
 
 onUnmounted(() => {

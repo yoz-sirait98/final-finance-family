@@ -1,0 +1,430 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "actions": "Actions",
+    "loading": "Loading...",
+    "success": "Success",
+    "error": "Error",
+    "description": "Description",
+    "name": "Name",
+    "amount": "Amount",
+    "category": "Category",
+    "account": "Account",
+    "date": "Date",
+    "status": "Status",
+    "search": "Search",
+    "close": "Close",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "done": "Done",
+    "active": "Active",
+    "inactive": "Inactive",
+    "completed": "Completed",
+    "cancelled": "Cancelled",
+    "view": "View",
+    "none": "None",
+    "all": "All",
+    "type": "Type",
+    "income": "Income",
+    "expense": "Expense",
+    "transfer": "Transfer",
+    "role": "Role",
+    "member": "Member",
+    "confirmDelete": "Are you sure you want to delete this item? This action cannot be undone."
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "transactions": "Transactions",
+    "accounts": "Accounts",
+    "categories": "Categories",
+    "budgets": "Budgets",
+    "goals": "Goals",
+    "recurring": "Recurring",
+    "members": "Members",
+    "reports": "Reports",
+    "settings": "Settings",
+    "main": "Main",
+    "management": "Management",
+    "analytics": "Analytics",
+    "brand": "Family Finance",
+    "budgetAlerts": "Budget Alerts",
+    "noAlerts": "No budget alerts",
+    "logout": "Logout",
+    "replayTour": "Replay tour"
+  },
+  "auth": {
+    "login": {
+      "title": "Family Finance",
+      "subtitle": "Sign in to manage your family finances",
+      "email": "Email",
+      "emailPlaceholder": "family@example.com",
+      "password": "Password",
+      "passwordPlaceholder": "Enter password",
+      "signIn": "Sign In",
+      "signingIn": "Signing in...",
+      "newHere": "New here?",
+      "createAccount": "Create an account",
+      "failed": "Login failed. Please check your credentials."
+    },
+    "register": {
+      "title": "Family Finance",
+      "subtitle": "Create a new family account",
+      "familyName": "Family Name",
+      "familyNamePlaceholder": "e.g., Surya Family",
+      "email": "Email",
+      "emailPlaceholder": "family@example.com",
+      "password": "Password",
+      "passwordPlaceholder": "Minimum 8 characters",
+      "confirmPassword": "Confirm Password",
+      "confirmPasswordPlaceholder": "Repeat password",
+      "createAccount": "Create Account",
+      "creatingAccount": "Creating account...",
+      "alreadyHaveAccount": "Already have an account?",
+      "signIn": "Sign in",
+      "passwordMismatch": "Passwords do not match.",
+      "success": "Registration successful. Welcome!"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Manage your profile and preferences",
+    "profile": "Profile",
+    "changePassword": "Change Password",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "updatePassword": "Update Password",
+    "updatingPassword": "Updating...",
+    "passwordSuccess": "Password updated successfully!",
+    "languagePref": "Language Preference",
+    "selectLanguage": "Select Language"
+  },
+  "dashboard": {
+    "period": "Period:",
+    "periodSub": "— Income vs Expense chart always shows full year",
+    "insights": "Financial Insight",
+    "insightsNew": "{count} new",
+    "totalBalance": "Total Balance",
+    "monthlyIncome": "Income — {period}",
+    "monthlyExpense": "Expense — {period}",
+    "monthlyNet": "Net — {period}",
+    "expenseByCategory": "Expense by Category",
+    "incomeVsExpense": "Income vs Expense — {year}",
+    "expenseTrend": "Expense Trend (Last 6 Months)",
+    "netWorthGrowth": "Net Worth Growth",
+    "noTransactions": "No transactions yet",
+    "noNetWorth": "No historical net worth snapshots",
+    "months": {
+      "1": "January", "2": "February", "3": "March", "4": "April",
+      "5": "May", "6": "June", "7": "July", "8": "August",
+      "9": "September", "10": "October", "11": "November", "12": "December"
+    },
+    "monthsAbbr": {
+      "1": "Jan", "2": "Feb", "3": "Mar", "4": "Apr",
+      "5": "May", "6": "Jun", "7": "Jul", "8": "Aug",
+      "9": "Sep", "10": "Oct", "11": "Nov", "12": "Dec"
+    }
+  },
+  "transactions": {
+    "title": "Transactions",
+    "subtitle": "Track and manage your family cash flow",
+    "addTransaction": "Add Transaction",
+    "editTransaction": "Edit Transaction",
+    "searchPlaceholder": "Search transactions...",
+    "allAccounts": "All Accounts",
+    "allCategories": "All Categories",
+    "allMembers": "All Members",
+    "clearFilters": "Clear Filters",
+    "fromAccount": "From Account",
+    "toAccount": "To Account",
+    "amountPlaceholder": "Enter amount",
+    "datePlaceholder": "Select date",
+    "descriptionPlaceholder": "e.g., Grocery shopping",
+    "savingInGoal": "Saving in Goal?",
+    "savingGoal": "Saving Goal",
+    "savingGoalInfo": "Linking a goal will deduct from this wallet and deposit into the saving goal pocket.",
+    "selectGoal": "Select Goal",
+    "selectCategory": "Select Category",
+    "selectAccount": "Select Account",
+    "selectMember": "Select Member",
+    "budgetWarning": "⚠️ Budget Alert: You have used {used}% of your budget for {category}.",
+    "budgetExceeded": "⚠️ Budget Exceeded: Adding this transaction of {amount} will exceed your budget for {category} by {exceeded}!",
+    "budgetExceededProceed": "Do you want to proceed anyway?",
+    "budgetLimit": "Budget Limit",
+    "alreadySpent": "Already Spent",
+    "thisTransaction": "This Transaction",
+    "totalAfterSave": "Total After Save",
+    "yesSaveAnyway": "Yes, save anyway",
+    "budgetExceededMsg": "This expense will exceed your {category} budget for this month.",
+    "validation": {
+      "amount": "Please enter a valid amount.",
+      "category": "Please select a category.",
+      "account": "Please select an account.",
+      "member": "Please select a member.",
+      "transferSame": "Source and destination accounts cannot be the same."
+    }
+  },
+  "accounts": {
+    "title": "Accounts",
+    "subtitle": "Manage your bank accounts, cash, and e-wallets",
+    "addAccount": "Add Account",
+    "editAccount": "Edit Account",
+    "accountName": "Account Name",
+    "accountNamePlaceholder": "e.g., BCA Savings, Pocket Cash",
+    "type": {
+      "bank": "Bank",
+      "cash": "Cash",
+      "e_wallet": "E-Wallet"
+    },
+    "balance": "Balance",
+    "balancePlaceholder": "Initial balance",
+    "walletDetails": "Wallet Details",
+    "validation": {
+      "name": "Please enter an account name.",
+      "type": "Please select an account type."
+    }
+  },
+  "budgets": {
+    "title": "Budgets",
+    "subtitle": "Set monthly spending limits for categories",
+    "addBudget": "Add Budget",
+    "editBudget": "Edit Budget",
+    "limit": "Limit",
+    "limitPlaceholder": "Monthly budget limit",
+    "spent": "Spent",
+    "remaining": "Remaining",
+    "alertThreshold": "Alert Threshold (%)",
+    "alertThresholdPlaceholder": "e.g., 80",
+    "used": "{percentage}% used",
+    "warningLimit": "Warning at {threshold}%",
+    "validation": {
+      "category": "Please select a category.",
+      "limit": "Please enter a valid limit.",
+      "threshold": "Please enter a threshold between 1 and 100."
+    }
+  },
+  "categories": {
+    "title": "Categories",
+    "subtitle": "Organize your transactions with custom categories",
+    "addCategory": "Add Category",
+    "editCategory": "Edit Category",
+    "icon": "Icon",
+    "color": "Color",
+    "validation": {
+      "name": "Please enter a category name.",
+      "type": "Please select a category type."
+    }
+  },
+  "goals": {
+    "title": "Saving Goals",
+    "subtitle": "Track your progress towards saving targets",
+    "addGoal": "Add Goal",
+    "editGoal": "Edit Goal",
+    "targetAmount": "Target Amount",
+    "targetAmountPlaceholder": "e.g., 5000000",
+    "currentAmount": "Current Progress Amount",
+    "deadline": "Deadline",
+    "linkedAccount": "Linked Wallet/Pocket",
+    "linkedAccountInfo": "When money is deposited into or spent from this pocket, the goal amount will auto-sync.",
+    "selectAccount": "Select Account (Optional)",
+    "completedManuallyError": "Cannot manually complete the goal if target amount has not been reached.",
+    "validation": {
+      "name": "Please enter a goal name.",
+      "target": "Please enter a valid target amount.",
+      "deadline": "Please select a deadline date."
+    }
+  },
+  "recurring": {
+    "title": "Recurring Expenses",
+    "subtitle": "Automate repeating transactions (Expenses Only)",
+    "addRecurring": "Add Recurring Expense",
+    "editRecurring": "Edit Recurring Expense",
+    "interval": "Interval",
+    "nextDue": "Next Due Date",
+    "intervals": {
+      "weekly": "Weekly",
+      "monthly": "Monthly",
+      "yearly": "Yearly"
+    },
+    "validation": {
+      "name": "Please enter a description.",
+      "category": "Please select a category.",
+      "account": "Please select an account.",
+      "member": "Please select a member.",
+      "interval": "Please select an interval.",
+      "nextDue": "Please select a starting next due date.",
+      "amount": "Please enter a valid amount."
+    }
+  },
+  "members": {
+    "title": "Family Members",
+    "subtitle": "Manage family members and their access roles",
+    "addMember": "Add Member",
+    "editMember": "Edit Member",
+    "roles": {
+      "father": "Father",
+      "mother": "Mother",
+      "child": "Child"
+    },
+    "validation": {
+      "name": "Please enter a name.",
+      "role": "Please select a role."
+    }
+  },
+  "reports": {
+    "title": "Reports & Export",
+    "subtitle": "Export your financial records to CSV or PDF",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "exportCsv": "Export to CSV",
+    "exportPdf": "Export to PDF",
+    "generating": "Generating...",
+    "validation": {
+      "dates": "Please select both start and end dates.",
+      "order": "Start date must be before or equal to end date."
+    }
+  },
+  "tours": {
+    "btn": {
+      "next": "Next →",
+      "prev": "← Back",
+      "done": "Done ✓"
+    },
+    "progress": "{{current}} of {{total}}",
+    "dashboard": {
+      "period": {
+        "title": "📅 Period Filter",
+        "description": "Select the month and year to filter your dashboard data. Charts and summary cards will update automatically."
+      },
+      "balance": {
+        "title": "💰 Total Balance",
+        "description": "Your family's total balance across all linked accounts, calculated in real time."
+      },
+      "income": {
+        "title": "📈 Monthly Income",
+        "description": "Total income recorded by all family members for the selected month."
+      },
+      "expense": {
+        "title": "📉 Monthly Expense",
+        "description": "Total expenses for the selected month. Keep an eye on this to stay within your budget."
+      },
+      "net": {
+        "title": "⚖️ Net Balance",
+        "description": "Income minus expenses. Green means you're saving, red means you're spending more than you earn."
+      },
+      "insights": {
+        "title": "✨ AI Financial Insights",
+        "description": "Smart tips generated from your transaction patterns. Click the title to expand and view personalized recommendations."
+      },
+      "charts": {
+        "title": "📊 Charts & Analytics",
+        "description": "Visualize your spending by category, compare income vs. expense over the year, track expense trends, and monitor net worth growth over time."
+      }
+    },
+    "transactions": {
+      "header": {
+        "title": "💸 Transactions",
+        "description": "This is your central hub for managing all family financial transactions — income, expenses, and transfers."
+      },
+      "add": {
+        "title": "➕ Add Transaction",
+        "description": "Click here to record a new income or expense. You can assign it to a family member, account, and category."
+      },
+      "transfer": {
+        "title": "🔄 Transfer Between Accounts",
+        "description": "Move money between your family's accounts — for example from your bank account to an e-wallet."
+      },
+      "filters": {
+        "title": "🔍 Smart Filters",
+        "description": "Filter transactions by type (income/expense), category, member, account, or date range. Use the search box to find specific transactions quickly."
+      },
+      "table": {
+        "title": "📋 Transaction List",
+        "description": "All transactions are listed here. Click the column headers to sort. Use the ✏️ Edit, 📋 Duplicate, and 🗑️ Delete action buttons on each row."
+      }
+    },
+    "accounts": {
+      "header": {
+        "title": "🏦 Accounts",
+        "description": "Manage all your family's financial accounts in one place — bank accounts, e-wallets, cash, and more."
+      },
+      "add": {
+        "title": "➕ Add an Account",
+        "description": "Click here to add a new account. Choose the account type (bank, e-wallet, cash, etc.) and set the initial balance."
+      },
+      "list": {
+        "title": "💳 Account Cards",
+        "description": "Each card shows the account name, type, and current balance. Balances update automatically as you add transactions. Use the Edit and Delete buttons to manage each account."
+      }
+    },
+    "budgets": {
+      "header": {
+        "title": "🎯 Budgets",
+        "description": "Set monthly spending limits for each expense category. The app will warn you when you're getting close to or exceeding your budget."
+      },
+      "add": {
+        "title": "➕ Create a Budget",
+        "description": "Click here to assign a monthly budget limit to any expense category. You can set different amounts for different months."
+      },
+      "list": {
+        "title": "📊 Budget Cards",
+        "description": "Each card shows a category's budget limit, how much has been spent, and the remaining amount. Colors change from green → yellow → red as you approach the limit."
+      },
+      "alerts": {
+        "title": "🔔 Budget Alerts",
+        "description": "When any budget exceeds its limit, a red badge appears on the bell icon here. Click it to see all over-budget categories."
+      }
+    },
+    "goals": {
+      "header": {
+        "title": "🏆 Financial Goals",
+        "description": "Set savings goals for your family — a vacation fund, emergency fund, new appliance, anything you're working towards together."
+      },
+      "add": {
+        "title": "➕ Add a Goal",
+        "description": "Click here to create a new goal. Set a name, target amount, and deadline. The app will track your progress automatically."
+      },
+      "list": {
+        "title": "🎯 Goal Cards",
+        "description": "Each card shows your goal name, target amount, current progress, and deadline. The progress bar fills up as you get closer to your target."
+      }
+    },
+    "recurring": {
+      "header": {
+        "title": "🔁 Recurring Transactions",
+        "description": "Automate your regular income and expenses — rent, subscriptions, salaries, utility bills — so you never forget to track them."
+      },
+      "add": {
+        "title": "➕ Add Recurring",
+        "description": "Click here to set up a recurring transaction. Define the amount, category, frequency (daily/weekly/monthly), and start date."
+      },
+      "list": {
+        "title": "📋 Recurring List",
+        "description": "All recurring transactions are listed here with their next due date and frequency. You can pause, edit, or delete any recurring item."
+      }
+    },
+    "reports": {
+      "header": {
+        "title": "📈 Reports",
+        "description": "Deep-dive into your family's financial data with detailed reports, charts, and exportable summaries."
+      },
+      "filters": {
+        "title": "🗓️ Date Range Filter",
+        "description": "Select a custom date range to analyze any time period. You can view weekly, monthly, quarterly, or yearly data."
+      },
+      "charts": {
+        "title": "📊 Visual Reports",
+        "description": "Charts give you an instant visual overview of your income vs. expenses, top spending categories, and trends over time."
+      },
+      "export": {
+        "title": "📄 Export to PDF",
+        "description": "Download a formatted PDF report of your financial data to share with your family or keep for your records."
+      }
+    }
+  }
+}

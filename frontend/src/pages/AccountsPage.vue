@@ -1,8 +1,13 @@
 <template>
   <div class="accounts-page fade-in">
     <div id="tour-accounts-header" class="page-header d-flex justify-content-between align-items-center">
-      <div><h4>Accounts</h4><p>Manage bank, cash, and e-wallet accounts</p></div>
-      <button id="tour-accounts-add-btn" class="btn btn-primary-gradient" @click="openCreate"><i class="bi bi-plus-lg me-1"></i>Add Account</button>
+      <div>
+        <h4>{{ $t('accounts.title') }}</h4>
+        <p>{{ $t('accounts.subtitle') }}</p>
+      </div>
+      <button id="tour-accounts-add-btn" class="btn btn-primary-gradient" @click="openCreate">
+        <i class="bi bi-plus-lg me-1"></i>{{ $t('accounts.addAccount') }}
+      </button>
     </div>
     <div id="tour-accounts-list" class="row g-3">
       <div v-for="acc in accounts" :key="acc.id" class="col-md-4 col-lg-3">
@@ -13,11 +18,15 @@
             </div>
             <div>
               <h6 class="mb-0 fw-bold">{{ acc.name }}</h6>
-              <small class="text-muted text-uppercase">{{ acc.type }}</small>
+              <small class="text-muted text-uppercase">
+                {{ $t('accounts.type.' + (acc.type === 'ewallet' ? 'e_wallet' : acc.type)) }}
+              </small>
             </div>
           </div>
           <div class="stat-value mb-2">{{ formatCurrency(acc.balance) }}</div>
-          <div v-if="acc.initial_balance" class="small text-muted mb-2">Opening: {{ formatCurrency(acc.initial_balance) }}</div>
+          <div v-if="acc.initial_balance" class="small text-muted mb-2">
+            {{ $t('accounts.balancePlaceholder') }}: {{ formatCurrency(acc.initial_balance) }}
+          </div>
           <div class="d-flex gap-1">
             <button class="btn btn-sm btn-outline-primary" @click="openEdit(acc)"><i class="bi bi-pencil"></i></button>
             <button class="btn btn-sm btn-outline-danger" @click="confirmDelete(acc)"><i class="bi bi-trash"></i></button>
@@ -30,29 +39,31 @@
     <div v-if="showModal" class="vue-modal-backdrop" @mousedown.self="showModal = false">
       <div class="vue-modal">
         <div class="modal-header">
-          <h5 class="modal-title">{{ editingId ? 'Edit' : 'Add' }} Account</h5>
+          <h5 class="modal-title">{{ editingId ? $t('accounts.editAccount') : $t('accounts.addAccount') }}</h5>
           <button type="button" class="btn-close" @click="showModal = false"></button>
         </div>
         <form @submit.prevent="save">
           <div class="modal-body">
             <div v-if="formError" class="alert alert-danger small">{{ formError }}</div>
             <div class="mb-3">
-              <label class="form-label">Name</label>
+              <label class="form-label">{{ $t('common.name') }}</label>
               <input v-model="form.name" class="form-control" required />
             </div>
             <div class="mb-3">
-              <label class="form-label">Type</label>
+              <label class="form-label">{{ $t('common.type') }}</label>
               <select v-model="form.type" class="form-select" required>
-                <option value="" disabled>- Type -</option>
-                <option value="bank">Bank</option>
-                <option value="cash">Cash</option>
-                <option value="ewallet">E-Wallet</option>
+                <option value="" disabled>- {{ $t('common.type') }} -</option>
+                <option value="bank">{{ $t('accounts.type.bank') }}</option>
+                <option value="cash">{{ $t('accounts.type.cash') }}</option>
+                <option value="ewallet">{{ $t('accounts.type.e_wallet') }}</option>
               </select>
             </div>
             <div class="mb-3">
-              <label class="form-label">Initial Balance (Rp)</label>
+              <label class="form-label">{{ $t('accounts.balancePlaceholder') }} (Rp)</label>
               <input v-model.number="form.initial_balance" type="number" class="form-control" min="0" />
-              <div v-if="editingId" class="form-text">Changing this will recalculate the current balance.</div>
+              <div v-if="editingId" class="form-text">
+                {{ localeStore.currentLocale === 'id' ? 'Mengubah ini akan menghitung ulang saldo saat ini.' : 'Changing this will recalculate the current balance.' }}
+              </div>
             </div>
             <div class="mb-3">
               <label class="form-label">Icon (Bootstrap Icon class)</label>
@@ -60,8 +71,8 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="showModal = false">Cancel</button>
-            <button type="submit" class="btn btn-primary-gradient">Save</button>
+            <button type="button" class="btn btn-secondary" @click="showModal = false">{{ $t('common.cancel') }}</button>
+            <button type="submit" class="btn btn-primary-gradient">{{ $t('common.save') }}</button>
           </div>
         </form>
       </div>
@@ -71,15 +82,15 @@
     <div v-if="showDeleteModal" class="vue-modal-backdrop" @mousedown.self="showDeleteModal = false">
       <div class="vue-modal" style="max-width:420px">
         <div class="modal-header border-0 pb-0">
-          <h5 class="modal-title text-danger"><i class="bi bi-exclamation-triangle me-2"></i>Delete Account</h5>
+          <h5 class="modal-title text-danger"><i class="bi bi-exclamation-triangle me-2"></i>{{ $t('common.delete') }} {{ $t('common.account') }}</h5>
           <button type="button" class="btn-close" @click="showDeleteModal = false"></button>
         </div>
         <div class="modal-body">
-          <p class="mb-0">Are you sure you want to delete <strong>{{ deletingItem?.name }}</strong>? This cannot be undone.</p>
+          <p class="mb-0">{{ $t('common.confirmDelete') }}</p>
         </div>
         <div class="modal-footer border-0 pt-0">
-          <button class="btn btn-secondary" @click="showDeleteModal = false">Cancel</button>
-          <button class="btn btn-danger" @click="doDelete">Delete</button>
+          <button class="btn btn-secondary" @click="showDeleteModal = false">{{ $t('common.cancel') }}</button>
+          <button class="btn btn-danger" @click="doDelete">{{ $t('common.delete') }}</button>
         </div>
       </div>
     </div>
@@ -93,6 +104,7 @@ import { accountsTourSteps } from '../tours/accountsTour';
 import { formatCurrency } from '../utils/format';
 import { accountService } from '../services/accountService';
 import { useToastStore } from '../stores/toast';
+import { useLocaleStore } from '../stores/locale';
 
 const accounts = ref([]);
 const editingId = ref(null);
@@ -100,6 +112,7 @@ const form = ref({ name: '', type: '', initial_balance: 0, icon: 'bi-bank' });
 const formError = ref('');
 let originalInitialBalance = 0;
 let originalBalance = 0;
+const localeStore = useLocaleStore();
 
 const showModal = ref(false);
 const showDeleteModal = ref(false);
@@ -138,16 +151,16 @@ async function save() {
         payload.balance = originalBalance + (payload.initial_balance - originalInitialBalance);
       }
       await accountService.update(editingId.value, payload);
-      toast.success('Account updated successfully');
+      toast.success(localeStore.t('common.success'));
     } else {
       payload.balance = payload.initial_balance;
       await accountService.create(payload);
-      toast.success('Account created successfully');
+      toast.success(localeStore.t('common.success'));
     }
     showModal.value = false;
     fetchData();
   } catch(e) {
-    formError.value = e.response?.data?.message || 'Error occurred';
+    formError.value = e.response?.data?.message || localeStore.t('common.error');
     toast.error(formError.value);
   }
 }
@@ -161,12 +174,12 @@ async function doDelete() {
   if (!deletingItem.value) return;
   try {
     await accountService.delete(deletingItem.value.id);
-    toast.success('Account deleted successfully');
+    toast.success(localeStore.t('common.success'));
     showDeleteModal.value = false;
     deletingItem.value = null;
     fetchData();
   } catch(e) {
-    toast.error(e.response?.data?.message || 'Failed to delete account');
+    toast.error(e.response?.data?.message || localeStore.t('common.error'));
   }
 }
 

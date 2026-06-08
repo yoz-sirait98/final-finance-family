@@ -1,8 +1,13 @@
 <template>
   <div class="goals-page fade-in">
     <div id="tour-goals-header" class="page-header d-flex justify-content-between align-items-center">
-      <div><h4>Saving Goals</h4><p>Track your saving targets</p></div>
-      <button id="tour-goals-add-btn" class="btn btn-primary-gradient" @click="openCreate"><i class="bi bi-plus-lg me-1"></i>Add Goal</button>
+      <div>
+        <h4>{{ $t('goals.title') }}</h4>
+        <p>{{ $t('goals.subtitle') }}</p>
+      </div>
+      <button id="tour-goals-add-btn" class="btn btn-primary-gradient" @click="openCreate">
+        <i class="bi bi-plus-lg me-1"></i>{{ $t('goals.addGoal') }}
+      </button>
     </div>
     <div id="tour-goals-list" class="row g-3">
       <div v-for="g in goals" :key="g.id" class="col-md-6 col-lg-4">
@@ -14,10 +19,10 @@
                 {{ g.name }}
               </h6>
               <div v-if="g.account_id" class="badge bg-info mt-1 mb-1 me-1"><i class="bi bi-link-45deg"></i> {{ g.account_name }}</div>
-              <small class="text-muted d-block">{{ g.deadline || 'No deadline' }}</small>
+              <small class="text-muted d-block">{{ g.deadline || (localeStore.currentLocale === 'id' ? 'Tidak ada tenggat' : 'No deadline') }}</small>
             </div>
             <span class="badge" :class="g.status === 'active' ? 'bg-primary' : g.status === 'completed' ? 'bg-success' : g.status === 'inactive' ? 'bg-warning text-dark' : 'bg-secondary'">
-              {{ g.status }}
+              {{ $t('common.' + g.status) }}
             </span>
           </div>
           <div class="d-flex justify-content-between small text-muted mb-1">
@@ -27,9 +32,13 @@
           <div class="progress mb-2" style="height:10px">
             <div class="progress-bar bg-primary" :style="{ width: g.progress_percentage + '%' }"></div>
           </div>
-          <div class="small text-muted mb-3">{{ g.progress_percentage }}% complete</div>
+          <div class="small text-muted mb-3">
+            {{ localeStore.currentLocale === 'id' ? g.progress_percentage + '% selesai' : g.progress_percentage + '% complete' }}
+          </div>
           <div class="d-flex gap-1">
-            <button v-if="g.status === 'active' && !g.account_id" class="btn btn-sm btn-primary-gradient" @click="openContribute(g)"><i class="bi bi-plus-circle me-1"></i>Contribute</button>
+            <button v-if="g.status === 'active' && !g.account_id" class="btn btn-sm btn-primary-gradient" @click="openContribute(g)">
+              <i class="bi bi-plus-circle me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Tabung' : 'Contribute' }}
+            </button>
             <button class="btn btn-sm btn-outline-primary" @click="openEdit(g)"><i class="bi bi-pencil"></i></button>
             <button class="btn btn-sm btn-outline-danger" @click="confirmDelete(g)"><i class="bi bi-trash"></i></button>
           </div>
@@ -41,51 +50,51 @@
     <div v-if="showModal" class="vue-modal-backdrop" @mousedown.self="showModal = false">
       <div class="vue-modal">
         <div class="modal-header">
-          <h5 class="modal-title">{{ editingId ? 'Edit' : 'Add' }} Goal</h5>
+          <h5 class="modal-title">{{ editingId ? $t('goals.editGoal') : $t('goals.addGoal') }}</h5>
           <button type="button" class="btn-close" @click="showModal = false"></button>
         </div>
         <form @submit.prevent="save">
           <div class="modal-body">
             <div v-if="formError" class="alert alert-danger small">{{ formError }}</div>
             <div class="mb-3">
-              <label class="form-label">Name</label>
+              <label class="form-label">{{ $t('common.name') }}</label>
               <input v-model="form.name" class="form-control" required />
             </div>
             <div class="mb-3">
-              <label class="form-label">Target Amount (Rp)</label>
+              <label class="form-label">{{ $t('goals.targetAmount') }} (Rp)</label>
               <input v-model.number="form.target_amount" type="number" class="form-control" min="1" required />
             </div>
             <div class="mb-3" v-if="editingId">
-              <label class="form-label">Current Progress</label>
+              <label class="form-label">{{ $t('goals.currentAmount') }}</label>
               <input type="text" class="form-control bg-light" :value="formatCurrency(editingGoal?.current_amount || 0)" disabled readonly />
             </div>
             <div class="mb-3">
-              <label class="form-label">Link to Account (Optional)</label>
+              <label class="form-label">{{ $t('goals.linkedAccount') }}</label>
               <select v-model="form.account_id" class="form-select">
-                <option value="">-- No Account Linked --</option>
+                <option value="">-- {{ localeStore.currentLocale === 'id' ? 'Tanpa Akun Terhubung' : 'No Account Linked' }} --</option>
                 <option v-for="a in accounts" :key="a.id" :value="a.id">{{ a.name }}</option>
               </select>
-              <div class="form-text small">If linked, goal progress automatically mirrors the account balance.</div>
+              <div class="form-text small">{{ $t('goals.linkedAccountInfo') }}</div>
             </div>
             <div class="mb-3">
-              <label class="form-label">Deadline</label>
+              <label class="form-label">{{ $t('goals.deadline') }}</label>
               <input v-model="form.deadline" type="date" class="form-control" />
             </div>
             <div class="mb-3" v-if="editingId">
-              <label class="form-label">Status</label>
+              <label class="form-label">{{ $t('common.status') }}</label>
               <select v-model="form.status" class="form-select">
-                <option value="active">Active</option>
-                <option value="completed" :disabled="editingGoal && editingGoal.current_amount < form.target_amount">Completed</option>
-                <option value="cancelled">Cancelled</option>
-                <option value="inactive">Inactive</option>
+                <option value="active">{{ $t('common.active') }}</option>
+                <option value="completed" :disabled="editingGoal && editingGoal.current_amount < form.target_amount">{{ $t('common.completed') }}</option>
+                <option value="cancelled">{{ $t('common.cancelled') }}</option>
+                <option value="inactive">{{ $t('common.inactive') }}</option>
               </select>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" :disabled="saving" @click="showModal = false">Cancel</button>
+            <button type="button" class="btn btn-secondary" :disabled="saving" @click="showModal = false">{{ $t('common.cancel') }}</button>
             <button type="submit" class="btn btn-primary-gradient" :disabled="saving">
               <span v-if="saving" class="spinner-border spinner-border-sm me-1"></span>
-              Save
+              {{ $t('common.save') }}
             </button>
           </div>
         </form>
@@ -96,25 +105,27 @@
     <div v-if="showContributeModal" class="vue-modal-backdrop" @mousedown.self="showContributeModal = false">
       <div class="vue-modal">
         <div class="modal-header">
-          <h5 class="modal-title">Contribute to {{ contributingGoal?.name }}</h5>
+          <h5 class="modal-title">
+            {{ localeStore.currentLocale === 'id' ? 'Tabung untuk' : 'Contribute to' }} {{ contributingGoal?.name }}
+          </h5>
           <button type="button" class="btn-close" @click="showContributeModal = false"></button>
         </div>
         <form @submit.prevent="doContribute">
           <div class="modal-body">
             <div class="mb-3">
-              <label class="form-label">Amount (Rp)</label>
+              <label class="form-label">{{ $t('common.amount') }} (Rp)</label>
               <input v-model.number="contributeForm.amount" type="number" class="form-control" min="1" required />
             </div>
             <div class="mb-3">
-              <label class="form-label">Note</label>
+              <label class="form-label">{{ localeStore.currentLocale === 'id' ? 'Catatan' : 'Note' }}</label>
               <input v-model="contributeForm.note" class="form-control" />
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" :disabled="saving" @click="showContributeModal = false">Cancel</button>
+            <button type="button" class="btn btn-secondary" :disabled="saving" @click="showContributeModal = false">{{ $t('common.cancel') }}</button>
             <button type="submit" class="btn btn-primary-gradient" :disabled="saving">
               <span v-if="saving" class="spinner-border spinner-border-sm me-1"></span>
-              Contribute
+              {{ localeStore.currentLocale === 'id' ? 'Tabung' : 'Contribute' }}
             </button>
           </div>
         </form>
@@ -125,17 +136,17 @@
     <div v-if="showDeleteModal" class="vue-modal-backdrop" @mousedown.self="showDeleteModal = false">
       <div class="vue-modal" style="max-width:420px">
         <div class="modal-header border-0 pb-0">
-          <h5 class="modal-title text-danger"><i class="bi bi-exclamation-triangle me-2"></i>Delete Goal</h5>
+          <h5 class="modal-title text-danger"><i class="bi bi-exclamation-triangle me-2"></i>{{ $t('common.delete') }} {{ $t('goals.title') }}</h5>
           <button type="button" class="btn-close" @click="showDeleteModal = false"></button>
         </div>
         <div class="modal-body">
-          <p class="mb-0">Are you sure you want to delete the goal <strong>{{ deletingItem?.name }}</strong>? This cannot be undone.</p>
+          <p class="mb-0">{{ $t('common.confirmDelete') }}</p>
         </div>
         <div class="modal-footer border-0 pt-0">
-          <button class="btn btn-secondary" :disabled="deleting" @click="showDeleteModal = false">Cancel</button>
+          <button class="btn btn-secondary" :disabled="deleting" @click="showDeleteModal = false">{{ $t('common.cancel') }}</button>
           <button class="btn btn-danger" :disabled="deleting" @click="doDelete">
             <span v-if="deleting" class="spinner-border spinner-border-sm me-1"></span>
-            Delete
+            {{ $t('common.delete') }}
           </button>
         </div>
       </div>
@@ -151,6 +162,7 @@ import { formatCurrency } from '../utils/format';
 import { goalService } from '../services/goalService';
 import { accountService } from '../services/accountService';
 import { useToastStore } from '../stores/toast';
+import { useLocaleStore } from '../stores/locale';
 
 const goals = ref([]);
 const accounts = ref([]);
@@ -158,6 +170,7 @@ const editingId = ref(null);
 const editingGoal = ref(null);
 const form = ref({ name: '', target_amount: 0, deadline: '', status: 'active' });
 const formError = ref('');
+const localeStore = useLocaleStore();
 
 const showModal = ref(false);
 const showContributeModal = ref(false);
@@ -203,7 +216,7 @@ async function save() {
   saving.value = true;
   
   if (form.value.status === 'completed' && editingGoal.value && editingGoal.value.current_amount < form.value.target_amount) {
-    formError.value = "Cannot mark as completed until target amount is reached.";
+    formError.value = localeStore.t('goals.completedManuallyError');
     saving.value = false;
     return;
   }
@@ -218,15 +231,15 @@ async function save() {
     };
     if (editingId.value) {
       await goalService.update(editingId.value, payload);
-      toast.success('Goal updated successfully');
+      toast.success(localeStore.t('common.success'));
     } else {
       await goalService.create(payload);
-      toast.success('Goal created successfully');
+      toast.success(localeStore.t('common.success'));
     }
     showModal.value = false;
     fetchData();
   } catch(e) {
-    formError.value = e.message || 'Error occurred';
+    formError.value = e.message || localeStore.t('common.error');
     toast.error(formError.value);
   } finally {
     saving.value = false;
@@ -237,11 +250,11 @@ async function doContribute() {
   saving.value = true;
   try {
     await goalService.contribute(contributingGoal.value.id, contributeForm.value);
-    toast.success('Contribution added successfully');
+    toast.success(localeStore.t('common.success'));
     showContributeModal.value = false;
     fetchData();
   } catch(e) {
-    toast.error(e.message || 'Error contributing');
+    toast.error(e.message || localeStore.t('common.error'));
   } finally {
     saving.value = false;
   }
@@ -257,12 +270,12 @@ async function doDelete() {
   deleting.value = true;
   try {
     await goalService.delete(deletingItem.value.id);
-    toast.success('Goal deleted successfully');
+    toast.success(localeStore.t('common.success'));
     showDeleteModal.value = false;
     deletingItem.value = null;
     fetchData();
   } catch(e) {
-    toast.error(e.message || 'Failed to delete goal');
+    toast.error(e.message || localeStore.t('common.error'));
   } finally {
     deleting.value = false;
   }
