@@ -113,6 +113,7 @@
               <td>{{ tx.description || '-' }}</td>
               <td>
                 <div class="btn-group btn-group-sm">
+                  <button v-if="tx.shopping_items && tx.shopping_items.length" class="btn btn-outline-info" @click="openReceipt(tx)" title="View Receipt"><i class="bi bi-receipt"></i></button>
                   <button class="btn btn-outline-success" @click="openDuplicate(tx)" title="Duplicate"><i class="bi bi-copy"></i></button>
                   <button class="btn btn-outline-primary" @click="openEdit(tx)" :title="$t('common.edit')"><i class="bi bi-pencil"></i></button>
                   <button class="btn btn-outline-danger" @click="confirmDelete(tx)" :title="$t('common.delete')"><i class="bi bi-trash"></i></button>
@@ -302,20 +303,20 @@
           </p>
           <div class="table-sm small mb-0">
             <div class="d-flex justify-content-between border-bottom py-1">
-              <span class="text-muted">{{ $t('transactions.budgetLimit') }}</span>
-              <span class="fw-semibold">{{ budgetConfirmData.limitFmt }}</span>
+               <span class="text-muted">{{ $t('transactions.budgetLimit') }}</span>
+               <span class="fw-semibold">{{ budgetConfirmData.limitFmt }}</span>
             </div>
             <div class="d-flex justify-content-between border-bottom py-1">
-              <span class="text-muted">{{ $t('transactions.alreadySpent') }}</span>
-              <span class="fw-semibold">{{ budgetConfirmData.spentFmt }}</span>
+               <span class="text-muted">{{ $t('transactions.alreadySpent') }}</span>
+               <span class="fw-semibold">{{ budgetConfirmData.spentFmt }}</span>
             </div>
             <div class="d-flex justify-content-between border-bottom py-1">
-              <span class="text-muted">{{ $t('transactions.thisTransaction') }}</span>
-              <span class="fw-semibold text-danger">{{ budgetConfirmData.addingFmt }}</span>
+               <span class="text-muted">{{ $t('transactions.thisTransaction') }}</span>
+               <span class="fw-semibold text-danger">{{ budgetConfirmData.addingFmt }}</span>
             </div>
             <div class="d-flex justify-content-between py-1">
-              <span class="text-muted">{{ $t('transactions.totalAfterSave') }}</span>
-              <span class="fw-bold text-danger">{{ budgetConfirmData.totalFmt }} ({{ budgetConfirmData.pct }}%)</span>
+               <span class="text-muted">{{ $t('transactions.totalAfterSave') }}</span>
+               <span class="fw-bold text-danger">{{ budgetConfirmData.totalFmt }} ({{ budgetConfirmData.pct }}%)</span>
             </div>
           </div>
         </div>
@@ -325,6 +326,28 @@
             <span v-if="saving" class="spinner-border spinner-border-sm me-1"></span>
             {{ $t('transactions.yesSaveAnyway') }}
           </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Receipt Modal ===== -->
+    <div v-if="showReceiptModal" class="vue-modal-backdrop" @mousedown.self="showReceiptModal = false">
+      <div class="vue-modal">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title fw-bold"><i class="bi bi-receipt me-2"></i>Itemized Receipt</h5>
+          <button type="button" class="btn-close" @click="showReceiptModal = false"></button>
+        </div>
+        <div class="modal-body">
+          <div class="list-group list-group-flush" v-if="receiptTx">
+            <div v-for="item in receiptTx.shopping_items" :key="item.id" class="list-group-item d-flex justify-content-between align-items-center px-0">
+              <span>{{ item.name }}</span>
+              <span class="fw-semibold">Rp {{ parseFloat(item.price).toLocaleString('id-ID') }}</span>
+            </div>
+            <div class="list-group-item d-flex justify-content-between align-items-center px-0 mt-3 border-top pt-3">
+              <span class="fw-bold">Total Transacted</span>
+              <span class="fw-bold text-danger">Rp {{ parseFloat(receiptTx.amount).toLocaleString('id-ID') }}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -369,6 +392,14 @@ const budgetStore = useBudgetStore();
 // Budget over-budget confirmation
 const showBudgetConfirm = ref(false);
 const budgetConfirmData = ref({});
+
+const showReceiptModal = ref(false);
+const receiptTx = ref(null);
+
+function openReceipt(tx) {
+  receiptTx.value = tx;
+  showReceiptModal.value = true;
+}
 
 function fmt(n) {
   const sign = n < 0 ? '-' : '';

@@ -289,6 +289,24 @@
       "order": "Start date must be before or equal to end date."
     }
   },
+  "shopping": {
+    "title": "Shopping List",
+    "subtitle": "Collaborative family shopping list",
+    "toBuy": "To Buy",
+    "bought": "Bought History",
+    "addItem": "Add Item",
+    "itemPlaceholder": "e.g. Milk, Eggs...",
+    "checkout": "Checkout Selected",
+    "checkoutConfirm": "Create Transaction",
+    "noItems": "No items in the list",
+    "price": "Price",
+    "pricePlaceholder": "Est. Price",
+    "addedBy": "Added by",
+    "checkoutSuccess": "Items checked out successfully!",
+    "validation": {
+      "name": "Please enter an item name."
+    }
+  },
   "tours": {
     "btn": {
       "next": "Next →",

@@ -34,6 +34,13 @@
             <span class="nav-text">{{ $t('nav.accounts') }}</span>
           </router-link>
         </div>
+        <div class="nav-item">
+          <router-link to="/shopping" class="nav-link" @click="closeMobile">
+            <i class="bi bi-cart"></i>
+            <span class="nav-text">{{ $t('shopping.title') }}</span>
+            <span v-if="pendingShoppingCount > 0" class="badge rounded-pill bg-danger ms-auto" style="font-size: 0.65rem;">{{ pendingShoppingCount }}</span>
+          </router-link>
+        </div>
 
         <span class="sidebar-section-title">{{ $t('nav.management') }}</span>
         <div class="nav-item">
@@ -202,6 +209,7 @@ import { useBudgetStore } from '../stores/budgets';
 import { useTourStore } from '../stores/tour';
 import { useLocaleStore } from '../stores/locale';
 import GoalNotificationModal from '../components/GoalNotificationModal.vue';
+import { supabase } from '../lib/supabase';
 
 const route = useRoute();
 const router = useRouter();
@@ -244,6 +252,8 @@ const userDropdownRef = ref(null);
 const langDropdownRef = ref(null);
 
 let pollTimer = null;
+const pendingShoppingCount = ref(0);
+let shoppingSub = null;
 
 const budgetAlerts = computed(() => budgetStore.alerts || []);
 const currentPageTitle = computed(() => {
@@ -256,6 +266,21 @@ async function refreshAlerts() {
   try {
     await budgetStore.fetchAlerts();
   } catch {}
+}
+
+async function fetchPendingShopping() {
+  if (!authStore.familyId) return;
+  const { count } = await supabase.from('shopping_items').select('*', { count: 'exact', head: true })
+    .eq('status', 'needed').eq('family_id', authStore.familyId);
+  pendingShoppingCount.value = count || 0;
+}
+
+function setupShoppingRealtime() {
+  if (!authStore.familyId) return;
+  shoppingSub = supabase.channel('dashboard_shopping')
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'shopping_items', filter: `family_id=eq.${authStore.familyId}` }, () => {
+      fetchPendingShopping();
+    }).subscribe();
 }
 
 function toggleBell() {
@@ -338,10 +363,13 @@ onMounted(async () => {
   document.addEventListener('mousedown', handleOutsideClick);
   await refreshAlerts();
   startAlertsPolling();
+  fetchPendingShopping();
+  setupShoppingRealtime();
 });
 
 onUnmounted(() => {
   document.removeEventListener('mousedown', handleOutsideClick);
   stopAlertsPolling();
+  if (shoppingSub) supabase.removeChannel(shoppingSub);
 });
 </script>

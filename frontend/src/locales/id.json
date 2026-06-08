@@ -289,6 +289,24 @@
       "order": "Tanggal mulai harus sebelum atau sama dengan tanggal selesai."
     }
   },
+  "shopping": {
+    "title": "Daftar Belanja",
+    "subtitle": "Daftar belanja keluarga kolaboratif",
+    "toBuy": "Akan Dibeli",
+    "bought": "Riwayat Dibeli",
+    "addItem": "Tambah Barang",
+    "itemPlaceholder": "contoh: Susu, Telur...",
+    "checkout": "Checkout Terpilih",
+    "checkoutConfirm": "Buat Transaksi",
+    "noItems": "Tidak ada barang di daftar",
+    "price": "Harga",
+    "pricePlaceholder": "Perkiraan Harga",
+    "addedBy": "Ditambahkan oleh",
+    "checkoutSuccess": "Barang berhasil dicheckout!",
+    "validation": {
+      "name": "Silakan masukkan nama barang."
+    }
+  },
   "tours": {
     "btn": {
       "next": "Lanjut →",
