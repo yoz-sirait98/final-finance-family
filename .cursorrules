@@ -6,6 +6,7 @@ Welcome, AI Agent! Please adhere strictly to the following instructions when wor
 - **Auto-Update**: Always automatically update the relevant planning and status files whenever a code change is made. This includes:
   - Artifact files in the conversation/brain directory (e.g. `task.md`, `implementation_plan.md`).
   - Markdown files in the local `/docs` folder (e.g. `/docs/task.md`, `/docs/implementation_plan.md`).
+- **Implementation Plan Archiving**: Before creating a new implementation plan for a new feature, save the existing `implementation_plan.md` artifact into a new artifact named `old_plan_YYYY_MM_DD.md` (in the scratch folder or as an artifact). When generating the new plan, you **must append/combine** it into the local `docs/implementation_plan.md` file rather than overwriting the whole file.
 - Keep all tasks, goals, and checklists fully updated and in-sync with the current state of implementation.
 
 ## 2. Walkthrough Artifacts
