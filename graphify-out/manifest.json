@@ -65,8 +65,8 @@
     "semantic_hash": "0855e5ca1f1e498f6c56ac90eadb1230"
   },
   "frontend/src/layouts/DashboardLayout.vue": {
-    "mtime": 1780912027.456414,
-    "ast_hash": "e89e3684bc4757b0d024f47b08a88529",
+    "mtime": 1780914270.5584645,
+    "ast_hash": "11ce24a2b9656265bb3bb19aba6e2be1",
     "semantic_hash": ""
   },
   "frontend/src/lib/realtime.js": {
@@ -155,13 +155,13 @@
     "semantic_hash": "a3bc98514bd0b2d7316bf84ad49f56a4"
   },
   "frontend/src/pages/TransactionsPage.vue": {
-    "mtime": 1780912071.035914,
-    "ast_hash": "58a0867a34f2538dfd7d823ae8782b19",
+    "mtime": 1780914253.1869135,
+    "ast_hash": "554b2e223d2b52756039cdab8cecc491",
     "semantic_hash": ""
   },
   "frontend/src/router/index.js": {
-    "mtime": 1780912001.2430017,
-    "ast_hash": "093514c883ccd1b8b25677564c3fa620",
+    "mtime": 1780914218.7757666,
+    "ast_hash": "68e3d6a61a3681445001e4312b29cdb3",
     "semantic_hash": ""
   },
   "frontend/src/services/accountService.js": {
@@ -215,8 +215,8 @@
     "semantic_hash": "eeecd65182cf15a22fa676acaddc5d70"
   },
   "frontend/src/services/transactionService.js": {
-    "mtime": 1780912046.187711,
-    "ast_hash": "7d5a43d93773696f43c12f7cece8b6cb",
+    "mtime": 1780914233.1560376,
+    "ast_hash": "6d3f14663c22a49812586f591a39707c",
     "semantic_hash": ""
   },
   "frontend/src/stores/accounts.js": {
@@ -405,13 +405,13 @@
     "semantic_hash": "34de4f7614dbad18adec76c1eb9d73af"
   },
   "frontend/src/pages/ShoppingPage.vue": {
-    "mtime": 1780911983.653998,
-    "ast_hash": "4400ec850a70cb6ab99888c41e601f3c",
+    "mtime": 1780914181.3190753,
+    "ast_hash": "eb838c47232c3d42a5216d251cea6eff",
     "semantic_hash": ""
   },
   "frontend/src/services/shoppingService.js": {
-    "mtime": 1780911820.0295749,
-    "ast_hash": "e09266d7b22e2631bc3001796eecf3e8",
+    "mtime": 1780914149.4873903,
+    "ast_hash": "cc81dfb19f2985935f1cb7b8973d8f7c",
     "semantic_hash": ""
   },
   "supabase/migrations/000012_shopping_items.sql": {
@@ -527,6 +527,21 @@
   "frontend/src/assets/vue.svg": {
     "mtime": 1780644717.7380989,
     "ast_hash": "081c348d068770af78fcd90980521318",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/ShoppingDetailPage.vue": {
+    "mtime": 1780914210.6714911,
+    "ast_hash": "b00e5b59975f0080630e69cb70ddcec5",
+    "semantic_hash": ""
+  },
+  "frontend/src/services/shoppingPlanService.js": {
+    "mtime": 1780914140.3250744,
+    "ast_hash": "3bc095bd924201d72509d3fd422e9ad3",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/000013_shopping_plans_overhaul.sql": {
+    "mtime": 1780914128.8253722,
+    "ast_hash": "a609979b89e7938fb7f47ce1dfe600ef",
     "semantic_hash": ""
   }
 }

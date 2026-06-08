@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS public.shopping_items CASCADE;
 CREATE TABLE public.shopping_plans (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     family_id UUID NOT NULL REFERENCES public.families(id) ON DELETE CASCADE,
-    created_by UUID REFERENCES public.members(id) ON DELETE SET NULL,
+    created_by BIGINT REFERENCES public.members(id) ON DELETE SET NULL,
     location VARCHAR(255) NOT NULL,
     status VARCHAR(50) NOT NULL DEFAULT 'progress' CHECK (status IN ('progress', 'done')),
     transaction_id BIGINT REFERENCES public.transactions(id) ON DELETE SET NULL,
@@ -22,14 +22,14 @@ ALTER TABLE public.shopping_plans ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Enable ALL for family members" ON public.shopping_plans
     FOR ALL USING (
-        family_id = (SELECT family_id FROM public.users WHERE id = auth.uid())
+        family_id = (SELECT family_id FROM public.profiles WHERE id = auth.uid())
     );
 
 -- 2. Create new nested shopping_items
 CREATE TABLE public.shopping_items (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     shopping_plan_id UUID NOT NULL REFERENCES public.shopping_plans(id) ON DELETE CASCADE,
-    added_by UUID REFERENCES public.members(id) ON DELETE SET NULL,
+    added_by BIGINT REFERENCES public.members(id) ON DELETE SET NULL,
     name VARCHAR(255) NOT NULL,
     price DECIMAL(15,2) DEFAULT 0,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -46,18 +46,11 @@ CREATE POLICY "Enable ALL for family members" ON public.shopping_items
         EXISTS (
             SELECT 1 FROM public.shopping_plans p
             WHERE p.id = shopping_items.shopping_plan_id
-            AND p.family_id = (SELECT family_id FROM public.users WHERE id = auth.uid())
+            AND p.family_id = (SELECT family_id FROM public.profiles WHERE id = auth.uid())
         )
     );
 
--- Add updated_at triggers
-CREATE TRIGGER set_shopping_plans_timestamp
-    BEFORE UPDATE ON public.shopping_plans
-    FOR EACH ROW EXECUTE FUNCTION trigger_set_timestamp();
 
-CREATE TRIGGER set_shopping_items_timestamp
-    BEFORE UPDATE ON public.shopping_items
-    FOR EACH ROW EXECUTE FUNCTION trigger_set_timestamp();
 
 -- 3. Recreate Smart Sync Trigger
 CREATE OR REPLACE FUNCTION public.update_transaction_from_shopping_item()
