@@ -29,6 +29,7 @@
                 placeholder="family@example.com"
                 required
                 autofocus
+                autocomplete="username"
               />
             </div>
           </div>
@@ -45,6 +46,7 @@
                 class="form-control"
                 placeholder="Enter password"
                 required
+                autocomplete="current-password"
               />
               <button type="button" class="btn btn-outline-secondary" @click="showPassword = !showPassword">
                 <i :class="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>

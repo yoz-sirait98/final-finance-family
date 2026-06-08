@@ -17,44 +17,53 @@
 
         <form @submit.prevent="handleRegister">
           <div class="mb-3">
-            <label class="form-label fw-semibold">Family Name</label>
+            <label class="form-label fw-semibold" for="regName">Family Name</label>
             <div class="input-group">
               <span class="input-group-text"><i class="bi bi-people"></i></span>
               <input
+                id="regName"
+                name="name"
                 v-model="form.name"
                 class="form-control"
                 placeholder="Keluarga Surya"
                 required
                 autofocus
+                autocomplete="organization"
               />
             </div>
           </div>
 
           <div class="mb-3">
-            <label class="form-label fw-semibold">Email</label>
+            <label class="form-label fw-semibold" for="regEmail">Email</label>
             <div class="input-group">
               <span class="input-group-text"><i class="bi bi-envelope"></i></span>
               <input
+                id="regEmail"
+                name="email"
                 v-model="form.email"
                 type="email"
                 class="form-control"
                 placeholder="family@example.com"
                 required
+                autocomplete="email"
               />
             </div>
           </div>
 
           <div class="mb-3">
-            <label class="form-label fw-semibold">Password</label>
+            <label class="form-label fw-semibold" for="regPassword">Password</label>
             <div class="input-group">
               <span class="input-group-text"><i class="bi bi-lock"></i></span>
               <input
+                id="regPassword"
+                name="password"
                 v-model="form.password"
                 :type="showPassword ? 'text' : 'password'"
                 class="form-control"
                 placeholder="Minimum 8 characters"
                 minlength="8"
                 required
+                autocomplete="new-password"
               />
               <button type="button" class="btn btn-outline-secondary" @click="showPassword = !showPassword">
                 <i :class="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
@@ -63,16 +72,19 @@
           </div>
 
           <div class="mb-4">
-            <label class="form-label fw-semibold">Confirm Password</label>
+            <label class="form-label fw-semibold" for="regPasswordConfirm">Confirm Password</label>
             <div class="input-group">
               <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
               <input
+                id="regPasswordConfirm"
+                name="password_confirmation"
                 v-model="form.password_confirmation"
                 :type="showPassword ? 'text' : 'password'"
                 class="form-control"
                 placeholder="Repeat password"
                 minlength="8"
                 required
+                autocomplete="new-password"
               />
             </div>
           </div>
