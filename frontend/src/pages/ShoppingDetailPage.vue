@@ -91,10 +91,10 @@
             </div>
           </div>
           <div class="modal-footer border-0 pt-0">
-            <button type="button" class="btn btn-secondary" @click="showAddModal = false">{{ $t('common.cancel') }}</button>
+            <button type="button" class="btn btn-secondary" @click="showAddModal = false">{{ $t('common.done') || 'Done' }}</button>
             <button type="submit" class="btn btn-primary-gradient" :disabled="saving">
               <span v-if="saving" class="spinner-border spinner-border-sm me-2"></span>
-              {{ $t('common.save') }}
+              {{ $t('common.add') || 'Add Item' }}
             </button>
           </div>
         </form>
@@ -235,7 +235,9 @@ async function saveItem() {
       price: itemForm.value.price || 0,
       added_by: itemForm.value.added_by
     });
-    showAddModal.value = false;
+    // showAddModal.value = false;
+    itemForm.value.name = '';
+    itemForm.value.price = '';
     toast.success('Item added');
     fetchItems();
   } catch (e) {

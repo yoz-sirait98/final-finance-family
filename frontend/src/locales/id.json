@@ -303,6 +303,11 @@
     "pricePlaceholder": "Perkiraan Harga",
     "addedBy": "Ditambahkan oleh",
     "checkoutSuccess": "Barang berhasil dicheckout!",
+    "createPlan": "Buat Rencana",
+    "location": "Lokasi Belanja",
+    "onProgress": "Sedang Berjalan",
+    "done": "Selesai",
+    "noPlans": "Belum ada rencana belanja.",
     "validation": {
       "name": "Silakan masukkan nama barang."
     }

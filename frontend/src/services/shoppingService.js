@@ -5,6 +5,11 @@ const crud = createCrudService('shopping_items');
 
 export const shoppingService = {
   ...crud,
+  create: async (payload) => {
+    const { data, error } = await supabase.from('shopping_items').insert([payload]).select().single();
+    if (error) throw error;
+    return { data: { data } };
+  },
   list: async (params = {}) => {
     let query = supabase.from('shopping_items').select('*, added_by_member:members!added_by(id, name)').order('created_at', { ascending: false });
     

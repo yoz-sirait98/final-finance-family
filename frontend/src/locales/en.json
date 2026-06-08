@@ -303,6 +303,11 @@
     "pricePlaceholder": "Est. Price",
     "addedBy": "Added by",
     "checkoutSuccess": "Items checked out successfully!",
+    "createPlan": "Create Plan",
+    "location": "Shopping Location",
+    "onProgress": "On Progress",
+    "done": "Done",
+    "noPlans": "No shopping plans found.",
     "validation": {
       "name": "Please enter an item name."
     }
