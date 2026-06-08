@@ -9,12 +9,10 @@ RETURNS TRIGGER AS $$
 BEGIN
     -- If the transaction is a transfer and has a linked transfer transaction
     IF OLD.type = 'transfer' AND OLD.transfer_id IS NOT NULL THEN
-        -- Prevent recursive deletion by breaking the link on the counterpart first
-        UPDATE public.transactions 
-        SET transfer_id = NULL 
-        WHERE id = OLD.transfer_id;
-        
-        -- Delete the counterpart transfer transaction
+        -- Delete the counterpart transfer transaction.
+        -- Since this is an AFTER trigger, the parent row is already deleted.
+        -- When the cascade delete triggers on the counterpart, it will attempt to
+        -- delete the parent row, match 0 rows, and naturally stop recursion.
         DELETE FROM public.transactions 
         WHERE id = OLD.transfer_id;
     END IF;
@@ -22,8 +20,8 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
--- Bind the trigger BEFORE DELETE to the transactions table
+-- Bind the trigger AFTER DELETE to the transactions table
 DROP TRIGGER IF EXISTS on_transaction_delete ON public.transactions;
 CREATE TRIGGER on_transaction_delete
-    BEFORE DELETE ON public.transactions
+    AFTER DELETE ON public.transactions
     FOR EACH ROW EXECUTE FUNCTION public.trg_cascade_delete_transfer();
