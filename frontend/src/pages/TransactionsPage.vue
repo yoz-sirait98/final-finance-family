@@ -6,12 +6,25 @@
         <p>{{ $t('transactions.subtitle') }}</p>
       </div>
       <div class="d-flex gap-2">
+        <button class="btn btn-outline-info" @click="triggerScan" :disabled="isScanning">
+          <i class="bi bi-camera me-1"></i>{{ $t('common.scanReceipt') || 'Scan Receipt' }}
+        </button>
+        <input type="file" ref="receiptScannerInput" accept="image/*" capture="environment" class="d-none" @change="onReceiptSelected" />
         <button id="tour-tx-transfer-btn" class="btn btn-outline-primary" @click="openTransfer">
           <i class="bi bi-arrow-left-right me-1"></i>{{ $t('common.transfer') }}
         </button>
         <button id="tour-tx-add-btn" class="btn btn-primary-gradient" @click="openCreate">
           <i class="bi bi-plus-lg me-1"></i>{{ $t('transactions.addTransaction') }}
         </button>
+      </div>
+    </div>
+
+    <!-- Scanning Overlay -->
+    <div v-if="isScanning" class="vue-modal-backdrop" style="z-index: 1060; background: rgba(0,0,0,0.8);">
+      <div class="d-flex flex-column justify-content-center align-items-center h-100 text-white">
+        <div class="spinner-border mb-3" style="width: 3rem; height: 3rem;" role="status"></div>
+        <h5>{{ $t('common.scanning') || 'Scanning Receipt...' }}</h5>
+        <p class="text-white-50">{{ scanProgress }}%</p>
       </div>
     </div>
 
@@ -338,6 +351,7 @@ import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useTour } from '../composables/useTour';
 import { transactionsTourSteps } from '../tours/transactionsTour';
+import { scanReceipt } from '../utils/receiptScanner';
 import { formatCurrency } from '../utils/format';
 import { transactionService } from '../services/transactionService';
 import { memberService } from '../services/memberService';
@@ -368,7 +382,12 @@ const showTransferModal = ref(false);
 const showDeleteModal = ref(false);
 const deletingTx = ref(null);
 const toast = useToastStore();
-const budgetStore = useBudgetStore();
+
+// OCR Scanning state
+const receiptScannerInput = ref(null);
+const isScanning = ref(false);
+const scanProgress = ref(0);
+
 // Budget over-budget confirmation
 const showBudgetConfirm = ref(false);
 const budgetConfirmData = ref({});
@@ -476,10 +495,58 @@ function resetFilters() {
 }
 
 function openCreate() {
-  editingId.value = null;
-  form.value = { type: '', member_id: '', account_id: '', category_id: '', amount: '', transaction_date: todayISO(), description: '' };
   formError.value = '';
+  editingId.value = null;
+  form.value = {
+    type: 'expense',
+    member_id: '',
+    account_id: '',
+    category_id: '',
+    amount: '',
+    transaction_date: todayISO(),
+    description: ''
+  };
   showTxModal.value = true;
+}
+
+function triggerScan() {
+  receiptScannerInput.value?.click();
+}
+
+async function onReceiptSelected(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  isScanning.value = true;
+  scanProgress.value = 0;
+  try {
+    const data = await scanReceipt(file, (progress) => {
+      scanProgress.value = progress;
+    });
+
+    // Reset the input so the same file can be selected again
+    event.target.value = '';
+
+    // Auto-fill and open modal
+    formError.value = '';
+    editingId.value = null;
+    form.value = {
+      type: 'expense',
+      member_id: '',
+      account_id: '',
+      category_id: '',
+      amount: data.totalAmount || '',
+      transaction_date: data.date || todayISO(),
+      description: data.merchantName || ''
+    };
+    showTxModal.value = true;
+    toast.success('Receipt scanned successfully!');
+
+  } catch (error) {
+    toast.error('Failed to parse receipt.');
+  } finally {
+    isScanning.value = false;
+  }
 }
 
 function openEdit(tx) {

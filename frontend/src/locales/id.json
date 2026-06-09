@@ -35,6 +35,8 @@
     "transfer": "Transfer",
     "role": "Peran",
     "member": "Anggota",
+    "scanReceipt": "Pindai Struk",
+    "scanning": "Memindai Struk...",
     "confirmDelete": "Apakah Anda yakin ingin menghapus data ini? Aksi ini tidak dapat dibatalkan."
   },
   "nav": {
