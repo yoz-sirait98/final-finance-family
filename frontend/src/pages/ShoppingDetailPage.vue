@@ -32,10 +32,13 @@
           <p class="mt-3">No items added to this plan yet.</p>
         </div>
         <div v-else class="list-group list-group-flush">
-          <div v-for="item in items" :key="item.id" class="list-group-item d-flex justify-content-between align-items-center py-3">
-            <div>
-              <h6 class="mb-0 fw-bold" :class="{'text-decoration-line-through': plan?.status === 'done'}">{{ item.name }}</h6>
-              <small class="text-muted">Added by {{ item.added_by_member?.name || 'Unknown' }}</small>
+          <div v-for="item in items" :key="item.id" class="list-group-item d-flex justify-content-between align-items-center py-3" :class="{'bg-light': item.is_checked}">
+            <div class="d-flex align-items-center gap-3">
+              <input type="checkbox" class="form-check-input mt-0 cursor-pointer" style="width: 1.5em; height: 1.5em;" v-model="item.is_checked" @change="toggleCheck(item)" :disabled="plan?.status === 'done'">
+              <div>
+                <h6 class="mb-0 fw-bold" :class="{'text-decoration-line-through text-muted': plan?.status === 'done' || item.is_checked}">{{ item.name }}</h6>
+                <small class="text-muted">Added by {{ item.added_by_member?.name || 'Unknown' }}</small>
+              </div>
             </div>
             <div class="d-flex align-items-center gap-3">
               <div class="input-group input-group-sm" style="width: 140px;">
@@ -280,6 +283,14 @@ async function updateItemPrice(item) {
   } catch (e) {
     toast.error('Failed to update price');
     fetchItems();
+  }
+}
+
+async function toggleCheck(item) {
+  try {
+    await shoppingService.update(item.id, { is_checked: item.is_checked });
+  } catch (e) {
+    toast.error('Failed to update status');
   }
 }
 
