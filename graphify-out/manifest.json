@@ -535,9 +535,9 @@
     "semantic_hash": "9d0203bcdc10a5c536d02d9842efb950"
   },
   "frontend/src/services/shoppingPlanService.js": {
-    "mtime": 1780914140.3250744,
-    "ast_hash": "3bc095bd924201d72509d3fd422e9ad3",
-    "semantic_hash": "3bc095bd924201d72509d3fd422e9ad3"
+    "mtime": 1780997597.7201557,
+    "ast_hash": "1b8483b93103beb9e55ad6adedac529c",
+    "semantic_hash": ""
   },
   "supabase/migrations/000013_shopping_plans_overhaul.sql": {
     "mtime": 1780914590.3981175,
