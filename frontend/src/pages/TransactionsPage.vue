@@ -573,6 +573,7 @@ function openDuplicate(tx) {
 
 // Called when user clicks Save button — runs budget pre-check for new expenses
 async function saveTransaction() {
+  if (saving.value) return;
   formError.value = '';
 
   // Budget pre-check: only for new expenses with a category
@@ -629,7 +630,7 @@ async function doSaveTransaction() {
     budgetStore.fetchAlerts(); // keep bell in sync after any transaction change
   } catch (err) {
     showBudgetConfirm.value = false;
-    formError.value = err.response?.data?.message || localeStore.t('common.error');
+    formError.value = err.response?.data?.message || err.message || localeStore.t('common.error');
     toast.error(formError.value);
   } finally {
     saving.value = false;
@@ -642,6 +643,7 @@ function confirmDelete(tx) {
 }
 
 async function doDelete() {
+  if (deleting.value) return;
   if (!deletingTx.value) return;
   deleting.value = true;
   try {
@@ -652,7 +654,7 @@ async function doDelete() {
     fetchData();
     budgetStore.fetchAlerts(); // keep bell in sync after delete
   } catch (err) {
-    toast.error(err.response?.data?.message || localeStore.t('common.error'));
+    toast.error(err.response?.data?.message || err.message || localeStore.t('common.error'));
   } finally {
     deleting.value = false;
   }
@@ -673,7 +675,7 @@ async function saveTransfer() {
     showTransferModal.value = false;
     fetchData();
   } catch (err) {
-    transferError.value = err.response?.data?.message || localeStore.t('common.error');
+    transferError.value = err.response?.data?.message || err.message || localeStore.t('common.error');
     toast.error(transferError.value);
   } finally {
     saving.value = false;
