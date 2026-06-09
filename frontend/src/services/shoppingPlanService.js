@@ -48,5 +48,22 @@ export const shoppingPlanService = {
     if (updateErr) throw updateErr;
     
     return { data: { transaction: txn, plan: updatedPlan } };
+  },
+  delete: async (id) => {
+    // 1. Fetch the plan to see if it has a linked transaction
+    const { data: plan, error: fetchErr } = await supabase.from('shopping_plans').select('transaction_id').eq('id', id).single();
+    if (fetchErr && fetchErr.code !== 'PGRST116') throw fetchErr;
+
+    // 2. If it has a transaction, delete the transaction (this will cascade or SET NULL in other places)
+    if (plan && plan.transaction_id) {
+      const { error: txnErr } = await supabase.from('transactions').delete().eq('id', plan.transaction_id);
+      if (txnErr) throw txnErr;
+    }
+
+    // 3. Delete the shopping plan
+    const { data, error } = await supabase.from('shopping_plans').delete().eq('id', id).select();
+    if (error) throw error;
+    
+    return { data };
   }
 };
