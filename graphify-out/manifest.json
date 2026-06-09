@@ -155,8 +155,8 @@
     "semantic_hash": "a3bc98514bd0b2d7316bf84ad49f56a4"
   },
   "frontend/src/pages/TransactionsPage.vue": {
-    "mtime": 1780999004.552117,
-    "ast_hash": "ca4da4995e68a52b7f9967a0fc0926fa",
+    "mtime": 1780999290.9547453,
+    "ast_hash": "8111d5a4fa6c24e0e4fb6170a7280338",
     "semantic_hash": ""
   },
   "frontend/src/router/index.js": {
