@@ -155,8 +155,8 @@
     "semantic_hash": "a3bc98514bd0b2d7316bf84ad49f56a4"
   },
   "frontend/src/pages/TransactionsPage.vue": {
-    "mtime": 1780999780.9223313,
-    "ast_hash": "dfbc50540f7b091b09fadf4fd5dd5a2b",
+    "mtime": 1781000756.803221,
+    "ast_hash": "8111d5a4fa6c24e0e4fb6170a7280338",
     "semantic_hash": ""
   },
   "frontend/src/router/index.js": {
@@ -215,9 +215,9 @@
     "semantic_hash": "eeecd65182cf15a22fa676acaddc5d70"
   },
   "frontend/src/services/transactionService.js": {
-    "mtime": 1780914233.1560376,
-    "ast_hash": "6d3f14663c22a49812586f591a39707c",
-    "semantic_hash": "6d3f14663c22a49812586f591a39707c"
+    "mtime": 1781000938.2813983,
+    "ast_hash": "7d2ecf86ce74e51068094f2d08e4f9ef",
+    "semantic_hash": ""
   },
   "frontend/src/stores/accounts.js": {
     "mtime": 1780644717.9291003,
@@ -570,8 +570,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectPocketsPage.vue": {
-    "mtime": 1780996033.466901,
-    "ast_hash": "b47e0bd266daaa164e533e9176c913a9",
+    "mtime": 1781000973.5458474,
+    "ast_hash": "0380d17735c225864847cb1f432571bb",
     "semantic_hash": ""
   },
   "supabase/migrations/000016_project_pockets_schema.sql": {
@@ -582,6 +582,11 @@
   "supabase/migrations/000017_shopping_items_is_checked.sql": {
     "mtime": 1780997880.822875,
     "ast_hash": "310e6fbb44baaff8ed984495cb4189b5",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/000018_project_pockets_refactor.sql": {
+    "mtime": 1781000921.7984164,
+    "ast_hash": "576803ffd7be1a79019e82d9c4a51c9d",
     "semantic_hash": ""
   }
 }
