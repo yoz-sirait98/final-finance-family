@@ -98,6 +98,7 @@
               <th>{{ $t('common.account') }}</th>
               <th>{{ $t('common.category') }}</th>
               <th>{{ $t('common.type') }}</th>
+              <th>{{ localeStore.currentLocale === 'id' ? 'Modul' : 'Module' }}</th>
               <th @click="sort('amount')" style="cursor:pointer">{{ $t('common.amount') }} <i class="bi bi-arrow-down-up small"></i></th>
               <th>{{ $t('common.description') }}</th>
               <th>{{ $t('common.actions') }}</th>
@@ -105,12 +106,12 @@
           </thead>
           <tbody>
             <tr v-if="loading">
-              <td colspan="8" class="text-center py-4">
+              <td colspan="9" class="text-center py-4">
                 <div class="spinner-border spinner-border-sm text-primary"></div> {{ $t('common.loading') }}
               </td>
             </tr>
             <tr v-else-if="!transactions.length">
-              <td colspan="8" class="text-center py-4 text-muted">{{ $t('dashboard.noTransactions') }}</td>
+              <td colspan="9" class="text-center py-4 text-muted">{{ $t('dashboard.noTransactions') }}</td>
             </tr>
             <tr v-for="tx in transactions" :key="tx.id">
               <td>{{ tx.transaction_date }}</td>
@@ -119,6 +120,9 @@
               <td>{{ tx.category?.name || '-' }}</td>
               <td>
                 <span class="badge" :class="'badge-' + tx.type">{{ $t('common.' + tx.type) }}</span>
+              </td>
+              <td>
+                <span class="badge bg-secondary bg-opacity-25 text-dark border">{{ getTransactionModule(tx) }}</span>
               </td>
               <td class="fw-semibold" :class="getAmountClass(tx)">
                 {{ formatAmountWithSign(tx) }}
@@ -412,6 +416,14 @@ function formatAmountWithSign(tx) {
   const isIncoming = tx.type === 'income' || (tx.type === 'transfer' && tx.amount > 0);
   const sign = isIncoming ? '+' : '-';
   return `${sign}${formatCurrency(Math.abs(tx.amount))}`;
+}
+
+function getTransactionModule(tx) {
+  if (tx.shopping_plans && tx.shopping_plans.length > 0) return localeStore.currentLocale === 'id' ? 'Daftar Belanja' : 'Shopping List';
+  if (tx.goal_id) return localeStore.currentLocale === 'id' ? 'Kantong Proyek' : 'Project Pockets';
+  if (tx.description && tx.description.endsWith('(Auto)')) return localeStore.currentLocale === 'id' ? 'Berulang' : 'Recurring';
+  if (tx.type === 'transfer') return 'Transfer';
+  return 'Manual';
 }
 
 const filters = ref({
