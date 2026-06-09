@@ -375,6 +375,7 @@ const formError = ref('');
 const transferError = ref('');
 const editingId = ref(null);
 const localeStore = useLocaleStore();
+const budgetStore = useBudgetStore();
 
 // Modal visibility
 const showTxModal = ref(false);
