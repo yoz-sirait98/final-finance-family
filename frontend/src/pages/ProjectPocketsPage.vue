@@ -29,8 +29,8 @@
 
           <div class="mb-3">
             <div class="d-flex justify-content-between small text-muted mb-1">
-              <span>{{ localeStore.currentLocale === 'id' ? 'Terkumpul' : 'Saved' }}: <strong>{{ formatCurrency(pocket.current_amount) }}</strong></span>
-              <span>{{ localeStore.currentLocale === 'id' ? 'Sisa Saldo' : 'Remaining' }}: <strong>{{ formatCurrency(pocket.remaining) }}</strong></span>
+              <span>{{ localeStore.currentLocale === 'id' ? 'Tersedia' : 'Available' }}: <strong>{{ formatCurrency(pocket.current_amount) }}</strong></span>
+              <span>{{ localeStore.currentLocale === 'id' ? 'Target' : 'Target' }}: {{ formatCurrency(pocket.target_amount) }}</span>
             </div>
             <div class="progress" style="height:8px">
               <div class="progress-bar" 
@@ -198,7 +198,6 @@ import { memberService } from '../services/memberService';
 import { categoryService } from '../services/categoryService';
 import { transactionService } from '../services/transactionService';
 import { formatCurrency } from '../utils/format';
-import { supabase } from '../lib/supabase';
 
 const router = useRouter();
 const localeStore = useLocaleStore();
@@ -259,7 +258,7 @@ async function loadData() {
       ...g,
       spent,
       remaining,
-      isActive: g.status === 'completed'
+      isActive: g.progress_percentage >= 100 || g.status === 'completed'
     };
   });
 
