@@ -28,6 +28,7 @@ const routes = [
       { path: 'shopping/:id', name: 'ShoppingDetail', component: () => import('../pages/ShoppingDetailPage.vue') },
       { path: 'budgets', name: 'Budgets', component: () => import('../pages/BudgetsPage.vue') },
       { path: 'goals', name: 'Goals', component: () => import('../pages/GoalsPage.vue') },
+      { path: 'projects', name: 'ProjectPockets', component: () => import('../pages/ProjectPocketsPage.vue') },
       { path: 'recurring', name: 'Recurring', component: () => import('../pages/RecurringPage.vue') },
       { path: 'reports', name: 'Reports', component: () => import('../pages/ReportsPage.vue') },
       { path: 'settings', name: 'Settings', component: () => import('../pages/SettingsPage.vue') },

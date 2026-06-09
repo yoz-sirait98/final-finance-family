@@ -62,6 +62,12 @@
           </router-link>
         </div>
         <div class="nav-item">
+          <router-link to="/projects" class="nav-link" @click="closeMobile">
+            <i class="bi bi-briefcase"></i>
+            <span class="nav-text">{{ $t('nav.projectPockets') }}</span>
+          </router-link>
+        </div>
+        <div class="nav-item">
           <router-link to="/recurring" class="nav-link" @click="closeMobile">
             <i class="bi bi-arrow-repeat"></i>
             <span class="nav-text">{{ $t('nav.recurring') }}</span>
