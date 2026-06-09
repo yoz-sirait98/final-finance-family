@@ -1,14 +1,14 @@
-# Family Finance Architecture & Integration Plans
+﻿# Family Finance Architecture & Integration Plans
 
 This document combines the implementation plans for the major architectural milestones of the Family Finance application: the Serverless Migration (Laravel to Supabase) and the Indonesian Language Mode Integration.
 
 ---
 
-# Part 1 — Family Finance Architecture Migration: Laravel to Supabase (Completed)
+# Part 1 â€” Family Finance Architecture Migration: Laravel to Supabase (Completed)
 
 This section outlines the complete strategy that was executed to migrate the Family Finance Management System from a Laravel + Vue 3 architecture to a Serverless Supabase + Vue 3 (GitHub Pages) architecture.
 
-## Phase 1 — Project Discovery Report
+## Phase 1 â€” Project Discovery Report
 
 ### 1. Migrated System Architecture
 - **Frontend**: Vue 3 SPA using Composition API, Vite, Pinia, Vue Router, and Bootstrap 5. Hosted on GitHub Pages (`yjsfinance.my.id`). Client-side features include PDF/CSV generation, interactive charts (Chart.js), and a guided tour (driver.js).
@@ -52,7 +52,7 @@ This section outlines the complete strategy that was executed to migrate the Fam
 
 ---
 
-## Phase 2 — Migration Task Breakdown
+## Phase 2 â€” Migration Task Breakdown
 
 | Task | Objective | Estimated Complexity | Dependencies |
 |------|-----------|----------------------|--------------|
@@ -73,7 +73,7 @@ This section outlines the complete strategy that was executed to migrate the Fam
 
 ---
 
-## Phase 3 — Implementation Plan (Proposed Changes)
+## Phase 3 â€” Implementation Plan (Proposed Changes)
 
 ### [Task 01 & 02] Database Schema & Auth Setup
 
@@ -135,7 +135,7 @@ This section outlines the complete strategy that was executed to migrate the Fam
 - Verify that adding an expense updates the Dashboard instantly (Realtime).
 - Verify the Budget Guardrail modal appears exactly as it did before.
 
-## Phase 4 — Post-Migration Polish (Completed)
+## Phase 4 â€” Post-Migration Polish (Completed)
 
 After the core migration, several UI and analytical enhancements were completed:
 1. **Dynamic Golden Ratio Colors**: All Chart.js pie and doughnut charts now mathematically generate distinct colors based on the golden ratio, preventing color collisions.
@@ -151,7 +151,7 @@ After the core migration, several UI and analytical enhancements were completed:
 
 ---
 
-# Part 2 — Indonesian Language Mode Integration (Completed)
+# Part 2 â€” Indonesian Language Mode Integration (Completed)
 
 This plan outlines the strategy that was executed to add full multi-language (English and Indonesian) support to the Family Finance Vue 3 frontend application, allowing seamless translation of all views, charts, tours, and notifications.
 
@@ -191,7 +191,7 @@ All main templates have been updated to call the `$t()` global helper:
 
 ---
 
-# Part 3 � Collaborative Shopping & Shared Bills
+# Part 3 — Collaborative Shopping & Shared Bills
 
 # Goal: Collaborative Shopping & Shared Bills
 
@@ -237,4 +237,49 @@ We will create a new migration file: `000012_shopping_list.sql`.
 ### Manual Verification
 - Open two different browsers. Add an item in Browser A and verify it appears instantly in Browser B without reloading.
 - Test the "Checkout" flow to ensure it correctly generates an Expense transaction and updates the account balance.
+
+
+
+# OCR Receipt Scanner
+
+The goal of this feature is to allow users to take a photo of a receipt (or upload an image) and automatically extract the transaction details (Merchant Name, Date, and Total Amount) to speed up manual data entry.
+
+## Open Questions
+
+> [!IMPORTANT]  
+> **Which parsing engine do you prefer?**
+> 1. **100% Free & Private (Recommended)**: We can install `tesseract.js` which runs entirely inside your browser/phone. It doesn't send images to any server. It uses Regex to find dates and totals. It is completely free forever, though slightly less accurate on crumpled receipts.
+> 2. **AI-Powered (Requires API Key)**: We can build a Supabase Edge Function that uses the Gemini or OpenAI API to read the receipt with 99% accuracy. You will need to provide your own API key for this to work.
+> 
+> *The proposed plan below uses option #1 (Tesseract.js) to keep things simple and free.* Let me know if you prefer option 2.
+
+## Proposed Changes
+
+### Frontend App
+
+#### [MODIFY] [TransactionsPage.vue](file:///c:/Projects/final-finance-family/frontend/src/pages/TransactionsPage.vue)
+- Add a "Scan Receipt" button (`<i class="bi bi-camera"></i>`) next to the "Add Transaction" button.
+- Implement a hidden file input `<input type="file" accept="image/*" capture="environment" />` to launch the phone's camera.
+- Add a loading state overlay while parsing.
+- Once parsing is complete, automatically pop open the existing "Add Transaction" modal, pre-filled with the extracted data.
+
+#### [NEW] [receiptScanner.js](file:///c:/Projects/final-finance-family/frontend/src/utils/receiptScanner.js)
+- A new utility file utilizing `tesseract.js` to process the image.
+- Implement smart Regex rules to parse the raw text output:
+  - **Date**: Find common date formats (DD/MM/YYYY, etc.).
+  - **Total Amount**: Search for keywords like "TOTAL", "AMOUNT", "RP", and extract the largest currency value near the bottom of the receipt.
+  - **Merchant Name**: Extract the first 2-3 lines of text, which typically contain the store name.
+
+### Dependencies
+
+#### [MODIFY] [package.json](file:///c:/Projects/final-finance-family/frontend/package.json)
+- `npm install tesseract.js` for offline browser-based OCR.
+
+## Verification Plan
+
+### Manual Verification
+1. Click "Scan Receipt" and upload a sample image of a supermarket receipt.
+2. Verify the "Scanning..." UI appears.
+3. Verify the "Add Transaction" modal opens automatically with the Total Amount, Date, and Merchant Name (Description) fields pre-filled.
+4. The user can then select the Category and Account manually before saving.
 
