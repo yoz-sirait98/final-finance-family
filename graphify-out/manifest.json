@@ -530,9 +530,9 @@
     "semantic_hash": "081c348d068770af78fcd90980521318"
   },
   "frontend/src/pages/ShoppingDetailPage.vue": {
-    "mtime": 1780972886.741291,
-    "ast_hash": "9d0203bcdc10a5c536d02d9842efb950",
-    "semantic_hash": "9d0203bcdc10a5c536d02d9842efb950"
+    "mtime": 1780997919.9147472,
+    "ast_hash": "3633fd5b822f6db71541165934057db0",
+    "semantic_hash": ""
   },
   "frontend/src/services/shoppingPlanService.js": {
     "mtime": 1780997597.7201557,
@@ -577,6 +577,11 @@
   "supabase/migrations/000016_project_pockets_schema.sql": {
     "mtime": 1780995916.8629391,
     "ast_hash": "fa01062e5305f4eef9ff30ad805be817",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/000017_shopping_items_is_checked.sql": {
+    "mtime": 1780997880.822875,
+    "ast_hash": "310e6fbb44baaff8ed984495cb4189b5",
     "semantic_hash": ""
   }
 }
