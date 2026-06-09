@@ -131,8 +131,8 @@
               <td>
                 <div class="btn-group btn-group-sm">
                   <button v-if="tx.shopping_plans && tx.shopping_plans.length" class="btn btn-outline-info" @click="goToShoppingDetail(tx.shopping_plans[0].id)" title="View Shopping Plan"><i class="bi bi-cart"></i></button>
-                  <button class="btn btn-outline-success" @click="openDuplicate(tx)" title="Duplicate"><i class="bi bi-copy"></i></button>
-                  <button class="btn btn-outline-primary" @click="openEdit(tx)" :title="$t('common.edit')"><i class="bi bi-pencil"></i></button>
+                  <button class="btn btn-outline-success" @click="openDuplicate(tx)" title="Duplicate" :disabled="getTransactionModule(tx) !== 'Manual'"><i class="bi bi-copy"></i></button>
+                  <button class="btn btn-outline-primary" @click="openEdit(tx)" :title="$t('common.edit')" :disabled="getTransactionModule(tx) !== 'Manual' && getTransactionModule(tx) !== 'Transfer'"><i class="bi bi-pencil"></i></button>
                   <button class="btn btn-outline-danger" @click="confirmDelete(tx)" :title="$t('common.delete')" :disabled="getTransactionModule(tx) !== 'Manual' && getTransactionModule(tx) !== 'Transfer'"><i class="bi bi-trash"></i></button>
                 </div>
               </td>
