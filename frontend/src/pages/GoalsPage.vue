@@ -151,6 +151,22 @@
         </div>
       </div>
     </div>
+
+    <!-- Warning Modal for Goals with Transactions -->
+    <div v-if="showWarningModal" class="vue-modal-backdrop" @mousedown.self="showWarningModal = false">
+      <div class="vue-modal" style="max-width:420px">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title text-warning"><i class="bi bi-exclamation-triangle-fill me-2"></i>{{ localeStore.currentLocale === 'id' ? 'Tidak Dapat Menghapus' : 'Cannot Delete' }}</h5>
+          <button type="button" class="btn-close" @click="showWarningModal = false"></button>
+        </div>
+        <div class="modal-body">
+          <p class="mb-0">{{ localeStore.currentLocale === 'id' ? 'Anda tidak dapat menghapus target menabung ini karena masih memiliki transaksi pengeluaran (Kantong Proyek). Harap hapus semua transaksi yang terkait dengan target ini di halaman Transaksi terlebih dahulu.' : 'You cannot delete this saving goal because it has logged expense transactions (Project Pockets). Please delete all related transactions in the Transactions page first.' }}</p>
+        </div>
+        <div class="modal-footer border-0 pt-0">
+          <button class="btn btn-primary" @click="showWarningModal = false">{{ $t('common.close') }}</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -175,6 +191,7 @@ const localeStore = useLocaleStore();
 const showModal = ref(false);
 const showContributeModal = ref(false);
 const showDeleteModal = ref(false);
+const showWarningModal = ref(false);
 
 const contributingGoal = ref(null);
 const contributeForm = ref({ amount: 0, note: '' });
@@ -260,9 +277,18 @@ async function doContribute() {
   }
 }
 
-function confirmDelete(g) {
+async function confirmDelete(g) {
   deletingItem.value = g;
-  showDeleteModal.value = true;
+  try {
+    const hasTx = await goalService.checkHasTransactions(g.id);
+    if (hasTx) {
+      showWarningModal.value = true;
+      return;
+    }
+    showDeleteModal.value = true;
+  } catch(e) {
+    toast.error(e.message || localeStore.t('common.error'));
+  }
 }
 
 async function doDelete() {

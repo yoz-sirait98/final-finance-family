@@ -63,5 +63,13 @@ export const goalService = {
 
     if (error) throw error;
     return { data };
+  },
+  checkHasTransactions: async (id) => {
+    const { count, error } = await supabase
+      .from('transactions')
+      .select('*', { count: 'exact', head: true })
+      .eq('goal_id', id);
+    if (error) throw error;
+    return count > 0;
   }
 };
