@@ -91,6 +91,26 @@
         </form>
       </div>
     </div>
+
+    <!-- ===== Delete Confirm Modal ===== -->
+    <div v-if="showDeleteModal" class="vue-modal-backdrop" @mousedown.self="showDeleteModal = false">
+      <div class="vue-modal" style="max-width:420px">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title text-danger"><i class="bi bi-exclamation-triangle me-2"></i>{{ $t('common.delete') }}</h5>
+          <button type="button" class="btn-close" @click="showDeleteModal = false"></button>
+        </div>
+        <div class="modal-body">
+          <p class="mb-0">{{ $t('common.confirmDelete') }}</p>
+        </div>
+        <div class="modal-footer border-0 pt-0">
+          <button class="btn btn-secondary" @click="showDeleteModal = false">{{ $t('common.cancel') }}</button>
+          <button class="btn btn-danger" :disabled="deleting" @click="doDeletePlan">
+            <span v-if="deleting" class="spinner-border spinner-border-sm me-1"></span>
+            {{ $t('common.delete') }}
+          </button>
+        </div>
+      </div>
+    </div>
     
   </div>
 </template>
@@ -111,6 +131,9 @@ const activeTab = ref('progress');
 const saving = ref(false);
 
 const showAddModal = ref(false);
+const showDeleteModal = ref(false);
+const deleting = ref(false);
+const planToDelete = ref(null);
 const planForm = ref({ location: '', created_by: '' });
 
 const authStore = useAuthStore();
@@ -163,15 +186,23 @@ async function savePlan() {
   }
 }
 
-async function confirmDeletePlan(plan) {
-  if (confirm(localeStore.t('common.confirmDelete'))) {
-    try {
-      await shoppingPlanService.delete(plan.id);
-      toast.success(localeStore.t('common.success'));
-      fetchData();
-    } catch (e) {
-      toast.error('Gagal menghapus');
-    }
+function confirmDeletePlan(plan) {
+  planToDelete.value = plan;
+  showDeleteModal.value = true;
+}
+
+async function doDeletePlan() {
+  if (!planToDelete.value) return;
+  deleting.value = true;
+  try {
+    await shoppingPlanService.delete(planToDelete.value.id);
+    toast.success(localeStore.t('common.success'));
+    fetchData();
+    showDeleteModal.value = false;
+  } catch (e) {
+    toast.error(localeStore.t('common.error'));
+  } finally {
+    deleting.value = false;
   }
 }
 

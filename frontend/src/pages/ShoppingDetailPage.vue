@@ -152,6 +152,26 @@
         </form>
       </div>
     </div>
+
+    <!-- ===== Delete Confirm Modal ===== -->
+    <div v-if="showDeleteModal" class="vue-modal-backdrop" @mousedown.self="showDeleteModal = false">
+      <div class="vue-modal" style="max-width:420px">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title text-danger"><i class="bi bi-exclamation-triangle me-2"></i>{{ $t('common.delete') }}</h5>
+          <button type="button" class="btn-close" @click="showDeleteModal = false"></button>
+        </div>
+        <div class="modal-body">
+          <p class="mb-0">{{ $t('common.confirmDelete') }}</p>
+        </div>
+        <div class="modal-footer border-0 pt-0">
+          <button class="btn btn-secondary" @click="showDeleteModal = false">{{ $t('common.cancel') }}</button>
+          <button class="btn btn-danger" :disabled="deleting" @click="doDeleteItem">
+            <span v-if="deleting" class="spinner-border spinner-border-sm me-1"></span>
+            {{ $t('common.delete') }}
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -182,6 +202,9 @@ const accounts = ref([]);
 const categories = ref([]);
 
 const showAddModal = ref(false);
+const showDeleteModal = ref(false);
+const itemToDelete = ref(null);
+const deleting = ref(false);
 const itemForm = ref({ name: '', price: '', added_by: '' });
 const saving = ref(false);
 
@@ -260,14 +283,22 @@ async function updateItemPrice(item) {
   }
 }
 
-async function confirmDeleteItem(item) {
-  if (confirm('Delete this item?')) {
-    try {
-      await shoppingService.delete(item.id);
-      fetchItems();
-    } catch (e) {
-      toast.error('Failed to delete item');
-    }
+function confirmDeleteItem(item) {
+  itemToDelete.value = item;
+  showDeleteModal.value = true;
+}
+
+async function doDeleteItem() {
+  if (!itemToDelete.value) return;
+  deleting.value = true;
+  try {
+    await shoppingService.delete(itemToDelete.value.id);
+    fetchItems();
+    showDeleteModal.value = false;
+  } catch (e) {
+    toast.error('Failed to delete item');
+  } finally {
+    deleting.value = false;
   }
 }
 
