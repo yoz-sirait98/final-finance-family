@@ -85,27 +85,28 @@ export function parseReceiptText(text) {
   let date = '';
   let totalAmount = 0;
 
-  if (lines.length > 0) {
-    // Usually the first line is the merchant name
-    merchantName = lines[0];
+  // 1. Merchant Name: Find the first line that has actual letters (ignore logo noise)
+  const validMerchantLine = lines.find(l => /[A-Za-z]{3,}/.test(l));
+  if (validMerchantLine) {
+    merchantName = validMerchantLine.replace(/[^a-zA-Z0-9 &.-]/g, '').substring(0, 30).trim();
   }
 
-  // Find date (common formats: DD/MM/YYYY, DD-MM-YYYY, YYYY-MM-DD, DD.MM.YY)
-  const dateRegex = /\b(\d{1,2}[\/\-\.]\d{1,2}[\/\-\.]\d{2,4})\b/;
+  // 2. Date: Find date and strictly format to YYYY-MM-DD for HTML date input
+  // Indonesian receipts usually use DD/MM/YYYY or DD-MM-YYYY
+  const dateRegex = /(\d{1,2})\s*[\/\-\.]\s*(\d{1,2})\s*[\/\-\.]\s*(\d{2,4})/;
   for (const line of lines) {
     const match = line.match(dateRegex);
     if (match) {
-      date = match[1].replace(/\./g, '-').replace(/\//g, '-');
-      // Normalize to YYYY-MM-DD if possible, else just keep it.
-      // A simple fallback: just use today's date if parsing fails in the UI, 
-      // but let's return the matched string for now.
+      let [_, d, m, y] = match;
+      if (y.length === 2) y = '20' + y;
+      
+      // Assume DD/MM/YYYY format
+      date = `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
       break;
     }
   }
 
-  // Find total amount
-  // We look for lines containing "TOTAL", "AMOUNT", "JUMLAH", "RP"
-  // and extract the largest number we find in those lines.
+  // 3. Find total amount
   const totalKeywords = ['TOTAL', 'AMOUNT', 'JUMLAH', 'TL', 'TOT'];
   let maxAmount = 0;
 
@@ -113,13 +114,10 @@ export function parseReceiptText(text) {
     const upperLine = line.toUpperCase();
     const hasKeyword = totalKeywords.some(kw => upperLine.includes(kw));
     if (hasKeyword) {
-      // Find all numbers in this line
       const numbers = line.match(/[\d.,]+/g);
       if (numbers) {
         for (const numStr of numbers) {
           const val = extractNumber(numStr);
-          // Reasonability check: usually totals are the largest number, but ignore crazy large phone numbers
-          // Let's say max 100,000,000 IDR
           if (val > maxAmount && val < 100000000) {
             maxAmount = val;
           }
@@ -128,8 +126,6 @@ export function parseReceiptText(text) {
     }
   }
 
-  // If we couldn't find a keyword, just look for the largest number in the entire receipt 
-  // that looks like currency (has a dot or comma, or follows 'Rp').
   if (maxAmount === 0) {
     for (const line of lines) {
       if (line.toUpperCase().includes('RP')) {
