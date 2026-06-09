@@ -1,16 +1,16 @@
 # Graph Report - final-finance-family  (2026-06-09)
 
 ## Corpus Check
-- 93 files · ~78,232 words
+- 93 files · ~78,282 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1064 nodes · 1503 edges · 120 communities (87 shown, 33 thin omitted)
+- 1064 nodes · 1503 edges · 122 communities (89 shown, 33 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `69089e03`
+- Built from commit: `9165d5b6`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -112,6 +112,8 @@
 - [[_COMMUNITY_Community 117|Community 117]]
 - [[_COMMUNITY_Community 118|Community 118]]
 - [[_COMMUNITY_Community 119|Community 119]]
+- [[_COMMUNITY_Community 120|Community 120]]
+- [[_COMMUNITY_Community 121|Community 121]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `common` - 43 edges
@@ -140,7 +142,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (120 total, 33 thin omitted)
+## Communities (122 total, 33 thin omitted)
 
 ### Community 0 - "Common UI Actions"
 Cohesion: 0.08
@@ -207,8 +209,8 @@ Cohesion: 0.18
 Nodes (12): account, amount, category, member, name, role, validation, validation (+4 more)
 
 ### Community 16 - "Month Labels"
-Cohesion: 0.17
-Nodes (20): accounts, accountName, accountNamePlaceholder, addAccount, balance, balancePlaceholder, editAccount, subtitle (+12 more)
+Cohesion: 0.22
+Nodes (9): accounts, accountName, accountNamePlaceholder, addAccount, balancePlaceholder, editAccount, subtitle, title (+1 more)
 
 ### Community 17 - "Dashboard Analytics Metrics"
 Cohesion: 0.11
@@ -239,8 +241,8 @@ Cohesion: 0.18
 Nodes (9): container, containerHeight, offsetY, props, scrollTop, startIndex, totalHeight, visibleCount (+1 more)
 
 ### Community 24 - "Savings Goals Management"
-Cohesion: 0.12
-Nodes (16): description, title, budgets, addBudget, alerts, alertThreshold, alertThresholdPlaceholder, editBudget (+8 more)
+Cohesion: 0.15
+Nodes (13): budgets, addBudget, alertThreshold, alertThresholdPlaceholder, editBudget, limit, limitPlaceholder, remaining (+5 more)
 
 ### Community 25 - "Savings Goals Management"
 Cohesion: 0.15
@@ -259,8 +261,8 @@ Cohesion: 0.20
 Nodes (9): Aplikasi Web Frontend Family Finance, Catatan Arsitektur & Desain, Eksport Laporan Client-Side, Global State (Pinia), Integritas Sistem & Visual Guardrail, Notifikasi Toast Real-Time, Penanganan Event Native Vue, Setup Pengembangan Lokal (+1 more)
 
 ### Community 29 - "Report Generation and Export"
-Cohesion: 0.11
-Nodes (21): description, title, charts, description, title, description, title, reports (+13 more)
+Cohesion: 0.14
+Nodes (16): description, title, charts, description, title, reports, charts, endDate (+8 more)
 
 ### Community 30 - "Social Media Icons"
 Cohesion: 0.15
@@ -339,16 +341,16 @@ Cohesion: 0.20
 Nodes (10): subtitle, members, addMember, editMember, roles, subtitle, title, child (+2 more)
 
 ### Community 105 - "Community 105"
-Cohesion: 0.16
-Nodes (20): add, header, list, description, title, add, header, list (+12 more)
+Cohesion: 0.18
+Nodes (18): add, list, description, title, add, list, list, description (+10 more)
 
 ### Community 106 - "Community 106"
 Cohesion: 0.12
 Nodes (17): register, success, alreadyHaveAccount, confirmPasswordPlaceholder, createAccount, creatingAccount, email, emailPlaceholder (+9 more)
 
 ### Community 107 - "Community 107"
-Cohesion: 0.12
-Nodes (16): description, title, balance, expense, income, insights, period, description (+8 more)
+Cohesion: 0.15
+Nodes (13): description, title, balance, expense, income, period, description, title (+5 more)
 
 ### Community 108 - "Community 108"
 Cohesion: 0.21
@@ -363,8 +365,8 @@ Cohesion: 0.20
 Nodes (10): description, title, balance, expense, income, description, title, description (+2 more)
 
 ### Community 111 - "Community 111"
-Cohesion: 0.22
-Nodes (9): description, title, tours, progress, transactions, table, transfer, description (+1 more)
+Cohesion: 0.29
+Nodes (8): description, title, filters, transactions, filters, transfer, description, title
 
 ### Community 112 - "Community 112"
 Cohesion: 0.22
@@ -398,6 +400,14 @@ Nodes (3): Answer, Q: Explain shopping, Source Nodes
 Cohesion: 0.67
 Nodes (3): transfer, description, title
 
+### Community 120 - "Community 120"
+Cohesion: 0.18
+Nodes (17): balance, description, title, alerts, expense, income, transfer, insights (+9 more)
+
+### Community 121 - "Community 121"
+Cohesion: 0.43
+Nodes (8): header, header, header, description, title, header, header, header
+
 ## Knowledge Gaps
 - **599 isolated node(s):** `recommendations`, `name`, `private`, `version`, `type` (+594 more)
   These have ≤1 connection - possible missing edges or undocumented components.
@@ -406,11 +416,11 @@ Nodes (3): transfer, description, title
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `dashboard` connect `Virtual Scroll Component` to `Time Intervals`, `Time Intervals`, `Community 107`, `Community 111`, `Month Labels`, `Dashboard Analytics Metrics`, `Report Generation and Export`?**
+- **Why does `dashboard` connect `Virtual Scroll Component` to `Time Intervals`, `Time Intervals`, `Community 105`, `Community 107`, `Dashboard Analytics Metrics`, `Community 120`, `Report Generation and Export`?**
   _High betweenness centrality (0.079) - this node is a cross-community bridge._
 - **Why does `common` connect `Common UI Actions` to `Family Member Roles`, `Database Backup Script`, `Community 106`, `Month Labels`, `Financial Data Export`, `Community 112`, `Community 115`?**
   _High betweenness centrality (0.063) - this node is a cross-community bridge._
-- **Why does `tours` connect `Community 111` to `Supabase Project Metadata`, `Time Intervals`, `Authentication Forms`, `Community 105`, `Community 107`, `Transactions Page View`, `Month Labels`, `Virtual Scroll Component`, `Savings Goals Management`, `Savings Goals Management`, `Report Generation and Export`?**
+- **Why does `tours` connect `Community 105` to `Supabase Project Metadata`, `Time Intervals`, `Authentication Forms`, `Community 107`, `Transactions Page View`, `Community 111`, `Month Labels`, `Virtual Scroll Component`, `Savings Goals Management`, `Savings Goals Management`, `Report Generation and Export`?**
   _High betweenness centrality (0.060) - this node is a cross-community bridge._
 - **What connects `recommendations`, `name`, `private` to the rest of the system?**
   _602 weakly-connected nodes found - possible documentation gaps or missing edges._

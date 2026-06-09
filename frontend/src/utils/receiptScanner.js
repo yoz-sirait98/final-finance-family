@@ -84,7 +84,7 @@ function extractNumber(str) {
 /**
  * Smart parses raw OCR text into structured data
  */
-export function parseReceiptText(text) {
+export function parseReceiptText(text, members = []) {
   const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 2);
   
   let merchantName = '';
@@ -165,17 +165,30 @@ export function parseReceiptText(text) {
 
   totalAmount = maxAmount;
 
+  // 4. Find member by name
+  let member_id = '';
+  if (members && members.length > 0) {
+    const upperText = text.toUpperCase();
+    for (const member of members) {
+      if (member.name && upperText.includes(member.name.toUpperCase())) {
+        member_id = member.id;
+        break;
+      }
+    }
+  }
+
   return {
     merchantName,
     date,
-    totalAmount
+    totalAmount,
+    member_id
   };
 }
 
 /**
  * Processes an image file and returns parsed receipt data
  */
-export async function scanReceipt(imageFile, onProgress = null) {
+export async function scanReceipt(imageFile, members = [], onProgress = null) {
   try {
     // 1. Preprocess the image (resize + grayscale) to drastically speed up parsing on mobile CPUs!
     if (onProgress) onProgress(5); // Show initial progress
@@ -194,7 +207,7 @@ export async function scanReceipt(imageFile, onProgress = null) {
     
     const { data: { text } } = await worker.recognize(processedBlob);
     console.log("Raw OCR Text:\n", text);
-    const result = parseReceiptText(text);
+    const result = parseReceiptText(text, members);
     
     await worker.terminate();
     return result;

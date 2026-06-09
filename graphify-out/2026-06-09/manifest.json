@@ -545,9 +545,9 @@
     "semantic_hash": "7697b77524bf4f0fac6fac49413befe1"
   },
   "frontend/src/utils/receiptScanner.js": {
-    "mtime": 1780977224.2465146,
-    "ast_hash": "3b1529ddc3d59e7c367d3a0b6820cd62",
-    "semantic_hash": "3b1529ddc3d59e7c367d3a0b6820cd62"
+    "mtime": 1780988186.5416121,
+    "ast_hash": "16bb4e31a48ee4c93553ddd425b3c624",
+    "semantic_hash": ""
   },
   "graphify-out/memory/query_20260609_044005_recurring.md": {
     "mtime": 1780980005.0242968,
@@ -557,6 +557,11 @@
   "graphify-out/memory/query_20260609_044122_explain_recurringservice_js.md": {
     "mtime": 1780980082.6795368,
     "ast_hash": "a175020da5ed2fe744d29019cd688ac6",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260609_044628_explain_shopping.md": {
+    "mtime": 1780980388.6470075,
+    "ast_hash": "70408e75cd79b5319e58e18c66b59fe6",
     "semantic_hash": ""
   }
 }

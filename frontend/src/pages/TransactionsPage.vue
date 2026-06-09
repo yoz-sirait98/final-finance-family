@@ -521,7 +521,7 @@ async function onReceiptSelected(event) {
   isScanning.value = true;
   scanProgress.value = 0;
   try {
-    const data = await scanReceipt(file, (progress) => {
+    const data = await scanReceipt(file, members.value, (progress) => {
       scanProgress.value = progress;
     });
 
@@ -533,7 +533,7 @@ async function onReceiptSelected(event) {
     editingId.value = null;
     form.value = {
       type: 'expense',
-      member_id: '',
+      member_id: data.member_id || '',
       account_id: '',
       category_id: '',
       amount: data.totalAmount || '',
