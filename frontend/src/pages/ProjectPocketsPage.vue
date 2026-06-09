@@ -259,7 +259,7 @@ async function loadData() {
       ...g,
       spent,
       remaining,
-      isActive: g.progress_percentage >= 100 || g.status === 'completed'
+      isActive: g.status === 'completed'
     };
   });
 
