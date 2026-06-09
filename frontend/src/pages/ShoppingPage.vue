@@ -198,6 +198,7 @@ async function doDeletePlan() {
     await shoppingPlanService.delete(planToDelete.value.id);
     toast.success(localeStore.t('common.success'));
     fetchData();
+    window.dispatchEvent(new CustomEvent('shopping-plans-updated'));
     showDeleteModal.value = false;
   } catch (e) {
     toast.error(localeStore.t('common.error'));

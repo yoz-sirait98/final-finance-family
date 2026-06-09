@@ -283,6 +283,10 @@ function setupShoppingRealtime() {
     }).subscribe();
 }
 
+function handleShoppingUpdated() {
+  fetchPendingShopping();
+}
+
 function toggleBell() {
   bellOpen.value = !bellOpen.value;
   userOpen.value = false;
@@ -361,6 +365,7 @@ watch(() => route.name, async (newRoute) => {
 
 onMounted(async () => {
   document.addEventListener('mousedown', handleOutsideClick);
+  window.addEventListener('shopping-plans-updated', handleShoppingUpdated);
   await refreshAlerts();
   startAlertsPolling();
   fetchPendingShopping();
@@ -369,6 +374,7 @@ onMounted(async () => {
 
 onUnmounted(() => {
   document.removeEventListener('mousedown', handleOutsideClick);
+  window.removeEventListener('shopping-plans-updated', handleShoppingUpdated);
   stopAlertsPolling();
   if (shoppingSub) supabase.removeChannel(shoppingSub);
 });
