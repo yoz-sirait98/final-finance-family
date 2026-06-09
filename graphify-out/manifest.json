@@ -65,9 +65,9 @@
     "semantic_hash": "0855e5ca1f1e498f6c56ac90eadb1230"
   },
   "frontend/src/layouts/DashboardLayout.vue": {
-    "mtime": 1780973266.0749714,
-    "ast_hash": "abd82833bd8d60d865c15e7d40278e01",
-    "semantic_hash": "abd82833bd8d60d865c15e7d40278e01"
+    "mtime": 1780995957.264254,
+    "ast_hash": "1aec7191e8b7cbab970fa738a456a75d",
+    "semantic_hash": ""
   },
   "frontend/src/lib/realtime.js": {
     "mtime": 1780647999.1151843,
@@ -80,14 +80,14 @@
     "semantic_hash": "85508e893fbc3828845498d90d86c519"
   },
   "frontend/src/locales/en.json": {
-    "mtime": 1780974302.817883,
-    "ast_hash": "7952d2cdec6f784232d36c2320e92362",
-    "semantic_hash": "7952d2cdec6f784232d36c2320e92362"
+    "mtime": 1780995967.6936512,
+    "ast_hash": "bdc996cf072bb1f0dc3f21046de72198",
+    "semantic_hash": ""
   },
   "frontend/src/locales/id.json": {
-    "mtime": 1780974370.198904,
-    "ast_hash": "a9640145c4cbab569e5bd329650906da",
-    "semantic_hash": "a9640145c4cbab569e5bd329650906da"
+    "mtime": 1780995982.4304368,
+    "ast_hash": "e9cddf0104d05a51f11724983c8b1e3d",
+    "semantic_hash": ""
   },
   "frontend/src/main.js": {
     "mtime": 1780891463.2389636,
@@ -160,9 +160,9 @@
     "semantic_hash": ""
   },
   "frontend/src/router/index.js": {
-    "mtime": 1780914218.7757666,
-    "ast_hash": "68e3d6a61a3681445001e4312b29cdb3",
-    "semantic_hash": "68e3d6a61a3681445001e4312b29cdb3"
+    "mtime": 1780995947.5771382,
+    "ast_hash": "dd2669b14c13cef3fd74c20f7ecdf8dd",
+    "semantic_hash": ""
   },
   "frontend/src/services/accountService.js": {
     "mtime": 1780647821.300354,
@@ -567,6 +567,16 @@
   "supabase/migrations/000014_predictive_insights_rpc.sql": {
     "mtime": 1780991578.6275456,
     "ast_hash": "497457628af72bda018c028c3ee11a15",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/ProjectPocketsPage.vue": {
+    "mtime": 1780996033.466901,
+    "ast_hash": "b47e0bd266daaa164e533e9176c913a9",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/000016_project_pockets_schema.sql": {
+    "mtime": 1780995916.8629391,
+    "ast_hash": "fa01062e5305f4eef9ff30ad805be817",
     "semantic_hash": ""
   }
 }
