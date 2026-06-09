@@ -13,6 +13,7 @@ export const transactionService = {
     if (params.category_id) query = query.eq('category_id', params.category_id);
     if (params.member_id) query = query.eq('member_id', params.member_id);
     if (params.account_id) query = query.eq('account_id', params.account_id);
+    if (params.goal_id) query = query.eq('goal_id', params.goal_id);
     if (params.date_from) query = query.gte('transaction_date', params.date_from);
     if (params.date_to) query = query.lte('transaction_date', params.date_to);
     

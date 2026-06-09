@@ -29,8 +29,8 @@
 
           <div class="mb-3">
             <div class="d-flex justify-content-between small text-muted mb-1">
-              <span>{{ localeStore.currentLocale === 'id' ? 'Tersedia' : 'Available' }}: <strong>{{ formatCurrency(pocket.current_amount) }}</strong></span>
-              <span>{{ localeStore.currentLocale === 'id' ? 'Target' : 'Target' }}: {{ formatCurrency(pocket.target_amount) }}</span>
+              <span>{{ localeStore.currentLocale === 'id' ? 'Terkumpul' : 'Saved' }}: <strong>{{ formatCurrency(pocket.current_amount) }}</strong></span>
+              <span>{{ localeStore.currentLocale === 'id' ? 'Sisa Saldo' : 'Remaining' }}: <strong>{{ formatCurrency(pocket.remaining) }}</strong></span>
             </div>
             <div class="progress" style="height:8px">
               <div class="progress-bar" 
@@ -42,12 +42,18 @@
 
           <div class="mt-auto d-flex gap-2">
             <button 
-              class="btn w-100" 
+              class="btn w-50" 
               :class="pocket.isActive ? 'btn-primary-gradient' : 'btn-outline-secondary'"
               :disabled="!pocket.isActive"
               @click="openLogExpense(pocket)"
             >
-              <i class="bi bi-receipt me-2"></i>{{ localeStore.currentLocale === 'id' ? 'Catat Pengeluaran' : 'Log Expense' }}
+              <i class="bi bi-receipt me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Catat' : 'Log' }}
+            </button>
+            <button 
+              class="btn btn-outline-info w-50" 
+              @click="openViewExpenses(pocket)"
+            >
+              <i class="bi bi-list-ul me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Pengeluaran' : 'Expenses' }}
             </button>
           </div>
         </div>
@@ -88,7 +94,7 @@
               <label class="form-label">{{ $t('common.amount') }} (Rp)</label>
               <input v-model.number="form.amount" type="number" class="form-control form-control-lg fw-bold text-danger" min="1" required />
               <div class="form-text small text-muted">
-                {{ localeStore.currentLocale === 'id' ? 'Saldo Tersedia' : 'Available Balance' }}: {{ formatCurrency(activePocket?.current_amount) }}
+                {{ localeStore.currentLocale === 'id' ? 'Sisa Saldo' : 'Remaining Balance' }}: {{ formatCurrency(activePocket?.remaining) }}
               </div>
             </div>
 
@@ -142,6 +148,42 @@
         </form>
       </div>
     </div>
+
+    <!-- View Expenses Modal -->
+    <div v-if="showExpensesModal" class="vue-modal-backdrop" @mousedown.self="showExpensesModal = false">
+      <div class="vue-modal" style="max-width: 600px;">
+        <div class="modal-header border-bottom-0 pb-0">
+          <h5 class="modal-title">
+            <i class="bi bi-list-ul me-2 text-info"></i>
+            {{ localeStore.currentLocale === 'id' ? 'Daftar Pengeluaran' : 'Expense List' }} - {{ activePocket?.name }}
+          </h5>
+          <button type="button" class="btn-close" @click="showExpensesModal = false"></button>
+        </div>
+        <div class="modal-body">
+          <div v-if="activePocketTransactions.length === 0" class="text-center py-4 text-muted">
+            <i class="bi bi-inboxes fs-2 mb-2 d-block"></i>
+            {{ localeStore.currentLocale === 'id' ? 'Belum ada pengeluaran dicatat.' : 'No expenses logged yet.' }}
+          </div>
+          <div v-else class="list-group list-group-flush">
+            <div v-for="tx in activePocketTransactions" :key="tx.id" class="list-group-item d-flex justify-content-between align-items-center py-3 px-0 border-light">
+              <div>
+                <h6 class="mb-0 fw-bold">{{ tx.description }}</h6>
+                <small class="text-muted">{{ tx.transaction_date }} &bull; {{ tx.account?.name }} &bull; {{ tx.member?.name }}</small>
+              </div>
+              <div class="d-flex align-items-center gap-3">
+                <span class="fw-bold text-danger">-{{ formatCurrency(tx.amount) }}</span>
+                <button class="btn btn-sm btn-outline-danger border-0" @click="deleteExpense(tx)" :disabled="deletingTx">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer border-top-0 pt-0">
+          <button type="button" class="btn btn-light" @click="showExpensesModal = false">{{ $t('common.close') }}</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -167,8 +209,12 @@ const members = ref([]);
 const categories = ref([]);
 
 const showModal = ref(false);
+const showExpensesModal = ref(false);
 const saving = ref(false);
+const deletingTx = ref(false);
 const activePocket = ref(null);
+const activePocketTransactions = ref([]);
+const allTransactions = ref([]);
 const formError = ref('');
 
 const form = ref({
@@ -201,10 +247,17 @@ async function loadData() {
     categoryService.list()
   ]);
 
-  // Transform saving_goals into pockets
+  // Load transactions manually or write a new custom query to get all project transactions
+  const { data: txRes } = await supabase.from('transactions').select('*, account:accounts(name), member:members(name)').not('goal_id', 'is', null);
+  allTransactions.value = txRes || [];
+
   pockets.value = (goalsRes.data?.data || []).map(g => {
+    const spent = allTransactions.value.filter(tx => tx.goal_id === g.id).reduce((sum, tx) => sum + Number(tx.amount), 0);
+    const remaining = Number(g.current_amount || 0) - spent;
     return {
       ...g,
+      spent,
+      remaining,
       isActive: g.progress_percentage >= 100 || g.status === 'completed'
     };
   });
@@ -229,10 +282,10 @@ function openLogExpense(pocket) {
 }
 
 async function saveExpense() {
-  if (form.value.amount > activePocket.value.current_amount) {
+  if (form.value.amount > activePocket.value.remaining) {
     formError.value = localeStore.currentLocale === 'id' 
-      ? 'Jumlah pengeluaran tidak boleh melebihi saldo kantong yang tersedia.' 
-      : 'Expense amount cannot exceed the available pocket balance.';
+      ? 'Jumlah pengeluaran tidak boleh melebihi sisa saldo kantong.' 
+      : 'Expense amount cannot exceed the remaining pocket balance.';
     return;
   }
 
@@ -260,6 +313,28 @@ async function saveExpense() {
     formError.value = err.message || localeStore.t('common.error');
   } finally {
     saving.value = false;
+  }
+}
+
+function openViewExpenses(pocket) {
+  activePocket.value = pocket;
+  activePocketTransactions.value = allTransactions.value.filter(tx => tx.goal_id === pocket.id).sort((a,b) => new Date(b.transaction_date) - new Date(a.transaction_date));
+  showExpensesModal.value = true;
+}
+
+async function deleteExpense(tx) {
+  if (!confirm(localeStore.t('common.confirmDelete'))) return;
+  deletingTx.value = true;
+  try {
+    await transactionService.delete(tx.id);
+    toast.success(localeStore.t('common.success'));
+    await loadData();
+    // Refresh modal list
+    activePocketTransactions.value = allTransactions.value.filter(t => t.goal_id === activePocket.value.id).sort((a,b) => new Date(b.transaction_date) - new Date(a.transaction_date));
+  } catch (err) {
+    toast.error(err.message || localeStore.t('common.error'));
+  } finally {
+    deletingTx.value = false;
   }
 }
 
