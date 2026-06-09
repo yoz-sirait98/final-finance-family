@@ -563,5 +563,10 @@
     "mtime": 1780980388.6470075,
     "ast_hash": "70408e75cd79b5319e58e18c66b59fe6",
     "semantic_hash": ""
+  },
+  "supabase/migrations/000014_predictive_insights_rpc.sql": {
+    "mtime": 1780991578.6275456,
+    "ast_hash": "497457628af72bda018c028c3ee11a15",
+    "semantic_hash": ""
   }
 }
