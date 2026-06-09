@@ -115,9 +115,9 @@
     "semantic_hash": "97dabd98a60415617fb340490b8e09a3"
   },
   "frontend/src/pages/GoalsPage.vue": {
-    "mtime": 1780891637.0119848,
-    "ast_hash": "b1f3a7ee7ca9b933abe3a6897041bc7e",
-    "semantic_hash": "b1f3a7ee7ca9b933abe3a6897041bc7e"
+    "mtime": 1780997049.8947594,
+    "ast_hash": "de9ecb86e6c0c08fab00ea528de16358",
+    "semantic_hash": ""
   },
   "frontend/src/pages/IconsGemPage.vue": {
     "mtime": 1780656883.0354702,
@@ -195,9 +195,9 @@
     "semantic_hash": "5fcb4496b207ae5668cbecf9dd0d1417"
   },
   "frontend/src/services/goalService.js": {
-    "mtime": 1780888450.938688,
-    "ast_hash": "bded8083c89b212615ad29ef7b102d0a",
-    "semantic_hash": "bded8083c89b212615ad29ef7b102d0a"
+    "mtime": 1780997030.1224287,
+    "ast_hash": "b1a37126a0744e8d27e797bdf0a3f3f0",
+    "semantic_hash": ""
   },
   "frontend/src/services/memberService.js": {
     "mtime": 1780647822.0719545,
