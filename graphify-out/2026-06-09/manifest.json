@@ -20,9 +20,9 @@
     "semantic_hash": "886c161c2f2d9388473a64033e7d1931"
   },
   "frontend/package.json": {
-    "mtime": 1780974212.7666373,
-    "ast_hash": "a5d9a746e5a0f9dd7fcd741df05fb64c",
-    "semantic_hash": ""
+    "mtime": 1780647560.0137074,
+    "ast_hash": "baefb18f60bd0b16aa2c7ffbadb25f04",
+    "semantic_hash": "baefb18f60bd0b16aa2c7ffbadb25f04"
   },
   "frontend/src/App.vue": {
     "mtime": 1780648005.3987162,
@@ -65,8 +65,8 @@
     "semantic_hash": "0855e5ca1f1e498f6c56ac90eadb1230"
   },
   "frontend/src/layouts/DashboardLayout.vue": {
-    "mtime": 1780973266.0749714,
-    "ast_hash": "abd82833bd8d60d865c15e7d40278e01",
+    "mtime": 1780914270.5584645,
+    "ast_hash": "11ce24a2b9656265bb3bb19aba6e2be1",
     "semantic_hash": ""
   },
   "frontend/src/lib/realtime.js": {
@@ -80,13 +80,13 @@
     "semantic_hash": "85508e893fbc3828845498d90d86c519"
   },
   "frontend/src/locales/en.json": {
-    "mtime": 1780974302.817883,
-    "ast_hash": "7952d2cdec6f784232d36c2320e92362",
+    "mtime": 1780915147.600577,
+    "ast_hash": "6ec71e398ded395db5ce2c73b4181b67",
     "semantic_hash": ""
   },
   "frontend/src/locales/id.json": {
-    "mtime": 1780974370.198904,
-    "ast_hash": "a9640145c4cbab569e5bd329650906da",
+    "mtime": 1780915156.48559,
+    "ast_hash": "99585285329d22188589c3415f4322e3",
     "semantic_hash": ""
   },
   "frontend/src/main.js": {
@@ -155,8 +155,8 @@
     "semantic_hash": "a3bc98514bd0b2d7316bf84ad49f56a4"
   },
   "frontend/src/pages/TransactionsPage.vue": {
-    "mtime": 1780978796.9706593,
-    "ast_hash": "d86a2f917af99eee47725136852b8694",
+    "mtime": 1780914253.1869135,
+    "ast_hash": "554b2e223d2b52756039cdab8cecc491",
     "semantic_hash": ""
   },
   "frontend/src/router/index.js": {
@@ -335,7 +335,7 @@
     "semantic_hash": "8cf684ed4141ac5298e8a40981a7a192"
   },
   "supabase/.temp/linked-project.json": {
-    "mtime": 1780971398.2793634,
+    "mtime": 1780651293.777926,
     "ast_hash": "34de4f7614dbad18adec76c1eb9d73af",
     "semantic_hash": "34de4f7614dbad18adec76c1eb9d73af"
   },
@@ -405,8 +405,8 @@
     "semantic_hash": "34de4f7614dbad18adec76c1eb9d73af"
   },
   "frontend/src/pages/ShoppingPage.vue": {
-    "mtime": 1780973275.8801785,
-    "ast_hash": "58f8fb90ce3490eb1b08f49ef9810b62",
+    "mtime": 1780914181.3190753,
+    "ast_hash": "eb838c47232c3d42a5216d251cea6eff",
     "semantic_hash": ""
   },
   "frontend/src/services/shoppingService.js": {
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "docs/implementation_plan.md": {
-    "mtime": 1780973967.8932836,
-    "ast_hash": "2d26de04417ceee738f209366a48a380",
+    "mtime": 1780910887.9318187,
+    "ast_hash": "85977245552451f6916925b1478538ef",
     "semantic_hash": ""
   },
   "docs/supabase-setup-guide.md": {
@@ -530,8 +530,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ShoppingDetailPage.vue": {
-    "mtime": 1780972886.741291,
-    "ast_hash": "9d0203bcdc10a5c536d02d9842efb950",
+    "mtime": 1780915138.2616143,
+    "ast_hash": "991760f04f7b67b02dc60b5fe7897787",
     "semantic_hash": ""
   },
   "frontend/src/services/shoppingPlanService.js": {
@@ -542,11 +542,6 @@
   "supabase/migrations/000013_shopping_plans_overhaul.sql": {
     "mtime": 1780914590.3981175,
     "ast_hash": "7697b77524bf4f0fac6fac49413befe1",
-    "semantic_hash": ""
-  },
-  "frontend/src/utils/receiptScanner.js": {
-    "mtime": 1780977224.2465146,
-    "ast_hash": "3b1529ddc3d59e7c367d3a0b6820cd62",
     "semantic_hash": ""
   }
 }
