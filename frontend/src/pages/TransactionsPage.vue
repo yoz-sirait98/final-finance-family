@@ -133,7 +133,7 @@
                   <button v-if="tx.shopping_plans && tx.shopping_plans.length" class="btn btn-outline-info" @click="goToShoppingDetail(tx.shopping_plans[0].id)" title="View Shopping Plan"><i class="bi bi-cart"></i></button>
                   <button class="btn btn-outline-success" @click="openDuplicate(tx)" title="Duplicate"><i class="bi bi-copy"></i></button>
                   <button class="btn btn-outline-primary" @click="openEdit(tx)" :title="$t('common.edit')"><i class="bi bi-pencil"></i></button>
-                  <button class="btn btn-outline-danger" @click="confirmDelete(tx)" :title="$t('common.delete')"><i class="bi bi-trash"></i></button>
+                  <button class="btn btn-outline-danger" @click="confirmDelete(tx)" :title="$t('common.delete')" :disabled="getTransactionModule(tx) !== 'Manual'"><i class="bi bi-trash"></i></button>
                 </div>
               </td>
             </tr>
@@ -251,7 +251,7 @@
               <select id="tfFrom" name="from_account_id" v-model="transferForm.from_account_id" class="form-select" required>
                 <option value="" disabled>- {{ $t('transactions.fromAccount') }} -</option>
                 <optgroup v-for="(group, type) in groupedAccounts" :key="type" :label="translateAccountType(type)">
-                  <option v-for="a in group" :key="a.id" :value="a.id">{{ a.name }} ({{ formatCurrency(a.balance + a.initial_balance) }})</option>
+                  <option v-for="a in group" :key="a.id" :value="a.id">{{ a.name }} ({{ formatCurrency(a.balance) }})</option>
                 </optgroup>
               </select>
             </div>
@@ -260,7 +260,7 @@
               <select id="tfTo" name="to_account_id" v-model="transferForm.to_account_id" class="form-select" required>
                 <option value="" disabled>- {{ $t('transactions.toAccount') }} -</option>
                 <optgroup v-for="(group, type) in groupedAccounts" :key="type" :label="translateAccountType(type)">
-                  <option v-for="a in group" :key="a.id" :value="a.id" :disabled="a.id === transferForm.from_account_id">{{ a.name }} ({{ formatCurrency(a.balance + a.initial_balance) }})</option>
+                  <option v-for="a in group" :key="a.id" :value="a.id" :disabled="a.id === transferForm.from_account_id">{{ a.name }} ({{ formatCurrency(a.balance) }})</option>
                 </optgroup>
               </select>
             </div>
