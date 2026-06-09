@@ -68,9 +68,15 @@ function preprocessImage(imageFile) {
  */
 function extractNumber(str) {
   // Remove all non-numeric characters except comma and dot
-  const cleaned = str.replace(/[^\d.,]/g, '');
-  // Replace comma with dot if it's used as a decimal separator, but usually in IDR it's used as a thousand separator.
-  // For IDR, we usually ignore dots and commas at the end, or just strip all non-digits to get the raw value.
+  let cleaned = str.replace(/[^\d.,]/g, '');
+  if (!cleaned) return 0;
+  
+  // If it ends with ,XX or .XX where XX is exactly two digits, remove the decimal part
+  if (/[,.]\d{2}$/.test(cleaned)) {
+    cleaned = cleaned.slice(0, -3);
+  }
+  
+  // Now simply remove all remaining non-digits
   const digitsOnly = cleaned.replace(/[^\d]/g, '');
   return parseInt(digitsOnly, 10) || 0;
 }
@@ -92,9 +98,24 @@ export function parseReceiptText(text) {
   }
 
   // 2. Date: Find date and strictly format to YYYY-MM-DD for HTML date input
-  // Indonesian receipts usually use DD/MM/YYYY or DD-MM-YYYY
+  // Indonesian receipts usually use DD/MM/YYYY or DD-MM-YYYY or DD MMM YYYY
   const dateRegex = /(\d{1,2})\s*[\/\-\.]\s*(\d{1,2})\s*[\/\-\.]\s*(\d{2,4})/;
+  const textDateRegex = /(\d{1,2})\s+(JAN|FEB|MAR|APR|MEI|JUN|JUL|AGS|SEP|OKT|NOV|DES)[A-Z]*\s+(\d{2,4})/i;
+  const monthMap = {
+    'JAN': '01', 'FEB': '02', 'MAR': '03', 'APR': '04', 'MEI': '05', 'JUN': '06',
+    'JUL': '07', 'AGS': '08', 'SEP': '09', 'OKT': '10', 'NOV': '11', 'DES': '12'
+  };
+
   for (const line of lines) {
+    const textMatch = line.match(textDateRegex);
+    if (textMatch) {
+      let [_, d, mName, y] = textMatch;
+      if (y.length === 2) y = '20' + y;
+      const m = monthMap[mName.substring(0, 3).toUpperCase()] || '01';
+      date = `${y}-${m}-${d.padStart(2, '0')}`;
+      break;
+    }
+
     const match = line.match(dateRegex);
     if (match) {
       let [_, d, m, y] = match;
