@@ -41,7 +41,7 @@
           </div>
 
           <div class="mt-auto d-flex flex-column gap-2">
-            <div class="d-flex gap-2" v-if="pocket.status !== 'inactive'">
+            <div class="d-flex gap-2" v-if="pocket.status === 'completed'">
               <button 
                 class="btn w-50" 
                 :class="pocket.isActive ? 'btn-primary-gradient' : 'btn-outline-secondary'"
@@ -263,7 +263,7 @@ async function loadData() {
   allTransactions.value = txRes || [];
 
   pockets.value = (goalsRes.data?.data || [])
-    .filter(g => g.status === 'active' || g.status === 'completed')
+    .filter(g => g.status !== 'inactive')
     .map(g => {
     const pocketTxs = allTransactions.value.filter(tx => Number(tx.goal_id) === Number(g.id));
     const spent = pocketTxs.reduce((sum, tx) => sum + Number(tx.amount), 0);
@@ -272,7 +272,7 @@ async function loadData() {
       ...g,
       spent,
       remaining,
-      isActive: g.progress_percentage >= 100 || g.status === 'completed'
+      isActive: g.status === 'completed'
     };
   });
 
@@ -342,6 +342,12 @@ async function deleteExpense(tx) {
   try {
     await transactionService.delete(tx.id);
     toast.success(localeStore.t('common.success'));
+    
+    // Rollback to completed if pocket was 'done'
+    if (activePocket.value.status === 'done') {
+      await goalService.update(activePocket.value.id, { status: 'completed' });
+    }
+    
     await loadData();
     // Refresh modal list
     activePocketTransactions.value = allTransactions.value.filter(t => t.goal_id === activePocket.value.id).sort((a,b) => new Date(b.transaction_date) - new Date(a.transaction_date));
@@ -356,7 +362,7 @@ async function markPocketAsDone(pocket) {
   if (!confirm(localeStore.currentLocale === 'id' ? 'Tandai kantong proyek ini sebagai selesai?' : 'Mark this project pocket as done?')) return;
   saving.value = true;
   try {
-    await goalService.update(pocket.id, { status: 'completed' });
+    await goalService.update(pocket.id, { status: 'done' });
     toast.success(localeStore.t('common.success'));
     await loadData();
   } catch (err) {

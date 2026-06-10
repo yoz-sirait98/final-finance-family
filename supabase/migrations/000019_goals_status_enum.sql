@@ -6,11 +6,11 @@
 -- Drop the existing constraint
 ALTER TABLE public.saving_goals DROP CONSTRAINT IF EXISTS saving_goals_status_check;
 
+-- Add the new constraint with active, completed, done, inactive
+ALTER TABLE public.saving_goals ADD CONSTRAINT saving_goals_status_check CHECK (status IN ('active', 'completed', 'done', 'inactive'));
+
 -- Convert any existing 'cancelled' to 'inactive'
 UPDATE public.saving_goals SET status = 'inactive' WHERE status = 'cancelled';
-
--- Add the new constraint with active, completed, inactive
-ALTER TABLE public.saving_goals ADD CONSTRAINT saving_goals_status_check CHECK (status IN ('active', 'completed', 'inactive'));
 
 -- Update the cron function to use 'inactive' instead of 'cancelled'
 CREATE OR REPLACE FUNCTION public.process_overdue_goals()

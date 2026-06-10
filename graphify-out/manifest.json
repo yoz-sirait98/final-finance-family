@@ -560,8 +560,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectPocketsPage.vue": {
-    "mtime": 1781064953.2060223,
-    "ast_hash": "51d690c716678891dfb48e754b3a704e",
+    "mtime": 1781065389.8576703,
+    "ast_hash": "b44c930ff5993dd4170ed88903fda577",
     "semantic_hash": ""
   },
   "supabase/migrations/000016_project_pockets_schema.sql": {
