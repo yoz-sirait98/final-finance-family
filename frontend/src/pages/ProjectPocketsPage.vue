@@ -29,7 +29,7 @@
 
           <div class="mb-3">
             <div class="d-flex justify-content-between small text-muted mb-1">
-              <span>{{ localeStore.currentLocale === 'id' ? 'Tersedia' : 'Available' }}: <strong>{{ formatCurrency(pocket.current_amount) }}</strong></span>
+              <span>{{ localeStore.currentLocale === 'id' ? 'Tersedia' : 'Available' }}: <strong>{{ formatCurrency(pocket.remaining) }}</strong></span>
               <span>{{ localeStore.currentLocale === 'id' ? 'Target' : 'Target' }}: {{ formatCurrency(pocket.target_amount) }}</span>
             </div>
             <div class="progress" style="height:8px">
