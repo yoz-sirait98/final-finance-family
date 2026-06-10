@@ -23,10 +23,9 @@
       
       <div v-show="showInsights" class="row g-2" style="animation: fadeIn 0.3s ease-in-out">
         <div v-for="(insight, index) in insights" :key="index" class="col-md-4">
-          <div class="card border-0 shadow-sm h-100" style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05)); border-left: 3px solid #667eea !important;">
+          <div class="card border-0 shadow-sm h-100" style="background: var(--card-bg); border: var(--card-border); border-left: 3px solid #667eea !important; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);">
             <div class="card-body p-2 d-flex align-items-center">
-              <!-- No duplicate lightbulb since the text already has emojis, but we keep the container clean -->
-              <p class="mb-0 ms-2 fw-medium text-dark" style="font-size: 0.85rem; line-height: 1.3;">{{ insight }}</p>
+              <p class="mb-0 ms-2 fw-medium" style="font-size: 0.85rem; line-height: 1.3; color: var(--text-color);">{{ insight }}</p>
             </div>
           </div>
         </div>
@@ -199,6 +198,17 @@ const hasNetWorthData = ref(false);
 
 let pieInstance, barInstance, lineInstance, netWorthInstance;
 
+function getChartColors() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  return {
+    textColor: isDark ? '#94a3b8' : '#64748b',
+    gridColor: isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.05)',
+    accentColor: isDark ? '#8a2be2' : '#667eea',
+    incomeColor: isDark ? '#10b981' : '#28a745',
+    expenseColor: isDark ? '#f43f5e' : '#dc3545',
+  };
+}
+
 async function updateCharts(d) {
   if (!d) return;
 
@@ -265,6 +275,8 @@ async function updateCharts(d) {
   hasNetWorthData.value = netWorthData.length > 0;
 
   await nextTick();
+  
+  const colors = getChartColors();
 
   if (hasPieData.value && pieChart.value) {
     pieInstance = new Chart(pieChart.value, {
@@ -273,7 +285,19 @@ async function updateCharts(d) {
         labels: pieData.map(d => d.category),
         datasets: [{ data: pieData.map(d => d.total), backgroundColor: pieData.map(d => d.color), borderWidth: 0 }],
       },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { padding: 16 } } } },
+      options: { 
+        responsive: true, 
+        maintainAspectRatio: false, 
+        plugins: { 
+          legend: { 
+            position: 'bottom', 
+            labels: { 
+              padding: 16,
+              color: colors.textColor
+            } 
+          } 
+        } 
+      },
     });
   }
 
@@ -283,33 +307,115 @@ async function updateCharts(d) {
       data: {
         labels: barData.map(d => d.month),
         datasets: [
-          { label: localeStore.t('common.income'),  data: barData.map(d => d.income),  backgroundColor: '#28a745', borderRadius: 4 },
-          { label: localeStore.t('common.expense'), data: barData.map(d => d.expense), backgroundColor: '#dc3545', borderRadius: 4 },
+          { label: localeStore.t('common.income'),  data: barData.map(d => d.income),  backgroundColor: colors.incomeColor, borderRadius: 4 },
+          { label: localeStore.t('common.expense'), data: barData.map(d => d.expense), backgroundColor: colors.expenseColor, borderRadius: 4 },
         ],
       },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } }, scales: { y: { beginAtZero: true } } },
+      options: { 
+        responsive: true, 
+        maintainAspectRatio: false, 
+        plugins: { 
+          legend: { 
+            position: 'top',
+            labels: { color: colors.textColor }
+          } 
+        }, 
+        scales: { 
+          x: {
+            ticks: { color: colors.textColor },
+            grid: { color: colors.gridColor }
+          },
+          y: { 
+            beginAtZero: true,
+            ticks: { color: colors.textColor },
+            grid: { color: colors.gridColor }
+          } 
+        } 
+      },
     });
   }
 
   if (hasLineData.value && lineChart.value) {
+    const ctx = lineChart.value.getContext('2d');
+    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+    gradient.addColorStop(0, colors.expenseColor === '#f43f5e' ? 'rgba(244, 63, 94, 0.35)' : 'rgba(220, 53, 69, 0.35)');
+    gradient.addColorStop(1, 'rgba(244, 63, 94, 0.0)');
+
     lineInstance = new Chart(lineChart.value, {
       type: 'line',
       data: {
         labels: lineData.map(d => d.month),
-        datasets: [{ label: localeStore.t('common.expense'), data: lineData.map(d => d.expense), borderColor: '#dc3545', backgroundColor: 'rgba(220,53,69,0.1)', fill: true, tension: 0.4 }],
+        datasets: [{ 
+          label: localeStore.t('common.expense'), 
+          data: lineData.map(d => d.expense), 
+          borderColor: colors.expenseColor, 
+          backgroundColor: gradient, 
+          fill: true, 
+          tension: 0.4,
+          pointRadius: 4,
+          pointBackgroundColor: colors.expenseColor
+        }],
       },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } },
+      options: { 
+        responsive: true, 
+        maintainAspectRatio: false, 
+        plugins: { 
+          legend: { display: false } 
+        }, 
+        scales: { 
+          x: {
+            ticks: { color: colors.textColor },
+            grid: { color: colors.gridColor }
+          },
+          y: { 
+            beginAtZero: true,
+            ticks: { color: colors.textColor },
+            grid: { color: colors.gridColor }
+          } 
+        } 
+      },
     });
   }
 
   if (hasNetWorthData.value && netWorthChart.value) {
+    const ctx = netWorthChart.value.getContext('2d');
+    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+    gradient.addColorStop(0, colors.accentColor === '#8a2be2' ? 'rgba(138, 43, 226, 0.35)' : 'rgba(102, 126, 234, 0.35)');
+    gradient.addColorStop(1, 'rgba(102, 126, 234, 0.0)');
+
     netWorthInstance = new Chart(netWorthChart.value, {
       type: 'line',
       data: {
         labels: netWorthData.map(d => d.month),
-        datasets: [{ label: localeStore.t('dashboard.netWorthGrowth'), data: netWorthData.map(d => d.balance), borderColor: '#667eea', backgroundColor: 'rgba(102,126,234,0.1)', fill: true, tension: 0.4, pointRadius: 4, pointBackgroundColor: '#667eea' }],
+        datasets: [{ 
+          label: localeStore.t('dashboard.netWorthGrowth'), 
+          data: netWorthData.map(d => d.balance), 
+          borderColor: colors.accentColor, 
+          backgroundColor: gradient, 
+          fill: true, 
+          tension: 0.4, 
+          pointRadius: 4, 
+          pointBackgroundColor: colors.accentColor 
+        }],
       },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: false } } },
+      options: { 
+        responsive: true, 
+        maintainAspectRatio: false, 
+        plugins: { 
+          legend: { display: false } 
+        }, 
+        scales: { 
+          x: {
+            ticks: { color: colors.textColor },
+            grid: { color: colors.gridColor }
+          },
+          y: { 
+            beginAtZero: false,
+            ticks: { color: colors.textColor },
+            grid: { color: colors.gridColor }
+          } 
+        } 
+      },
     });
   }
 }
@@ -329,15 +435,23 @@ watch(() => localeStore.currentLocale, () => {
   }
 });
 
+function handleThemeChanged() {
+  if (dashboardData.value) {
+    updateCharts(dashboardData.value);
+  }
+}
+
 onMounted(() => {
   if (dashboardData.value) {
     updateCharts(dashboardData.value);
   }
   startAutoTour(dashboardTourSteps);
   window.addEventListener('start-dashboard-tour', () => startTour(dashboardTourSteps));
+  window.addEventListener('theme-changed', handleThemeChanged);
 });
 
 onUnmounted(() => {
   window.removeEventListener('start-dashboard-tour', () => startTour(dashboardTourSteps));
+  window.removeEventListener('theme-changed', handleThemeChanged);
 });
 </script>

@@ -107,6 +107,15 @@
 
       <div class="d-flex align-items-center gap-3">
 
+        <!-- Theme Toggle Button -->
+        <button
+          class="toggle-btn"
+          @click="toggleTheme"
+          :title="theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
+        >
+          <i class="bi" :class="theme === 'dark' ? 'bi-sun-fill text-warning' : 'bi-moon-stars-fill'"></i>
+        </button>
+
         <!-- Tour Help Button -->
         <button
           id="tour-help-btn"
@@ -252,6 +261,14 @@ const mobileOpen = ref(false);
 const bellOpen = ref(false);
 const userOpen = ref(false);
 const langOpen = ref(false);
+const theme = ref(localStorage.getItem('theme') || 'light');
+
+function toggleTheme() {
+  theme.value = theme.value === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', theme.value);
+  document.documentElement.setAttribute('data-theme', theme.value);
+  window.dispatchEvent(new CustomEvent('theme-changed', { detail: theme.value }));
+}
 
 const bellDropdownRef = ref(null);
 const userDropdownRef = ref(null);
@@ -370,6 +387,7 @@ watch(() => route.name, async (newRoute) => {
 });
 
 onMounted(async () => {
+  document.documentElement.setAttribute('data-theme', theme.value);
   document.addEventListener('mousedown', handleOutsideClick);
   window.addEventListener('shopping-plans-updated', handleShoppingUpdated);
   await refreshAlerts();

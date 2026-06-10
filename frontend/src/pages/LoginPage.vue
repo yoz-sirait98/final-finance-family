@@ -18,14 +18,14 @@
       </div>
     </div>
 
-    <div class="card shadow-lg border-0" style="max-width: 420px; width: 100%; border-radius: 16px;">
+    <div class="card shadow-lg border-0 glass-login-card" style="max-width: 420px; width: 100%; border-radius: 16px;">
       <div class="card-body p-4 p-md-5">
         <div class="text-center mb-4">
           <div class="mb-3">
-            <i class="bi bi-wallet2 text-primary" style="font-size: 3rem;"></i>
+            <i class="bi bi-wallet2 text-white" style="font-size: 3rem; filter: drop-shadow(0 0 8px rgba(255,255,255,0.3))"></i>
           </div>
-          <h3 class="fw-bold text-dark">{{ $t('nav.brand') }}</h3>
-          <p class="text-muted">{{ $t('auth.login.subtitle') }}</p>
+          <h3 class="fw-bold text-white">{{ $t('nav.brand') }}</h3>
+          <p class="text-white-50">{{ $t('auth.login.subtitle') }}</p>
         </div>
 
         <div v-if="error" class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -35,7 +35,7 @@
 
         <form @submit.prevent="handleLogin">
           <div class="mb-3">
-            <label class="form-label fw-semibold" for="loginEmail">{{ $t('auth.login.email') }}</label>
+            <label class="form-label fw-semibold text-white" for="loginEmail">{{ $t('auth.login.email') }}</label>
             <div class="input-group">
               <span class="input-group-text"><i class="bi bi-envelope"></i></span>
               <input
@@ -53,7 +53,7 @@
           </div>
 
           <div class="mb-4">
-            <label class="form-label fw-semibold" for="loginPassword">{{ $t('auth.login.password') }}</label>
+            <label class="form-label fw-semibold text-white" for="loginPassword">{{ $t('auth.login.password') }}</label>
             <div class="input-group">
               <span class="input-group-text"><i class="bi bi-lock"></i></span>
               <input
@@ -74,7 +74,8 @@
 
           <button
             type="submit"
-            class="btn btn-primary-gradient w-100 py-2 fw-semibold"
+            class="btn btn-light w-100 py-2 fw-bold text-primary-gradient border-0 shadow"
+            style="background: #fff; color: #764ba2; transition: all 0.2s;"
             :disabled="loading"
           >
             <span v-if="loading" class="spinner-border spinner-border-sm me-2"></span>
@@ -82,13 +83,49 @@
           </button>
         </form>
 
-        <p class="text-center text-muted mt-4 mb-0">
-          {{ $t('auth.login.newHere') }} <router-link to="/register" class="text-primary text-decoration-none fw-semibold">{{ $t('auth.login.createAccount') }}</router-link>
+        <p class="text-center text-white-50 mt-4 mb-0">
+          {{ $t('auth.login.newHere') }} <router-link to="/register" class="text-white text-decoration-none fw-bold">{{ $t('auth.login.createAccount') }}</router-link>
         </p>
       </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+.glass-login-card {
+  background: rgba(255, 255, 255, 0.12) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2) !important;
+}
+
+.login-page :deep(.form-control) {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  color: #fff !important;
+}
+
+.login-page :deep(.form-control::placeholder) {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.login-page :deep(.input-group-text) {
+  background-color: rgba(255, 255, 255, 0.12) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  color: #fff !important;
+}
+
+.login-page :deep(.btn-outline-secondary) {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  color: #fff !important;
+}
+
+.login-page :deep(.btn-outline-secondary:hover) {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+}
+</style>
 
 <script setup>
 import { ref } from 'vue';

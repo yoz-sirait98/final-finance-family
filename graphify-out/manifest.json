@@ -65,8 +65,8 @@
     "semantic_hash": ""
   },
   "frontend/src/layouts/DashboardLayout.vue": {
-    "mtime": 1781060149.3699167,
-    "ast_hash": "b250eb209ecced66ab2610ef60e24fcd",
+    "mtime": 1781061958.818057,
+    "ast_hash": "86be450d5816221a7f01a65e8d1aafaf",
     "semantic_hash": ""
   },
   "frontend/src/lib/realtime.js": {
@@ -110,13 +110,13 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/DashboardPage.vue": {
-    "mtime": 1781060149.373923,
-    "ast_hash": "05fa9d51d50117d3dcfa461e3d727360",
+    "mtime": 1781061980.3011303,
+    "ast_hash": "47cc13d2a63e5bcf3cc1b40bf01cb34a",
     "semantic_hash": ""
   },
   "frontend/src/pages/GoalsPage.vue": {
-    "mtime": 1781060149.3749237,
-    "ast_hash": "368de430654bdf615a44af00c3e873c8",
+    "mtime": 1781063617.563453,
+    "ast_hash": "d2dd5ff67984743b9947878c8d7856b0",
     "semantic_hash": ""
   },
   "frontend/src/pages/IconsGemPage.vue": {
@@ -125,8 +125,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/LoginPage.vue": {
-    "mtime": 1781060149.376059,
-    "ast_hash": "e751e5e8e84b8f166bc360b308fef0a8",
+    "mtime": 1781061998.5559525,
+    "ast_hash": "3e896c45985e7066bdda7cd8acd15502",
     "semantic_hash": ""
   },
   "frontend/src/pages/MembersPage.vue": {
@@ -140,8 +140,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/RegisterPage.vue": {
-    "mtime": 1781060149.3780572,
-    "ast_hash": "78ca1ad11acadb6c75385976b9334561",
+    "mtime": 1781062002.5074768,
+    "ast_hash": "8a8081f816d4a789709e2710ea77c0e4",
     "semantic_hash": ""
   },
   "frontend/src/pages/ReportsPage.vue": {
@@ -155,8 +155,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/TransactionsPage.vue": {
-    "mtime": 1781060149.3810544,
-    "ast_hash": "2b37b7c82d4c1f0dffffe01e4aff8dfb",
+    "mtime": 1781061976.0367887,
+    "ast_hash": "bd1aa408cf3608ad79177511508bed57",
     "semantic_hash": ""
   },
   "frontend/src/router/index.js": {

@@ -20,11 +20,19 @@
     </div>
 
     <!-- Scanning Overlay -->
-    <div v-if="isScanning" class="vue-modal-backdrop" style="z-index: 1060; background: rgba(0,0,0,0.8);">
-      <div class="d-flex flex-column justify-content-center align-items-center h-100 text-white">
-        <div class="spinner-border mb-3" style="width: 3rem; height: 3rem;" role="status"></div>
-        <h5>{{ $t('common.scanning') || 'Scanning Receipt...' }}</h5>
-        <p class="text-white-50">{{ scanProgress }}%</p>
+    <div v-if="isScanning" class="vue-modal-backdrop" style="z-index: 1060; background: rgba(11, 11, 20, 0.9);">
+      <div class="d-flex flex-column justify-content-center align-items-center h-100 text-white position-relative">
+        <div class="ocr-scanner-box position-relative mb-4 overflow-hidden border border-primary border-opacity-25 rounded-4" style="width: 280px; height: 380px; background: rgba(255,255,255,0.02)">
+          <!-- Camera icon/silhouette placeholder in the background -->
+          <div class="position-absolute top-50 start-50 translate-middle text-white-50 opacity-25 text-center">
+            <i class="bi bi-receipt fs-1 d-block mb-2"></i>
+            <span class="small">{{ localeStore.currentLocale === 'id' ? 'Pratinjau Struk' : 'Receipt Preview' }}</span>
+          </div>
+          <!-- Laser Scan Line -->
+          <div class="ocr-scan-line"></div>
+        </div>
+        <h5 class="fw-bold"><i class="bi bi-cpu text-info me-2 spinner-border-sm"></i>{{ $t('common.scanning') || 'Analyzing Receipt...' }}</h5>
+        <p class="text-muted small mb-0">{{ scanProgress }}% processed</p>
       </div>
     </div>
 

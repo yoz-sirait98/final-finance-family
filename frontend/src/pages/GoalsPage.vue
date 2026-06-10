@@ -334,15 +334,6 @@ onUnmounted(() => {
   transition: all 0.3s ease;
 }
 
-/* Dark mode fallback for completed card */
-@media (prefers-color-scheme: dark) {
-  :global([data-theme="dark"]) .goal-completed-card {
-    background: linear-gradient(135deg, #2a2512 0%, #1f1b0a 100%);
-    border: 1px solid #c9a227;
-    box-shadow: 0 8px 25px rgba(201, 162, 39, 0.15);
-  }
-}
-
 /* Add a premium gold animated shine */
 .goal-completed-card::after {
   content: '';
@@ -355,12 +346,6 @@ onUnmounted(() => {
   transform: rotate(30deg);
   animation: shine 4s infinite linear;
   pointer-events: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  :global([data-theme="dark"]) .goal-completed-card::after {
-    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255,255,255,0) 100%);
-  }
 }
 
 @keyframes shine {
@@ -383,12 +368,6 @@ onUnmounted(() => {
 
 .goal-completed-card .fw-bold {
   color: #b8860b;
-}
-
-@media (prefers-color-scheme: dark) {
-  :global([data-theme="dark"]) .goal-completed-card .fw-bold {
-    color: #e6c25e;
-  }
 }
 
 .bounce-animation {
