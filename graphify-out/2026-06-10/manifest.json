@@ -570,8 +570,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectPocketsPage.vue": {
-    "mtime": 1781058700.7322273,
-    "ast_hash": "e9133616483edf55e1c7807a4f67b485",
+    "mtime": 1781059206.1918793,
+    "ast_hash": "95d6c3039cce579f7623847271f87c7c",
     "semantic_hash": ""
   },
   "supabase/migrations/000016_project_pockets_schema.sql": {
@@ -602,6 +602,11 @@
   "frontend/test_ocr2.mjs": {
     "mtime": 1781058058.7489164,
     "ast_hash": "f2b2f25f4f7981ef559d389fd9d3fb57",
+    "semantic_hash": ""
+  },
+  "frontend/test_supabase.mjs": {
+    "mtime": 1781059116.086872,
+    "ast_hash": "7fe704b3113037f2580c378d52fc853e",
     "semantic_hash": ""
   }
 }

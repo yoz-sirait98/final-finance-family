@@ -1,7 +1,7 @@
 # Graph Report - final-finance-family  (2026-06-10)
 
 ## Corpus Check
-- 102 files · ~82,616 words
+- 102 files · ~82,622 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `eb292101`
+- Built from commit: `586066f9`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -391,20 +391,20 @@ Cohesion: 0.17
 Nodes (20): accounts, accountName, accountNamePlaceholder, addAccount, balance, balancePlaceholder, editAccount, subtitle (+12 more)
 
 ## Knowledge Gaps
-- **602 isolated node(s):** `supabase`, `routeNamesToPollAlerts`, `sidebarCollapsed`, `mobileOpen`, `bellOpen` (+597 more)
+- **602 isolated node(s):** `save`, `cancel`, `add`, `edit`, `delete` (+597 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **35 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `dashboard` connect `Month Labels` to `Family Member Roles`, `Database Backup Script`, `Navigation and Management`, `Community 110`, `Community 112`, `Dashboard Analytics Metrics`?**
-  _High betweenness centrality (0.074) - this node is a cross-community bridge._
-- **Why does `transactions` connect `Transaction and Budget Logic` to `Common UI Actions`, `Family Member Roles`, `Database Backup Script`, `Navigation and Management`, `Community 112`, `Community 113`, `Social Media Icons`?**
-  _High betweenness centrality (0.063) - this node is a cross-community bridge._
 - **Why does `dashboard` connect `Virtual Scroll Component` to `Time Intervals`, `Time Intervals`, `Community 107`, `Toast Notification Store`, `Community 111`, `Dashboard Analytics Metrics`, `Community 120`?**
-  _High betweenness centrality (0.060) - this node is a cross-community bridge._
-- **What connects `supabase`, `routeNamesToPollAlerts`, `sidebarCollapsed` to the rest of the system?**
+  _High betweenness centrality (0.062) - this node is a cross-community bridge._
+- **Why does `dashboard` connect `Month Labels` to `Family Member Roles`, `Database Backup Script`, `Navigation and Management`, `Community 110`, `Community 112`, `Dashboard Analytics Metrics`?**
+  _High betweenness centrality (0.057) - this node is a cross-community bridge._
+- **Why does `transactions` connect `Transaction and Budget Logic` to `Common UI Actions`, `Family Member Roles`, `Database Backup Script`, `Navigation and Management`, `Community 112`, `Community 113`, `Social Media Icons`?**
+  _High betweenness centrality (0.049) - this node is a cross-community bridge._
+- **What connects `save`, `cancel`, `add` to the rest of the system?**
   _605 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Common UI Actions` be split into smaller, more focused modules?**
   _Cohesion score 0.083710407239819 - nodes in this community are weakly interconnected._
