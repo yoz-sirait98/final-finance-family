@@ -80,13 +80,13 @@
     "semantic_hash": ""
   },
   "frontend/src/locales/en.json": {
-    "mtime": 1781074583.0784895,
-    "ast_hash": "897f99269917aed93849c5878f1d2310",
+    "mtime": 1781075146.6757128,
+    "ast_hash": "7bb883b55548a8609c703fa17fe1b741",
     "semantic_hash": ""
   },
   "frontend/src/locales/id.json": {
-    "mtime": 1781074591.2799711,
-    "ast_hash": "8337210bb1fa74a1d7c036bf46fbe86a",
+    "mtime": 1781075150.8098984,
+    "ast_hash": "2f76b42a9a3efe28b23054aec2d3b863",
     "semantic_hash": ""
   },
   "frontend/src/main.js": {
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "docs/task.md": {
-    "mtime": 1781074482.4099352,
-    "ast_hash": "4b99c3debd483809d4f6a79fdb2f5322",
+    "mtime": 1781075169.4470532,
+    "ast_hash": "4a85a38b35535ffcb6e130ec8382cac9",
     "semantic_hash": ""
   },
   "docs/walkthrough_graphify.md": {
@@ -610,8 +610,13 @@
     "semantic_hash": ""
   },
   "frontend/src/services/aiService.js": {
-    "mtime": 1781074538.44534,
-    "ast_hash": "72a28cd627212e2bb7b59cb58adf77e8",
+    "mtime": 1781075738.2077317,
+    "ast_hash": "d7a985dc8db8ea634b3a329f237ac18b",
+    "semantic_hash": ""
+  },
+  "docs/walkthrough_receipt_scanner_ai.md": {
+    "mtime": 1781075176.9452417,
+    "ast_hash": "3f65d5bbaff9a583327ffd743338d097",
     "semantic_hash": ""
   }
 }
