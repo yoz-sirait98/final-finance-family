@@ -150,8 +150,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/SettingsPage.vue": {
-    "mtime": 1781076234.7671857,
-    "ast_hash": "4d0dcbe220a00202d95d78b15742fa3b",
+    "mtime": 1781081393.258424,
+    "ast_hash": "b3780e24c8c219c6b1b2caab4fee5266",
     "semantic_hash": ""
   },
   "frontend/src/pages/TransactionsPage.vue": {
@@ -225,8 +225,8 @@
     "semantic_hash": ""
   },
   "frontend/src/stores/auth.js": {
-    "mtime": 1781060149.3861952,
-    "ast_hash": "88501ff73f9243e3372ac11af137ad24",
+    "mtime": 1781078963.280985,
+    "ast_hash": "39d64d9a83cf3554e29bfa0f61c62e0f",
     "semantic_hash": ""
   },
   "frontend/src/stores/budgets.js": {
@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "docs/implementation_plan.md": {
-    "mtime": 1781074295.3765202,
-    "ast_hash": "2ce96a479b254da2314c3cbe2b1ce84a",
+    "mtime": 1781078916.929413,
+    "ast_hash": "aae4181af910b5f68f836519e77d9b84",
     "semantic_hash": ""
   },
   "docs/supabase-setup-guide.md": {
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "docs/task.md": {
-    "mtime": 1781075169.4470532,
-    "ast_hash": "4a85a38b35535ffcb6e130ec8382cac9",
+    "mtime": 1781078997.252052,
+    "ast_hash": "93611d331799e293c82704b1775f7908",
     "semantic_hash": ""
   },
   "docs/walkthrough_graphify.md": {
@@ -605,18 +605,28 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/AiPage.vue": {
-    "mtime": 1781074546.716614,
-    "ast_hash": "e6f209c91aff920efe40bcc4a1b44ac6",
+    "mtime": 1781081077.3160295,
+    "ast_hash": "40655f240bb75a21d688a69513e2de91",
     "semantic_hash": ""
   },
   "frontend/src/services/aiService.js": {
-    "mtime": 1781076220.9525695,
-    "ast_hash": "349f8a2b98552c43793ad71823128698",
+    "mtime": 1781081396.107052,
+    "ast_hash": "df57301e61ee2403d7e01cb3e2a4e175",
     "semantic_hash": ""
   },
   "docs/walkthrough_receipt_scanner_ai.md": {
     "mtime": 1781075176.9452417,
     "ast_hash": "3f65d5bbaff9a583327ffd743338d097",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/000021_add_gemini_api_key_to_families.sql": {
+    "mtime": 1781078953.7622967,
+    "ast_hash": "d61ed2321e83001504ee172045720ee6",
+    "semantic_hash": ""
+  },
+  "docs/walkthrough_gemini_key_sync.md": {
+    "mtime": 1781079039.6601515,
+    "ast_hash": "df0d4b39db4649e772c5ba83800ab7aa",
     "semantic_hash": ""
   }
 }
