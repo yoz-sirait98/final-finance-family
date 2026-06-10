@@ -53,7 +53,8 @@ BEGIN
       AND category_id = p_category_id
       AND type = 'expense'
       AND EXTRACT(MONTH FROM transaction_date) = v_month
-      AND EXTRACT(YEAR FROM transaction_date) = v_year;
+      AND EXTRACT(YEAR FROM transaction_date) = v_year
+      AND goal_id IS NULL;
 
     -- 3. Calculate projections
     v_projected_spent := v_current_spent + p_amount;

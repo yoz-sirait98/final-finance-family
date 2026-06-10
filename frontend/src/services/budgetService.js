@@ -31,7 +31,8 @@ export const budgetService = {
         .select('category_id, amount')
         .eq('type', 'expense')
         .gte('transaction_date', startDate)
-        .lte('transaction_date', endDate);
+        .lte('transaction_date', endDate)
+        .is('goal_id', null);
       
       const spentByCategory = {};
       (txs || []).forEach(tx => {
