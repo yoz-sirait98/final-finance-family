@@ -41,7 +41,7 @@
           </div>
 
           <div class="mt-auto d-flex flex-column gap-2">
-            <div class="d-flex gap-2" v-if="pocket.status !== 'completed'">
+            <div class="d-flex gap-2" v-if="pocket.status !== 'inactive'">
               <button 
                 class="btn w-50" 
                 :class="pocket.isActive ? 'btn-primary-gradient' : 'btn-outline-secondary'"
