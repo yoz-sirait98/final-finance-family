@@ -115,8 +115,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/GoalsPage.vue": {
-    "mtime": 1781064899.103891,
-    "ast_hash": "aafa6af8c23d2f57ec262c509e7b238b",
+    "mtime": 1781066988.653436,
+    "ast_hash": "d60077e9c4967082c7e5a163ccd16e7a",
     "semantic_hash": ""
   },
   "frontend/src/pages/IconsGemPage.vue": {
@@ -560,8 +560,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectPocketsPage.vue": {
-    "mtime": 1781066113.5171027,
-    "ast_hash": "d8ed228313d6335e0ded77aed213f7c7",
+    "mtime": 1781066978.4619873,
+    "ast_hash": "284c52138f5a13f62382e5e7eeabe523",
     "semantic_hash": ""
   },
   "supabase/migrations/000016_project_pockets_schema.sql": {
