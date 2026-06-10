@@ -5,6 +5,7 @@ export const useAuthStore = defineStore('auth', {
   state: () => ({
     user: null,
     session: null,
+    family: null,
     initialized: false
   }),
 
@@ -63,6 +64,15 @@ export const useAuthStore = defineStore('auth', {
       const { data, error } = await supabase.from('profiles').select('*').eq('id', userId).single();
       if (!error && data) {
         this.user = data;
+        
+        // Fetch family record to retrieve cross-device gemini_api_key
+        const { data: family } = await supabase.from('families').select('*').eq('id', data.family_id).single();
+        if (family) {
+          this.family = family;
+          if (family.gemini_api_key) {
+            localStorage.setItem('gemini_api_key', family.gemini_api_key);
+          }
+        }
       }
     },
 

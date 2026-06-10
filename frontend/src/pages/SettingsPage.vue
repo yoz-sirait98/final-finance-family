@@ -91,6 +91,7 @@ import { useAuthStore } from '../stores/auth';
 import { useLocaleStore } from '../stores/locale';
 import { useToastStore } from '../stores/toast';
 import { authService } from '../services/authService';
+import { supabase } from '../lib/supabase';
 
 const authStore = useAuthStore();
 const localeStore = useLocaleStore();
@@ -109,7 +110,13 @@ async function saveGeminiKey() {
   const trimmedKey = geminiApiKey.value.trim();
   if (!trimmedKey) {
     localStorage.removeItem('gemini_api_key');
-    toast.success('API Key removed.');
+    try {
+      await supabase.from('families').update({ gemini_api_key: null }).eq('id', authStore.familyId);
+      toast.success('API Key removed.');
+    } catch (e) {
+      console.error('Failed to remove key from database:', e);
+      toast.error('Failed to remove key from database.');
+    }
     return;
   }
 
@@ -132,6 +139,8 @@ async function saveGeminiKey() {
     }
 
     localStorage.setItem('gemini_api_key', trimmedKey);
+    // Sync to database
+    await supabase.from('families').update({ gemini_api_key: trimmedKey }).eq('id', authStore.familyId);
     toast.success(localeStore.t('common.success') || 'Settings saved successfully!');
   } catch (err) {
     console.error('Gemini verification failed:', err);

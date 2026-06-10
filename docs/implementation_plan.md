@@ -338,5 +338,43 @@ This plan outlines the implementation details for integrating Tesseract.js offli
 2. Open the AI Coach tab and verify that sending a message successfully retrieves financial advice based on the actual database numbers.
 3. Open the Transactions page, click the camera icon to upload a receipt image, and verify the scanning animation triggers and pre-fills the transaction details.
 
+---
+
+# Part 7 — Cross-Device Gemini API Key Syncing (Proposed)
+
+This section outlines the strategy to synchronize the user's Gemini API Key across multiple devices and family members. It stores the verified key in the Supabase database (`families` table) and caches it in `localStorage` upon profile hydration.
+
+## User Review Required
+
+> [!IMPORTANT]
+> 1. **Database Schema Update**: Adds a `gemini_api_key TEXT` column to the `families` table. This column is secured by existing RLS policies, ensuring only family members can access it.
+> 2. **Auto-Hydration**: Upon logging in on any device, the user's profile and family details are loaded, and the API key is automatically cached in `localStorage`.
+> 3. **Backward Compatibility**: Preserves all direct `localStorage` read operations, preventing regressions in other parts of the app.
+
+## Proposed Changes
+
+### Supabase Database Migration
+- **[NEW] `supabase/migrations/000021_add_gemini_api_key_to_families.sql`**:
+  ```sql
+  ALTER TABLE public.families ADD COLUMN IF NOT EXISTS gemini_api_key TEXT;
+  ```
+
+### Frontend Services & Stores
+- **[MODIFY] `frontend/src/stores/auth.js`**:
+  - Add `family` to state.
+  - Modify `fetchProfile` to fetch the linked family record and automatically cache `family.gemini_api_key` in `localStorage` if it exists.
+- **[MODIFY] `frontend/src/pages/SettingsPage.vue`**:
+  - Update `saveGeminiKey` to update the `families` table record with the verified key or set it to `null` if cleared.
+
+## Verification Plan
+
+### Automated Tests
+- Run `npm run build` to check client compilation.
+
+### Manual Verification
+1. Input and save a valid key on Device A, and verify it writes to the database.
+2. Login to the same account on Device B, and verify the key is populated automatically in the Settings page.
+3. Chat with the AI Advisor on both devices.
+
 
 

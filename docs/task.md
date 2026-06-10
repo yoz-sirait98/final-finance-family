@@ -56,6 +56,12 @@
 - `[x]` Task 43: Add translation keys in `en.json` and `id.json`
 - `[x]` Task 44: Run build verification and Graphify AST update
 
+## Part 7 — Cross-Device Gemini API Key Syncing
+- `[x]` Task 45: Create database migration `000021_add_gemini_api_key_to_families.sql`
+- `[x]` Task 46: Update `auth.js` Pinia store to load family record and cache key in `localStorage`
+- `[x]` Task 47: Update `SettingsPage.vue` to save/delete key from Supabase `families` table
+- `[x]` Task 48: Rebuild and verify compilation
+
 
 
 
