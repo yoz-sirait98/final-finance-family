@@ -340,16 +340,15 @@ This plan outlines the implementation details for integrating Tesseract.js offli
 
 ---
 
-# Part 7 — Cross-Device Gemini API Key Syncing (Proposed)
+# Part 7 — Cross-Device Gemini API Key Syncing (Completed)
 
 This section outlines the strategy to synchronize the user's Gemini API Key across multiple devices and family members. It stores the verified key in the Supabase database (`families` table) and caches it in `localStorage` upon profile hydration.
 
-## User Review Required
+## Implementation Details
 
-> [!IMPORTANT]
-> 1. **Database Schema Update**: Adds a `gemini_api_key TEXT` column to the `families` table. This column is secured by existing RLS policies, ensuring only family members can access it.
-> 2. **Auto-Hydration**: Upon logging in on any device, the user's profile and family details are loaded, and the API key is automatically cached in `localStorage`.
-> 3. **Backward Compatibility**: Preserves all direct `localStorage` read operations, preventing regressions in other parts of the app.
+1. **Database Schema Update**: Adds a `gemini_api_key TEXT` column to the `families` table. This column is secured by existing RLS policies, ensuring only family members can access it.
+2. **Auto-Hydration**: Upon logging in on any device, the user's profile and family details are loaded, and the API key is automatically cached in `localStorage`.
+3. **Backward Compatibility**: Preserves all direct `localStorage` read operations, preventing regressions in other parts of the app.
 
 ## Proposed Changes
 
@@ -375,6 +374,21 @@ This section outlines the strategy to synchronize the user's Gemini API Key acro
 1. Input and save a valid key on Device A, and verify it writes to the database.
 2. Login to the same account on Device B, and verify the key is populated automatically in the Settings page.
 3. Chat with the AI Advisor on both devices.
+
+---
+
+# Part 8 — Update Documentation (Completed)
+
+This section outlines the final task of documenting the new features across all project README files.
+
+## Proposed Changes
+
+### Root Documentation
+- **[MODIFY] [README.md](file:///C:/Users/Yosua Jan/.gemini/antigravity/worktrees/final-finance-family/redesign-ui-supabase-stack/README.md)**: Updated Arsitektur, Fitur Utama, and screenshots list to document the offline OCR receipt scanner, Gemini AI Advisor, and the Supabase API Key synchronization.
+
+### Frontend Documentation
+- **[MODIFY] [frontend/README.md](file:///C:/Users/Yosua Jan/.gemini/antigravity/worktrees/final-finance-family/redesign-ui-supabase-stack/frontend/README.md)**: Added technical details on offline scanning (Tesseract.js, regex heuristics, camera capture) and Gemini AI integration (glassmorphic styling, Pinia auth syncing, model selection).
+
 
 
 

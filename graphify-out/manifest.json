@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "docs/implementation_plan.md": {
-    "mtime": 1781078916.929413,
-    "ast_hash": "aae4181af910b5f68f836519e77d9b84",
+    "mtime": 1781082170.0896013,
+    "ast_hash": "e6b91195c4282ffc58c233af32023614",
     "semantic_hash": ""
   },
   "docs/supabase-setup-guide.md": {
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "docs/task.md": {
-    "mtime": 1781078997.252052,
-    "ast_hash": "93611d331799e293c82704b1775f7908",
+    "mtime": 1781082155.055527,
+    "ast_hash": "0367596a89fb383358c1349072730d02",
     "semantic_hash": ""
   },
   "docs/walkthrough_graphify.md": {
@@ -430,8 +430,8 @@
     "semantic_hash": ""
   },
   "frontend/README.md": {
-    "mtime": 1781060149.345388,
-    "ast_hash": "09ac4f3cdadc63942c1a9eb3d3d70518",
+    "mtime": 1781082138.3807404,
+    "ast_hash": "8bc5335bc7276c3f0afe8e8d465bdd60",
     "semantic_hash": ""
   },
   "frontend/index.html": {
@@ -627,6 +627,11 @@
   "docs/walkthrough_gemini_key_sync.md": {
     "mtime": 1781079039.6601515,
     "ast_hash": "df0d4b39db4649e772c5ba83800ab7aa",
+    "semantic_hash": ""
+  },
+  "docs/screenshots/page_ai_advisor.png": {
+    "mtime": 1781078111.3281026,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
     "semantic_hash": ""
   }
 }

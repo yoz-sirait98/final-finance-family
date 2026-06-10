@@ -62,6 +62,11 @@
 - `[x]` Task 47: Update `SettingsPage.vue` to save/delete key from Supabase `families` table
 - `[x]` Task 48: Rebuild and verify compilation
 
+## Part 8 — Update Documentation
+- `[x]` Task 49: Update root `README.md` with new features (OCR scanner, AI Coach, Gemini API key syncing)
+- `[x]` Task 50: Update `frontend/README.md` with frontend configuration and package details for new features
+
+
 
 
 

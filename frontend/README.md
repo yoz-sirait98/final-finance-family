@@ -76,3 +76,20 @@ Komponen transaksi dirancang sangat proaktif dalam menjaga ketertiban pencatatan
 1. **Budget Guardrail** – Memblokir user (melalui _confirmation modal_) jika input pengeluaran melebih sisa anggaran, lalu mengekskalasi _badge bell_ notifikasi secara _real-time_.
 2. **Linked Sinking Fund** – Mengikat target tabungan (_goals_) untuk sinkron mengambil sisa rasio _balance_ asli dari sub-akun bank terkait.
 3. **Audit Trail** – Seluruh perubahan data (_Create, Update, Delete_) dari modul utama secara otomatis terekam jejaknya (beserta datanya) ke _Activity Log System_ backend, memastikan kontrol akuntabilitas untuk setiap member keluarga yang menggunakannya.
+
+### Scan Struk Offline (Tesseract.js OCR)
+
+Untuk mempercepat pencatatan pengeluaran, sistem menyediakan fitur **Scan Struk** yang memproses gambar secara offline (sisi client) langsung di dalam browser menggunakan `Tesseract.js`.
+
+- **Heuristik & Regex (`receiptScanner.js`)**: Mengekstrak teks dari foto struk dan mencari pola nama toko/merchant (dengan menyaring metadata kasir/alamat/no telp), tanggal transaksi (mendukung parsing format lokal Indonesia seperti "Jan", "Juni", "Okt"), dan total nominal transaksi terbesar.
+- **Pemetaan Otomatis (Auto-Mapping)**: Melakukan pencarian kata kunci secara case-insensitive pada daftar akun dan kategori aktif yang ada di database untuk meng-autofill dropdown transaksi secara cerdas.
+- **Kamera Mobile**: Memanfaatkan parameter `capture="environment"` pada input file guna membuka kamera utama ponsel secara instan saat tombol scan ditekan.
+
+### Asisten Keuangan AI & Sinkronisasi API Key (Gemini & Supabase)
+
+Fitur **Aurora AI Advisor** menghadirkan asisten keuangan pribadi yang responsif dan interaktif.
+
+- **Antarmuka Premium (`AiPage.vue`)**: Mengusung desain kaca buram (glassmorphic) bertekstur Aurora dengan efek bayangan dan partikel bersinar. Mendukung penyesuaian kontras warna untuk mode terang/gelap, scrolling kustom, animasi gelembung chat, dan tombol pintasan (chips) pertanyaan.
+- **Snapshot Konteks Otomatis (`aiService.js`)**: Sebelum pesan dikirim ke model Gemini, service ini secara otomatis mengompilasi snapshot terstruktur yang bersumber dari database lokal: sisa saldo rekening, progress budget bulanan, target tabungan, dan riwayat transaksi terbaru.
+- **Optimasi Model**: Menggunakan model `gemini-flash-lite-latest` (`gemini-3.1-flash-lite`) yang andal, hemat token, dan kebal dari error 503 (Service Unavailable) yang sering melanda model Flash standar saat beban token tinggi.
+- **Sinkronisasi Kolaboratif**: API Key disimpan di database Supabase pada tabel `families` (kolom `gemini_api_key`) yang aman di bawah perlindungan Row-Level Security (RLS). Store Pinia `auth.js` secara otomatis mengunduh dan menyalin key tersebut ke `localStorage` saat login, sehingga key langsung tersinkronisasi di semua perangkat anggota keluarga tanpa perlu input manual berkali-kali.

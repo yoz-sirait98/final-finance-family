@@ -150,8 +150,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/SettingsPage.vue": {
-    "mtime": 1781078976.318576,
-    "ast_hash": "0aa6a9d515d5837ba2a8b84482afb522",
+    "mtime": 1781081393.258424,
+    "ast_hash": "b3780e24c8c219c6b1b2caab4fee5266",
     "semantic_hash": ""
   },
   "frontend/src/pages/TransactionsPage.vue": {
@@ -605,13 +605,13 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/AiPage.vue": {
-    "mtime": 1781074546.716614,
-    "ast_hash": "e6f209c91aff920efe40bcc4a1b44ac6",
+    "mtime": 1781081077.3160295,
+    "ast_hash": "40655f240bb75a21d688a69513e2de91",
     "semantic_hash": ""
   },
   "frontend/src/services/aiService.js": {
-    "mtime": 1781078145.915135,
-    "ast_hash": "d4125b7797f0b588a54a9836e1b40264",
+    "mtime": 1781081396.107052,
+    "ast_hash": "df57301e61ee2403d7e01cb3e2a4e175",
     "semantic_hash": ""
   },
   "docs/walkthrough_receipt_scanner_ai.md": {
@@ -622,6 +622,11 @@
   "supabase/migrations/000021_add_gemini_api_key_to_families.sql": {
     "mtime": 1781078953.7622967,
     "ast_hash": "d61ed2321e83001504ee172045720ee6",
+    "semantic_hash": ""
+  },
+  "docs/walkthrough_gemini_key_sync.md": {
+    "mtime": 1781079039.6601515,
+    "ast_hash": "df0d4b39db4649e772c5ba83800ab7aa",
     "semantic_hash": ""
   }
 }
