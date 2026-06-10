@@ -545,8 +545,8 @@
     "semantic_hash": "7697b77524bf4f0fac6fac49413befe1"
   },
   "frontend/src/utils/receiptScanner.js": {
-    "mtime": 1781058118.6735206,
-    "ast_hash": "38ceb79dd4cfd0fb2e405ebece6b33d6",
+    "mtime": 1780988851.8421843,
+    "ast_hash": "82b92c9aaf040d53777ee038310bad6c",
     "semantic_hash": ""
   },
   "graphify-out/memory/query_20260609_044005_recurring.md": {
@@ -592,16 +592,6 @@
   "supabase/migrations/000019_fix_project_pockets_trigger.sql": {
     "mtime": 1781002024.891488,
     "ast_hash": "f4c1ba35d452156dfaa8b4e23a6012e6",
-    "semantic_hash": ""
-  },
-  "frontend/test_ocr.mjs": {
-    "mtime": 1781058041.5372658,
-    "ast_hash": "25f81eb15249d9de9ef28eafc88c376c",
-    "semantic_hash": ""
-  },
-  "frontend/test_ocr2.mjs": {
-    "mtime": 1781058058.7489164,
-    "ast_hash": "f2b2f25f4f7981ef559d389fd9d3fb57",
     "semantic_hash": ""
   }
 }
