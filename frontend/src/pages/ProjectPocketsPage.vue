@@ -249,11 +249,13 @@ async function loadData() {
   ]);
 
   // Load transactions manually or write a new custom query to get all project transactions
-  const { data: txRes } = await supabase.from('transactions').select('*, account:accounts(name), member:members(name)').not('goal_id', 'is', null);
+  const { data: txRes, error: txErr } = await supabase.from('transactions').select('*, account:accounts(name), member:members(name)').not('goal_id', 'is', null);
+  if (txErr) console.error("Error fetching transactions:", txErr);
   allTransactions.value = txRes || [];
 
   pockets.value = (goalsRes.data?.data || []).map(g => {
-    const spent = allTransactions.value.filter(tx => tx.goal_id === g.id).reduce((sum, tx) => sum + Number(tx.amount), 0);
+    const pocketTxs = allTransactions.value.filter(tx => Number(tx.goal_id) === Number(g.id));
+    const spent = pocketTxs.reduce((sum, tx) => sum + Number(tx.amount), 0);
     const remaining = Number(g.current_amount || 0) - spent;
     return {
       ...g,
