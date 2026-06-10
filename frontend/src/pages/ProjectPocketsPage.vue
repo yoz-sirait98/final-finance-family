@@ -359,7 +359,18 @@ async function deleteExpense(tx) {
 }
 
 async function markPocketAsDone(pocket) {
-  if (!confirm(localeStore.currentLocale === 'id' ? 'Tandai kantong proyek ini sebagai selesai?' : 'Mark this project pocket as done?')) return;
+  if (pocket.spent <= 0) {
+    toast.error(localeStore.currentLocale === 'id' 
+      ? 'Tidak dapat menyelesaikan kantong proyek ini karena belum ada pengeluaran yang dicatat.' 
+      : 'Cannot mark this project pocket as done because no expenses have been logged yet.');
+    return;
+  }
+
+  const msgId = 'Tandai kantong proyek ini sebagai selesai? Pastikan semua pengeluaran sudah dicatat karena kantong proyek yang sudah selesai (DONE) tidak dapat diedit atau dihapus lagi.';
+  const msgEn = 'Mark this project pocket as done? Make sure all expenses are logged because a completed project pocket (DONE) cannot be edited or deleted anymore.';
+  
+  if (!confirm(localeStore.currentLocale === 'id' ? msgId : msgEn)) return;
+  
   saving.value = true;
   try {
     await goalService.update(pocket.id, { status: 'done' });

@@ -39,8 +39,8 @@
             <button v-if="g.status === 'active' && !g.account_id" class="btn btn-sm btn-primary-gradient" @click="openContribute(g)">
               <i class="bi bi-plus-circle me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Tabung' : 'Contribute' }}
             </button>
-            <button class="btn btn-sm btn-outline-primary" @click="openEdit(g)"><i class="bi bi-pencil"></i></button>
-            <button class="btn btn-sm btn-outline-danger" @click="confirmDelete(g)" :disabled="g.status !== 'inactive'"><i class="bi bi-trash"></i></button>
+            <button v-if="g.status !== 'done'" class="btn btn-sm btn-outline-primary" @click="openEdit(g)"><i class="bi bi-pencil"></i></button>
+            <button v-if="g.status !== 'done'" class="btn btn-sm btn-outline-danger" @click="confirmDelete(g)" :disabled="g.status !== 'inactive'"><i class="bi bi-trash"></i></button>
           </div>
         </div>
       </div>

@@ -560,8 +560,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectPocketsPage.vue": {
-    "mtime": 1781065389.8576703,
-    "ast_hash": "b44c930ff5993dd4170ed88903fda577",
+    "mtime": 1781066113.5171027,
+    "ast_hash": "d8ed228313d6335e0ded77aed213f7c7",
     "semantic_hash": ""
   },
   "supabase/migrations/000016_project_pockets_schema.sql": {
@@ -605,8 +605,8 @@
     "semantic_hash": ""
   },
   "supabase/migrations/000019_goals_status_enum.sql": {
-    "mtime": 1781064990.8697505,
-    "ast_hash": "93d226efc67ab65246097551b015e124",
+    "mtime": 1781066094.13817,
+    "ast_hash": "0fe4d8a2a7c19f576ad590e8ae072af9",
     "semantic_hash": ""
   },
   "supabase/migrations/supabase/.temp/linked-project.json": {
