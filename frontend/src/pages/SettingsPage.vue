@@ -135,7 +135,8 @@ async function saveGeminiKey() {
     );
 
     if (!response.ok) {
-      throw new Error('Invalid key');
+      const errData = await response.json().catch(() => ({}));
+      throw new Error(errData.error?.message || `API returned status ${response.status}`);
     }
 
     localStorage.setItem('gemini_api_key', trimmedKey);
