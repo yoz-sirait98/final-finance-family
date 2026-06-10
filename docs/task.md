@@ -38,3 +38,11 @@
 ## Part 4 — AI Assistant Graphify Integration
 - `[x]` Task 30: Install pipx and graphifyy package
 - `[x]` Task 31: Integrate Graphify skill for Antigravity assistant into `.agents` directory
+
+## Part 5 — Modular Agent Rules and Knowledge Reorganization
+- `[x]` Task 32: Create modular agent rules files under `.agents/rules/` (`supabase_network_restriction.md`, `documentation_lifecycle.md`, `walkthrough_artifacts.md`, `git_push_policy.md`)
+- `[x]` Task 33: Reorganize root `.cursorrules` as a clean entry index
+- `[x]` Task 34: Append rules reorganization plan to `docs/implementation_plan.md`
+- `[x]` Task 35: Run `graphify update .` to rebuild AST knowledge graph
+
+

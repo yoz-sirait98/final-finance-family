@@ -1,4 +1,4 @@
-﻿# Family Finance Architecture & Integration Plans
+# Family Finance Architecture & Integration Plans
 
 This document combines the implementation plans for the major architectural milestones of the Family Finance application: the Serverless Migration (Laravel to Supabase) and the Indonesian Language Mode Integration.
 
@@ -282,4 +282,31 @@ The goal of this feature is to allow users to take a photo of a receipt (or uplo
 2. Verify the "Scanning..." UI appears.
 3. Verify the "Add Transaction" modal opens automatically with the Total Amount, Date, and Merchant Name (Description) fields pre-filled.
 4. The user can then select the Category and Account manually before saving.
+
+---
+
+# Part 5 — Modular Agent Rules and Knowledge Base Rearrangement (Completed)
+
+This plan outlines the strategy that was executed to organize the agent instructions, system policies, constraints, and development guidelines into modular triggered rule files under `.agents/rules/` and restructure `.cursorrules` at the root directory.
+
+## Implementation Details
+
+### 1. Modular Rules Under `.agents/rules/`
+We split the large consolidated `.cursorrules` file into individual markdown files with YAML frontmatter:
+- **`supabase_network_restriction.md`**: Outlines the port `5432` block and HTTP REST client API or hotspot workarounds.
+- **`documentation_lifecycle.md`**: Covers the auto-update policy for task lists and plans, and the implementation plan archiving process.
+- **`walkthrough_artifacts.md`**: Covers guidelines for creating separate feature-specific walkthrough docs.
+- **`git_push_policy.md`**: Focuses on clean, incremental commits and the mandatory `ask_question` authorization before pushing.
+
+### 2. Root `.cursorrules` Reorganization
+- Converted `.cursorrules` into a clean, well-indexed directory mapping categories to their modular rule files.
+- Provided a consolidated reference outline for direct IDE use.
+
+## Verification Plan
+
+### Manual Verification
+1. Confirm that `.agents/rules/` contains the correct rule files and YAML frontmatter headers.
+2. Verify that the root `.cursorrules` file points to the correct absolute paths and lists the triggers correctly.
+3. Run `graphify update .` to rebuild the AST graph.
+
 

@@ -1,61 +1,40 @@
-# AI Agent Instructions, Repository Rules & Domain Knowledge
+# AI Agent Instructions & Workspace Rules
 
-Welcome, AI Agent! Adhere strictly to these rules and make use of the documented codebase knowledge to successfully fulfill your tasks.
+Welcome! This repository uses a modular rules architecture. Rules and system constraints are dynamically triggered by the agent runner and are stored individually in the [`.agents/rules/`](file:///C:/Users/Yosua%20Jan/.gemini/antigravity/worktrees/final-finance-family/redesign-ui-supabase-stack/.agents/rules) directory.
 
----
-
-## 1. Domain Knowledge & System Constraints
-
-### Supabase Database Port Restriction
-- **Environment Context**: Office Network (Ethernet connections).
-- **Known Issue**: Port `5432` (default PostgreSQL port) is blocked.
-- **System Impact**: CLI commands requiring direct TCP database connections (e.g., `npx supabase db push`/`pull`, migrations, direct SQL queries) will fail.
-- **Workarounds**:
-  - **Local Development / API Queries**: Rely on the Supabase HTTP REST API (`https://<project-id>.supabase.co`) which communicates over standard HTTPS port `443` (not blocked).
-  - **Direct CLI Schema Sync**: Temporarily switch your network connection to a phone hotspot to bypass the port restriction, run the push/pull, and switch back.
+Adhere strictly to all workspace rules outlined below and defined in the modular rule files.
 
 ---
 
-## 2. Documentation & Artifact Lifecycle
+## Rule Directory Index
 
-### Auto-Update Rule
-- Automatically update relevant planning, checklists, and status documents upon completing code updates. This ensures the workspace state matches implementation:
-  - **Brain/Scratch Artifacts**: Update `task.md` and `implementation_plan.md` in the current conversation directory.
-  - **Local Directory Docs**: Synchronize changes to `docs/task.md` and `docs/implementation_plan.md`.
-
-### Implementation Plan Lifecycle & Archiving
-- Before initiating a new feature's design:
-  1. Archive the current `implementation_plan.md` by saving a copy to the scratch/artifacts folder named `old_plan_YYYY_MM_DD.md`.
-  2. For the new plan, **append and combine** the detailed sections into `docs/implementation_plan.md` instead of overwriting the document.
+| Rule Area | Rule File | Description | Trigger |
+| :--- | :--- | :--- | :--- |
+| **Supabase Port Limit** | [`supabase_network_restriction.md`](file:///C:/Users/Yosua%20Jan/.gemini/antigravity/worktrees/final-finance-family/redesign-ui-supabase-stack/.agents/rules/supabase_network_restriction.md) | Workarounds for blocked database port 5432. | `always_on` |
+| **Doc Lifecycles** | [`documentation_lifecycle.md`](file:///C:/Users/Yosua%20Jan/.gemini/antigravity/worktrees/final-finance-family/redesign-ui-supabase-stack/.agents/rules/documentation_lifecycle.md) | Archiving and auto-updating `task.md` and `implementation_plan.md`. | `always_on` |
+| **Walkthrough Logs** | [`walkthrough_artifacts.md`](file:///C:/Users/Yosua%20Jan/.gemini/antigravity/worktrees/final-finance-family/redesign-ui-supabase-stack/.agents/rules/walkthrough_artifacts.md) | Writing descriptive feature-specific walkthrough docs. | `always_on` |
+| **Git Push Policy** | [`git_push_policy.md`](file:///C:/Users/Yosua%20Jan/.gemini/antigravity/worktrees/final-finance-family/redesign-ui-supabase-stack/.agents/rules/git_push_policy.md) | Incremental commits and user prompt before pushing to origin. | `always_on` |
+| **Graphify Queries** | [`graphify.md`](file:///C:/Users/Yosua%20Jan/.gemini/antigravity/worktrees/final-finance-family/redesign-ui-supabase-stack/.agents/rules/graphify.md) | Query-first policy using knowledge graph instead of heavy grep. | `always_on` |
 
 ---
 
-## 3. Walkthrough Artifacts
+## Consolidated Reference Outline
 
-### Feature-Specific Walkthroughs
-- Create separate, descriptive Walkthrough documents for distinct features, bug fixes, or design iterations (e.g., `docs/walkthrough_receipt_scanner.md`).
-- Do not consolidate unrelated updates or completely erase previous history in a single walkthrough.
+### 1. Supabase Port Constraint
+* Default TCP database connections over port `5432` are **blocked** in this network.
+* Use HTTP REST API on port `443` for standard app queries.
+* Switch network connection to a cellular hotspot when running migrations or direct database CLI schema synchronizations (`npx supabase db push`/`pull`).
 
----
+### 2. Documentation & Lifecycle
+* Keep `task.md` and `implementation_plan.md` in sync across brain directory and local `docs/`.
+* When creating a new plan, archive the old one to the scratch folder as `old_plan_YYYY_MM_DD.md` and append/combine sections inside local `docs/implementation_plan.md`.
 
-## 4. Git Operations & Push Policy
+### 3. Walkthroughs
+* Separate distinct features and fixes into descriptive markdown files (e.g. `docs/walkthrough_receipt_scanner.md`) to preserve full development logs.
 
-### Commit Frequency
-- Create clean, incremental Git commits as tasks are checked off.
+### 4. Git Push Safety
+* **CRITICAL**: Before executing any `git push` command, invoke the `ask_question` tool to request explicit user authorization. Stop and wait for approval.
 
-### Push Authorization Modal
-- **CRITICAL**: BEFORE running any `git push` command, you MUST invoke the `ask_question` tool.
-- Render options to the user (e.g., `"Yes, push to origin"` / `"No, wait"`).
-- **STOP and wait** for explicit user approval via the interactive modal before executing the push command.
-
----
-
-## 5. Codebase Navigation via Graphify
-
-### Query First Policy
-- For any architectural, structural, or codebase-wide queries, you **must query the Graphify knowledge graph** instead of using recursive grep searches.
-- Follow the guidelines in `.agents/rules/graphify.md`.
-- Run `graphify query "<question>"` to obtain a scoped subgraph before reading raw files.
-
-### AST Updates
-- After completing modifications to code files, run `graphify update .` to keep the codebase index current.
+### 5. Codebase Navigation via Graphify
+* For any architectural or structural codebase queries, you must search the Graphify knowledge graph (`.\graphify.ps1 query "<question>"`) instead of using recursive grep searches.
+* Keep the graph updated using `graphify update .` after code files are modified.
