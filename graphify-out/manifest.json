@@ -175,8 +175,8 @@
     "semantic_hash": ""
   },
   "frontend/src/services/budgetService.js": {
-    "mtime": 1780660813.4580007,
-    "ast_hash": "d9c0d39858aba0aadd27896116786541",
+    "mtime": 1781067577.8817668,
+    "ast_hash": "4a45e396ab2b3a73e70d1e9bbc595c7c",
     "semantic_hash": ""
   },
   "frontend/src/services/categoryService.js": {
@@ -360,8 +360,8 @@
     "semantic_hash": ""
   },
   "supabase/migrations/000006_budget_guardrail_rpc.sql": {
-    "mtime": 1780647294.9000974,
-    "ast_hash": "6891951e19b33bea2d2c490ce4180422",
+    "mtime": 1781067587.6728992,
+    "ast_hash": "4152322256e85d16baca723ee53831dc",
     "semantic_hash": ""
   },
   "supabase/migrations/000007_dashboard_analytics_rpc.sql": {
