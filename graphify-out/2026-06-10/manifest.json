@@ -80,13 +80,13 @@
     "semantic_hash": "85508e893fbc3828845498d90d86c519"
   },
   "frontend/src/locales/en.json": {
-    "mtime": 1780995967.6936512,
-    "ast_hash": "bdc996cf072bb1f0dc3f21046de72198",
+    "mtime": 1781059759.2786376,
+    "ast_hash": "fc0e6bc76a7b943312a0ba013cb16877",
     "semantic_hash": ""
   },
   "frontend/src/locales/id.json": {
-    "mtime": 1780995982.4304368,
-    "ast_hash": "e9cddf0104d05a51f11724983c8b1e3d",
+    "mtime": 1781059759.2786376,
+    "ast_hash": "86c0bf6f73d847c7271f066b6922153f",
     "semantic_hash": ""
   },
   "frontend/src/main.js": {
@@ -570,8 +570,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectPocketsPage.vue": {
-    "mtime": 1781059206.1918793,
-    "ast_hash": "95d6c3039cce579f7623847271f87c7c",
+    "mtime": 1781059731.80061,
+    "ast_hash": "2ff677b21a38eb85ea8da1c3979b0836",
     "semantic_hash": ""
   },
   "supabase/migrations/000016_project_pockets_schema.sql": {
