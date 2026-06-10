@@ -29,11 +29,14 @@ Repositori ini menggunakan struktur **monorepo** yang berisi aplikasi frontend d
 2.  **Manajemen Akun**: Melacak saldo pada kas, rekening bank, dan e-wallet. Saldo terupdate otomatis menggunakan _Database Triggers_.
 3.  **Pencatatan Transaksi**: Mencatat pemasukan, pengeluaran, serta transfer antar akun.
 4.  **Anggaran (Budget)**: Menentukan batas pengeluaran bulanan per kategori dengan progress bar real-time serta **Budget Guardrail** (peringatan modal interaktif) dan notifikasi _bell_ jika mendekati/melebihi 80%.
-5.  **Target Tabungan (Saving Goals)**: Melacak target dana dengan progress persentase interaktif dan terhubung dengan akun.
-6.  **Transaksi Berulang (Recurring Transactions)**: Sistem penjadwalan otomatis menggunakan **pg_cron** di level database yang mencatat pengeluaran berulang (mingguan, bulanan, tahunan) di belakang layar tanpa campur tangan pengguna.
-7.  **Dashboard Analitik**: Menyediakan laporan visual tren pengeluaran, perbandingan pemasukan/pengeluaran, dan pie chart distribusi kategori menggunakan generator warna dinamis yang membedakan tiap kategori dengan warna interaktif. Menghitung historical _Net Worth_ (Kekayaan Bersih) secara dinamis.
-8.  **Eksport Laporan (_Client-Side_)**: Unduh laporan keuangan ke format **CSV** dan **PDF** terstruktur langsung dari browser.
-9.  **Keamanan Berlapis (RLS)**: Row Level Security memastikan data satu keluarga terisolasi secara sempurna dan tidak bisa diakses oleh keluarga lain.
+5.  **Kantong Proyek (Project Pockets)**: Memisahkan dana untuk acara/proyek besar secara independen. Pengeluaran di Kantong Proyek **tidak mengganggu** limit Anggaran Bulanan reguler.
+6.  **Daftar Belanja Cerdas & Scan Struk (OCR)**: Mencatat rencana belanja dan mencentangnya secara real-time. Dilengkapi fitur unggah/scan foto struk yang akan terekstraksi otomatis menggunakan AI OCR dan langsung tersinkronisasi sebagai Pengeluaran.
+7.  **Target Tabungan (Saving Goals)**: Melacak target dana dengan progress persentase interaktif, terhubung dengan akun, dan terintegrasi mulus dengan Kantong Proyek saat target telah tercapai.
+8.  **Transaksi Berulang (Recurring Transactions)**: Sistem penjadwalan otomatis menggunakan **pg_cron** di level database yang mencatat pengeluaran berulang (mingguan, bulanan, tahunan) di belakang layar.
+9.  **Dashboard Analitik**: Menyediakan laporan visual tren pengeluaran, perbandingan pemasukan/pengeluaran, dan pie chart distribusi kategori.
+10. **Modern UI/UX**: Tampilan dinamis, bersih, dan memanjakan mata dengan dukungan Light/Dark Mode serta transisi animasi yang mulus.
+11. **Eksport Laporan (_Client-Side_)**: Unduh laporan keuangan ke format **CSV** dan **PDF** terstruktur langsung dari browser.
+12. **Keamanan Berlapis (RLS)**: Row Level Security memastikan data satu keluarga terisolasi secara sempurna dan tidak bisa diakses oleh keluarga lain.
 
 ## Setup AI Assistant (Graphify)
 
