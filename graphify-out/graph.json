@@ -620,7 +620,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "locales_en",
-      "community": 29,
+      "community": 15,
       "norm_label": "en.json"
     },
     {
@@ -1220,7 +1220,7 @@
       "source_location": "L64",
       "_origin": "ast",
       "id": "locales_en_auth",
-      "community": 29,
+      "community": 15,
       "norm_label": "auth"
     },
     {
@@ -1230,7 +1230,7 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "locales_en_auth_login",
-      "community": 15,
+      "community": 10,
       "norm_label": "login"
     },
     {
@@ -1240,7 +1240,7 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "locales_en_login_title",
-      "community": 15,
+      "community": 10,
       "norm_label": "title"
     },
     {
@@ -1260,7 +1260,7 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "locales_en_login_email",
-      "community": 15,
+      "community": 10,
       "norm_label": "email"
     },
     {
@@ -1270,7 +1270,7 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "locales_en_login_emailplaceholder",
-      "community": 15,
+      "community": 10,
       "norm_label": "emailplaceholder"
     },
     {
@@ -1280,7 +1280,7 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "locales_en_login_password",
-      "community": 15,
+      "community": 10,
       "norm_label": "password"
     },
     {
@@ -1290,7 +1290,7 @@
       "source_location": "L71",
       "_origin": "ast",
       "id": "locales_en_login_passwordplaceholder",
-      "community": 15,
+      "community": 10,
       "norm_label": "passwordplaceholder"
     },
     {
@@ -1300,7 +1300,7 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "locales_en_login_signin",
-      "community": 15,
+      "community": 10,
       "norm_label": "signin"
     },
     {
@@ -1310,7 +1310,7 @@
       "source_location": "L73",
       "_origin": "ast",
       "id": "locales_en_login_signingin",
-      "community": 15,
+      "community": 10,
       "norm_label": "signingin"
     },
     {
@@ -1320,7 +1320,7 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "locales_en_login_newhere",
-      "community": 15,
+      "community": 10,
       "norm_label": "newhere"
     },
     {
@@ -1330,7 +1330,7 @@
       "source_location": "L75",
       "_origin": "ast",
       "id": "locales_en_login_createaccount",
-      "community": 15,
+      "community": 10,
       "norm_label": "createaccount"
     },
     {
@@ -1340,7 +1340,7 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "locales_en_login_failed",
-      "community": 15,
+      "community": 10,
       "norm_label": "failed"
     },
     {
@@ -1660,7 +1660,7 @@
       "source_location": "L112",
       "_origin": "ast",
       "id": "locales_en_dashboard_period",
-      "community": 20,
+      "community": 107,
       "norm_label": "period"
     },
     {
@@ -2570,7 +2570,7 @@
       "source_location": "L209",
       "_origin": "ast",
       "id": "locales_en_accounts_validation",
-      "community": 26,
+      "community": 11,
       "norm_label": "validation"
     },
     {
@@ -2580,7 +2580,7 @@
       "source_location": "L210",
       "_origin": "ast",
       "id": "locales_en_validation_name",
-      "community": 26,
+      "community": 11,
       "norm_label": "name"
     },
     {
@@ -2590,7 +2590,7 @@
       "source_location": "L211",
       "_origin": "ast",
       "id": "locales_en_validation_type",
-      "community": 26,
+      "community": 11,
       "norm_label": "type"
     },
     {
@@ -2760,7 +2760,7 @@
       "source_location": "L233",
       "_origin": "ast",
       "id": "locales_en_categories",
-      "community": 33,
+      "community": 15,
       "norm_label": "categories"
     },
     {
@@ -2770,7 +2770,7 @@
       "source_location": "L234",
       "_origin": "ast",
       "id": "locales_en_categories_title",
-      "community": 33,
+      "community": 15,
       "norm_label": "title"
     },
     {
@@ -2780,7 +2780,7 @@
       "source_location": "L235",
       "_origin": "ast",
       "id": "locales_en_categories_subtitle",
-      "community": 33,
+      "community": 15,
       "norm_label": "subtitle"
     },
     {
@@ -2790,7 +2790,7 @@
       "source_location": "L236",
       "_origin": "ast",
       "id": "locales_en_categories_addcategory",
-      "community": 33,
+      "community": 15,
       "norm_label": "addcategory"
     },
     {
@@ -2800,7 +2800,7 @@
       "source_location": "L237",
       "_origin": "ast",
       "id": "locales_en_categories_editcategory",
-      "community": 33,
+      "community": 15,
       "norm_label": "editcategory"
     },
     {
@@ -2810,7 +2810,7 @@
       "source_location": "L238",
       "_origin": "ast",
       "id": "locales_en_categories_icon",
-      "community": 33,
+      "community": 15,
       "norm_label": "icon"
     },
     {
@@ -2820,7 +2820,7 @@
       "source_location": "L239",
       "_origin": "ast",
       "id": "locales_en_categories_color",
-      "community": 33,
+      "community": 15,
       "norm_label": "color"
     },
     {
@@ -2830,7 +2830,7 @@
       "source_location": "L240",
       "_origin": "ast",
       "id": "locales_en_categories_validation",
-      "community": 26,
+      "community": 11,
       "norm_label": "validation"
     },
     {
@@ -3230,7 +3230,7 @@
       "source_location": "L296",
       "_origin": "ast",
       "id": "locales_en_members_validation",
-      "community": 26,
+      "community": 11,
       "norm_label": "validation"
     },
     {
@@ -3240,7 +3240,7 @@
       "source_location": "L298",
       "_origin": "ast",
       "id": "locales_en_validation_role",
-      "community": 26,
+      "community": 11,
       "norm_label": "role"
     },
     {
@@ -3560,7 +3560,7 @@
       "source_location": "L334",
       "_origin": "ast",
       "id": "locales_en_shopping_validation",
-      "community": 26,
+      "community": 11,
       "norm_label": "validation"
     },
     {
@@ -3640,7 +3640,7 @@
       "source_location": "L347",
       "_origin": "ast",
       "id": "locales_en_period_title",
-      "community": 20,
+      "community": 107,
       "norm_label": "title"
     },
     {
@@ -3650,7 +3650,7 @@
       "source_location": "L348",
       "_origin": "ast",
       "id": "locales_en_period_description",
-      "community": 20,
+      "community": 107,
       "norm_label": "description"
     },
     {
@@ -3800,7 +3800,7 @@
       "source_location": "L370",
       "_origin": "ast",
       "id": "locales_en_dashboard_charts",
-      "community": 107,
+      "community": 29,
       "norm_label": "charts"
     },
     {
@@ -3810,7 +3810,7 @@
       "source_location": "L371",
       "_origin": "ast",
       "id": "locales_en_charts_title",
-      "community": 107,
+      "community": 29,
       "norm_label": "title"
     },
     {
@@ -3820,7 +3820,7 @@
       "source_location": "L372",
       "_origin": "ast",
       "id": "locales_en_charts_description",
-      "community": 107,
+      "community": 29,
       "norm_label": "description"
     },
     {
@@ -3930,7 +3930,7 @@
       "source_location": "L388",
       "_origin": "ast",
       "id": "locales_en_transactions_filters",
-      "community": 111,
+      "community": 29,
       "norm_label": "filters"
     },
     {
@@ -3940,7 +3940,7 @@
       "source_location": "L389",
       "_origin": "ast",
       "id": "locales_en_filters_title",
-      "community": 111,
+      "community": 29,
       "norm_label": "title"
     },
     {
@@ -3950,7 +3950,7 @@
       "source_location": "L390",
       "_origin": "ast",
       "id": "locales_en_filters_description",
-      "community": 111,
+      "community": 29,
       "norm_label": "description"
     },
     {
@@ -3960,7 +3960,7 @@
       "source_location": "L392",
       "_origin": "ast",
       "id": "locales_en_transactions_table",
-      "community": 16,
+      "community": 111,
       "norm_label": "table"
     },
     {
@@ -3970,7 +3970,7 @@
       "source_location": "L393",
       "_origin": "ast",
       "id": "locales_en_table_title",
-      "community": 16,
+      "community": 111,
       "norm_label": "title"
     },
     {
@@ -3980,7 +3980,7 @@
       "source_location": "L394",
       "_origin": "ast",
       "id": "locales_en_table_description",
-      "community": 16,
+      "community": 111,
       "norm_label": "description"
     },
     {
@@ -4200,7 +4200,7 @@
       "source_location": "L457",
       "_origin": "ast",
       "id": "locales_en_tours_reports",
-      "community": 111,
+      "community": 29,
       "norm_label": "reports"
     },
     {
@@ -4210,7 +4210,7 @@
       "source_location": "L458",
       "_origin": "ast",
       "id": "locales_en_reports_header",
-      "community": 111,
+      "community": 29,
       "norm_label": "header"
     },
     {
@@ -4220,7 +4220,7 @@
       "source_location": "L462",
       "_origin": "ast",
       "id": "locales_en_reports_filters",
-      "community": 111,
+      "community": 29,
       "norm_label": "filters"
     },
     {
@@ -4230,7 +4230,7 @@
       "source_location": "L466",
       "_origin": "ast",
       "id": "locales_en_reports_charts",
-      "community": 107,
+      "community": 29,
       "norm_label": "charts"
     },
     {
@@ -4270,7 +4270,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "locales_id",
-      "community": 105,
+      "community": 121,
       "norm_label": "id.json"
     },
     {
@@ -4390,7 +4390,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "locales_id_common_name",
-      "community": 42,
+      "community": 1,
       "norm_label": "name"
     },
     {
@@ -4400,7 +4400,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "locales_id_common_amount",
-      "community": 42,
+      "community": 1,
       "norm_label": "amount"
     },
     {
@@ -4410,7 +4410,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "locales_id_common_category",
-      "community": 42,
+      "community": 1,
       "norm_label": "category"
     },
     {
@@ -4420,7 +4420,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "locales_id_common_account",
-      "community": 42,
+      "community": 1,
       "norm_label": "account"
     },
     {
@@ -4580,7 +4580,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "locales_id_common_type",
-      "community": 125,
+      "community": 1,
       "norm_label": "type"
     },
     {
@@ -4590,7 +4590,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "locales_id_common_income",
-      "community": 121,
+      "community": 39,
       "norm_label": "income"
     },
     {
@@ -4600,7 +4600,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "locales_id_common_expense",
-      "community": 121,
+      "community": 39,
       "norm_label": "expense"
     },
     {
@@ -4610,7 +4610,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "locales_id_common_transfer",
-      "community": 121,
+      "community": 39,
       "norm_label": "transfer"
     },
     {
@@ -4620,7 +4620,7 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "locales_id_common_role",
-      "community": 42,
+      "community": 1,
       "norm_label": "role"
     },
     {
@@ -4630,7 +4630,7 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "locales_id_common_member",
-      "community": 42,
+      "community": 1,
       "norm_label": "member"
     },
     {
@@ -4870,7 +4870,7 @@
       "source_location": "L64",
       "_origin": "ast",
       "id": "locales_id_auth",
-      "community": 105,
+      "community": 121,
       "norm_label": "auth"
     },
     {
@@ -5310,7 +5310,7 @@
       "source_location": "L112",
       "_origin": "ast",
       "id": "locales_id_dashboard_period",
-      "community": 110,
+      "community": 39,
       "norm_label": "period"
     },
     {
@@ -5330,7 +5330,7 @@
       "source_location": "L114",
       "_origin": "ast",
       "id": "locales_id_dashboard_insights",
-      "community": 110,
+      "community": 14,
       "norm_label": "insights"
     },
     {
@@ -6150,7 +6150,7 @@
       "source_location": "L201",
       "_origin": "ast",
       "id": "locales_id_accounts_type",
-      "community": 125,
+      "community": 1,
       "norm_label": "type"
     },
     {
@@ -6160,7 +6160,7 @@
       "source_location": "L202",
       "_origin": "ast",
       "id": "locales_id_type_bank",
-      "community": 125,
+      "community": 1,
       "norm_label": "bank"
     },
     {
@@ -6170,7 +6170,7 @@
       "source_location": "L203",
       "_origin": "ast",
       "id": "locales_id_type_cash",
-      "community": 125,
+      "community": 1,
       "norm_label": "cash"
     },
     {
@@ -6180,7 +6180,7 @@
       "source_location": "L204",
       "_origin": "ast",
       "id": "locales_id_type_e_wallet",
-      "community": 125,
+      "community": 1,
       "norm_label": "e_wallet"
     },
     {
@@ -6190,7 +6190,7 @@
       "source_location": "L206",
       "_origin": "ast",
       "id": "locales_id_accounts_balance",
-      "community": 121,
+      "community": 39,
       "norm_label": "balance"
     },
     {
@@ -6220,7 +6220,7 @@
       "source_location": "L209",
       "_origin": "ast",
       "id": "locales_id_accounts_validation",
-      "community": 12,
+      "community": 42,
       "norm_label": "validation"
     },
     {
@@ -6230,7 +6230,7 @@
       "source_location": "L210",
       "_origin": "ast",
       "id": "locales_id_validation_name",
-      "community": 12,
+      "community": 42,
       "norm_label": "name"
     },
     {
@@ -6240,7 +6240,7 @@
       "source_location": "L211",
       "_origin": "ast",
       "id": "locales_id_validation_type",
-      "community": 12,
+      "community": 42,
       "norm_label": "type"
     },
     {
@@ -6480,7 +6480,7 @@
       "source_location": "L240",
       "_origin": "ast",
       "id": "locales_id_categories_validation",
-      "community": 12,
+      "community": 42,
       "norm_label": "validation"
     },
     {
@@ -6620,7 +6620,7 @@
       "source_location": "L258",
       "_origin": "ast",
       "id": "locales_id_goals_validation",
-      "community": 42,
+      "community": 1,
       "norm_label": "validation"
     },
     {
@@ -6630,7 +6630,7 @@
       "source_location": "L260",
       "_origin": "ast",
       "id": "locales_id_validation_target",
-      "community": 42,
+      "community": 1,
       "norm_label": "target"
     },
     {
@@ -6640,7 +6640,7 @@
       "source_location": "L261",
       "_origin": "ast",
       "id": "locales_id_validation_deadline",
-      "community": 42,
+      "community": 1,
       "norm_label": "deadline"
     },
     {
@@ -6880,7 +6880,7 @@
       "source_location": "L296",
       "_origin": "ast",
       "id": "locales_id_members_validation",
-      "community": 12,
+      "community": 42,
       "norm_label": "validation"
     },
     {
@@ -6890,7 +6890,7 @@
       "source_location": "L298",
       "_origin": "ast",
       "id": "locales_id_validation_role",
-      "community": 12,
+      "community": 42,
       "norm_label": "role"
     },
     {
@@ -6980,7 +6980,7 @@
       "source_location": "L309",
       "_origin": "ast",
       "id": "locales_id_reports_validation",
-      "community": 42,
+      "community": 1,
       "norm_label": "validation"
     },
     {
@@ -6990,7 +6990,7 @@
       "source_location": "L310",
       "_origin": "ast",
       "id": "locales_id_validation_dates",
-      "community": 42,
+      "community": 1,
       "norm_label": "dates"
     },
     {
@@ -7000,7 +7000,7 @@
       "source_location": "L311",
       "_origin": "ast",
       "id": "locales_id_validation_order",
-      "community": 42,
+      "community": 1,
       "norm_label": "order"
     },
     {
@@ -7210,7 +7210,7 @@
       "source_location": "L334",
       "_origin": "ast",
       "id": "locales_id_shopping_validation",
-      "community": 12,
+      "community": 42,
       "norm_label": "validation"
     },
     {
@@ -7220,7 +7220,7 @@
       "source_location": "L338",
       "_origin": "ast",
       "id": "locales_id_tours",
-      "community": 34,
+      "community": 113,
       "norm_label": "tours"
     },
     {
@@ -7230,7 +7230,7 @@
       "source_location": "L339",
       "_origin": "ast",
       "id": "locales_id_tours_btn",
-      "community": 126,
+      "community": 1,
       "norm_label": "btn"
     },
     {
@@ -7240,7 +7240,7 @@
       "source_location": "L340",
       "_origin": "ast",
       "id": "locales_id_btn_next",
-      "community": 126,
+      "community": 1,
       "norm_label": "next"
     },
     {
@@ -7250,7 +7250,7 @@
       "source_location": "L341",
       "_origin": "ast",
       "id": "locales_id_btn_prev",
-      "community": 126,
+      "community": 1,
       "norm_label": "prev"
     },
     {
@@ -7260,7 +7260,7 @@
       "source_location": "L342",
       "_origin": "ast",
       "id": "locales_id_btn_done",
-      "community": 126,
+      "community": 1,
       "norm_label": "done"
     },
     {
@@ -7270,7 +7270,7 @@
       "source_location": "L344",
       "_origin": "ast",
       "id": "locales_id_tours_progress",
-      "community": 34,
+      "community": 113,
       "norm_label": "progress"
     },
     {
@@ -7290,7 +7290,7 @@
       "source_location": "L347",
       "_origin": "ast",
       "id": "locales_id_period_title",
-      "community": 110,
+      "community": 39,
       "norm_label": "title"
     },
     {
@@ -7300,7 +7300,7 @@
       "source_location": "L348",
       "_origin": "ast",
       "id": "locales_id_period_description",
-      "community": 110,
+      "community": 39,
       "norm_label": "description"
     },
     {
@@ -7400,7 +7400,7 @@
       "source_location": "L362",
       "_origin": "ast",
       "id": "locales_id_dashboard_net",
-      "community": 121,
+      "community": 39,
       "norm_label": "net"
     },
     {
@@ -7410,7 +7410,7 @@
       "source_location": "L363",
       "_origin": "ast",
       "id": "locales_id_net_title",
-      "community": 121,
+      "community": 39,
       "norm_label": "title"
     },
     {
@@ -7420,7 +7420,7 @@
       "source_location": "L364",
       "_origin": "ast",
       "id": "locales_id_net_description",
-      "community": 121,
+      "community": 39,
       "norm_label": "description"
     },
     {
@@ -7430,7 +7430,7 @@
       "source_location": "L367",
       "_origin": "ast",
       "id": "locales_id_insights_title",
-      "community": 110,
+      "community": 14,
       "norm_label": "title"
     },
     {
@@ -7440,7 +7440,7 @@
       "source_location": "L368",
       "_origin": "ast",
       "id": "locales_id_insights_description",
-      "community": 110,
+      "community": 14,
       "norm_label": "description"
     },
     {
@@ -7450,7 +7450,7 @@
       "source_location": "L370",
       "_origin": "ast",
       "id": "locales_id_dashboard_charts",
-      "community": 113,
+      "community": 110,
       "norm_label": "charts"
     },
     {
@@ -7460,7 +7460,7 @@
       "source_location": "L371",
       "_origin": "ast",
       "id": "locales_id_charts_title",
-      "community": 113,
+      "community": 110,
       "norm_label": "title"
     },
     {
@@ -7470,7 +7470,7 @@
       "source_location": "L372",
       "_origin": "ast",
       "id": "locales_id_charts_description",
-      "community": 113,
+      "community": 110,
       "norm_label": "description"
     },
     {
@@ -7480,7 +7480,7 @@
       "source_location": "L375",
       "_origin": "ast",
       "id": "locales_id_tours_transactions",
-      "community": 39,
+      "community": 113,
       "norm_label": "transactions"
     },
     {
@@ -7490,7 +7490,7 @@
       "source_location": "L376",
       "_origin": "ast",
       "id": "locales_id_transactions_header",
-      "community": 39,
+      "community": 113,
       "norm_label": "header"
     },
     {
@@ -7550,7 +7550,7 @@
       "source_location": "L384",
       "_origin": "ast",
       "id": "locales_id_transactions_transfer",
-      "community": 39,
+      "community": 113,
       "norm_label": "transfer"
     },
     {
@@ -7560,7 +7560,7 @@
       "source_location": "L385",
       "_origin": "ast",
       "id": "locales_id_transfer_title",
-      "community": 39,
+      "community": 113,
       "norm_label": "title"
     },
     {
@@ -7570,7 +7570,7 @@
       "source_location": "L386",
       "_origin": "ast",
       "id": "locales_id_transfer_description",
-      "community": 39,
+      "community": 113,
       "norm_label": "description"
     },
     {
@@ -7580,7 +7580,7 @@
       "source_location": "L388",
       "_origin": "ast",
       "id": "locales_id_transactions_filters",
-      "community": 39,
+      "community": 36,
       "norm_label": "filters"
     },
     {
@@ -7590,7 +7590,7 @@
       "source_location": "L389",
       "_origin": "ast",
       "id": "locales_id_filters_title",
-      "community": 39,
+      "community": 36,
       "norm_label": "title"
     },
     {
@@ -7600,7 +7600,7 @@
       "source_location": "L390",
       "_origin": "ast",
       "id": "locales_id_filters_description",
-      "community": 39,
+      "community": 36,
       "norm_label": "description"
     },
     {
@@ -7640,7 +7640,7 @@
       "source_location": "L397",
       "_origin": "ast",
       "id": "locales_id_tours_accounts",
-      "community": 34,
+      "community": 113,
       "norm_label": "accounts"
     },
     {
@@ -7740,7 +7740,7 @@
       "source_location": "L424",
       "_origin": "ast",
       "id": "locales_id_budgets_alerts",
-      "community": 27,
+      "community": 39,
       "norm_label": "alerts"
     },
     {
@@ -7750,7 +7750,7 @@
       "source_location": "L425",
       "_origin": "ast",
       "id": "locales_id_alerts_title",
-      "community": 27,
+      "community": 39,
       "norm_label": "title"
     },
     {
@@ -7760,7 +7760,7 @@
       "source_location": "L426",
       "_origin": "ast",
       "id": "locales_id_alerts_description",
-      "community": 27,
+      "community": 39,
       "norm_label": "description"
     },
     {
@@ -7770,7 +7770,7 @@
       "source_location": "L429",
       "_origin": "ast",
       "id": "locales_id_tours_goals",
-      "community": 121,
+      "community": 113,
       "norm_label": "goals"
     },
     {
@@ -7780,7 +7780,7 @@
       "source_location": "L430",
       "_origin": "ast",
       "id": "locales_id_goals_header",
-      "community": 121,
+      "community": 113,
       "norm_label": "header"
     },
     {
@@ -7790,7 +7790,7 @@
       "source_location": "L434",
       "_origin": "ast",
       "id": "locales_id_goals_add",
-      "community": 121,
+      "community": 39,
       "norm_label": "add"
     },
     {
@@ -7800,7 +7800,7 @@
       "source_location": "L438",
       "_origin": "ast",
       "id": "locales_id_goals_list",
-      "community": 121,
+      "community": 34,
       "norm_label": "list"
     },
     {
@@ -7820,7 +7820,7 @@
       "source_location": "L444",
       "_origin": "ast",
       "id": "locales_id_recurring_header",
-      "community": 34,
+      "community": 113,
       "norm_label": "header"
     },
     {
@@ -7870,7 +7870,7 @@
       "source_location": "L462",
       "_origin": "ast",
       "id": "locales_id_reports_filters",
-      "community": 39,
+      "community": 36,
       "norm_label": "filters"
     },
     {
@@ -7880,7 +7880,7 @@
       "source_location": "L466",
       "_origin": "ast",
       "id": "locales_id_reports_charts",
-      "community": 113,
+      "community": 110,
       "norm_label": "charts"
     },
     {
@@ -7890,7 +7890,7 @@
       "source_location": "L470",
       "_origin": "ast",
       "id": "locales_id_reports_export",
-      "community": 36,
+      "community": 39,
       "norm_label": "export"
     },
     {
@@ -7900,7 +7900,7 @@
       "source_location": "L471",
       "_origin": "ast",
       "id": "locales_id_export_title",
-      "community": 36,
+      "community": 39,
       "norm_label": "title"
     },
     {
@@ -7910,7 +7910,7 @@
       "source_location": "L472",
       "_origin": "ast",
       "id": "locales_id_export_description",
-      "community": 36,
+      "community": 39,
       "norm_label": "description"
     },
     {
@@ -8260,7 +8260,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_categoryservice",
-      "community": 33,
+      "community": 15,
       "norm_label": "categoryservice.js"
     },
     {
@@ -8270,7 +8270,7 @@
       "source_location": "L2",
       "_origin": "ast",
       "id": "services_categoryservice_categoryservice",
-      "community": 33,
+      "community": 15,
       "norm_label": "categoryservice"
     },
     {
@@ -8570,7 +8570,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "stores_categories",
-      "community": 33,
+      "community": 15,
       "norm_label": "categories.js"
     },
     {
@@ -8580,7 +8580,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "stores_categories_usecategorystore",
-      "community": 33,
+      "community": 15,
       "norm_label": "usecategorystore"
     },
     {
@@ -9104,13 +9104,113 @@
       "norm_label": "vite.config.js"
     },
     {
+      "label": "linked-project.json",
+      "file_type": "code",
+      "source_file": "supabase/.temp/linked-project.json",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "supabase_temp_linked_project_json_temp_linked_project",
+      "community": 125,
+      "norm_label": "linked-project.json"
+    },
+    {
+      "label": "ref",
+      "file_type": "code",
+      "source_file": "supabase/.temp/linked-project.json",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "supabase_temp_linked_project_json_temp_linked_project_ref",
+      "community": 125,
+      "norm_label": "ref"
+    },
+    {
+      "label": "name",
+      "file_type": "code",
+      "source_file": "supabase/.temp/linked-project.json",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "supabase_temp_linked_project_json_temp_linked_project_name",
+      "community": 125,
+      "norm_label": "name"
+    },
+    {
+      "label": "organization_id",
+      "file_type": "code",
+      "source_file": "supabase/.temp/linked-project.json",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "supabase_temp_linked_project_json_temp_linked_project_organization_id",
+      "community": 125,
+      "norm_label": "organization_id"
+    },
+    {
+      "label": "organization_slug",
+      "file_type": "code",
+      "source_file": "supabase/.temp/linked-project.json",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "supabase_temp_linked_project_json_temp_linked_project_organization_slug",
+      "community": 125,
+      "norm_label": "organization_slug"
+    },
+    {
+      "label": "linked-project.json",
+      "file_type": "code",
+      "source_file": "supabase/migrations/supabase/.temp/linked-project.json",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "supabase_migrations_supabase_temp_linked_project_json_temp_linked_project",
+      "community": 122,
+      "norm_label": "linked-project.json"
+    },
+    {
+      "label": "ref",
+      "file_type": "code",
+      "source_file": "supabase/migrations/supabase/.temp/linked-project.json",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "supabase_migrations_supabase_temp_linked_project_json_temp_linked_project_ref",
+      "community": 122,
+      "norm_label": "ref"
+    },
+    {
+      "label": "name",
+      "file_type": "code",
+      "source_file": "supabase/migrations/supabase/.temp/linked-project.json",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "supabase_migrations_supabase_temp_linked_project_json_temp_linked_project_name",
+      "community": 122,
+      "norm_label": "name"
+    },
+    {
+      "label": "organization_id",
+      "file_type": "code",
+      "source_file": "supabase/migrations/supabase/.temp/linked-project.json",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "supabase_migrations_supabase_temp_linked_project_json_temp_linked_project_organization_id",
+      "community": 122,
+      "norm_label": "organization_id"
+    },
+    {
+      "label": "organization_slug",
+      "file_type": "code",
+      "source_file": "supabase/migrations/supabase/.temp/linked-project.json",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "supabase_migrations_supabase_temp_linked_project_json_temp_linked_project_organization_slug",
+      "community": 122,
+      "norm_label": "organization_slug"
+    },
+    {
       "label": "implementation_plan.md",
       "file_type": "document",
       "source_file": "docs/implementation_plan.md",
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_implementation_plan",
-      "community": 2,
+      "community": 46,
       "norm_label": "implementation_plan.md"
     },
     {
@@ -9120,7 +9220,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_implementation_plan_family_finance_architecture_integration_plans",
-      "community": 2,
+      "community": 46,
       "norm_label": "family finance architecture & integration plans"
     },
     {
@@ -9130,7 +9230,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "docs_implementation_plan_part_1_\u00e2_family_finance_architecture_migration_laravel_to_supabase_completed",
-      "community": 2,
+      "community": 26,
       "norm_label": "part 1 a\u20ac\u201d family finance architecture migration: laravel to supabase (completed)"
     },
     {
@@ -9140,7 +9240,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "docs_implementation_plan_phase_1_\u00e2_project_discovery_report",
-      "community": 2,
+      "community": 26,
       "norm_label": "phase 1 a\u20ac\u201d project discovery report"
     },
     {
@@ -9150,7 +9250,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "docs_implementation_plan_1_migrated_system_architecture",
-      "community": 2,
+      "community": 26,
       "norm_label": "1. migrated system architecture"
     },
     {
@@ -9160,7 +9260,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "docs_implementation_plan_2_feature_inventory",
-      "community": 2,
+      "community": 26,
       "norm_label": "2. feature inventory"
     },
     {
@@ -9170,7 +9270,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "docs_implementation_plan_3_business_rules_inventory",
-      "community": 2,
+      "community": 26,
       "norm_label": "3. business rules inventory"
     },
     {
@@ -9180,7 +9280,7 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "docs_implementation_plan_4_dependencies_inventory",
-      "community": 2,
+      "community": 26,
       "norm_label": "4. dependencies inventory"
     },
     {
@@ -9190,7 +9290,7 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "docs_implementation_plan_5_risks",
-      "community": 2,
+      "community": 26,
       "norm_label": "5. risks"
     },
     {
@@ -9200,7 +9300,7 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "docs_implementation_plan_6_migration_complexity_assessment",
-      "community": 2,
+      "community": 26,
       "norm_label": "6. migration complexity assessment"
     },
     {
@@ -9210,7 +9310,7 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "docs_implementation_plan_phase_2_\u00e2_migration_task_breakdown",
-      "community": 2,
+      "community": 26,
       "norm_label": "phase 2 a\u20ac\u201d migration task breakdown"
     },
     {
@@ -9330,7 +9430,7 @@
       "source_location": "L111",
       "_origin": "ast",
       "id": "docs_implementation_plan_task_10_12_frontend_refactor",
-      "community": 13,
+      "community": 120,
       "norm_label": "[task 10-12] frontend refactor"
     },
     {
@@ -9340,7 +9440,7 @@
       "source_location": "L113",
       "_origin": "ast",
       "id": "docs_implementation_plan_modify_frontend_package_json",
-      "community": 13,
+      "community": 120,
       "norm_label": "[modify] `frontend/package.json`"
     },
     {
@@ -9350,7 +9450,7 @@
       "source_location": "L116",
       "_origin": "ast",
       "id": "docs_implementation_plan_new_frontend_src_lib_supabase_js",
-      "community": 13,
+      "community": 120,
       "norm_label": "[new] `frontend/src/lib/supabase.js`"
     },
     {
@@ -9360,7 +9460,7 @@
       "source_location": "L119",
       "_origin": "ast",
       "id": "docs_implementation_plan_modify_frontend_src_stores_frontend_src_services",
-      "community": 13,
+      "community": 120,
       "norm_label": "[modify] `frontend/src/stores/*` & `frontend/src/services/*`"
     },
     {
@@ -9370,7 +9470,7 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "docs_implementation_plan_modify_frontend_src_router_index_js",
-      "community": 13,
+      "community": 120,
       "norm_label": "[modify] `frontend/src/router/index.js`"
     },
     {
@@ -9380,7 +9480,7 @@
       "source_location": "L128",
       "_origin": "ast",
       "id": "docs_implementation_plan_verification_plan",
-      "community": 2,
+      "community": 35,
       "norm_label": "verification plan"
     },
     {
@@ -9390,7 +9490,7 @@
       "source_location": "L130",
       "_origin": "ast",
       "id": "docs_implementation_plan_automated_database_verification",
-      "community": 2,
+      "community": 35,
       "norm_label": "automated / database verification"
     },
     {
@@ -9400,7 +9500,7 @@
       "source_location": "L133",
       "_origin": "ast",
       "id": "docs_implementation_plan_manual_verification",
-      "community": 2,
+      "community": 35,
       "norm_label": "manual verification"
     },
     {
@@ -9410,7 +9510,7 @@
       "source_location": "L138",
       "_origin": "ast",
       "id": "docs_implementation_plan_phase_4_\u00e2_post_migration_polish_completed",
-      "community": 2,
+      "community": 26,
       "norm_label": "phase 4 a\u20ac\u201d post-migration polish (completed)"
     },
     {
@@ -9420,7 +9520,7 @@
       "source_location": "L154",
       "_origin": "ast",
       "id": "docs_implementation_plan_part_2_\u00e2_indonesian_language_mode_integration_completed",
-      "community": 2,
+      "community": 46,
       "norm_label": "part 2 a\u20ac\u201d indonesian language mode integration (completed)"
     },
     {
@@ -9430,7 +9530,7 @@
       "source_location": "L158",
       "_origin": "ast",
       "id": "docs_implementation_plan_implementation_details",
-      "community": 2,
+      "community": 115,
       "norm_label": "implementation details"
     },
     {
@@ -9440,7 +9540,7 @@
       "source_location": "L160",
       "_origin": "ast",
       "id": "docs_implementation_plan_1_translation_system_core_dependencies_stores",
-      "community": 2,
+      "community": 115,
       "norm_label": "1. translation system core (dependencies & stores)"
     },
     {
@@ -9450,7 +9550,7 @@
       "source_location": "L168",
       "_origin": "ast",
       "id": "docs_implementation_plan_2_ui_layout_switcher_integration",
-      "community": 2,
+      "community": 115,
       "norm_label": "2. ui layout & switcher integration"
     },
     {
@@ -9460,7 +9560,7 @@
       "source_location": "L174",
       "_origin": "ast",
       "id": "docs_implementation_plan_3_pages_features_localization",
-      "community": 2,
+      "community": 115,
       "norm_label": "3. pages & features localization"
     },
     {
@@ -9470,7 +9570,7 @@
       "source_location": "L180",
       "_origin": "ast",
       "id": "docs_implementation_plan_4_interactive_tours_utilities",
-      "community": 2,
+      "community": 115,
       "norm_label": "4. interactive tours & utilities"
     },
     {
@@ -9480,7 +9580,7 @@
       "source_location": "L184",
       "_origin": "ast",
       "id": "docs_implementation_plan_verification_plan_184",
-      "community": 2,
+      "community": 46,
       "norm_label": "verification plan"
     },
     {
@@ -9490,7 +9590,7 @@
       "source_location": "L186",
       "_origin": "ast",
       "id": "docs_implementation_plan_manual_verification_186",
-      "community": 2,
+      "community": 46,
       "norm_label": "manual verification"
     },
     {
@@ -9500,7 +9600,7 @@
       "source_location": "L194",
       "_origin": "ast",
       "id": "docs_implementation_plan_part_3_collaborative_shopping_shared_bills",
-      "community": 2,
+      "community": 46,
       "norm_label": "part 3 \u2014 collaborative shopping & shared bills"
     },
     {
@@ -9510,7 +9610,7 @@
       "source_location": "L196",
       "_origin": "ast",
       "id": "docs_implementation_plan_goal_collaborative_shopping_shared_bills",
-      "community": 2,
+      "community": 35,
       "norm_label": "goal: collaborative shopping & shared bills"
     },
     {
@@ -9520,7 +9620,7 @@
       "source_location": "L200",
       "_origin": "ast",
       "id": "docs_implementation_plan_open_questions",
-      "community": 2,
+      "community": 35,
       "norm_label": "open questions"
     },
     {
@@ -9560,7 +9660,7 @@
       "source_location": "L232",
       "_origin": "ast",
       "id": "docs_implementation_plan_verification_plan_232",
-      "community": 2,
+      "community": 35,
       "norm_label": "verification plan"
     },
     {
@@ -9570,7 +9670,7 @@
       "source_location": "L234",
       "_origin": "ast",
       "id": "docs_implementation_plan_automated_tests",
-      "community": 2,
+      "community": 35,
       "norm_label": "automated tests"
     },
     {
@@ -9580,7 +9680,7 @@
       "source_location": "L237",
       "_origin": "ast",
       "id": "docs_implementation_plan_manual_verification_237",
-      "community": 2,
+      "community": 35,
       "norm_label": "manual verification"
     },
     {
@@ -9690,7 +9790,7 @@
       "source_location": "L288",
       "_origin": "ast",
       "id": "docs_implementation_plan_part_5_modular_agent_rules_and_knowledge_base_rearrangement_completed",
-      "community": 2,
+      "community": 114,
       "norm_label": "part 5 \u2014 modular agent rules and knowledge base rearrangement (completed)"
     },
     {
@@ -9700,7 +9800,7 @@
       "source_location": "L292",
       "_origin": "ast",
       "id": "docs_implementation_plan_implementation_details_292",
-      "community": 2,
+      "community": 114,
       "norm_label": "implementation details"
     },
     {
@@ -9710,7 +9810,7 @@
       "source_location": "L294",
       "_origin": "ast",
       "id": "docs_implementation_plan_1_modular_rules_under_agents_rules",
-      "community": 2,
+      "community": 114,
       "norm_label": "1. modular rules under `.agents/rules/`"
     },
     {
@@ -9720,7 +9820,7 @@
       "source_location": "L301",
       "_origin": "ast",
       "id": "docs_implementation_plan_2_root_cursorrules_reorganization",
-      "community": 2,
+      "community": 114,
       "norm_label": "2. root `.cursorrules` reorganization"
     },
     {
@@ -9730,7 +9830,7 @@
       "source_location": "L305",
       "_origin": "ast",
       "id": "docs_implementation_plan_verification_plan_305",
-      "community": 2,
+      "community": 114,
       "norm_label": "verification plan"
     },
     {
@@ -9740,7 +9840,7 @@
       "source_location": "L307",
       "_origin": "ast",
       "id": "docs_implementation_plan_manual_verification_307",
-      "community": 2,
+      "community": 114,
       "norm_label": "manual verification"
     },
     {
@@ -24340,12 +24440,92 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "supabase/.temp/linked-project.json",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "supabase_temp_linked_project_json_temp_linked_project",
+      "target": "supabase_temp_linked_project_json_temp_linked_project_name",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "supabase/.temp/linked-project.json",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "supabase_temp_linked_project_json_temp_linked_project",
+      "target": "supabase_temp_linked_project_json_temp_linked_project_organization_id",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "supabase/.temp/linked-project.json",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "supabase_temp_linked_project_json_temp_linked_project",
+      "target": "supabase_temp_linked_project_json_temp_linked_project_organization_slug",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "supabase/.temp/linked-project.json",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "supabase_temp_linked_project_json_temp_linked_project",
+      "target": "supabase_temp_linked_project_json_temp_linked_project_ref",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "supabase/migrations/supabase/.temp/linked-project.json",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "supabase_migrations_supabase_temp_linked_project_json_temp_linked_project",
+      "target": "supabase_migrations_supabase_temp_linked_project_json_temp_linked_project_name",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "supabase/migrations/supabase/.temp/linked-project.json",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "supabase_migrations_supabase_temp_linked_project_json_temp_linked_project",
+      "target": "supabase_migrations_supabase_temp_linked_project_json_temp_linked_project_organization_id",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "supabase/migrations/supabase/.temp/linked-project.json",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "supabase_migrations_supabase_temp_linked_project_json_temp_linked_project",
+      "target": "supabase_migrations_supabase_temp_linked_project_json_temp_linked_project_organization_slug",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "supabase/migrations/supabase/.temp/linked-project.json",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "supabase_migrations_supabase_temp_linked_project_json_temp_linked_project",
+      "target": "supabase_migrations_supabase_temp_linked_project_json_temp_linked_project_ref",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "docs/implementation_plan.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_implementation_plan",
-      "target": "docs_implementation_plan_family_finance_architecture_integration_plans",
-      "confidence_score": 1.0
+      "target": "docs_implementation_plan_family_finance_architecture_integration_plans"
     },
     {
       "relation": "contains",
@@ -24403,9 +24583,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L288",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_implementation_plan",
-      "target": "docs_implementation_plan_part_5_modular_agent_rules_and_knowledge_base_rearrangement_completed",
-      "confidence_score": 1.0
+      "target": "docs_implementation_plan_part_5_modular_agent_rules_and_knowledge_base_rearrangement_completed"
     },
     {
       "relation": "contains",
@@ -25003,9 +25183,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L292",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_implementation_plan_part_5_modular_agent_rules_and_knowledge_base_rearrangement_completed",
-      "target": "docs_implementation_plan_implementation_details_292",
-      "confidence_score": 1.0
+      "target": "docs_implementation_plan_implementation_details_292"
     },
     {
       "relation": "contains",
@@ -25013,9 +25193,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L305",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_implementation_plan_part_5_modular_agent_rules_and_knowledge_base_rearrangement_completed",
-      "target": "docs_implementation_plan_verification_plan_305",
-      "confidence_score": 1.0
+      "target": "docs_implementation_plan_verification_plan_305"
     },
     {
       "relation": "contains",
@@ -25023,9 +25203,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L294",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_implementation_plan_implementation_details_292",
-      "target": "docs_implementation_plan_1_modular_rules_under_agents_rules",
-      "confidence_score": 1.0
+      "target": "docs_implementation_plan_1_modular_rules_under_agents_rules"
     },
     {
       "relation": "contains",
@@ -25033,9 +25213,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L301",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_implementation_plan_implementation_details_292",
-      "target": "docs_implementation_plan_2_root_cursorrules_reorganization",
-      "confidence_score": 1.0
+      "target": "docs_implementation_plan_2_root_cursorrules_reorganization"
     },
     {
       "relation": "contains",
@@ -25043,9 +25223,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L307",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_implementation_plan_verification_plan_305",
-      "target": "docs_implementation_plan_manual_verification_307",
-      "confidence_score": 1.0
+      "target": "docs_implementation_plan_manual_verification_307"
     },
     {
       "relation": "contains",
@@ -25183,9 +25363,9 @@
       "source_file": "docs/task.md",
       "source_location": "L42",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_task_family_finance_migration_integration_tasks",
-      "target": "docs_task_part_5_modular_agent_rules_and_knowledge_reorganization",
-      "confidence_score": 1.0
+      "target": "docs_task_part_5_modular_agent_rules_and_knowledge_reorganization"
     },
     {
       "relation": "contains",
@@ -25429,5 +25609,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "0610bbef511b8f8429efdacd2393dc08fcd89853"
+  "built_at_commit": "297d0d530ac5bf15a95a13dbbc866d55c0750c66"
 }
