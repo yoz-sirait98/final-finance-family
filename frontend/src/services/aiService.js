@@ -121,12 +121,12 @@ ${financeSnapshot}
           },
           body: JSON.stringify({
             contents: contents,
-            systemInstruction: {
+            system_instruction: {
               parts: [{ text: systemPrompt }]
             },
-            generationConfig: {
+            generation_config: {
               temperature: 0.7,
-              maxOutputTokens: 1000
+              max_output_tokens: 1000
             }
           })
         }
