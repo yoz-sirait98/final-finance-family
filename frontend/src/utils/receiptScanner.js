@@ -43,9 +43,13 @@ function preprocessImage(imageFile) {
       for (let i = 0; i < data.length; i += 4) {
         // Luminance calculation
         const avg = (data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114);
-        data[i] = avg;     // red
-        data[i + 1] = avg; // green
-        data[i + 2] = avg; // blue
+        // Binarization: drastically improves OCR for yellow/colored backgrounds
+        // Anything brighter than ~160 becomes pure white, else black.
+        const binary = avg > 160 ? 255 : 0;
+        
+        data[i] = binary;     // red
+        data[i + 1] = binary; // green
+        data[i + 2] = binary; // blue
       }
       ctx.putImageData(imageData, 0, 0);
 
@@ -94,7 +98,11 @@ export function parseReceiptText(text, members = []) {
   // 1. Merchant Name: Find the first line that has actual letters (ignore logo noise)
   const validMerchantLine = lines.find(l => /[A-Za-z]{3,}/.test(l));
   if (validMerchantLine) {
-    merchantName = validMerchantLine.replace(/[^a-zA-Z0-9 &.-]/g, '').substring(0, 30).trim();
+    merchantName = validMerchantLine
+      .replace(/[^a-zA-Z0-9 &.-]/g, '')
+      .replace(/^[\d\s]+/, '') // Remove leading numbers
+      .substring(0, 30)
+      .trim();
   }
 
   // 2. Date: Find date and strictly format to YYYY-MM-DD for HTML date input
@@ -127,29 +135,33 @@ export function parseReceiptText(text, members = []) {
     }
   }
 
-  // 3. Find total amount
-  const totalKeywords = ['TOTAL', 'AMOUNT', 'JUMLAH', 'TL', 'TOT'];
-  let maxAmount = 0;
-
+  // Try to find an explicit TOTAL line first
+  const explicitTotalKeywords = ['TOTAL', 'GRAND TOTAL', 'JUMLAH TOTAL', 'NETTO'];
   for (const line of lines) {
     const upperLine = line.toUpperCase();
-    const hasKeyword = totalKeywords.some(kw => upperLine.includes(kw));
-    if (hasKeyword) {
+    if (explicitTotalKeywords.some(kw => upperLine.includes(kw)) && !upperLine.includes('SUB')) {
       const numbers = line.match(/[\d.,]+/g);
       if (numbers) {
-        for (const numStr of numbers) {
-          const val = extractNumber(numStr);
-          if (val > maxAmount && val < 100000000) {
-            maxAmount = val;
-          }
+        // Usually the last number is the actual total
+        const lastNumStr = numbers[numbers.length - 1];
+        const val = extractNumber(lastNumStr);
+        if (val > 0 && val < 100000000) {
+          totalAmount = val;
+          break; // Found our explicit total!
         }
       }
     }
   }
 
-  if (maxAmount === 0) {
+  // Fallback to max amount if explicit total isn't found
+  if (totalAmount === 0) {
+    const totalKeywords = ['TOTAL', 'AMOUNT', 'JUMLAH', 'TL', 'TOT'];
+    let maxAmount = 0;
+
     for (const line of lines) {
-      if (line.toUpperCase().includes('RP')) {
+      const upperLine = line.toUpperCase();
+      const hasKeyword = totalKeywords.some(kw => upperLine.includes(kw));
+      if (hasKeyword) {
         const numbers = line.match(/[\d.,]+/g);
         if (numbers) {
           for (const numStr of numbers) {
@@ -161,9 +173,25 @@ export function parseReceiptText(text, members = []) {
         }
       }
     }
-  }
 
-  totalAmount = maxAmount;
+    if (maxAmount === 0) {
+      for (const line of lines) {
+        if (line.toUpperCase().includes('RP')) {
+          const numbers = line.match(/[\d.,]+/g);
+          if (numbers) {
+            for (const numStr of numbers) {
+              const val = extractNumber(numStr);
+              if (val > maxAmount && val < 100000000) {
+                maxAmount = val;
+              }
+            }
+          }
+        }
+      }
+    }
+    
+    totalAmount = maxAmount;
+  }
 
   // 4. Find member by name
   let member_id = '';
