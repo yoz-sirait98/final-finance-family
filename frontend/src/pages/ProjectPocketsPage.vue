@@ -198,6 +198,7 @@ import { memberService } from '../services/memberService';
 import { categoryService } from '../services/categoryService';
 import { transactionService } from '../services/transactionService';
 import { formatCurrency } from '../utils/format';
+import { supabase } from '../lib/supabase';
 
 const router = useRouter();
 const localeStore = useLocaleStore();
