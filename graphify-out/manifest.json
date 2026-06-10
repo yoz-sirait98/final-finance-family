@@ -150,8 +150,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/SettingsPage.vue": {
-    "mtime": 1781074531.482652,
-    "ast_hash": "01c09988d60e820afc614a8566e65887",
+    "mtime": 1781076234.7671857,
+    "ast_hash": "4d0dcbe220a00202d95d78b15742fa3b",
     "semantic_hash": ""
   },
   "frontend/src/pages/TransactionsPage.vue": {
@@ -610,8 +610,8 @@
     "semantic_hash": ""
   },
   "frontend/src/services/aiService.js": {
-    "mtime": 1781076005.1501453,
-    "ast_hash": "98710d8bd28ae6b9cc2a7ce497c1c78d",
+    "mtime": 1781076220.9525695,
+    "ast_hash": "349f8a2b98552c43793ad71823128698",
     "semantic_hash": ""
   },
   "docs/walkthrough_receipt_scanner_ai.md": {

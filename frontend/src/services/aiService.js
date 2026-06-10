@@ -111,6 +111,16 @@ ${financeSnapshot}
       parts: [{ text: msg.text }]
     }));
 
+    // Prepend the system instructions to the very first user message for complete v1 compatibility
+    if (contents.length > 0 && contents[0].role === 'user') {
+      contents[0].parts[0].text = `${systemPrompt}\n\n[USER QUESTION]:\n${contents[0].parts[0].text}`;
+    } else {
+      contents.unshift({
+        role: 'user',
+        parts: [{ text: `${systemPrompt}\n\n[USER QUESTION]:\nHello` }]
+      });
+    }
+
     try {
       const response = await fetch(
         `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
@@ -121,9 +131,6 @@ ${financeSnapshot}
           },
           body: JSON.stringify({
             contents: contents,
-            system_instruction: {
-              parts: [{ text: systemPrompt }]
-            },
             generation_config: {
               temperature: 0.7,
               max_output_tokens: 1000

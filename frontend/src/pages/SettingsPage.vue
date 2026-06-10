@@ -43,8 +43,9 @@
                 class="form-control"
                 placeholder="AIzaSy..."
               />
-              <button class="btn btn-primary-gradient" @click="saveGeminiKey">
-                {{ $t('common.save') || 'Save' }}
+              <button class="btn btn-primary-gradient" @click="saveGeminiKey" :disabled="isSavingKey">
+                <span v-if="isSavingKey" class="spinner-border spinner-border-sm me-1"></span>
+                {{ isSavingKey ? ($t('common.loading') || 'Checking...') : ($t('common.save') || 'Save') }}
               </button>
             </div>
             <div class="form-text small text-muted mt-2">
@@ -102,9 +103,41 @@ const error = ref('');
 
 const geminiApiKey = ref(localStorage.getItem('gemini_api_key') || '');
 
-function saveGeminiKey() {
-  localStorage.setItem('gemini_api_key', geminiApiKey.value.trim());
-  toast.success(localeStore.t('common.success') || 'Settings saved successfully!');
+const isSavingKey = ref(false);
+
+async function saveGeminiKey() {
+  const trimmedKey = geminiApiKey.value.trim();
+  if (!trimmedKey) {
+    localStorage.removeItem('gemini_api_key');
+    toast.success('API Key removed.');
+    return;
+  }
+
+  isSavingKey.value = true;
+  try {
+    // Perform a lightweight check request to verify the key is valid
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${trimmedKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ role: 'user', parts: [{ text: 'respond with ok' }] }]
+        })
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error('Invalid key');
+    }
+
+    localStorage.setItem('gemini_api_key', trimmedKey);
+    toast.success(localeStore.t('common.success') || 'Settings saved successfully!');
+  } catch (err) {
+    toast.error('Invalid Gemini API Key. Please verify and try again.');
+  } finally {
+    isSavingKey.value = false;
+  }
 }
 
 async function changePassword() {
