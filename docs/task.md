@@ -45,4 +45,17 @@
 - `[x]` Task 34: Append rules reorganization plan to `docs/implementation_plan.md`
 - `[x]` Task 35: Run `graphify update .` to rebuild AST knowledge graph
 
+## Part 6 — Offline OCR Receipt Scanner & AI Financial Coach
+- `[x]` Task 36: Install `tesseract.js` dependency
+- `[x]` Task 37: Create `receiptScanner.js` OCR utility
+- `[x]` Task 38: Integrate scanner into `TransactionsPage.vue` with scanner overlay
+- `[x]` Task 39: Implement Gemini API Key setup in `SettingsPage.vue`
+- `[x]` Task 40: Create `aiService.js` context connector
+- `[x]` Task 41: Create `AiPage.vue` chat interface
+- `[x]` Task 42: Add AI Advisor sidebar navigation to `DashboardLayout.vue`
+- `[x]` Task 43: Add translation keys in `en.json` and `id.json`
+- `[x]` Task 44: Run build verification and Graphify AST update
+
+
+
 

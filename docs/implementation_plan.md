@@ -309,4 +309,34 @@ We split the large consolidated `.cursorrules` file into individual markdown fil
 2. Verify that the root `.cursorrules` file points to the correct absolute paths and lists the triggers correctly.
 3. Run `graphify update .` to rebuild the AST graph.
 
+---
+
+# Part 6 — Offline OCR Receipt Scanner & AI Financial Coach
+
+This plan outlines the implementation details for integrating Tesseract.js offline receipt scanning inside the transactions workflow, and adding a conversational Gemini AI Coach for family finance metrics.
+
+## Implementation Details
+
+### 1. Offline Receipt OCR Parsing
+- **Dependency**: Add `"tesseract.js": "^5.1.0"` in `frontend/package.json`.
+- **Parsing Engine (`receiptScanner.js`)**: Initialize Tesseract to recognize text locally in the browser. Regex engines extract the merchant name, currency amount, and date.
+- **Scanner integration (`TransactionsPage.vue`)**: Capture user uploads, display the visual laser scanning overlay, and pre-fill form parameters on finished OCR.
+
+### 2. Conversational AI Coach
+- **Gemini Key Configuration (`SettingsPage.vue`)**: Provide a text field to save user's Gemini API key locally in `localStorage` (`gemini_api_key`).
+- **Data Integration service (`aiService.js`)**: Query local Supabase assets, budget capacities, and category transaction sums. Format these metrics into a system prompt.
+- **Chat page (`AiPage.vue`)**: Add an interactive chat container styled with frosted glassmorphism elements, supporting streaming, loading states, and API key missing prompts.
+- **Navigation (`DashboardLayout.vue`)**: Link the new chat tab with a sparkling `bi-stars` icon in the sidebar.
+
+## Verification Plan
+
+### Automated / Build Verification
+- Execute `npm run build` inside `/frontend` to verify clean compilation with the new packages.
+
+### Manual Verification
+1. Configure a free Gemini API Key in the Settings panel.
+2. Open the AI Coach tab and verify that sending a message successfully retrieves financial advice based on the actual database numbers.
+3. Open the Transactions page, click the camera icon to upload a receipt image, and verify the scanning animation triggers and pre-fills the transaction details.
+
+
 

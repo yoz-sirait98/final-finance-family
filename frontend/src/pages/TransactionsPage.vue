@@ -541,21 +541,72 @@ async function onReceiptSelected(event) {
   isScanning.value = true;
   scanProgress.value = 0;
   try {
-    const data = await scanReceipt(file, members.value, (progress) => {
+    const data = await scanReceipt(file, (progress) => {
       scanProgress.value = progress;
     });
 
     // Reset the input so the same file can be selected again
     event.target.value = '';
 
+    // Heuristic mappings for Category
+    let matchedCategoryId = '';
+    const catRec = data.heuristics.category; // e.g. 'food', 'groceries', 'health', 'utilities', 'transport'
+    const expenseCats = categories.value.filter(c => c.type === 'expense');
+    
+    if (catRec === 'food') {
+      const match = expenseCats.find(c => c.name.toLowerCase().match(/(makan|minum|food|drink|dining|cafe|kopi)/));
+      if (match) matchedCategoryId = match.id;
+    } else if (catRec === 'groceries') {
+      const match = expenseCats.find(c => c.name.toLowerCase().match(/(grocer|belanja|sembako|bulanan|pasar|dapur)/));
+      if (match) matchedCategoryId = match.id;
+    } else if (catRec === 'health') {
+      const match = expenseCats.find(c => c.name.toLowerCase().match(/(sehat|obat|medis|health|medical|apotek)/));
+      if (match) matchedCategoryId = match.id;
+    } else if (catRec === 'utilities') {
+      const match = expenseCats.find(c => c.name.toLowerCase().match(/(listrik|air|utilit|bill|telepon|internet|pulsa)/));
+      if (match) matchedCategoryId = match.id;
+    } else if (catRec === 'transport') {
+      const match = expenseCats.find(c => c.name.toLowerCase().match(/(transport|bensin|kendaraan|ojek|gojek|grab|bensin|fuel)/));
+      if (match) matchedCategoryId = match.id;
+    }
+    
+    if (!matchedCategoryId && expenseCats.length > 0) {
+      matchedCategoryId = expenseCats[0].id;
+    }
+
+    // Heuristic mappings for Account
+    let matchedAccountId = '';
+    const accRec = data.heuristics.account; // e.g. 'cash', 'wallet', 'bank'
+    
+    if (accRec === 'cash') {
+      const match = accounts.value.find(a => a.name.toLowerCase().match(/(cash|tunai|dompet|fisik)/));
+      if (match) matchedAccountId = match.id;
+    } else if (accRec === 'wallet') {
+      const match = accounts.value.find(a => a.name.toLowerCase().match(/(wallet|gopay|ovo|dana|shopee|link|digital|qris)/));
+      if (match) matchedAccountId = match.id;
+    } else if (accRec === 'bank') {
+      const match = accounts.value.find(a => a.name.toLowerCase().match(/(bank|mandiri|bca|bni|bri|cimb|debit|tabungan)/));
+      if (match) matchedAccountId = match.id;
+    }
+    
+    if (!matchedAccountId && accounts.value.length > 0) {
+      matchedAccountId = accounts.value[0].id;
+    }
+
+    // Default member
+    let matchedMemberId = '';
+    if (members.value.length > 0) {
+      matchedMemberId = members.value[0].id;
+    }
+
     // Auto-fill and open modal
     formError.value = '';
     editingId.value = null;
     form.value = {
       type: 'expense',
-      member_id: data.member_id || '',
-      account_id: '',
-      category_id: '',
+      member_id: matchedMemberId,
+      account_id: matchedAccountId,
+      category_id: matchedCategoryId,
       amount: data.totalAmount || '',
       transaction_date: data.date || todayISO(),
       description: data.merchantName || ''

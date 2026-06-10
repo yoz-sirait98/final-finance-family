@@ -37,7 +37,8 @@
     "member": "Member",
     "scanReceipt": "Scan Receipt",
     "scanning": "Scanning Receipt...",
-    "confirmDelete": "Are you sure you want to delete this item? This action cannot be undone."
+    "confirmDelete": "Are you sure you want to delete this item? This action cannot be undone.",
+    "you": "You"
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -59,7 +60,8 @@
     "noAlerts": "No budget alerts",
     "logout": "Logout",
     "replayTour": "Replay tour",
-    "projectpockets": "Project Pockets"
+    "projectpockets": "Project Pockets",
+    "aiadvisor": "AI Advisor"
   },
   "auth": {
     "login": {
@@ -106,7 +108,9 @@
     "updatingPassword": "Updating...",
     "passwordSuccess": "Password updated successfully!",
     "languagePref": "Language Preference",
-    "selectLanguage": "Select Language"
+    "selectLanguage": "Select Language",
+    "aiConfig": "AI Configuration",
+    "geminiApiKey": "Gemini API Key"
   },
   "dashboard": {
     "period": "Period:",
@@ -334,6 +338,11 @@
     "validation": {
       "name": "Please enter an item name."
     }
+  },
+  "ai": {
+    "title": "Aurora AI Advisor",
+    "subtitle": "Your personal family finance coach and budget advisor.",
+    "welcome": "Hello! I am Aurora, your family finance coach. I can analyze your budgets, spending history, savings goals, and accounts to give you personalized suggestions. How can I help you today?"
   },
   "tours": {
     "btn": {

@@ -32,6 +32,7 @@ const routes = [
       { path: 'recurring', name: 'Recurring', component: () => import('../pages/RecurringPage.vue') },
       { path: 'reports', name: 'Reports', component: () => import('../pages/ReportsPage.vue') },
       { path: 'settings', name: 'Settings', component: () => import('../pages/SettingsPage.vue') },
+      { path: 'ai', name: 'AiAdvisor', component: () => import('../pages/AiPage.vue') },
       { path: 'gem', name: 'IconsGem', component: () => import('../pages/IconsGemPage.vue') },
     ],
   },

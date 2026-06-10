@@ -88,6 +88,12 @@
           </router-link>
         </div>
         <div class="nav-item">
+          <router-link to="/ai" class="nav-link" @click="closeMobile">
+            <i class="bi bi-stars"></i>
+            <span class="nav-text">{{ $t('nav.aiadvisor') || 'AI Advisor' }}</span>
+          </router-link>
+        </div>
+        <div class="nav-item">
           <router-link to="/settings" class="nav-link" @click="closeMobile">
             <i class="bi bi-gear"></i>
             <span class="nav-text">{{ $t('nav.settings') }}</span>

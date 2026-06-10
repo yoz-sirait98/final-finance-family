@@ -16,7 +16,7 @@
         </div>
 
         <!-- Language Preference -->
-        <div class="stat-card">
+        <div class="stat-card mb-4">
           <h6 class="fw-bold mb-3"><i class="bi bi-translate me-2"></i>{{ $t('settings.languagePref') }}</h6>
           <div class="mb-3">
             <label class="form-label">{{ $t('settings.selectLanguage') }}</label>
@@ -28,6 +28,28 @@
               <option value="en">English</option>
               <option value="id">Indonesia</option>
             </select>
+          </div>
+        </div>
+
+        <!-- AI Configuration -->
+        <div class="stat-card">
+          <h6 class="fw-bold mb-3"><i class="bi bi-stars me-2"></i>{{ $t('settings.aiConfig') || 'AI Configuration' }}</h6>
+          <div class="mb-3">
+            <label class="form-label">{{ $t('settings.geminiApiKey') || 'Gemini API Key' }}</label>
+            <div class="input-group">
+              <input
+                v-model="geminiApiKey"
+                type="password"
+                class="form-control"
+                placeholder="AIzaSy..."
+              />
+              <button class="btn btn-primary-gradient" @click="saveGeminiKey">
+                {{ $t('common.save') || 'Save' }}
+              </button>
+            </div>
+            <div class="form-text small text-muted mt-2">
+              Get a free API key from <a href="https://aistudio.google.com/" target="_blank" class="text-primary text-decoration-underline">Google AI Studio</a>. Stored locally in your browser.
+            </div>
           </div>
         </div>
       </div>
@@ -66,15 +88,24 @@
 import { ref } from 'vue';
 import { useAuthStore } from '../stores/auth';
 import { useLocaleStore } from '../stores/locale';
+import { useToastStore } from '../stores/toast';
 import { authService } from '../services/authService';
 
 const authStore = useAuthStore();
 const localeStore = useLocaleStore();
+const toast = useToastStore();
 
 const form = ref({ current_password: '', password: '', password_confirmation: '' });
 const loading = ref(false);
 const success = ref('');
 const error = ref('');
+
+const geminiApiKey = ref(localStorage.getItem('gemini_api_key') || '');
+
+function saveGeminiKey() {
+  localStorage.setItem('gemini_api_key', geminiApiKey.value.trim());
+  toast.success(localeStore.t('common.success') || 'Settings saved successfully!');
+}
 
 async function changePassword() {
   loading.value = true;

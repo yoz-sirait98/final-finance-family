@@ -37,7 +37,8 @@
     "member": "Anggota",
     "scanReceipt": "Pindai Struk",
     "scanning": "Memindai Struk...",
-    "confirmDelete": "Apakah Anda yakin ingin menghapus data ini? Aksi ini tidak dapat dibatalkan."
+    "confirmDelete": "Apakah Anda yakin ingin menghapus data ini? Aksi ini tidak dapat dibatalkan.",
+    "you": "Anda"
   },
   "nav": {
     "dashboard": "Dasbor",
@@ -59,7 +60,8 @@
     "noAlerts": "Tidak ada peringatan anggaran",
     "logout": "Keluar",
     "replayTour": "Ulang Panduan",
-    "projectpockets": "Kantong Proyek"
+    "projectpockets": "Kantong Proyek",
+    "aiadvisor": "Asisten AI"
   },
   "auth": {
     "login": {
@@ -106,7 +108,9 @@
     "updatingPassword": "Memperbarui...",
     "passwordSuccess": "Kata sandi berhasil diperbarui!",
     "languagePref": "Preferensi Bahasa",
-    "selectLanguage": "Pilih Bahasa"
+    "selectLanguage": "Pilih Bahasa",
+    "aiConfig": "Konfigurasi AI",
+    "geminiApiKey": "Kunci API Gemini"
   },
   "dashboard": {
     "period": "Periode:",
@@ -334,6 +338,11 @@
     "validation": {
       "name": "Silakan masukkan nama barang."
     }
+  },
+  "ai": {
+    "title": "Asisten AI Aurora",
+    "subtitle": "Pelatih keuangan keluarga dan penasihat anggaran pribadi Anda.",
+    "welcome": "Halo! Saya Aurora, pelatih keuangan keluarga Anda. Saya bisa menganalisis anggaran, riwayat pengeluaran, tujuan tabungan, dan rekening Anda untuk memberikan saran yang dipersonalisasi. Ada yang bisa saya bantu hari ini?"
   },
   "tours": {
     "btn": {
