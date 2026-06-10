@@ -134,7 +134,8 @@ async function saveGeminiKey() {
     localStorage.setItem('gemini_api_key', trimmedKey);
     toast.success(localeStore.t('common.success') || 'Settings saved successfully!');
   } catch (err) {
-    toast.error('Invalid Gemini API Key. Please verify and try again.');
+    console.error('Gemini verification failed:', err);
+    toast.error(`Gemini verification failed: ${err.message || 'Invalid key or network issue.'}`);
   } finally {
     isSavingKey.value = false;
   }
