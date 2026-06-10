@@ -124,7 +124,7 @@ async function saveGeminiKey() {
   try {
     // Perform a lightweight check request to verify the key is valid
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${trimmedKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent?key=${trimmedKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
