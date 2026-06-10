@@ -11,9 +11,13 @@ export const aiService = {
    */
   async getFinanceSnapshot() {
     try {
+      const d = new Date();
+      const currentMonth = d.getMonth() + 1;
+      const currentYear = d.getFullYear();
+
       const [accRes, budRes, txRes, goalRes, memRes] = await Promise.all([
         accountService.list({ is_active: true }),
-        budgetService.list(),
+        budgetService.list({ month: currentMonth, year: currentYear }),
         transactionService.list({ limit: 15 }),
         goalService.list(),
         memberService.list()
@@ -51,7 +55,7 @@ export const aiService = {
         const limit = parseFloat(b.amount || 0);
         const spent = parseFloat(b.spent || 0);
         const pct = limit > 0 ? Math.round((spent / limit) * 100) : 0;
-        summary += `- Category: ${b.category_name || 'Others'}, Budget: Rp ${limit.toLocaleString('id-ID')}, Spent: Rp ${spent.toLocaleString('id-ID')} (${pct}% utilized)\n`;
+        summary += `- Category: ${b.category?.name || 'Others'}, Budget: Rp ${limit.toLocaleString('id-ID')}, Spent: Rp ${spent.toLocaleString('id-ID')} (${pct}% utilized)\n`;
       });
       summary += "\n";
 
@@ -68,7 +72,7 @@ export const aiService = {
       // 5. Recent Transactions
       summary += "Last 15 Transactions:\n";
       transactions.forEach(t => {
-        summary += `- Date: ${t.transaction_date}, ${t.type.toUpperCase()}: Rp ${parseFloat(t.amount || 0).toLocaleString('id-ID')} | Desc: ${t.description || 'No desc'} (Category: ${t.category_name || 'Others'}, Account: ${t.account_name || 'Others'}, logged by: ${t.member_name || 'Unknown'})\n`;
+        summary += `- Date: ${t.transaction_date}, ${t.type.toUpperCase()}: Rp ${parseFloat(t.amount || 0).toLocaleString('id-ID')} | Desc: ${t.description || 'No desc'} (Category: ${t.category?.name || 'Others'}, Account: ${t.account?.name || 'Others'}, logged by: ${t.member?.name || 'Unknown'})\n`;
       });
 
       return summary;
