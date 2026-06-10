@@ -150,9 +150,15 @@ async function sendMessage() {
     // 3. Add AI response to history
     chatHistory.value.push({ sender: 'assistant', text: response });
   } catch (error) {
+    const errorStr = error.message.toLowerCase();
+    const isTempLimit = errorStr.includes('demand') || errorStr.includes('quota') || errorStr.includes('503') || errorStr.includes('429') || errorStr.includes('limit') || errorStr.includes('unavailable') || errorStr.includes('exhausted');
+    const advice = isTempLimit
+      ? 'This is a temporary server rate limit or model demand spike. Please try again in a few moments.'
+      : 'Please verify your API Key in Settings.';
+
     chatHistory.value.push({ 
       sender: 'assistant', 
-      text: `Failed to connect with Gemini: ${error.message}. Please verify your API Key in Settings.` 
+      text: `Failed to connect with Gemini: ${error.message}. ${advice}` 
     });
   } finally {
     loading.value = false;
