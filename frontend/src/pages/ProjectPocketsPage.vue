@@ -40,17 +40,26 @@
             </div>
           </div>
 
-          <div class="mt-auto d-flex gap-2">
+          <div class="mt-auto d-flex flex-column gap-2">
+            <div class="d-flex gap-2" v-if="pocket.status !== 'completed'">
+              <button 
+                class="btn w-50" 
+                :class="pocket.isActive ? 'btn-primary-gradient' : 'btn-outline-secondary'"
+                :disabled="!pocket.isActive"
+                @click="openLogExpense(pocket)"
+              >
+                <i class="bi bi-receipt me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Catat' : 'Log' }}
+              </button>
+              <button 
+                class="btn btn-outline-success w-50" 
+                @click="markPocketAsDone(pocket)"
+                :disabled="saving"
+              >
+                <i class="bi bi-check-circle me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Selesai' : 'Done' }}
+              </button>
+            </div>
             <button 
-              class="btn w-50" 
-              :class="pocket.isActive ? 'btn-primary-gradient' : 'btn-outline-secondary'"
-              :disabled="!pocket.isActive"
-              @click="openLogExpense(pocket)"
-            >
-              <i class="bi bi-receipt me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Catat' : 'Log' }}
-            </button>
-            <button 
-              class="btn btn-outline-info w-50" 
+              class="btn btn-outline-info w-100" 
               @click="openViewExpenses(pocket)"
             >
               <i class="bi bi-list-ul me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Pengeluaran' : 'Expenses' }}
@@ -253,7 +262,9 @@ async function loadData() {
   if (txErr) console.error("Error fetching transactions:", txErr);
   allTransactions.value = txRes || [];
 
-  pockets.value = (goalsRes.data?.data || []).map(g => {
+  pockets.value = (goalsRes.data?.data || [])
+    .filter(g => g.status === 'active' || g.status === 'completed')
+    .map(g => {
     const pocketTxs = allTransactions.value.filter(tx => Number(tx.goal_id) === Number(g.id));
     const spent = pocketTxs.reduce((sum, tx) => sum + Number(tx.amount), 0);
     const remaining = Number(g.current_amount || 0) - spent;
@@ -338,6 +349,20 @@ async function deleteExpense(tx) {
     toast.error(err.message || localeStore.t('common.error'));
   } finally {
     deletingTx.value = false;
+  }
+}
+
+async function markPocketAsDone(pocket) {
+  if (!confirm(localeStore.currentLocale === 'id' ? 'Tandai kantong proyek ini sebagai selesai?' : 'Mark this project pocket as done?')) return;
+  saving.value = true;
+  try {
+    await goalService.update(pocket.id, { status: 'completed' });
+    toast.success(localeStore.t('common.success'));
+    await loadData();
+  } catch (err) {
+    toast.error(err.message || localeStore.t('common.error'));
+  } finally {
+    saving.value = false;
   }
 }
 

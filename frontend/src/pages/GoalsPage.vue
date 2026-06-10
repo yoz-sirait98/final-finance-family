@@ -40,7 +40,7 @@
               <i class="bi bi-plus-circle me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Tabung' : 'Contribute' }}
             </button>
             <button class="btn btn-sm btn-outline-primary" @click="openEdit(g)"><i class="bi bi-pencil"></i></button>
-            <button class="btn btn-sm btn-outline-danger" @click="confirmDelete(g)"><i class="bi bi-trash"></i></button>
+            <button class="btn btn-sm btn-outline-danger" @click="confirmDelete(g)" :disabled="g.status !== 'inactive'"><i class="bi bi-trash"></i></button>
           </div>
         </div>
       </div>
@@ -85,7 +85,6 @@
               <select v-model="form.status" class="form-select">
                 <option value="active">{{ $t('common.active') }}</option>
                 <option value="completed" :disabled="editingGoal && editingGoal.current_amount < form.target_amount">{{ $t('common.completed') }}</option>
-                <option value="cancelled">{{ $t('common.cancelled') }}</option>
                 <option value="inactive">{{ $t('common.inactive') }}</option>
               </select>
             </div>
