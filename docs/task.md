@@ -85,6 +85,8 @@
 
 ## Part 10 — Feature Description Accuracy Correction
 - `[x]` Task 66: Correct inaccurate feature description in README.md by separating collaborative shopping list and offline OCR receipt scanner
+- `[x]` Task 67: Refactor `receiptScanner.js` to improve OCR parsing accuracy, adding date range/2-digit validation and bottom-up total amount search
+
 
 
 

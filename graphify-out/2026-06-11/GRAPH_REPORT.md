@@ -1,7 +1,7 @@
 # Graph Report - redesign-ui-supabase-stack  (2026-06-11)
 
 ## Corpus Check
-- 110 files · ~92,725 words
+- 110 files · ~93,001 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `3e47635f`
+- Built from commit: `2aa96fdd`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -444,7 +444,7 @@ Nodes (6): Family Finance Architecture & Integration Plans, Frontend Documentati
 
 ### Community 137 - "Community 137"
 Cohesion: 0.29
-Nodes (7): Feature 1: Receipt Image Storage, Feature 2: Financial Calendar View, Key Files, Key Files, Part 9 — Receipt Image Storage & Financial Calendar View (Completed 2026-06-11), Theming Compatibility (Theme Audit), Verification
+Nodes (7): Feature 1: Receipt Image Storage, Feature 2: Financial Calendar View, Key Files, Key Files, Part 9 — Receipt Image Storage & Financial Calendar View (Completed 2026-06-11), Theming Compatibility (Theme Audit & Mobile Bugfixes), Verification
 
 ## Knowledge Gaps
 - **649 isolated node(s):** `recommendations`, `name`, `private`, `version`, `type` (+644 more)

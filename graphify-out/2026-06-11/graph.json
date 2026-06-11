@@ -10244,20 +10244,20 @@
       "norm_label": "key files"
     },
     {
-      "label": "Theming Compatibility (Theme Audit)",
+      "label": "Theming Compatibility (Theme Audit & Mobile Bugfixes)",
       "file_type": "document",
       "source_file": "docs/implementation_plan.md",
       "source_location": "L419",
       "_origin": "ast",
-      "id": "docs_implementation_plan_theming_compatibility_theme_audit",
+      "id": "docs_implementation_plan_theming_compatibility_theme_audit_mobile_bugfixes",
       "community": 137,
-      "norm_label": "theming compatibility (theme audit)"
+      "norm_label": "theming compatibility (theme audit & mobile bugfixes)"
     },
     {
       "label": "Verification",
       "file_type": "document",
       "source_file": "docs/implementation_plan.md",
-      "source_location": "L422",
+      "source_location": "L423",
       "_origin": "ast",
       "id": "docs_implementation_plan_verification",
       "community": 137,
@@ -26607,9 +26607,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L419",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_part_9_receipt_image_storage_financial_calendar_view_completed_2026_06_11",
-      "target": "docs_implementation_plan_theming_compatibility_theme_audit"
+      "target": "docs_implementation_plan_theming_compatibility_theme_audit_mobile_bugfixes",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -27097,9 +27097,9 @@
       "source_file": "docs/walkthrough_receipt_storage_calendar.md",
       "source_location": "L108",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_walkthrough_receipt_storage_calendar_walkthrough_receipt_image_storage_financial_calendar_view",
-      "target": "docs_walkthrough_receipt_storage_calendar_auditing_theming_compatibility_2026_06_11",
-      "confidence_score": 1.0
+      "target": "docs_walkthrough_receipt_storage_calendar_auditing_theming_compatibility_2026_06_11"
     },
     {
       "relation": "contains",
@@ -27433,5 +27433,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "3e47635fdebff983604e77529d713cfbad1873b2"
+  "built_at_commit": "2aa96fdd3f7e07c0bdade63292618b5f3808400c"
 }
