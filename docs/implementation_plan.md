@@ -389,6 +389,32 @@ This section outlines the final task of documenting the new features across all 
 ### Frontend Documentation
 - **[MODIFY] [frontend/README.md](file:///C:/Users/Yosua Jan/.gemini/antigravity/worktrees/final-finance-family/redesign-ui-supabase-stack/frontend/README.md)**: Added technical details on offline scanning (Tesseract.js, regex heuristics, camera capture) and Gemini AI integration (glassmorphic styling, Pinia auth syncing, model selection).
 
+---
 
+# Part 9 — Receipt Image Storage & Financial Calendar View (Completed 2026-06-11)
 
+Two new user-selected features implemented and shipped to `origin/redesign-ui-supabase-stack`.
 
+## Feature 1: Receipt Image Storage
+
+Scanned receipt photos are now compressed client-side (canvas 1200px max, JPEG 82%) and uploaded to a private Supabase Storage bucket (`receipts/{familyId}/{uuid}.jpg`), then linked to the transaction record via a new `receipt_url` column.
+
+### Key Files
+- **[NEW]** `supabase/migrations/000022_add_receipt_url_to_transactions.sql` — adds `receipt_url TEXT` column
+- **[NEW]** `frontend/src/services/storageService.js` — `uploadReceipt`, `getReceiptSignedUrl`, `deleteReceipt`
+- **[MODIFY]** `frontend/src/utils/receiptScanner.js` — returns `imageFile` in result
+- **[MODIFY]** `frontend/src/services/transactionService.js` — `receipt_url` in select query
+- **[MODIFY]** `frontend/src/pages/TransactionsPage.vue` — upload flow, thumbnail, lightbox, 📎 badge, delete cleanup
+
+## Feature 2: Financial Calendar View
+
+Monthly calendar page with 7-column grid (Mon-Sun), colored dots per day (🟢 income, 🔴 expense, 🔵 recurring, 🟡 goal), net chip, slide-up day detail panel, month navigation, summary strip, and mobile list-view fallback.
+
+### Key Files
+- **[NEW]** `frontend/src/pages/CalendarPage.vue`
+- **[MODIFY]** `frontend/src/router/index.js` — `/calendar` route
+- **[MODIFY]** `frontend/src/layouts/DashboardLayout.vue` — Calendar nav item
+- **[MODIFY]** `frontend/src/locales/en.json` & `id.json` — `nav.calendar` key
+
+## Verification
+- Build: `✓ 1.52s, zero errors` | Graph: `1116 nodes, 1560 edges` | Commit: `7499a9e`

@@ -66,7 +66,14 @@
 - `[x]` Task 49: Update root `README.md` with new features (OCR scanner, AI Coach, Gemini API key syncing)
 - `[x]` Task 50: Update `frontend/README.md` with frontend configuration and package details for new features
 
-
-
-
-
+## Part 9 — Receipt Image Storage & Financial Calendar View
+- `[x]` Task 51: Create migration `000022_add_receipt_url_to_transactions.sql`
+- `[x]` Task 52: Create `frontend/src/services/storageService.js` (upload/signed-URL/delete)
+- `[x]` Task 53: Update `receiptScanner.js` to return `imageFile` reference in result
+- `[x]` Task 54: Update `transactionService.js` to include `receipt_url` in select query
+- `[x]` Task 55: Update `TransactionsPage.vue` — upload on save, thumbnail preview, lightbox, 📎 badge, cleanup on delete
+- `[x]` Task 56: Create `frontend/src/pages/CalendarPage.vue` (7-col grid, dots, day detail panel, mobile list view)
+- `[x]` Task 57: Add `/calendar` route to `router/index.js`
+- `[x]` Task 58: Add Calendar nav item to `DashboardLayout.vue`
+- `[x]` Task 59: Add `nav.calendar` translation keys to `en.json` and `id.json`
+- `[x]` Task 60: Build verification (✓ 1.52s, zero errors) + graphify update (1116 nodes, 1560 edges)
