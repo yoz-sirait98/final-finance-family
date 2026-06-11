@@ -81,5 +81,7 @@
 - `[x]` Task 62: Rebuild and verify compilation
 - `[x]` Task 63: Fix recurring bill amount badge visibility by using custom `.badge-recurring` and `.badge-goal` styling
 - `[x]` Task 64: Expand mobile list view details container to display recurring bills and saving goals
+- `[x]` Task 65: Fix blurry tour popover buttons rendering by forcing hardware acceleration (translate3d, backface-visibility, font-smoothing)
+
 
 

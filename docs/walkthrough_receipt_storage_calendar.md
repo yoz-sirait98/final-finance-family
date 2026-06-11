@@ -112,5 +112,7 @@ graphify update . → 1116 nodes, 1560 edges, 134 communities
 - Replaced undefined `--primary` variable references with `--primary-color` to ensure today's cell highlight and hover border borders match the active theme's accent color (periwinkle in light, violet in dark).
 - Fixed a bug where recurring bills and savings goals did not display in the mobile list view (expanded the mobile day drawer template to render them similarly to the desktop panel).
 - Added custom `.badge-recurring` and `.badge-goal` CSS classes to fix amount text visibility issues on desktop where Bootstrap opacity utilities collided.
+- Fixed blurry buttons and text in the driver.js tour popover screen across all pages by forcing GPU hardware acceleration using `translate3d(0, 0, 0)`, `backface-visibility: hidden`, and proper font-smoothing configurations.
+
 
 
