@@ -32,15 +32,16 @@ Repositori ini menggunakan struktur **monorepo** yang berisi aplikasi frontend d
 3.  **Pencatatan Transaksi**: Mencatat pemasukan, pengeluaran, serta transfer antar akun.
 4.  **Anggaran (Budget)**: Menentukan batas pengeluaran bulanan per kategori dengan progress bar real-time serta **Budget Guardrail** (peringatan modal interaktif) dan notifikasi _bell_ jika mendekati/melebihi 80%.
 5.  **Kantong Proyek (Project Pockets)**: Memisahkan dana untuk acara/proyek besar secara independen. Pengeluaran di Kantong Proyek **tidak mengganggu** limit Anggaran Bulanan reguler.
-6.  **Daftar Belanja Cerdas & Scan Struk (OCR)**: Mencatat rencana belanja dan mencentangnya secara real-time. Dilengkapi fitur unggah/scan foto struk yang diekstraksi secara offline (sisi client) menggunakan Tesseract.js untuk mendeteksi nama toko, tanggal, dan nominal transaksi secara otomatis.
-7.  **Target Tabungan (Saving Goals)**: Melacak target dana dengan progress persentase interaktif, terhubung dengan akun, dan terintegrasi mulus dengan Kantong Proyek saat target telah tercapai.
-8.  **Transaksi Berulang (Recurring Transactions)**: Sistem penjadwalan otomatis menggunakan **pg_cron** di level database yang mencatat pengeluaran berulang (mingguan, bulanan, tahunan) di belakang layar.
-9.  **Dashboard Analitik**: Menyediakan laporan visual tren pengeluaran, perbandingan pemasukan/pengeluaran, dan pie chart distribusi kategori.
-10. **Modern UI/UX**: Tampilan dinamis, bersih, dan memanjakan mata dengan dukungan Light/Dark Mode serta transisi animasi yang mulus.
-11. **Eksport Laporan (_Client-Side_)**: Unduh laporan keuangan ke format **CSV** dan **PDF** terstruktur langsung dari browser.
-12. **Keamanan Berlapis (RLS)**: Row Level Security memastikan data satu keluarga terisolasi secara sempurna dan tidak bisa diakses oleh keluarga lain.
-13. **Asisten Keuangan AI (Aurora AI Advisor)**: Fitur konsultasi keuangan interaktif dengan tampilan glassmorphic premium. AI menganalisis kondisi keuangan keluarga (saldo, anggaran, pencapaian target tabungan, dan riwayat transaksi terbaru) untuk memberikan saran keuangan cerdas dan personal dalam Bahasa Indonesia maupun Inggris.
-14. **Sinkronisasi API Key Lintas Perangkat**: API Key Gemini dapat disimpan langsung ke profil keluarga di database Supabase yang diamankan oleh kebijakan Row Level Security (RLS). Semua anggota keluarga di berbagai perangkat/browser dapat menggunakan AI Advisor secara instan tanpa perlu memasukkan API Key berulang kali.
+6.  **Daftar Belanja Kolaboratif**: Mencatat rencana belanja dan mengelolanya secara real-time bersama keluarga. Dilengkapi fitur Checkout untuk mengubah rencana belanja yang selesai menjadi transaksi pengeluaran secara otomatis.
+7.  **Scan Struk Offline (OCR)**: Fitur scan foto struk pada pencatatan transaksi yang diekstraksi secara offline (sisi client) menggunakan Tesseract.js untuk mendeteksi nama toko, tanggal, dan nominal transaksi secara otomatis.
+8.  **Target Tabungan (Saving Goals)**: Melacak target dana dengan progress persentase interaktif, terhubung dengan akun, dan terintegrasi mulus dengan Kantong Proyek saat target telah tercapai.
+9.  **Transaksi Berulang (Recurring Transactions)**: Sistem penjadwalan otomatis menggunakan **pg_cron** di level database yang mencatat pengeluaran berulang (mingguan, bulanan, tahunan) di belakang layar.
+10. **Dashboard Analitik**: Menyediakan laporan visual tren pengeluaran, perbandingan pemasukan/pengeluaran, dan pie chart distribusi kategori.
+11. **Modern UI/UX**: Tampilan dinamis, bersih, dan memanjakan mata dengan dukungan Light/Dark Mode serta transisi animasi yang mulus.
+12. **Eksport Laporan (_Client-Side_)**: Unduh laporan keuangan ke format **CSV** dan **PDF** terstruktur langsung dari browser.
+13. **Keamanan Berlapis (RLS)**: Row Level Security memastikan data satu keluarga terisolasi secara sempurna dan tidak bisa diakses oleh keluarga lain.
+14. **Asisten Keuangan AI (Aurora AI Advisor)**: Fitur konsultasi keuangan interaktif dengan tampilan glassmorphic premium. AI menganalisis kondisi keuangan keluarga (saldo, anggaran, pencapaian target tabungan, dan riwayat transaksi terbaru) untuk memberikan saran keuangan cerdas dan personal dalam Bahasa Indonesia maupun Inggris.
+15. **Sinkronisasi API Key Lintas Perangkat**: API Key Gemini dapat disimpan langsung ke profil keluarga di database Supabase yang diamankan oleh kebijakan Row Level Security (RLS). Semua anggota keluarga di berbagai perangkat/browser dapat menggunakan AI Advisor secara instan tanpa perlu memasukkan API Key berulang kali.
 
 ## Setup AI Assistant (Graphify)
 

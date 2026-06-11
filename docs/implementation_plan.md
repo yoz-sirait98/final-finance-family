@@ -424,5 +424,9 @@ Monthly calendar page with 7-column grid (Mon-Sun), colored dots per day (🟢 i
 - Build: compiled cleanly (`npm run build`)
 - Git commit + push to origin
 
+## Feature Description Accuracy Correction
+- **[MODIFY]** `README.md` — corrected inaccurate description of Feature 6 (which combined collaborative shopping list and offline OCR scanner into one item). Separated them into Feature 6 (**Daftar Belanja Kolaboratif**) and Feature 7 (**Scan Struk Offline (OCR)**) and renumbered subsequent items up to 15.
+
+
 
 
