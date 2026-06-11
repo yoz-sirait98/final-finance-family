@@ -544,6 +544,18 @@ body {
   color: #4a6cf7;
 }
 
+.badge-recurring {
+  background: rgba(59, 130, 246, 0.12) !important;
+  color: #3b82f6 !important;
+  border: 1px solid rgba(59, 130, 246, 0.2) !important;
+}
+
+.badge-goal {
+  background: rgba(245, 158, 11, 0.12) !important;
+  color: #f59e0b !important;
+  border: 1px solid rgba(245, 158, 11, 0.2) !important;
+}
+
 /* ===== Modals ===== */
 .modal-content {
   border: var(--card-border);

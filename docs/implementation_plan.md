@@ -416,10 +416,12 @@ Monthly calendar page with 7-column grid (Mon-Sun), colored dots per day (🟢 i
 - **[MODIFY]** `frontend/src/layouts/DashboardLayout.vue` — Calendar nav item
 - **[MODIFY]** `frontend/src/locales/en.json` & `id.json` — `nav.calendar` key
 
-## Theming Compatibility (Theme Audit)
-- **[MODIFY]** `frontend/src/pages/CalendarPage.vue` — updated styles to use theme variables (`--input-border`, `--primary-color`) rather than undefined/fallback variables (`--border-color`, `--primary`), solving invisible grid cells in light mode.
+## Theming Compatibility (Theme Audit & Mobile Bugfixes)
+- **[MODIFY]** `frontend/src/pages/CalendarPage.vue` — updated styles to use theme variables (`--input-border`, `--primary-color`) rather than undefined/fallback variables (`--border-color`, `--primary`), solving invisible grid cells in light mode. Expanded the mobile list details container to display recurring bills and saving goals, matching the desktop experience.
+- **[MODIFY]** `frontend/src/style.css` — added custom `.badge-recurring` and `.badge-goal` styles to prevent solid color overrides blocking amount visibility. Added custom `.btn-outline-primary` and `.btn-outline-secondary` overrides for premium theme-aware button colors.
 
 ## Verification
 - Build: compiled cleanly (`npm run build`)
 - Git commit + push to origin
+
 

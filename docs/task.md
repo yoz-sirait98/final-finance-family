@@ -79,4 +79,7 @@
 - `[x]` Task 60: Build verification (✓ 1.52s, zero errors) + graphify update (1116 nodes, 1560 edges)
 - `[x]` Task 61: Audit and update `CalendarPage.vue` styles to use theme variables (`--input-border`, `--primary-color`) for full light/dark mode compatibility
 - `[x]` Task 62: Rebuild and verify compilation
+- `[x]` Task 63: Fix recurring bill amount badge visibility by using custom `.badge-recurring` and `.badge-goal` styling
+- `[x]` Task 64: Expand mobile list view details container to display recurring bills and saving goals
+
 

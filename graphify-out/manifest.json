@@ -635,8 +635,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/CalendarPage.vue": {
-    "mtime": 1781146421.2630434,
-    "ast_hash": "42291686089ec93692098ff00edb04e2",
+    "mtime": 1781147244.7496564,
+    "ast_hash": "8d5688da6f17dfc033b4d133cda4526e",
     "semantic_hash": ""
   },
   "frontend/src/services/storageService.js": {

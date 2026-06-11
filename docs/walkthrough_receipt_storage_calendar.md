@@ -110,4 +110,7 @@ graphify update . → 1116 nodes, 1560 edges, 134 communities
 - Audited `CalendarPage.vue` for full light/dark mode legibility.
 - Fixed calendar grid borders being invisible in light mode by replacing undefined `--border-color` variable (which fell back to `rgba(255,255,255,0.07)`) with the theme's `--input-border` variable.
 - Replaced undefined `--primary` variable references with `--primary-color` to ensure today's cell highlight and hover border borders match the active theme's accent color (periwinkle in light, violet in dark).
+- Fixed a bug where recurring bills and savings goals did not display in the mobile list view (expanded the mobile day drawer template to render them similarly to the desktop panel).
+- Added custom `.badge-recurring` and `.badge-goal` CSS classes to fix amount text visibility issues on desktop where Bootstrap opacity utilities collided.
+
 

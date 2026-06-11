@@ -123,7 +123,7 @@
               </div>
               <div v-for="r in getDayRecurring(selectedDay)" :key="'r-' + r.id" class="d-flex justify-content-between align-items-center py-1 border-bottom">
                 <span class="small">{{ r.description }}</span>
-                <span class="badge bg-info bg-opacity-15 text-info border border-info border-opacity-25 small">{{ formatCurrency(r.amount) }}</span>
+                <span class="badge badge-recurring small">{{ formatCurrency(r.amount) }}</span>
               </div>
             </div>
 
@@ -134,7 +134,7 @@
               </div>
               <div v-for="g in getDayGoals(selectedDay)" :key="'g-' + g.id" class="d-flex justify-content-between align-items-center py-1 border-bottom">
                 <span class="small">{{ g.name }}</span>
-                <span class="badge bg-warning bg-opacity-15 text-warning border border-warning border-opacity-25 small">{{ formatCurrency(g.target_amount) }}</span>
+                <span class="badge badge-goal small">{{ formatCurrency(g.target_amount) }}</span>
               </div>
             </div>
 
@@ -173,18 +173,47 @@
             <i class="bi small" :class="mobileDayOpen === day ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
           </div>
         </div>
-        <div v-if="mobileDayOpen === day" class="p-2">
-          <div v-for="tx in getDayTransactions(day)" :key="tx.id" class="d-flex justify-content-between py-1 border-bottom">
-            <div>
-              <span class="badge me-1" :class="'badge-' + tx.type">{{ $t('common.' + tx.type) }}</span>
-              <span class="small">{{ tx.description || (tx.category?.name ?? '-') }}</span>
+        <div v-if="mobileDayOpen === day" class="p-3">
+          <!-- Recurring bills -->
+          <div v-if="getDayRecurring(day).length > 0" class="mb-3">
+            <div class="small fw-semibold text-muted mb-2">
+              <i class="bi bi-arrow-repeat me-1 text-info"></i>{{ localeStore.currentLocale === 'id' ? 'Tagihan Jatuh Tempo' : 'Bills Due' }}
             </div>
-            <span class="small fw-semibold" :class="tx.type === 'income' ? 'text-success' : 'text-danger'">
-              {{ tx.type === 'income' ? '+' : '-' }}{{ formatCurrency(Math.abs(tx.amount)) }}
-            </span>
+            <div v-for="r in getDayRecurring(day)" :key="'r-' + r.id" class="d-flex justify-content-between align-items-center py-1 border-bottom">
+              <span class="small">{{ r.description }}</span>
+              <span class="badge badge-recurring small">{{ formatCurrency(r.amount) }}</span>
+            </div>
           </div>
-          <div v-if="!getDayTransactions(day).length" class="text-muted small py-2">
-            {{ localeStore.currentLocale === 'id' ? 'Tidak ada transaksi.' : 'No transactions.' }}
+
+          <!-- Goal deadlines -->
+          <div v-if="getDayGoals(day).length > 0" class="mb-3">
+            <div class="small fw-semibold text-muted mb-2">
+              <i class="bi bi-trophy me-1 text-warning"></i>{{ localeStore.currentLocale === 'id' ? 'Deadline Target Tabungan' : 'Saving Goal Deadlines' }}
+            </div>
+            <div v-for="g in getDayGoals(day)" :key="'g-' + g.id" class="d-flex justify-content-between align-items-center py-1 border-bottom">
+              <span class="small">{{ g.name }}</span>
+              <span class="badge badge-goal small">{{ formatCurrency(g.target_amount) }}</span>
+            </div>
+          </div>
+
+          <!-- Actual transactions -->
+          <div v-if="getDayTransactions(day).length > 0">
+            <div class="small fw-semibold text-muted mb-2">
+              <i class="bi bi-arrow-left-right me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Transaksi' : 'Transactions' }}
+            </div>
+            <div v-for="tx in getDayTransactions(day)" :key="tx.id" class="d-flex justify-content-between align-items-center py-1 border-bottom">
+              <div>
+                <span class="badge me-1" :class="'badge-' + tx.type">{{ $t('common.' + tx.type) }}</span>
+                <span class="small">{{ tx.description || (tx.category?.name ?? '-') }}</span>
+              </div>
+              <span class="small fw-semibold" :class="tx.type === 'income' ? 'text-success' : 'text-danger'">
+                {{ tx.type === 'income' ? '+' : '-' }}{{ formatCurrency(Math.abs(tx.amount)) }}
+              </span>
+            </div>
+          </div>
+
+          <div v-if="!getDayTransactions(day).length && !getDayRecurring(day).length && !getDayGoals(day).length" class="text-muted small text-center py-3">
+            {{ localeStore.currentLocale === 'id' ? 'Tidak ada aktivitas pada hari ini.' : 'No activity on this day.' }}
           </div>
         </div>
       </div>
