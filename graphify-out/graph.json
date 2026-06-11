@@ -1730,7 +1730,7 @@
       "source_location": "L119",
       "_origin": "ast",
       "id": "locales_en_dashboard_insights",
-      "community": 39,
+      "community": 20,
       "norm_label": "insights"
     },
     {
@@ -3870,7 +3870,7 @@
       "source_location": "L377",
       "_origin": "ast",
       "id": "locales_en_insights_title",
-      "community": 39,
+      "community": 20,
       "norm_label": "title"
     },
     {
@@ -3880,7 +3880,7 @@
       "source_location": "L378",
       "_origin": "ast",
       "id": "locales_en_insights_description",
-      "community": 39,
+      "community": 20,
       "norm_label": "description"
     },
     {
@@ -3890,7 +3890,7 @@
       "source_location": "L380",
       "_origin": "ast",
       "id": "locales_en_dashboard_charts",
-      "community": 29,
+      "community": 39,
       "norm_label": "charts"
     },
     {
@@ -3900,7 +3900,7 @@
       "source_location": "L381",
       "_origin": "ast",
       "id": "locales_en_charts_title",
-      "community": 29,
+      "community": 39,
       "norm_label": "title"
     },
     {
@@ -3910,7 +3910,7 @@
       "source_location": "L382",
       "_origin": "ast",
       "id": "locales_en_charts_description",
-      "community": 29,
+      "community": 39,
       "norm_label": "description"
     },
     {
@@ -3960,7 +3960,7 @@
       "source_location": "L390",
       "_origin": "ast",
       "id": "locales_en_transactions_add",
-      "community": 26,
+      "community": 124,
       "norm_label": "add"
     },
     {
@@ -3970,7 +3970,7 @@
       "source_location": "L391",
       "_origin": "ast",
       "id": "locales_en_add_title",
-      "community": 26,
+      "community": 124,
       "norm_label": "title"
     },
     {
@@ -3980,7 +3980,7 @@
       "source_location": "L392",
       "_origin": "ast",
       "id": "locales_en_add_description",
-      "community": 26,
+      "community": 124,
       "norm_label": "description"
     },
     {
@@ -4020,7 +4020,7 @@
       "source_location": "L398",
       "_origin": "ast",
       "id": "locales_en_transactions_filters",
-      "community": 113,
+      "community": 124,
       "norm_label": "filters"
     },
     {
@@ -4030,7 +4030,7 @@
       "source_location": "L399",
       "_origin": "ast",
       "id": "locales_en_filters_title",
-      "community": 113,
+      "community": 124,
       "norm_label": "title"
     },
     {
@@ -4040,7 +4040,7 @@
       "source_location": "L400",
       "_origin": "ast",
       "id": "locales_en_filters_description",
-      "community": 113,
+      "community": 124,
       "norm_label": "description"
     },
     {
@@ -4080,7 +4080,7 @@
       "source_location": "L407",
       "_origin": "ast",
       "id": "locales_en_tours_accounts",
-      "community": 26,
+      "community": 124,
       "norm_label": "accounts"
     },
     {
@@ -4100,7 +4100,7 @@
       "source_location": "L412",
       "_origin": "ast",
       "id": "locales_en_accounts_add",
-      "community": 26,
+      "community": 124,
       "norm_label": "add"
     },
     {
@@ -4160,7 +4160,7 @@
       "source_location": "L426",
       "_origin": "ast",
       "id": "locales_en_budgets_add",
-      "community": 26,
+      "community": 124,
       "norm_label": "add"
     },
     {
@@ -4250,7 +4250,7 @@
       "source_location": "L453",
       "_origin": "ast",
       "id": "locales_en_tours_recurring",
-      "community": 26,
+      "community": 124,
       "norm_label": "recurring"
     },
     {
@@ -4270,7 +4270,7 @@
       "source_location": "L458",
       "_origin": "ast",
       "id": "locales_en_recurring_add",
-      "community": 26,
+      "community": 124,
       "norm_label": "add"
     },
     {
@@ -4310,7 +4310,7 @@
       "source_location": "L472",
       "_origin": "ast",
       "id": "locales_en_reports_filters",
-      "community": 113,
+      "community": 124,
       "norm_label": "filters"
     },
     {
@@ -4320,7 +4320,7 @@
       "source_location": "L476",
       "_origin": "ast",
       "id": "locales_en_reports_charts",
-      "community": 29,
+      "community": 39,
       "norm_label": "charts"
     },
     {
@@ -9267,7 +9267,7 @@
       "label": "cleanLineOfDatesAndTimes()",
       "file_type": "code",
       "source_file": "frontend/src/utils/receiptScanner.js",
-      "source_location": "L47",
+      "source_location": "L48",
       "_origin": "ast",
       "id": "utils_receiptscanner_cleanlineofdatesandtimes",
       "community": 43,
@@ -9277,7 +9277,7 @@
       "label": "parseDate()",
       "file_type": "code",
       "source_file": "frontend/src/utils/receiptScanner.js",
-      "source_location": "L68",
+      "source_location": "L70",
       "_origin": "ast",
       "id": "utils_receiptscanner_parsedate",
       "community": 43,
@@ -9287,7 +9287,7 @@
       "label": "scanReceipt()",
       "file_type": "code",
       "source_file": "frontend/src/utils/receiptScanner.js",
-      "source_location": "L127",
+      "source_location": "L129",
       "_origin": "ast",
       "id": "utils_receiptscanner_scanreceipt",
       "community": 43,
@@ -25624,9 +25624,9 @@
       "source_file": "frontend/src/utils/receiptScanner.js",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "utils_receiptscanner",
-      "target": "utils_receiptscanner_fuzzymonths",
-      "confidence_score": 1.0
+      "target": "utils_receiptscanner_fuzzymonths"
     },
     {
       "relation": "contains",
@@ -27524,5 +27524,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "cc7c7db6441cf37e18255863dca04f1c43478a75"
+  "built_at_commit": "73ce0fb378dceabf8636cea4e288cd854aa230e3"
 }

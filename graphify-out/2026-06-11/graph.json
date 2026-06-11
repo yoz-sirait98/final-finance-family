@@ -1730,7 +1730,7 @@
       "source_location": "L119",
       "_origin": "ast",
       "id": "locales_en_dashboard_insights",
-      "community": 20,
+      "community": 39,
       "norm_label": "insights"
     },
     {
@@ -3870,7 +3870,7 @@
       "source_location": "L377",
       "_origin": "ast",
       "id": "locales_en_insights_title",
-      "community": 20,
+      "community": 39,
       "norm_label": "title"
     },
     {
@@ -3880,7 +3880,7 @@
       "source_location": "L378",
       "_origin": "ast",
       "id": "locales_en_insights_description",
-      "community": 20,
+      "community": 39,
       "norm_label": "description"
     },
     {
@@ -3890,7 +3890,7 @@
       "source_location": "L380",
       "_origin": "ast",
       "id": "locales_en_dashboard_charts",
-      "community": 39,
+      "community": 29,
       "norm_label": "charts"
     },
     {
@@ -3900,7 +3900,7 @@
       "source_location": "L381",
       "_origin": "ast",
       "id": "locales_en_charts_title",
-      "community": 39,
+      "community": 29,
       "norm_label": "title"
     },
     {
@@ -3910,7 +3910,7 @@
       "source_location": "L382",
       "_origin": "ast",
       "id": "locales_en_charts_description",
-      "community": 39,
+      "community": 29,
       "norm_label": "description"
     },
     {
@@ -3960,7 +3960,7 @@
       "source_location": "L390",
       "_origin": "ast",
       "id": "locales_en_transactions_add",
-      "community": 124,
+      "community": 26,
       "norm_label": "add"
     },
     {
@@ -3970,7 +3970,7 @@
       "source_location": "L391",
       "_origin": "ast",
       "id": "locales_en_add_title",
-      "community": 124,
+      "community": 26,
       "norm_label": "title"
     },
     {
@@ -3980,7 +3980,7 @@
       "source_location": "L392",
       "_origin": "ast",
       "id": "locales_en_add_description",
-      "community": 124,
+      "community": 26,
       "norm_label": "description"
     },
     {
@@ -4020,7 +4020,7 @@
       "source_location": "L398",
       "_origin": "ast",
       "id": "locales_en_transactions_filters",
-      "community": 29,
+      "community": 113,
       "norm_label": "filters"
     },
     {
@@ -4030,7 +4030,7 @@
       "source_location": "L399",
       "_origin": "ast",
       "id": "locales_en_filters_title",
-      "community": 29,
+      "community": 113,
       "norm_label": "title"
     },
     {
@@ -4040,7 +4040,7 @@
       "source_location": "L400",
       "_origin": "ast",
       "id": "locales_en_filters_description",
-      "community": 29,
+      "community": 113,
       "norm_label": "description"
     },
     {
@@ -4080,7 +4080,7 @@
       "source_location": "L407",
       "_origin": "ast",
       "id": "locales_en_tours_accounts",
-      "community": 124,
+      "community": 26,
       "norm_label": "accounts"
     },
     {
@@ -4100,7 +4100,7 @@
       "source_location": "L412",
       "_origin": "ast",
       "id": "locales_en_accounts_add",
-      "community": 124,
+      "community": 26,
       "norm_label": "add"
     },
     {
@@ -4160,7 +4160,7 @@
       "source_location": "L426",
       "_origin": "ast",
       "id": "locales_en_budgets_add",
-      "community": 124,
+      "community": 26,
       "norm_label": "add"
     },
     {
@@ -4180,7 +4180,7 @@
       "source_location": "L434",
       "_origin": "ast",
       "id": "locales_en_budgets_alerts",
-      "community": 24,
+      "community": 105,
       "norm_label": "alerts"
     },
     {
@@ -4190,7 +4190,7 @@
       "source_location": "L435",
       "_origin": "ast",
       "id": "locales_en_alerts_title",
-      "community": 24,
+      "community": 105,
       "norm_label": "title"
     },
     {
@@ -4200,7 +4200,7 @@
       "source_location": "L436",
       "_origin": "ast",
       "id": "locales_en_alerts_description",
-      "community": 24,
+      "community": 105,
       "norm_label": "description"
     },
     {
@@ -4250,7 +4250,7 @@
       "source_location": "L453",
       "_origin": "ast",
       "id": "locales_en_tours_recurring",
-      "community": 124,
+      "community": 26,
       "norm_label": "recurring"
     },
     {
@@ -4270,7 +4270,7 @@
       "source_location": "L458",
       "_origin": "ast",
       "id": "locales_en_recurring_add",
-      "community": 124,
+      "community": 26,
       "norm_label": "add"
     },
     {
@@ -4310,7 +4310,7 @@
       "source_location": "L472",
       "_origin": "ast",
       "id": "locales_en_reports_filters",
-      "community": 29,
+      "community": 113,
       "norm_label": "filters"
     },
     {
@@ -4320,7 +4320,7 @@
       "source_location": "L476",
       "_origin": "ast",
       "id": "locales_en_reports_charts",
-      "community": 39,
+      "community": 29,
       "norm_label": "charts"
     },
     {
@@ -4330,7 +4330,7 @@
       "source_location": "L480",
       "_origin": "ast",
       "id": "locales_en_reports_export",
-      "community": 105,
+      "community": 29,
       "norm_label": "export"
     },
     {
@@ -4340,7 +4340,7 @@
       "source_location": "L481",
       "_origin": "ast",
       "id": "locales_en_export_title",
-      "community": 105,
+      "community": 29,
       "norm_label": "title"
     },
     {
@@ -4350,7 +4350,7 @@
       "source_location": "L482",
       "_origin": "ast",
       "id": "locales_en_export_description",
-      "community": 105,
+      "community": 29,
       "norm_label": "description"
     },
     {
@@ -4360,7 +4360,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "locales_id",
-      "community": 21,
+      "community": 134,
       "norm_label": "id.json"
     },
     {
@@ -4450,7 +4450,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "locales_id_common_success",
-      "community": 106,
+      "community": 1,
       "norm_label": "success"
     },
     {
@@ -4990,7 +4990,7 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "locales_id_auth",
-      "community": 21,
+      "community": 106,
       "norm_label": "auth"
     },
     {
@@ -5020,7 +5020,7 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "locales_id_login_subtitle",
-      "community": 21,
+      "community": 106,
       "norm_label": "subtitle"
     },
     {
@@ -5440,7 +5440,7 @@
       "source_location": "L116",
       "_origin": "ast",
       "id": "locales_id_dashboard",
-      "community": 110,
+      "community": 108,
       "norm_label": "dashboard"
     },
     {
@@ -5450,7 +5450,7 @@
       "source_location": "L117",
       "_origin": "ast",
       "id": "locales_id_dashboard_period",
-      "community": 110,
+      "community": 15,
       "norm_label": "period"
     },
     {
@@ -5460,7 +5460,7 @@
       "source_location": "L118",
       "_origin": "ast",
       "id": "locales_id_dashboard_periodsub",
-      "community": 110,
+      "community": 108,
       "norm_label": "periodsub"
     },
     {
@@ -5480,7 +5480,7 @@
       "source_location": "L120",
       "_origin": "ast",
       "id": "locales_id_dashboard_insightsnew",
-      "community": 110,
+      "community": 108,
       "norm_label": "insightsnew"
     },
     {
@@ -5490,7 +5490,7 @@
       "source_location": "L121",
       "_origin": "ast",
       "id": "locales_id_dashboard_totalbalance",
-      "community": 110,
+      "community": 108,
       "norm_label": "totalbalance"
     },
     {
@@ -5500,7 +5500,7 @@
       "source_location": "L122",
       "_origin": "ast",
       "id": "locales_id_dashboard_monthlyincome",
-      "community": 110,
+      "community": 108,
       "norm_label": "monthlyincome"
     },
     {
@@ -5510,7 +5510,7 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "locales_id_dashboard_monthlyexpense",
-      "community": 110,
+      "community": 108,
       "norm_label": "monthlyexpense"
     },
     {
@@ -5520,7 +5520,7 @@
       "source_location": "L124",
       "_origin": "ast",
       "id": "locales_id_dashboard_monthlynet",
-      "community": 110,
+      "community": 108,
       "norm_label": "monthlynet"
     },
     {
@@ -5530,7 +5530,7 @@
       "source_location": "L125",
       "_origin": "ast",
       "id": "locales_id_dashboard_expensebycategory",
-      "community": 110,
+      "community": 108,
       "norm_label": "expensebycategory"
     },
     {
@@ -5540,7 +5540,7 @@
       "source_location": "L126",
       "_origin": "ast",
       "id": "locales_id_dashboard_incomevsexpense",
-      "community": 110,
+      "community": 108,
       "norm_label": "incomevsexpense"
     },
     {
@@ -5550,7 +5550,7 @@
       "source_location": "L127",
       "_origin": "ast",
       "id": "locales_id_dashboard_expensetrend",
-      "community": 110,
+      "community": 108,
       "norm_label": "expensetrend"
     },
     {
@@ -5560,7 +5560,7 @@
       "source_location": "L128",
       "_origin": "ast",
       "id": "locales_id_dashboard_networthgrowth",
-      "community": 110,
+      "community": 108,
       "norm_label": "networthgrowth"
     },
     {
@@ -5570,7 +5570,7 @@
       "source_location": "L129",
       "_origin": "ast",
       "id": "locales_id_dashboard_notransactions",
-      "community": 110,
+      "community": 108,
       "norm_label": "notransactions"
     },
     {
@@ -5580,7 +5580,7 @@
       "source_location": "L130",
       "_origin": "ast",
       "id": "locales_id_dashboard_nonetworth",
-      "community": 110,
+      "community": 108,
       "norm_label": "nonetworth"
     },
     {
@@ -6360,7 +6360,7 @@
       "source_location": "L214",
       "_origin": "ast",
       "id": "locales_id_accounts_validation",
-      "community": 15,
+      "community": 21,
       "norm_label": "validation"
     },
     {
@@ -6370,7 +6370,7 @@
       "source_location": "L215",
       "_origin": "ast",
       "id": "locales_id_validation_name",
-      "community": 15,
+      "community": 21,
       "norm_label": "name"
     },
     {
@@ -6380,7 +6380,7 @@
       "source_location": "L216",
       "_origin": "ast",
       "id": "locales_id_validation_type",
-      "community": 15,
+      "community": 21,
       "norm_label": "type"
     },
     {
@@ -6620,7 +6620,7 @@
       "source_location": "L245",
       "_origin": "ast",
       "id": "locales_id_categories_validation",
-      "community": 15,
+      "community": 21,
       "norm_label": "validation"
     },
     {
@@ -6930,7 +6930,7 @@
       "source_location": "L291",
       "_origin": "ast",
       "id": "locales_id_members",
-      "community": 21,
+      "community": 9,
       "norm_label": "members"
     },
     {
@@ -6940,7 +6940,7 @@
       "source_location": "L292",
       "_origin": "ast",
       "id": "locales_id_members_title",
-      "community": 21,
+      "community": 9,
       "norm_label": "title"
     },
     {
@@ -6950,7 +6950,7 @@
       "source_location": "L293",
       "_origin": "ast",
       "id": "locales_id_members_subtitle",
-      "community": 21,
+      "community": 9,
       "norm_label": "subtitle"
     },
     {
@@ -6960,7 +6960,7 @@
       "source_location": "L294",
       "_origin": "ast",
       "id": "locales_id_members_addmember",
-      "community": 21,
+      "community": 9,
       "norm_label": "addmember"
     },
     {
@@ -6970,7 +6970,7 @@
       "source_location": "L295",
       "_origin": "ast",
       "id": "locales_id_members_editmember",
-      "community": 21,
+      "community": 9,
       "norm_label": "editmember"
     },
     {
@@ -6980,7 +6980,7 @@
       "source_location": "L296",
       "_origin": "ast",
       "id": "locales_id_members_roles",
-      "community": 21,
+      "community": 9,
       "norm_label": "roles"
     },
     {
@@ -6990,7 +6990,7 @@
       "source_location": "L297",
       "_origin": "ast",
       "id": "locales_id_roles_father",
-      "community": 21,
+      "community": 9,
       "norm_label": "father"
     },
     {
@@ -7000,7 +7000,7 @@
       "source_location": "L298",
       "_origin": "ast",
       "id": "locales_id_roles_mother",
-      "community": 21,
+      "community": 9,
       "norm_label": "mother"
     },
     {
@@ -7010,7 +7010,7 @@
       "source_location": "L299",
       "_origin": "ast",
       "id": "locales_id_roles_child",
-      "community": 21,
+      "community": 9,
       "norm_label": "child"
     },
     {
@@ -7020,7 +7020,7 @@
       "source_location": "L301",
       "_origin": "ast",
       "id": "locales_id_members_validation",
-      "community": 15,
+      "community": 9,
       "norm_label": "validation"
     },
     {
@@ -7030,7 +7030,7 @@
       "source_location": "L303",
       "_origin": "ast",
       "id": "locales_id_validation_role",
-      "community": 15,
+      "community": 9,
       "norm_label": "role"
     },
     {
@@ -7350,7 +7350,7 @@
       "source_location": "L339",
       "_origin": "ast",
       "id": "locales_id_shopping_validation",
-      "community": 15,
+      "community": 21,
       "norm_label": "validation"
     },
     {
@@ -7360,7 +7360,7 @@
       "source_location": "L343",
       "_origin": "ast",
       "id": "locales_id_ai",
-      "community": 21,
+      "community": 134,
       "norm_label": "ai"
     },
     {
@@ -7370,7 +7370,7 @@
       "source_location": "L344",
       "_origin": "ast",
       "id": "locales_id_ai_title",
-      "community": 21,
+      "community": 134,
       "norm_label": "title"
     },
     {
@@ -7380,7 +7380,7 @@
       "source_location": "L345",
       "_origin": "ast",
       "id": "locales_id_ai_subtitle",
-      "community": 21,
+      "community": 134,
       "norm_label": "subtitle"
     },
     {
@@ -7390,7 +7390,7 @@
       "source_location": "L346",
       "_origin": "ast",
       "id": "locales_id_ai_welcome",
-      "community": 21,
+      "community": 134,
       "norm_label": "welcome"
     },
     {
@@ -7460,7 +7460,7 @@
       "source_location": "L355",
       "_origin": "ast",
       "id": "locales_id_tours_dashboard",
-      "community": 110,
+      "community": 15,
       "norm_label": "dashboard"
     },
     {
@@ -7470,7 +7470,7 @@
       "source_location": "L357",
       "_origin": "ast",
       "id": "locales_id_period_title",
-      "community": 110,
+      "community": 15,
       "norm_label": "title"
     },
     {
@@ -7480,7 +7480,7 @@
       "source_location": "L358",
       "_origin": "ast",
       "id": "locales_id_period_description",
-      "community": 110,
+      "community": 15,
       "norm_label": "description"
     },
     {
@@ -7490,7 +7490,7 @@
       "source_location": "L360",
       "_origin": "ast",
       "id": "locales_id_dashboard_balance",
-      "community": 110,
+      "community": 15,
       "norm_label": "balance"
     },
     {
@@ -7500,7 +7500,7 @@
       "source_location": "L361",
       "_origin": "ast",
       "id": "locales_id_balance_title",
-      "community": 110,
+      "community": 15,
       "norm_label": "title"
     },
     {
@@ -7510,7 +7510,7 @@
       "source_location": "L362",
       "_origin": "ast",
       "id": "locales_id_balance_description",
-      "community": 110,
+      "community": 15,
       "norm_label": "description"
     },
     {
@@ -7520,7 +7520,7 @@
       "source_location": "L364",
       "_origin": "ast",
       "id": "locales_id_dashboard_income",
-      "community": 110,
+      "community": 15,
       "norm_label": "income"
     },
     {
@@ -7530,7 +7530,7 @@
       "source_location": "L365",
       "_origin": "ast",
       "id": "locales_id_income_title",
-      "community": 110,
+      "community": 15,
       "norm_label": "title"
     },
     {
@@ -7540,7 +7540,7 @@
       "source_location": "L366",
       "_origin": "ast",
       "id": "locales_id_income_description",
-      "community": 110,
+      "community": 15,
       "norm_label": "description"
     },
     {
@@ -7550,7 +7550,7 @@
       "source_location": "L368",
       "_origin": "ast",
       "id": "locales_id_dashboard_expense",
-      "community": 110,
+      "community": 15,
       "norm_label": "expense"
     },
     {
@@ -7560,7 +7560,7 @@
       "source_location": "L369",
       "_origin": "ast",
       "id": "locales_id_expense_title",
-      "community": 110,
+      "community": 15,
       "norm_label": "title"
     },
     {
@@ -7570,7 +7570,7 @@
       "source_location": "L370",
       "_origin": "ast",
       "id": "locales_id_expense_description",
-      "community": 110,
+      "community": 15,
       "norm_label": "description"
     },
     {
@@ -7630,7 +7630,7 @@
       "source_location": "L380",
       "_origin": "ast",
       "id": "locales_id_dashboard_charts",
-      "community": 110,
+      "community": 36,
       "norm_label": "charts"
     },
     {
@@ -7640,7 +7640,7 @@
       "source_location": "L381",
       "_origin": "ast",
       "id": "locales_id_charts_title",
-      "community": 110,
+      "community": 36,
       "norm_label": "title"
     },
     {
@@ -7650,7 +7650,7 @@
       "source_location": "L382",
       "_origin": "ast",
       "id": "locales_id_charts_description",
-      "community": 110,
+      "community": 36,
       "norm_label": "description"
     },
     {
@@ -7660,7 +7660,7 @@
       "source_location": "L385",
       "_origin": "ast",
       "id": "locales_id_tours_transactions",
-      "community": 34,
+      "community": 111,
       "norm_label": "transactions"
     },
     {
@@ -7670,7 +7670,7 @@
       "source_location": "L386",
       "_origin": "ast",
       "id": "locales_id_transactions_header",
-      "community": 34,
+      "community": 111,
       "norm_label": "header"
     },
     {
@@ -7680,7 +7680,7 @@
       "source_location": "L387",
       "_origin": "ast",
       "id": "locales_id_header_title",
-      "community": 34,
+      "community": 111,
       "norm_label": "title"
     },
     {
@@ -7690,7 +7690,7 @@
       "source_location": "L388",
       "_origin": "ast",
       "id": "locales_id_header_description",
-      "community": 34,
+      "community": 111,
       "norm_label": "description"
     },
     {
@@ -7730,7 +7730,7 @@
       "source_location": "L394",
       "_origin": "ast",
       "id": "locales_id_transactions_transfer",
-      "community": 34,
+      "community": 111,
       "norm_label": "transfer"
     },
     {
@@ -7740,7 +7740,7 @@
       "source_location": "L395",
       "_origin": "ast",
       "id": "locales_id_transfer_title",
-      "community": 34,
+      "community": 111,
       "norm_label": "title"
     },
     {
@@ -7750,7 +7750,7 @@
       "source_location": "L396",
       "_origin": "ast",
       "id": "locales_id_transfer_description",
-      "community": 34,
+      "community": 111,
       "norm_label": "description"
     },
     {
@@ -7830,7 +7830,7 @@
       "source_location": "L408",
       "_origin": "ast",
       "id": "locales_id_accounts_header",
-      "community": 34,
+      "community": 111,
       "norm_label": "header"
     },
     {
@@ -7850,7 +7850,7 @@
       "source_location": "L416",
       "_origin": "ast",
       "id": "locales_id_accounts_list",
-      "community": 121,
+      "community": 34,
       "norm_label": "list"
     },
     {
@@ -7860,7 +7860,7 @@
       "source_location": "L417",
       "_origin": "ast",
       "id": "locales_id_list_title",
-      "community": 121,
+      "community": 34,
       "norm_label": "title"
     },
     {
@@ -7870,7 +7870,7 @@
       "source_location": "L418",
       "_origin": "ast",
       "id": "locales_id_list_description",
-      "community": 121,
+      "community": 34,
       "norm_label": "description"
     },
     {
@@ -7890,7 +7890,7 @@
       "source_location": "L422",
       "_origin": "ast",
       "id": "locales_id_budgets_header",
-      "community": 34,
+      "community": 111,
       "norm_label": "header"
     },
     {
@@ -7910,7 +7910,7 @@
       "source_location": "L430",
       "_origin": "ast",
       "id": "locales_id_budgets_list",
-      "community": 121,
+      "community": 34,
       "norm_label": "list"
     },
     {
@@ -7920,7 +7920,7 @@
       "source_location": "L434",
       "_origin": "ast",
       "id": "locales_id_budgets_alerts",
-      "community": 27,
+      "community": 110,
       "norm_label": "alerts"
     },
     {
@@ -7930,7 +7930,7 @@
       "source_location": "L435",
       "_origin": "ast",
       "id": "locales_id_alerts_title",
-      "community": 27,
+      "community": 110,
       "norm_label": "title"
     },
     {
@@ -7940,7 +7940,7 @@
       "source_location": "L436",
       "_origin": "ast",
       "id": "locales_id_alerts_description",
-      "community": 27,
+      "community": 110,
       "norm_label": "description"
     },
     {
@@ -7960,7 +7960,7 @@
       "source_location": "L440",
       "_origin": "ast",
       "id": "locales_id_goals_header",
-      "community": 34,
+      "community": 111,
       "norm_label": "header"
     },
     {
@@ -7970,7 +7970,7 @@
       "source_location": "L444",
       "_origin": "ast",
       "id": "locales_id_goals_add",
-      "community": 34,
+      "community": 110,
       "norm_label": "add"
     },
     {
@@ -7980,7 +7980,7 @@
       "source_location": "L448",
       "_origin": "ast",
       "id": "locales_id_goals_list",
-      "community": 121,
+      "community": 34,
       "norm_label": "list"
     },
     {
@@ -8000,7 +8000,7 @@
       "source_location": "L454",
       "_origin": "ast",
       "id": "locales_id_recurring_header",
-      "community": 34,
+      "community": 111,
       "norm_label": "header"
     },
     {
@@ -8020,7 +8020,7 @@
       "source_location": "L462",
       "_origin": "ast",
       "id": "locales_id_recurring_list",
-      "community": 121,
+      "community": 34,
       "norm_label": "list"
     },
     {
@@ -8030,7 +8030,7 @@
       "source_location": "L467",
       "_origin": "ast",
       "id": "locales_id_tours_reports",
-      "community": 34,
+      "community": 36,
       "norm_label": "reports"
     },
     {
@@ -8040,7 +8040,7 @@
       "source_location": "L468",
       "_origin": "ast",
       "id": "locales_id_reports_header",
-      "community": 34,
+      "community": 111,
       "norm_label": "header"
     },
     {
@@ -8060,7 +8060,7 @@
       "source_location": "L476",
       "_origin": "ast",
       "id": "locales_id_reports_charts",
-      "community": 110,
+      "community": 36,
       "norm_label": "charts"
     },
     {
@@ -9244,10 +9244,20 @@
       "norm_label": "receiptscanner.js"
     },
     {
+      "label": "fuzzyMonths",
+      "file_type": "code",
+      "source_file": "frontend/src/utils/receiptScanner.js",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "utils_receiptscanner_fuzzymonths",
+      "community": 43,
+      "norm_label": "fuzzymonths"
+    },
+    {
       "label": "extractNumbers()",
       "file_type": "code",
       "source_file": "frontend/src/utils/receiptScanner.js",
-      "source_location": "L6",
+      "source_location": "L22",
       "_origin": "ast",
       "id": "utils_receiptscanner_extractnumbers",
       "community": 43,
@@ -9257,7 +9267,7 @@
       "label": "cleanLineOfDatesAndTimes()",
       "file_type": "code",
       "source_file": "frontend/src/utils/receiptScanner.js",
-      "source_location": "L31",
+      "source_location": "L47",
       "_origin": "ast",
       "id": "utils_receiptscanner_cleanlineofdatesandtimes",
       "community": 43,
@@ -9267,7 +9277,7 @@
       "label": "parseDate()",
       "file_type": "code",
       "source_file": "frontend/src/utils/receiptScanner.js",
-      "source_location": "L52",
+      "source_location": "L68",
       "_origin": "ast",
       "id": "utils_receiptscanner_parsedate",
       "community": 43,
@@ -9277,7 +9287,7 @@
       "label": "scanReceipt()",
       "file_type": "code",
       "source_file": "frontend/src/utils/receiptScanner.js",
-      "source_location": "L116",
+      "source_location": "L127",
       "_origin": "ast",
       "id": "utils_receiptscanner_scanreceipt",
       "community": 43,
@@ -25594,9 +25604,9 @@
       "source_file": "frontend/src/utils/receiptScanner.js",
       "source_location": "L31",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "utils_receiptscanner",
-      "target": "utils_receiptscanner_cleanlineofdatesandtimes",
-      "confidence_score": 1.0
+      "target": "utils_receiptscanner_cleanlineofdatesandtimes"
     },
     {
       "relation": "contains",
@@ -25607,6 +25617,16 @@
       "confidence_score": 1.0,
       "source": "utils_receiptscanner",
       "target": "utils_receiptscanner_extractnumbers"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/utils/receiptScanner.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "utils_receiptscanner",
+      "target": "utils_receiptscanner_fuzzymonths",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -25646,9 +25666,9 @@
       "source_file": "frontend/src/utils/receiptScanner.js",
       "source_location": "L222",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "utils_receiptscanner_scanreceipt",
-      "target": "utils_receiptscanner_cleanlineofdatesandtimes",
-      "confidence_score": 1.0
+      "target": "utils_receiptscanner_cleanlineofdatesandtimes"
     },
     {
       "relation": "calls",

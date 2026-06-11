@@ -155,8 +155,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/TransactionsPage.vue": {
-    "mtime": 1781143700.9708948,
-    "ast_hash": "151200ba87be5594223303ced0ca2f01",
+    "mtime": 1781150615.6417532,
+    "ast_hash": "b93d2c28246a17bc637deb988a9e80d7",
     "semantic_hash": ""
   },
   "frontend/src/router/index.js": {
@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "docs/implementation_plan.md": {
-    "mtime": 1781148899.8481772,
-    "ast_hash": "d44f7f84936571dcb940910bd362ae4e",
+    "mtime": 1781150646.8965,
+    "ast_hash": "4ef3135f4d63017bff78bc33455d653e",
     "semantic_hash": ""
   },
   "docs/supabase-setup-guide.md": {
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "docs/task.md": {
-    "mtime": 1781148894.0902026,
-    "ast_hash": "82f0a8d2300c8d6e3e703b476892f430",
+    "mtime": 1781150632.9590962,
+    "ast_hash": "06b8c86653e30089228896c68f324b63",
     "semantic_hash": ""
   },
   "docs/walkthrough_graphify.md": {
@@ -535,8 +535,8 @@
     "semantic_hash": ""
   },
   "frontend/src/utils/receiptScanner.js": {
-    "mtime": 1781148884.2595234,
-    "ast_hash": "cef3788d18e8878cc8b09de27278a5e8",
+    "mtime": 1781150203.681128,
+    "ast_hash": "62c7c1b7185485a58148c6ff09d99a97",
     "semantic_hash": ""
   },
   "graphify-out/memory/query_20260609_044005_recurring.md": {

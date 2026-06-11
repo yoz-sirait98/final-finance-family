@@ -1,16 +1,16 @@
 # Graph Report - redesign-ui-supabase-stack  (2026-06-11)
 
 ## Corpus Check
-- 110 files · ~93,754 words
+- 110 files · ~93,842 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1144 nodes · 1588 edges · 133 communities (97 shown, 36 thin omitted)
+- 1144 nodes · 1588 edges · 132 communities (96 shown, 36 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `cc7c7db6`
+- Built from commit: `73ce0fb3`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -103,7 +103,6 @@
 - [[_COMMUNITY_Community 110|Community 110]]
 - [[_COMMUNITY_Community 111|Community 111]]
 - [[_COMMUNITY_Community 112|Community 112]]
-- [[_COMMUNITY_Community 113|Community 113]]
 - [[_COMMUNITY_Community 114|Community 114]]
 - [[_COMMUNITY_Community 115|Community 115]]
 - [[_COMMUNITY_Community 116|Community 116]]
@@ -148,7 +147,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (133 total, 36 thin omitted)
+## Communities (132 total, 36 thin omitted)
 
 ### Community 0 - "Common UI Actions"
 Cohesion: 0.08
@@ -227,8 +226,8 @@ Cohesion: 0.23
 Nodes (7): useTour(), app, localeStore, pinia, useLocaleStore, useTourStore, queryClient
 
 ### Community 20 - "Virtual Scroll Component"
-Cohesion: 0.15
-Nodes (13): dashboard, expenseByCategory, expenseTrend, incomeVsExpense, insightsNew, monthlyExpense, monthlyIncome, monthlyNet (+5 more)
+Cohesion: 0.12
+Nodes (16): dashboard, expenseByCategory, expenseTrend, incomeVsExpense, insights, insightsNew, monthlyExpense, monthlyIncome (+8 more)
 
 ### Community 21 - "Budget Limits and Alerts"
 Cohesion: 0.18
@@ -251,8 +250,8 @@ Cohesion: 0.17
 Nodes (12): goals, addGoal, completedManuallyError, currentAmount, deadline, editGoal, linkedAccount, linkedAccountInfo (+4 more)
 
 ### Community 26 - "Community 26"
-Cohesion: 0.22
-Nodes (14): add, list, description, title, add, list, list, description (+6 more)
+Cohesion: 0.53
+Nodes (6): list, list, list, description, title, list
 
 ### Community 27 - "Supabase Skill Configuration"
 Cohesion: 0.15
@@ -263,8 +262,8 @@ Cohesion: 0.17
 Nodes (11): Aplikasi Web Frontend Family Finance, Asisten Keuangan AI & Sinkronisasi API Key (Gemini & Supabase), Catatan Arsitektur & Desain, Eksport Laporan Client-Side, Global State (Pinia), Integritas Sistem & Visual Guardrail, Notifikasi Toast Real-Time, Penanganan Event Native Vue (+3 more)
 
 ### Community 29 - "Report Generation and Export"
-Cohesion: 0.14
-Nodes (15): description, title, charts, description, title, reports, charts, endDate (+7 more)
+Cohesion: 0.18
+Nodes (11): description, title, reports, endDate, export, exportCsv, exportPdf, generating (+3 more)
 
 ### Community 30 - "Social Media Icons"
 Cohesion: 0.15
@@ -304,7 +303,7 @@ Nodes (10): subtitle, members, addMember, editMember, roles, subtitle, title, ch
 
 ### Community 39 - "Database Backup Script"
 Cohesion: 0.15
-Nodes (13): description, title, balance, expense, income, insights, description, title (+5 more)
+Nodes (14): description, title, description, title, balance, charts, expense, income (+6 more)
 
 ### Community 40 - "UI Assets and Icons"
 Cohesion: 0.17
@@ -362,10 +361,6 @@ Nodes (12): header, header, header, description, title, header, header, transact
 Cohesion: 0.18
 Nodes (10): 1. Build Compilation, 1. Database Schema Update (`000021_add_gemini_api_key_to_families.sql`), 2. Auto-Hydration on Login (`auth.js` Pinia Store), 2. How to Verify Manually, 3. Settings Page Sync (`SettingsPage.vue`), Features Implemented, Step A: Apply Migration, Step B: Test Syncing (+2 more)
 
-### Community 113 - "Community 113"
-Cohesion: 0.67
-Nodes (4): description, title, filters, filters
-
 ### Community 114 - "Community 114"
 Cohesion: 0.33
 Nodes (6): 1. Modular Rules Under `.agents/rules/`, 2. Root `.cursorrules` Reorganization, Implementation Details, Manual Verification, Part 5 — Modular Agent Rules and Knowledge Base Rearrangement (Completed), Verification Plan
@@ -391,8 +386,8 @@ Cohesion: 0.29
 Nodes (7): 1. Offline Receipt OCR Parsing, 2. Conversational AI Coach, Automated / Build Verification, Implementation Details, Manual Verification, Part 6 — Offline OCR Receipt Scanner & AI Financial Coach, Verification Plan
 
 ### Community 124 - "Community 124"
-Cohesion: 0.19
-Nodes (15): header, header, description, title, header, header, tours, budgets (+7 more)
+Cohesion: 0.12
+Nodes (27): add, header, description, title, add, header, description, title (+19 more)
 
 ### Community 126 - "Community 126"
 Cohesion: 0.50
@@ -434,7 +429,7 @@ Nodes (8): Feature 1: Receipt Image Storage, Feature 2: Financial Calendar View,
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `dashboard` connect `Virtual Scroll Component` to `Time Intervals`, `Database Backup Script`, `Community 105`, `Community 107`, `Dashboard Analytics Metrics`, `Community 124`, `Report Generation and Export`?**
+- **Why does `dashboard` connect `Virtual Scroll Component` to `Time Intervals`, `Database Backup Script`, `Community 105`, `Community 107`, `Dashboard Analytics Metrics`, `Community 124`?**
   _High betweenness centrality (0.079) - this node is a cross-community bridge._
 - **Why does `common` connect `Common UI Actions` to `Community 134`, `Transactions Page View`, `Community 46`, `Community 110`, `Community 126`?**
   _High betweenness centrality (0.068) - this node is a cross-community bridge._

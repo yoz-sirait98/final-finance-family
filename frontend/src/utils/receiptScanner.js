@@ -42,7 +42,8 @@ function extractNumbers(text) {
 }
 
 /**
- * Clean dates and times from a line before extracting numbers to avoid false positives
+ * Clean dates and times from a line before extracting numbers to avoid false positives.
+ * Uses ES2018 lookbehind/lookahead assertions to be resilient to missing word/number spacing.
  */
 function cleanLineOfDatesAndTimes(line) {
   let cleaned = line.toLowerCase();
@@ -51,25 +52,26 @@ function cleanLineOfDatesAndTimes(line) {
   cleaned = cleaned.replace(/\b\d{1,2}:\d{2}(?::\d{2})?\b/g, ' ');
   
   // Remove dates with slashes, dashes, or dots (e.g. 11/06/2026, 11-06-26, 11.06.2026)
-  cleaned = cleaned.replace(/\b\d{1,2}[/\-.]\d{1,2}[/\-.]\d{2,4}\b/g, ' ');
-  cleaned = cleaned.replace(/\b\d{4}[/\-.]\d{1,2}[/\-.]\d{1,2}\b/g, ' ');
+  cleaned = cleaned.replace(/(?<!\d)\d{1,2}[/\-.]\d{1,2}[/\-.]\d{2,4}(?!\d)/g, ' ');
+  cleaned = cleaned.replace(/(?<!\d)\d{4}[/\-.]\d{1,2}[/\-.]\d{1,2}(?!\d)/g, ' ');
   
   // Remove word dates (e.g. 10 Jun 2026 or 10-Juni-2026)
   const monthsPattern = '(?:jan|feb|mar|apr|mei|may|jun|jul|ags|aug|sep|okt|oct|nov|des|dec)[a-z]*';
-  const wordDateRegex = new RegExp(`\\b\\d{1,2}[\\s/\\-.]*${monthsPattern}[\\s/\\-.]*\\d{2,4}\\b`, 'g');
+  const wordDateRegex = new RegExp(`(?<!\\d)\\d{1,2}[\\s/\\-.]*${monthsPattern}[\\s/\\-.]*\\d{2,4}(?!\\d)`, 'g');
   cleaned = cleaned.replace(wordDateRegex, ' ');
   
   return cleaned;
 }
 
 /**
- * Parse date string from text
+ * Parse date string from text.
+ * Uses ES2018 lookbehind/lookahead assertions to handle squeezed spaces (e.g. "on9 June 2026").
  */
 function parseDate(text) {
   const textLower = text.toLowerCase();
   
   // 1. Check standard DD/MM/YY(YY) or DD-MM-YY(YY) or DD.MM.YY(YY)
-  const standardDateRegex = /\b(\d{1,2})[/\-.](\d{1,2})[/\-.](\d{2,4})\b/;
+  const standardDateRegex = /(?<!\d)(\d{1,2})[/\-.](\d{1,2})[/\-.](\d{2,4})(?!\d)/;
   const matchStd = textLower.match(standardDateRegex);
   if (matchStd) {
     const day = parseInt(matchStd[1], 10);
@@ -88,7 +90,7 @@ function parseDate(text) {
   }
 
   // 2. Check YYYY-MM-DD or YYYY/MM/DD or YYYY.MM.DD
-  const isoDateRegex = /\b(\d{4})[/\-.](\d{1,2})[/\-.](\d{1,2})\b/;
+  const isoDateRegex = /(?<!\d)(\d{4})[/\-.](\d{1,2})[/\-.](\d{1,2})(?!\d)/;
   const matchIso = textLower.match(isoDateRegex);
   if (matchIso) {
     const year = parseInt(matchIso[1], 10);
@@ -101,7 +103,7 @@ function parseDate(text) {
   
   // 3. Check word dates with fuzzy matching
   for (const mItem of fuzzyMonths) {
-    const wordRegex = new RegExp(`\\b(\\d{1,2})[\\s/\\-.]*(${mItem.pattern.source})[a-z]*[\\s/\\-.]*(\\d{2,4})\\b`, 'i');
+    const wordRegex = new RegExp(`(?<!\\d)(\\d{1,2})[\\s/\\-.]*(${mItem.pattern.source})[a-z]*[\\s/\\-.]*(\\d{2,4})(?!\\d)`, 'i');
     const wordMatch = textLower.match(wordRegex);
     if (wordMatch) {
       const day = parseInt(wordMatch[1], 10);
