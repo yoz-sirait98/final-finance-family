@@ -1,5 +1,21 @@
 import Tesseract from 'tesseract.js';
 
+// Fuzzy month configurations for robust date extraction despite OCR errors
+const fuzzyMonths = [
+  { pattern: /ja[nu|m|n]/i, val: '01' },
+  { pattern: /f[eb|p]|p[eb|p]/i, val: '02' },
+  { pattern: /ma[r|t]/i, val: '03' },
+  { pattern: /ap[r|l]/i, val: '04' },
+  { pattern: /me[iy]|ma[yi]/i, val: '05' },
+  { pattern: /ju[nmrhi][ei]?/i, val: '06' }, // Matches Jun, Juni, June, Jume, Jure, Juhi, etc.
+  { pattern: /ju[liy]/i, val: '07' },
+  { pattern: /au[gs]|ag[su]/i, val: '08' },
+  { pattern: /se[pt]/i, val: '09' },
+  { pattern: /ok[tc]|oc[tk]/i, val: '10' },
+  { pattern: /no[vw]/i, val: '11' },
+  { pattern: /de[sc]/i, val: '12' }
+];
+
 /**
  * Clean and parse numbers from OCR lines
  */
@@ -83,25 +99,20 @@ function parseDate(text) {
     }
   }
   
-  // 3. Check word dates (Indonesian & English months)
-  const monthsMap = {
-    jan: '01', peb: '02', feb: '02', mar: '03', apr: '04', mei: '05', may: '05',
-    jun: '06', jul: '07', ags: '08', aug: '08', sep: '09', okt: '10', nov: '11', des: '12', dec: '12'
-  };
-  
-  for (const [mName, mVal] of Object.entries(monthsMap)) {
-    const wordRegex = new RegExp(`\\b(\\d{1,2})[\\s/\\-.]*${mName}[a-z]*[\\s/\\-.]*(\\d{2,4})\\b`);
+  // 3. Check word dates with fuzzy matching
+  for (const mItem of fuzzyMonths) {
+    const wordRegex = new RegExp(`\\b(\\d{1,2})[\\s/\\-.]*(${mItem.pattern.source})[a-z]*[\\s/\\-.]*(\\d{2,4})\\b`, 'i');
     const wordMatch = textLower.match(wordRegex);
     if (wordMatch) {
       const day = parseInt(wordMatch[1], 10);
-      const yearStr = wordMatch[2];
+      const yearStr = wordMatch[3];
       if (day >= 1 && day <= 31) {
         let year = parseInt(yearStr, 10);
         if (yearStr.length === 2) {
           year = 2000 + year;
         }
         if (year >= 2000 && year <= 2099) {
-          return `${year}-${mVal}-${String(day).padStart(2, '0')}`;
+          return `${year}-${mItem.val}-${String(day).padStart(2, '0')}`;
         }
       }
     }
@@ -154,6 +165,8 @@ export async function scanReceipt(imageFile, progressCallback) {
     { pattern: /cinema\s*xxi/i, name: 'Cinema XXI' },
     { pattern: /pertamina/i, name: 'Pertamina' },
     { pattern: /shell/i, name: 'Shell' },
+    { pattern: /grab|grob|greb|enjoyed your ride/i, name: 'Grab' },
+    { pattern: /gojek|go-jek/i, name: 'Gojek' }
   ];
   
   let merchantName = '';
@@ -274,7 +287,7 @@ export async function scanReceipt(imageFile, progressCallback) {
     recommendedCategoryType = 'health';
   } else if (rawTextLower.match(/(pln|listrik|pdam|air|telkom|internet|pulsa|speedy)/)) {
     recommendedCategoryType = 'utilities';
-  } else if (rawTextLower.match(/(pertamina|bensin|shell|gojek|grab|taxi|toll|parkir|bensin)/)) {
+  } else if (rawTextLower.match(/(pertamina|bensin|shell|gojek|go-jek|grab|grob|greb|taxi|toll|parkir|bensin|ride|fare|passenger|booking|trip|perjalanan|driver)/)) {
     recommendedCategoryType = 'transport';
   }
   

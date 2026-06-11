@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "docs/implementation_plan.md": {
-    "mtime": 1781148703.5870495,
-    "ast_hash": "2e7f4a753eb6a09b0867cffcf7a833e9",
+    "mtime": 1781148899.8481772,
+    "ast_hash": "d44f7f84936571dcb940910bd362ae4e",
     "semantic_hash": ""
   },
   "docs/supabase-setup-guide.md": {
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "docs/task.md": {
-    "mtime": 1781148697.8290007,
-    "ast_hash": "5def0ff3d7cf4836c5c6de7aabe2d1ee",
+    "mtime": 1781148894.0902026,
+    "ast_hash": "82f0a8d2300c8d6e3e703b476892f430",
     "semantic_hash": ""
   },
   "docs/walkthrough_graphify.md": {
@@ -535,8 +535,8 @@
     "semantic_hash": ""
   },
   "frontend/src/utils/receiptScanner.js": {
-    "mtime": 1781143590.1684973,
-    "ast_hash": "26d2b8423d44734bae94513e6e7d5a35",
+    "mtime": 1781150203.681128,
+    "ast_hash": "62c7c1b7185485a58148c6ff09d99a97",
     "semantic_hash": ""
   },
   "graphify-out/memory/query_20260609_044005_recurring.md": {
