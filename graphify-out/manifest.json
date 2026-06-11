@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "docs/implementation_plan.md": {
-    "mtime": 1781150646.8965,
-    "ast_hash": "4ef3135f4d63017bff78bc33455d653e",
+    "mtime": 1781151628.5564964,
+    "ast_hash": "1dbb1b26dbc970d526899f80b289f528",
     "semantic_hash": ""
   },
   "docs/supabase-setup-guide.md": {
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "docs/task.md": {
-    "mtime": 1781150632.9590962,
-    "ast_hash": "06b8c86653e30089228896c68f324b63",
+    "mtime": 1781151611.5648358,
+    "ast_hash": "93d7e9c39d7dcbfe352a46625166d7d5",
     "semantic_hash": ""
   },
   "docs/walkthrough_graphify.md": {
@@ -640,8 +640,8 @@
     "semantic_hash": ""
   },
   "frontend/src/services/storageService.js": {
-    "mtime": 1781143579.6219883,
-    "ast_hash": "aad030bd5dbc3c03a5a4cac82a7c4a9f",
+    "mtime": 1781151347.7986486,
+    "ast_hash": "1551a0c29f6a62c18e02e6a0467ad948",
     "semantic_hash": ""
   },
   "supabase/migrations/000022_add_receipt_url_to_transactions.sql": {
@@ -652,6 +652,11 @@
   "docs/walkthrough_receipt_storage_calendar.md": {
     "mtime": 1781147874.7583482,
     "ast_hash": "8b574a67f0aee50dbe322d17bc2966b7",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/000023_add_storage_bucket_and_rls_policies.sql": {
+    "mtime": 1781152967.673469,
+    "ast_hash": "1346b9eeb66b0a1eeb2100695467ad6c",
     "semantic_hash": ""
   }
 }
