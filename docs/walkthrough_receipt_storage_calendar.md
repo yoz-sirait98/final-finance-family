@@ -101,3 +101,13 @@ graphify update . → 1116 nodes, 1560 edges, 134 communities
 - [ ] Click Today → jumps to current month
 - [ ] Switch to ID locale → verify day names, UI text translate correctly
 - [ ] Resize to mobile → list view shows instead of grid
+- [ ] Verify calendar is fully legible in both Light and Dark modes (borders visible in light mode, hover states and today highlighted in theme primary colors).
+
+---
+
+## Auditing & Theming Compatibility (2026-06-11)
+
+- Audited `CalendarPage.vue` for full light/dark mode legibility.
+- Fixed calendar grid borders being invisible in light mode by replacing undefined `--border-color` variable (which fell back to `rgba(255,255,255,0.07)`) with the theme's `--input-border` variable.
+- Replaced undefined `--primary` variable references with `--primary-color` to ensure today's cell highlight and hover border borders match the active theme's accent color (periwinkle in light, violet in dark).
+
