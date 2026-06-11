@@ -429,6 +429,8 @@ Monthly calendar page with 7-column grid (Mon-Sun), colored dots per day (🟢 i
 - **[MODIFY]** `frontend/src/utils/receiptScanner.js` — refined Tesseract parsing with robust date formatting (2-digit years, dots/slashes), cash/change exclusions, and bottom-up scanner heuristics to solve inaccurate pre-fill issues.
 - **[MODIFY]** `frontend/src/pages/TransactionsPage.vue` — added dynamic family member matching by searching the scanned receipt's raw text for active family members' names.
 - **[MODIFY]** `frontend/src/services/storageService.js` — removed redundant `receipts/` path prefix from upload target to correctly conform to the Supabase Storage folder-level RLS policy.
+- **[NEW]** `supabase/migrations/000023_add_storage_bucket_and_rls_policies.sql` — database migration defining private `receipts` bucket and folder-level storage RLS policies for uploads/reads/deletes.
+
 
 
 

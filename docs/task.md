@@ -88,6 +88,8 @@
 - `[x]` Task 67: Refactor `receiptScanner.js` to improve OCR parsing accuracy, adding date range/2-digit validation and bottom-up total amount search
 - `[x]` Task 68: Update `TransactionsPage.vue` to dynamically match family member from scanned receipt text
 - `[x]` Task 69: Remove redundant receipts/ folder prefix in `storageService.js` to satisfy Supabase Storage RLS folder isolation
+- `[x]` Task 70: Create database migration `000023_add_storage_bucket_and_rls_policies.sql` to setup receipts bucket and configure storage.objects RLS policies
+
 
 
 
