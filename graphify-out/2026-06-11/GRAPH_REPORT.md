@@ -1,16 +1,16 @@
 # Graph Report - redesign-ui-supabase-stack  (2026-06-11)
 
 ## Corpus Check
-- 110 files · ~92,628 words
+- 110 files · ~92,725 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1139 nodes · 1582 edges · 138 communities (102 shown, 36 thin omitted)
+- 1140 nodes · 1583 edges · 137 communities (101 shown, 36 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `02aa0146`
+- Built from commit: `3e47635f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -122,7 +122,6 @@
 - [[_COMMUNITY_Community 131|Community 131]]
 - [[_COMMUNITY_Community 132|Community 132]]
 - [[_COMMUNITY_Community 134|Community 134]]
-- [[_COMMUNITY_Community 135|Community 135]]
 - [[_COMMUNITY_Community 136|Community 136]]
 - [[_COMMUNITY_Community 137|Community 137]]
 
@@ -153,7 +152,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (138 total, 36 thin omitted)
+## Communities (137 total, 36 thin omitted)
 
 ### Community 0 - "Common UI Actions"
 Cohesion: 0.08
@@ -164,8 +163,8 @@ Cohesion: 0.07
 Nodes (29): common, actions, active, add, all, back, cancel, cancelled (+21 more)
 
 ### Community 2 - "Core Services and Routing"
-Cohesion: 0.25
-Nodes (9): Dependencies, Frontend, Frontend App, [MODIFY] [package.json](file:///c:/Projects/final-finance-family/frontend/package.json), [MODIFY] [TransactionsPage.vue](file:///c:/Projects/final-finance-family/frontend/src/pages/TransactionsPage.vue), [NEW] [receiptScanner.js](file:///c:/Projects/final-finance-family/frontend/src/utils/receiptScanner.js), Proposed Changes, Proposed Changes (+1 more)
+Cohesion: 0.18
+Nodes (13): Dependencies, Frontend, Frontend App, Manual Verification, [MODIFY] [package.json](file:///c:/Projects/final-finance-family/frontend/package.json), [MODIFY] [TransactionsPage.vue](file:///c:/Projects/final-finance-family/frontend/src/pages/TransactionsPage.vue), [NEW] [receiptScanner.js](file:///c:/Projects/final-finance-family/frontend/src/utils/receiptScanner.js), OCR Receipt Scanner (+5 more)
 
 ### Community 3 - "Project Dependencies"
 Cohesion: 0.06
@@ -204,20 +203,20 @@ Cohesion: 0.10
 Nodes (20): shopping, addedBy, addItem, bought, checkout, checkoutConfirm, checkoutSuccess, createPlan (+12 more)
 
 ### Community 13 - "Financial Insights and Charts"
-Cohesion: 0.08
-Nodes (26): 1. Migrated System Architecture, 2. Feature Inventory, 3. Business Rules Inventory, 4. Dependencies Inventory, 5. Risks, 6. Migration Complexity Assessment, [MODIFY] `frontend/package.json`, [MODIFY] `frontend/src/router/index.js` (+18 more)
+Cohesion: 0.12
+Nodes (16): [MODIFY] `frontend/package.json`, [MODIFY] `frontend/src/router/index.js`, [MODIFY] `frontend/src/stores/*` & `frontend/src/services/*`, [NEW] `frontend/src/lib/supabase.js`, [NEW] `supabase/migrations/000001_core_schema.sql`, [NEW] `supabase/migrations/000002_rls_policies.sql`, [NEW] `supabase/migrations/000003_business_logic_triggers.sql`, [NEW] `supabase/migrations/000004_rpc_and_views.sql` (+8 more)
 
 ### Community 14 - "Month Labels"
-Cohesion: 0.15
-Nodes (19): balance, description, title, alerts, expense, income, transfer, net (+11 more)
+Cohesion: 0.25
+Nodes (14): balance, expense, income, transfer, net, add, header, list (+6 more)
 
 ### Community 15 - "Financial Data Export"
 Cohesion: 0.29
 Nodes (7): categories, addCategory, color, editCategory, icon, subtitle, title
 
 ### Community 16 - "Month Labels"
-Cohesion: 0.22
-Nodes (9): accounts, accountName, accountNamePlaceholder, addAccount, balancePlaceholder, editAccount, subtitle, title (+1 more)
+Cohesion: 0.13
+Nodes (14): accounts, accountName, accountNamePlaceholder, addAccount, balancePlaceholder, editAccount, subtitle, title (+6 more)
 
 ### Community 17 - "Dashboard Analytics Metrics"
 Cohesion: 0.11
@@ -232,8 +231,8 @@ Cohesion: 0.23
 Nodes (7): useTour(), app, localeStore, pinia, useLocaleStore, useTourStore, queryClient
 
 ### Community 20 - "Virtual Scroll Component"
-Cohesion: 0.12
-Nodes (16): dashboard, expenseByCategory, expenseTrend, incomeVsExpense, insights, insightsNew, monthlyExpense, monthlyIncome (+8 more)
+Cohesion: 0.15
+Nodes (13): dashboard, expenseByCategory, expenseTrend, incomeVsExpense, insightsNew, monthlyExpense, monthlyIncome, monthlyNet (+5 more)
 
 ### Community 21 - "Budget Limits and Alerts"
 Cohesion: 0.20
@@ -256,8 +255,8 @@ Cohesion: 0.15
 Nodes (13): goals, addGoal, completedManuallyError, currentAmount, deadline, editGoal, linkedAccount, linkedAccountInfo (+5 more)
 
 ### Community 26 - "Community 26"
-Cohesion: 0.67
-Nodes (3): transfer, description, title
+Cohesion: 0.20
+Nodes (10): 1. Migrated System Architecture, 2. Feature Inventory, 3. Business Rules Inventory, 4. Dependencies Inventory, 5. Risks, 6. Migration Complexity Assessment, Part 1 â€” Family Finance Architecture Migration: Laravel to Supabase (Completed), Phase 1 â€” Project Discovery Report (+2 more)
 
 ### Community 27 - "Supabase Skill Configuration"
 Cohesion: 0.15
@@ -268,8 +267,8 @@ Cohesion: 0.17
 Nodes (11): Aplikasi Web Frontend Family Finance, Asisten Keuangan AI & Sinkronisasi API Key (Gemini & Supabase), Catatan Arsitektur & Desain, Eksport Laporan Client-Side, Global State (Pinia), Integritas Sistem & Visual Guardrail, Notifikasi Toast Real-Time, Penanganan Event Native Vue (+3 more)
 
 ### Community 29 - "Report Generation and Export"
-Cohesion: 0.18
-Nodes (12): description, title, reports, endDate, exportCsv, exportPdf, filters, generating (+4 more)
+Cohesion: 0.12
+Nodes (20): description, title, charts, description, title, description, title, reports (+12 more)
 
 ### Community 30 - "Social Media Icons"
 Cohesion: 0.15
@@ -288,16 +287,16 @@ Cohesion: 0.09
 Nodes (22): nav, accounts, aiadvisor, analytics, brand, budgetAlerts, budgets, calendar (+14 more)
 
 ### Community 34 - "Family Member Roles"
-Cohesion: 0.17
-Nodes (20): add, list, description, title, add, list, add, list (+12 more)
+Cohesion: 0.14
+Nodes (22): add, header, description, title, add, header, description, title (+14 more)
 
 ### Community 35 - "Community 35"
-Cohesion: 0.20
-Nodes (12): Automated / Database Verification, Automated Tests, Goal: Collaborative Shopping & Shared Bills, Manual Verification, Manual Verification, Manual Verification, OCR Receipt Scanner, Open Questions (+4 more)
+Cohesion: 0.29
+Nodes (8): Automated / Database Verification, Automated Tests, Goal: Collaborative Shopping & Shared Bills, Manual Verification, Manual Verification, Open Questions, Verification Plan, Verification Plan
 
 ### Community 36 - "Family Member Roles"
 Cohesion: 0.14
-Nodes (17): description, title, charts, description, title, reports, charts, endDate (+9 more)
+Nodes (15): description, title, description, title, reports, endDate, export, exportCsv (+7 more)
 
 ### Community 37 - "Date Formatting Utilities"
 Cohesion: 0.29
@@ -308,8 +307,8 @@ Cohesion: 0.20
 Nodes (10): subtitle, members, addMember, editMember, roles, subtitle, title, child (+2 more)
 
 ### Community 39 - "Database Backup Script"
-Cohesion: 0.20
-Nodes (16): balance, expense, income, transfer, net, period, description, title (+8 more)
+Cohesion: 0.14
+Nodes (21): balance, description, title, expense, income, transfer, balance, expense (+13 more)
 
 ### Community 40 - "UI Assets and Icons"
 Cohesion: 0.18
@@ -348,16 +347,16 @@ Cohesion: 0.08
 Nodes (28): login, register, success, createAccount, email, emailPlaceholder, failed, newHere (+20 more)
 
 ### Community 107 - "Community 107"
-Cohesion: 0.15
-Nodes (14): description, title, description, title, balance, charts, expense, income (+6 more)
+Cohesion: 0.67
+Nodes (3): income, description, title
 
 ### Community 108 - "Community 108"
 Cohesion: 0.12
 Nodes (16): confirmPassword, settings, aiConfig, changePassword, confirmPassword, currentPassword, geminiApiKey, languagePref (+8 more)
 
 ### Community 110 - "Community 110"
-Cohesion: 0.15
-Nodes (13): description, title, balance, expense, income, insights, description, title (+5 more)
+Cohesion: 0.12
+Nodes (16): description, title, balance, expense, income, insights, period, description (+8 more)
 
 ### Community 111 - "Community 111"
 Cohesion: 0.15
@@ -396,8 +395,8 @@ Cohesion: 0.29
 Nodes (7): 1. Offline Receipt OCR Parsing, 2. Conversational AI Coach, Automated / Build Verification, Implementation Details, Manual Verification, Part 6 — Offline OCR Receipt Scanner & AI Financial Coach, Verification Plan
 
 ### Community 121 - "Community 121"
-Cohesion: 0.60
-Nodes (5): type, type, bank, cash, e_wallet
+Cohesion: 0.28
+Nodes (9): list, description, title, alerts, list, description, title, list (+1 more)
 
 ### Community 122 - "Community 122"
 Cohesion: 0.33
@@ -405,11 +404,11 @@ Nodes (7): validation, validation, validation, validation, name, role, type
 
 ### Community 124 - "Community 124"
 Cohesion: 0.14
-Nodes (23): add, header, description, title, add, header, description, title (+15 more)
+Nodes (22): add, list, description, title, add, list, list, description (+14 more)
 
 ### Community 125 - "Community 125"
-Cohesion: 0.53
-Nodes (6): list, list, list, description, title, list
+Cohesion: 0.43
+Nodes (8): header, header, header, description, title, header, header, header
 
 ### Community 126 - "Community 126"
 Cohesion: 0.50
@@ -420,12 +419,12 @@ Cohesion: 0.25
 Nodes (9): categories, addCategory, color, editCategory, icon, subtitle, title, categoryService (+1 more)
 
 ### Community 129 - "Community 129"
-Cohesion: 0.13
-Nodes (14): Build, Feature 1: 📸 Receipt Image Storage (Supabase Storage), Feature 2: 📅 Financial Calendar View, Features Detail, Files Changed, Files Changed, Key Architecture Decisions, Knowledge Graph (+6 more)
+Cohesion: 0.12
+Nodes (15): Auditing & Theming Compatibility (2026-06-11), Build, Feature 1: 📸 Receipt Image Storage (Supabase Storage), Feature 2: 📅 Financial Calendar View, Features Detail, Files Changed, Files Changed, Key Architecture Decisions (+7 more)
 
 ### Community 130 - "Community 130"
-Cohesion: 0.33
-Nodes (5): ai, subtitle, title, welcome, auth
+Cohesion: 0.67
+Nodes (4): description, title, charts, charts
 
 ### Community 131 - "Community 131"
 Cohesion: 0.60
@@ -436,12 +435,8 @@ Cohesion: 0.50
 Nodes (4): done, next, prev, btn
 
 ### Community 134 - "Community 134"
-Cohesion: 0.22
-Nodes (9): accounts, accountName, accountNamePlaceholder, addAccount, balancePlaceholder, editAccount, subtitle, title (+1 more)
-
-### Community 135 - "Community 135"
-Cohesion: 0.43
-Nodes (8): header, header, header, description, title, header, header, header
+Cohesion: 0.18
+Nodes (14): accounts, accountName, accountNamePlaceholder, addAccount, balancePlaceholder, editAccount, subtitle, title (+6 more)
 
 ### Community 136 - "Community 136"
 Cohesion: 0.29
@@ -452,21 +447,21 @@ Cohesion: 0.29
 Nodes (7): Feature 1: Receipt Image Storage, Feature 2: Financial Calendar View, Key Files, Key Files, Part 9 — Receipt Image Storage & Financial Calendar View (Completed 2026-06-11), Theming Compatibility (Theme Audit), Verification
 
 ## Knowledge Gaps
-- **648 isolated node(s):** `recommendations`, `name`, `private`, `version`, `type` (+643 more)
+- **649 isolated node(s):** `recommendations`, `name`, `private`, `version`, `type` (+644 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **36 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `dashboard` connect `Virtual Scroll Component` to `Time Intervals`, `Community 130`, `Database Backup Script`, `Community 107`, `Dashboard Analytics Metrics`, `Community 124`?**
+- **Why does `dashboard` connect `Virtual Scroll Component` to `Time Intervals`, `Database Backup Script`, `Month Labels`, `Dashboard Analytics Metrics`, `Community 124`, `Report Generation and Export`?**
   _High betweenness centrality (0.080) - this node is a cross-community bridge._
-- **Why does `common` connect `Common UI Actions` to `Family Member Roles`, `Community 106`, `Transactions Page View`, `Community 46`, `Month Labels`, `Community 121`, `Community 126`?**
+- **Why does `common` connect `Common UI Actions` to `Community 134`, `Community 106`, `Transactions Page View`, `Community 46`, `Month Labels`, `Community 126`?**
   _High betweenness centrality (0.068) - this node is a cross-community bridge._
-- **Why does `dashboard` connect `Community 111` to `Family Member Roles`, `Family Member Roles`, `Navigation and Management`, `Transactions Page View`, `Community 110`, `Month Labels`, `Dashboard Analytics Metrics`?**
+- **Why does `dashboard` connect `Community 111` to `Community 130`, `Family Member Roles`, `Navigation and Management`, `Transactions Page View`, `Community 110`, `Month Labels`, `Dashboard Analytics Metrics`?**
   _High betweenness centrality (0.067) - this node is a cross-community bridge._
 - **What connects `recommendations`, `name`, `private` to the rest of the system?**
-  _651 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _652 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Common UI Actions` be split into smaller, more focused modules?**
   _Cohesion score 0.07656341320864991 - nodes in this community are weakly interconnected._
 - **Should `Common UI Actions` be split into smaller, more focused modules?**

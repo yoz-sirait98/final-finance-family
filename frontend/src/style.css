@@ -853,6 +853,14 @@ body {
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(102, 126, 234, 0.2);
   max-width: 340px;
   padding: 0;
+  
+  /* Blurry text & translate3d subpixel alignment fixes */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
 }
 
 /* Title */
@@ -897,6 +905,13 @@ body {
   border: none;
   cursor: pointer;
   transition: all 0.2s ease;
+  
+  /* Antialias & rasterization rendering fixes */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
 }
 
 /* Previous button */

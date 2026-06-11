@@ -635,8 +635,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/CalendarPage.vue": {
-    "mtime": 1781146421.2630434,
-    "ast_hash": "42291686089ec93692098ff00edb04e2",
+    "mtime": 1781147244.7496564,
+    "ast_hash": "8d5688da6f17dfc033b4d133cda4526e",
     "semantic_hash": ""
   },
   "frontend/src/services/storageService.js": {
@@ -650,8 +650,8 @@
     "semantic_hash": ""
   },
   "docs/walkthrough_receipt_storage_calendar.md": {
-    "mtime": 1781145015.4114394,
-    "ast_hash": "4b2036c4f3888fab07e1ebf6bb592000",
+    "mtime": 1781146472.8265617,
+    "ast_hash": "3027d62db844bf5f771c63c585e314c3",
     "semantic_hash": ""
   }
 }

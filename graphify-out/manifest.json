@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "docs/implementation_plan.md": {
-    "mtime": 1781146438.575247,
-    "ast_hash": "3ad9d38063dd79106605f41b1c37b187",
+    "mtime": 1781147272.473738,
+    "ast_hash": "a8b39c7798454acae03fbe4abf4bc021",
     "semantic_hash": ""
   },
   "docs/supabase-setup-guide.md": {
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "docs/task.md": {
-    "mtime": 1781146433.544502,
-    "ast_hash": "91595370dd5628803cad41d8ca97e8c5",
+    "mtime": 1781147261.065003,
+    "ast_hash": "7166955832b9063a1d08d026a8dc157c",
     "semantic_hash": ""
   },
   "docs/walkthrough_graphify.md": {
@@ -650,8 +650,8 @@
     "semantic_hash": ""
   },
   "docs/walkthrough_receipt_storage_calendar.md": {
-    "mtime": 1781146472.8265617,
-    "ast_hash": "3027d62db844bf5f771c63c585e314c3",
+    "mtime": 1781147281.0991328,
+    "ast_hash": "f259aeea7a18b2177677599cfecf3d0c",
     "semantic_hash": ""
   }
 }
