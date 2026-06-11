@@ -1250,7 +1250,7 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "locales_en_auth",
-      "community": 10,
+      "community": 130,
       "norm_label": "auth"
     },
     {
@@ -4020,7 +4020,7 @@
       "source_location": "L398",
       "_origin": "ast",
       "id": "locales_en_transactions_filters",
-      "community": 124,
+      "community": 29,
       "norm_label": "filters"
     },
     {
@@ -4030,7 +4030,7 @@
       "source_location": "L399",
       "_origin": "ast",
       "id": "locales_en_filters_title",
-      "community": 124,
+      "community": 29,
       "norm_label": "title"
     },
     {
@@ -4040,7 +4040,7 @@
       "source_location": "L400",
       "_origin": "ast",
       "id": "locales_en_filters_description",
-      "community": 124,
+      "community": 29,
       "norm_label": "description"
     },
     {
@@ -4180,7 +4180,7 @@
       "source_location": "L434",
       "_origin": "ast",
       "id": "locales_en_budgets_alerts",
-      "community": 39,
+      "community": 24,
       "norm_label": "alerts"
     },
     {
@@ -4190,7 +4190,7 @@
       "source_location": "L435",
       "_origin": "ast",
       "id": "locales_en_alerts_title",
-      "community": 39,
+      "community": 24,
       "norm_label": "title"
     },
     {
@@ -4200,7 +4200,7 @@
       "source_location": "L436",
       "_origin": "ast",
       "id": "locales_en_alerts_description",
-      "community": 39,
+      "community": 24,
       "norm_label": "description"
     },
     {
@@ -4310,7 +4310,7 @@
       "source_location": "L472",
       "_origin": "ast",
       "id": "locales_en_reports_filters",
-      "community": 124,
+      "community": 29,
       "norm_label": "filters"
     },
     {
@@ -4330,7 +4330,7 @@
       "source_location": "L480",
       "_origin": "ast",
       "id": "locales_en_reports_export",
-      "community": 29,
+      "community": 39,
       "norm_label": "export"
     },
     {
@@ -4340,7 +4340,7 @@
       "source_location": "L481",
       "_origin": "ast",
       "id": "locales_en_export_title",
-      "community": 29,
+      "community": 39,
       "norm_label": "title"
     },
     {
@@ -4350,7 +4350,7 @@
       "source_location": "L482",
       "_origin": "ast",
       "id": "locales_en_export_description",
-      "community": 29,
+      "community": 39,
       "norm_label": "description"
     },
     {
@@ -4360,7 +4360,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "locales_id",
-      "community": 21,
+      "community": 45,
       "norm_label": "id.json"
     },
     {
@@ -4990,7 +4990,7 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "locales_id_auth",
-      "community": 21,
+      "community": 45,
       "norm_label": "auth"
     },
     {
@@ -5210,7 +5210,7 @@
       "source_location": "L90",
       "_origin": "ast",
       "id": "locales_id_register_confirmpassword",
-      "community": 9,
+      "community": 108,
       "norm_label": "confirmpassword"
     },
     {
@@ -5290,7 +5290,7 @@
       "source_location": "L100",
       "_origin": "ast",
       "id": "locales_id_settings",
-      "community": 9,
+      "community": 108,
       "norm_label": "settings"
     },
     {
@@ -5300,7 +5300,7 @@
       "source_location": "L101",
       "_origin": "ast",
       "id": "locales_id_settings_title",
-      "community": 9,
+      "community": 108,
       "norm_label": "title"
     },
     {
@@ -5310,7 +5310,7 @@
       "source_location": "L102",
       "_origin": "ast",
       "id": "locales_id_settings_subtitle",
-      "community": 9,
+      "community": 108,
       "norm_label": "subtitle"
     },
     {
@@ -5320,7 +5320,7 @@
       "source_location": "L103",
       "_origin": "ast",
       "id": "locales_id_settings_profile",
-      "community": 9,
+      "community": 108,
       "norm_label": "profile"
     },
     {
@@ -5330,7 +5330,7 @@
       "source_location": "L104",
       "_origin": "ast",
       "id": "locales_id_settings_changepassword",
-      "community": 9,
+      "community": 108,
       "norm_label": "changepassword"
     },
     {
@@ -5340,7 +5340,7 @@
       "source_location": "L105",
       "_origin": "ast",
       "id": "locales_id_settings_currentpassword",
-      "community": 9,
+      "community": 108,
       "norm_label": "currentpassword"
     },
     {
@@ -5350,7 +5350,7 @@
       "source_location": "L106",
       "_origin": "ast",
       "id": "locales_id_settings_newpassword",
-      "community": 9,
+      "community": 108,
       "norm_label": "newpassword"
     },
     {
@@ -5360,7 +5360,7 @@
       "source_location": "L107",
       "_origin": "ast",
       "id": "locales_id_settings_confirmpassword",
-      "community": 9,
+      "community": 108,
       "norm_label": "confirmpassword"
     },
     {
@@ -5370,7 +5370,7 @@
       "source_location": "L108",
       "_origin": "ast",
       "id": "locales_id_settings_updatepassword",
-      "community": 9,
+      "community": 108,
       "norm_label": "updatepassword"
     },
     {
@@ -5380,7 +5380,7 @@
       "source_location": "L109",
       "_origin": "ast",
       "id": "locales_id_settings_updatingpassword",
-      "community": 9,
+      "community": 108,
       "norm_label": "updatingpassword"
     },
     {
@@ -5390,7 +5390,7 @@
       "source_location": "L110",
       "_origin": "ast",
       "id": "locales_id_settings_passwordsuccess",
-      "community": 9,
+      "community": 108,
       "norm_label": "passwordsuccess"
     },
     {
@@ -5400,7 +5400,7 @@
       "source_location": "L111",
       "_origin": "ast",
       "id": "locales_id_settings_languagepref",
-      "community": 9,
+      "community": 108,
       "norm_label": "languagepref"
     },
     {
@@ -5410,7 +5410,7 @@
       "source_location": "L112",
       "_origin": "ast",
       "id": "locales_id_settings_selectlanguage",
-      "community": 9,
+      "community": 108,
       "norm_label": "selectlanguage"
     },
     {
@@ -5420,7 +5420,7 @@
       "source_location": "L113",
       "_origin": "ast",
       "id": "locales_id_settings_aiconfig",
-      "community": 9,
+      "community": 108,
       "norm_label": "aiconfig"
     },
     {
@@ -5430,7 +5430,7 @@
       "source_location": "L114",
       "_origin": "ast",
       "id": "locales_id_settings_geminiapikey",
-      "community": 9,
+      "community": 108,
       "norm_label": "geminiapikey"
     },
     {
@@ -5450,7 +5450,7 @@
       "source_location": "L117",
       "_origin": "ast",
       "id": "locales_id_dashboard_period",
-      "community": 110,
+      "community": 14,
       "norm_label": "period"
     },
     {
@@ -5470,7 +5470,7 @@
       "source_location": "L119",
       "_origin": "ast",
       "id": "locales_id_dashboard_insights",
-      "community": 14,
+      "community": 110,
       "norm_label": "insights"
     },
     {
@@ -6220,7 +6220,7 @@
       "source_location": "L199",
       "_origin": "ast",
       "id": "locales_id_accounts",
-      "community": 21,
+      "community": 134,
       "norm_label": "accounts"
     },
     {
@@ -6230,7 +6230,7 @@
       "source_location": "L200",
       "_origin": "ast",
       "id": "locales_id_accounts_title",
-      "community": 21,
+      "community": 134,
       "norm_label": "title"
     },
     {
@@ -6240,7 +6240,7 @@
       "source_location": "L201",
       "_origin": "ast",
       "id": "locales_id_accounts_subtitle",
-      "community": 21,
+      "community": 134,
       "norm_label": "subtitle"
     },
     {
@@ -6250,7 +6250,7 @@
       "source_location": "L202",
       "_origin": "ast",
       "id": "locales_id_accounts_addaccount",
-      "community": 21,
+      "community": 134,
       "norm_label": "addaccount"
     },
     {
@@ -6260,7 +6260,7 @@
       "source_location": "L203",
       "_origin": "ast",
       "id": "locales_id_accounts_editaccount",
-      "community": 21,
+      "community": 134,
       "norm_label": "editaccount"
     },
     {
@@ -6270,7 +6270,7 @@
       "source_location": "L204",
       "_origin": "ast",
       "id": "locales_id_accounts_accountname",
-      "community": 21,
+      "community": 134,
       "norm_label": "accountname"
     },
     {
@@ -6280,7 +6280,7 @@
       "source_location": "L205",
       "_origin": "ast",
       "id": "locales_id_accounts_accountnameplaceholder",
-      "community": 21,
+      "community": 134,
       "norm_label": "accountnameplaceholder"
     },
     {
@@ -6340,7 +6340,7 @@
       "source_location": "L212",
       "_origin": "ast",
       "id": "locales_id_accounts_balanceplaceholder",
-      "community": 21,
+      "community": 134,
       "norm_label": "balanceplaceholder"
     },
     {
@@ -6350,7 +6350,7 @@
       "source_location": "L213",
       "_origin": "ast",
       "id": "locales_id_accounts_walletdetails",
-      "community": 21,
+      "community": 134,
       "norm_label": "walletdetails"
     },
     {
@@ -7470,7 +7470,7 @@
       "source_location": "L357",
       "_origin": "ast",
       "id": "locales_id_period_title",
-      "community": 110,
+      "community": 14,
       "norm_label": "title"
     },
     {
@@ -7480,7 +7480,7 @@
       "source_location": "L358",
       "_origin": "ast",
       "id": "locales_id_period_description",
-      "community": 110,
+      "community": 14,
       "norm_label": "description"
     },
     {
@@ -7610,7 +7610,7 @@
       "source_location": "L377",
       "_origin": "ast",
       "id": "locales_id_insights_title",
-      "community": 14,
+      "community": 110,
       "norm_label": "title"
     },
     {
@@ -7620,7 +7620,7 @@
       "source_location": "L378",
       "_origin": "ast",
       "id": "locales_id_insights_description",
-      "community": 14,
+      "community": 110,
       "norm_label": "description"
     },
     {
@@ -7660,7 +7660,7 @@
       "source_location": "L385",
       "_origin": "ast",
       "id": "locales_id_tours_transactions",
-      "community": 26,
+      "community": 34,
       "norm_label": "transactions"
     },
     {
@@ -7670,7 +7670,7 @@
       "source_location": "L386",
       "_origin": "ast",
       "id": "locales_id_transactions_header",
-      "community": 34,
+      "community": 135,
       "norm_label": "header"
     },
     {
@@ -7680,7 +7680,7 @@
       "source_location": "L387",
       "_origin": "ast",
       "id": "locales_id_header_title",
-      "community": 34,
+      "community": 135,
       "norm_label": "title"
     },
     {
@@ -7690,7 +7690,7 @@
       "source_location": "L388",
       "_origin": "ast",
       "id": "locales_id_header_description",
-      "community": 34,
+      "community": 135,
       "norm_label": "description"
     },
     {
@@ -7760,7 +7760,7 @@
       "source_location": "L398",
       "_origin": "ast",
       "id": "locales_id_transactions_filters",
-      "community": 26,
+      "community": 36,
       "norm_label": "filters"
     },
     {
@@ -7770,7 +7770,7 @@
       "source_location": "L399",
       "_origin": "ast",
       "id": "locales_id_filters_title",
-      "community": 26,
+      "community": 36,
       "norm_label": "title"
     },
     {
@@ -7780,7 +7780,7 @@
       "source_location": "L400",
       "_origin": "ast",
       "id": "locales_id_filters_description",
-      "community": 26,
+      "community": 36,
       "norm_label": "description"
     },
     {
@@ -7830,7 +7830,7 @@
       "source_location": "L408",
       "_origin": "ast",
       "id": "locales_id_accounts_header",
-      "community": 34,
+      "community": 135,
       "norm_label": "header"
     },
     {
@@ -7890,7 +7890,7 @@
       "source_location": "L422",
       "_origin": "ast",
       "id": "locales_id_budgets_header",
-      "community": 34,
+      "community": 135,
       "norm_label": "header"
     },
     {
@@ -7960,7 +7960,7 @@
       "source_location": "L440",
       "_origin": "ast",
       "id": "locales_id_goals_header",
-      "community": 34,
+      "community": 135,
       "norm_label": "header"
     },
     {
@@ -7970,7 +7970,7 @@
       "source_location": "L444",
       "_origin": "ast",
       "id": "locales_id_goals_add",
-      "community": 14,
+      "community": 34,
       "norm_label": "add"
     },
     {
@@ -8000,7 +8000,7 @@
       "source_location": "L454",
       "_origin": "ast",
       "id": "locales_id_recurring_header",
-      "community": 34,
+      "community": 135,
       "norm_label": "header"
     },
     {
@@ -8030,7 +8030,7 @@
       "source_location": "L467",
       "_origin": "ast",
       "id": "locales_id_tours_reports",
-      "community": 34,
+      "community": 36,
       "norm_label": "reports"
     },
     {
@@ -8040,7 +8040,7 @@
       "source_location": "L468",
       "_origin": "ast",
       "id": "locales_id_reports_header",
-      "community": 34,
+      "community": 135,
       "norm_label": "header"
     },
     {
@@ -8050,7 +8050,7 @@
       "source_location": "L472",
       "_origin": "ast",
       "id": "locales_id_reports_filters",
-      "community": 26,
+      "community": 36,
       "norm_label": "filters"
     },
     {
@@ -9370,7 +9370,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_implementation_plan",
-      "community": 42,
+      "community": 136,
       "norm_label": "implementation_plan.md"
     },
     {
@@ -9380,7 +9380,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_implementation_plan_family_finance_architecture_integration_plans",
-      "community": 42,
+      "community": 136,
       "norm_label": "family finance architecture & integration plans"
     },
     {
@@ -9390,7 +9390,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "docs_implementation_plan_part_1_\u00e2_family_finance_architecture_migration_laravel_to_supabase_completed",
-      "community": 108,
+      "community": 13,
       "norm_label": "part 1 a\u20ac\u201d family finance architecture migration: laravel to supabase (completed)"
     },
     {
@@ -9400,7 +9400,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "docs_implementation_plan_phase_1_\u00e2_project_discovery_report",
-      "community": 108,
+      "community": 13,
       "norm_label": "phase 1 a\u20ac\u201d project discovery report"
     },
     {
@@ -9410,7 +9410,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "docs_implementation_plan_1_migrated_system_architecture",
-      "community": 108,
+      "community": 13,
       "norm_label": "1. migrated system architecture"
     },
     {
@@ -9420,7 +9420,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "docs_implementation_plan_2_feature_inventory",
-      "community": 108,
+      "community": 13,
       "norm_label": "2. feature inventory"
     },
     {
@@ -9430,7 +9430,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "docs_implementation_plan_3_business_rules_inventory",
-      "community": 108,
+      "community": 13,
       "norm_label": "3. business rules inventory"
     },
     {
@@ -9440,7 +9440,7 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "docs_implementation_plan_4_dependencies_inventory",
-      "community": 108,
+      "community": 13,
       "norm_label": "4. dependencies inventory"
     },
     {
@@ -9450,7 +9450,7 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "docs_implementation_plan_5_risks",
-      "community": 108,
+      "community": 13,
       "norm_label": "5. risks"
     },
     {
@@ -9460,7 +9460,7 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "docs_implementation_plan_6_migration_complexity_assessment",
-      "community": 108,
+      "community": 13,
       "norm_label": "6. migration complexity assessment"
     },
     {
@@ -9470,7 +9470,7 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "docs_implementation_plan_phase_2_\u00e2_migration_task_breakdown",
-      "community": 108,
+      "community": 13,
       "norm_label": "phase 2 a\u20ac\u201d migration task breakdown"
     },
     {
@@ -9590,7 +9590,7 @@
       "source_location": "L111",
       "_origin": "ast",
       "id": "docs_implementation_plan_task_10_12_frontend_refactor",
-      "community": 129,
+      "community": 13,
       "norm_label": "[task 10-12] frontend refactor"
     },
     {
@@ -9600,7 +9600,7 @@
       "source_location": "L113",
       "_origin": "ast",
       "id": "docs_implementation_plan_modify_frontend_package_json",
-      "community": 129,
+      "community": 13,
       "norm_label": "[modify] `frontend/package.json`"
     },
     {
@@ -9610,7 +9610,7 @@
       "source_location": "L116",
       "_origin": "ast",
       "id": "docs_implementation_plan_new_frontend_src_lib_supabase_js",
-      "community": 129,
+      "community": 13,
       "norm_label": "[new] `frontend/src/lib/supabase.js`"
     },
     {
@@ -9620,7 +9620,7 @@
       "source_location": "L119",
       "_origin": "ast",
       "id": "docs_implementation_plan_modify_frontend_src_stores_frontend_src_services",
-      "community": 129,
+      "community": 13,
       "norm_label": "[modify] `frontend/src/stores/*` & `frontend/src/services/*`"
     },
     {
@@ -9630,7 +9630,7 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "docs_implementation_plan_modify_frontend_src_router_index_js",
-      "community": 129,
+      "community": 13,
       "norm_label": "[modify] `frontend/src/router/index.js`"
     },
     {
@@ -9670,7 +9670,7 @@
       "source_location": "L138",
       "_origin": "ast",
       "id": "docs_implementation_plan_phase_4_\u00e2_post_migration_polish_completed",
-      "community": 108,
+      "community": 13,
       "norm_label": "phase 4 a\u20ac\u201d post-migration polish (completed)"
     },
     {
@@ -9760,7 +9760,7 @@
       "source_location": "L194",
       "_origin": "ast",
       "id": "docs_implementation_plan_part_3_collaborative_shopping_shared_bills",
-      "community": 42,
+      "community": 136,
       "norm_label": "part 3 \u2014 collaborative shopping & shared bills"
     },
     {
@@ -10160,7 +10160,7 @@
       "source_location": "L380",
       "_origin": "ast",
       "id": "docs_implementation_plan_part_8_update_documentation_completed",
-      "community": 42,
+      "community": 136,
       "norm_label": "part 8 \u2014 update documentation (completed)"
     },
     {
@@ -10170,7 +10170,7 @@
       "source_location": "L384",
       "_origin": "ast",
       "id": "docs_implementation_plan_proposed_changes_384",
-      "community": 42,
+      "community": 136,
       "norm_label": "proposed changes"
     },
     {
@@ -10180,7 +10180,7 @@
       "source_location": "L386",
       "_origin": "ast",
       "id": "docs_implementation_plan_root_documentation",
-      "community": 42,
+      "community": 136,
       "norm_label": "root documentation"
     },
     {
@@ -10190,8 +10190,78 @@
       "source_location": "L389",
       "_origin": "ast",
       "id": "docs_implementation_plan_frontend_documentation",
-      "community": 42,
+      "community": 136,
       "norm_label": "frontend documentation"
+    },
+    {
+      "label": "Part 9 \u2014 Receipt Image Storage & Financial Calendar View (Completed 2026-06-11)",
+      "file_type": "document",
+      "source_file": "docs/implementation_plan.md",
+      "source_location": "L394",
+      "_origin": "ast",
+      "id": "docs_implementation_plan_part_9_receipt_image_storage_financial_calendar_view_completed_2026_06_11",
+      "community": 137,
+      "norm_label": "part 9 \u2014 receipt image storage & financial calendar view (completed 2026-06-11)"
+    },
+    {
+      "label": "Feature 1: Receipt Image Storage",
+      "file_type": "document",
+      "source_file": "docs/implementation_plan.md",
+      "source_location": "L398",
+      "_origin": "ast",
+      "id": "docs_implementation_plan_feature_1_receipt_image_storage",
+      "community": 137,
+      "norm_label": "feature 1: receipt image storage"
+    },
+    {
+      "label": "Key Files",
+      "file_type": "document",
+      "source_file": "docs/implementation_plan.md",
+      "source_location": "L402",
+      "_origin": "ast",
+      "id": "docs_implementation_plan_key_files",
+      "community": 137,
+      "norm_label": "key files"
+    },
+    {
+      "label": "Feature 2: Financial Calendar View",
+      "file_type": "document",
+      "source_file": "docs/implementation_plan.md",
+      "source_location": "L409",
+      "_origin": "ast",
+      "id": "docs_implementation_plan_feature_2_financial_calendar_view",
+      "community": 137,
+      "norm_label": "feature 2: financial calendar view"
+    },
+    {
+      "label": "Key Files",
+      "file_type": "document",
+      "source_file": "docs/implementation_plan.md",
+      "source_location": "L413",
+      "_origin": "ast",
+      "id": "docs_implementation_plan_key_files_413",
+      "community": 137,
+      "norm_label": "key files"
+    },
+    {
+      "label": "Theming Compatibility (Theme Audit)",
+      "file_type": "document",
+      "source_file": "docs/implementation_plan.md",
+      "source_location": "L419",
+      "_origin": "ast",
+      "id": "docs_implementation_plan_theming_compatibility_theme_audit",
+      "community": 137,
+      "norm_label": "theming compatibility (theme audit)"
+    },
+    {
+      "label": "Verification",
+      "file_type": "document",
+      "source_file": "docs/implementation_plan.md",
+      "source_location": "L422",
+      "_origin": "ast",
+      "id": "docs_implementation_plan_verification",
+      "community": 137,
+      "norm_label": "verification"
     },
     {
       "label": "supabase-setup-guide.md",
@@ -10382,6 +10452,16 @@
       "id": "docs_task_part_8_update_documentation",
       "community": 40,
       "norm_label": "part 8 \u2014 update documentation"
+    },
+    {
+      "label": "Part 9 \u2014 Receipt Image Storage & Financial Calendar View",
+      "file_type": "document",
+      "source_file": "docs/task.md",
+      "source_location": "L69",
+      "_origin": "ast",
+      "id": "docs_task_part_9_receipt_image_storage_financial_calendar_view",
+      "community": 40,
+      "norm_label": "part 9 \u2014 receipt image storage & financial calendar view"
     },
     {
       "label": "walkthrough_gemini_key_sync.md",
@@ -10672,6 +10752,156 @@
       "id": "docs_walkthrough_receipt_scanner_ai_how_to_test_manually",
       "community": 41,
       "norm_label": "how to test manually"
+    },
+    {
+      "label": "walkthrough_receipt_storage_calendar.md",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_storage_calendar.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_storage_calendar",
+      "community": 129,
+      "norm_label": "walkthrough_receipt_storage_calendar.md"
+    },
+    {
+      "label": "Walkthrough: Receipt Image Storage & Financial Calendar View",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_storage_calendar.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_storage_calendar_walkthrough_receipt_image_storage_financial_calendar_view",
+      "community": 129,
+      "norm_label": "walkthrough: receipt image storage & financial calendar view"
+    },
+    {
+      "label": "Feature 1: \ud83d\udcf8 Receipt Image Storage (Supabase Storage)",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_storage_calendar.md",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_storage_calendar_feature_1_receipt_image_storage_supabase_storage",
+      "community": 129,
+      "norm_label": "feature 1: \ud83d\udcf8 receipt image storage (supabase storage)"
+    },
+    {
+      "label": "Overview",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_storage_calendar.md",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_storage_calendar_overview",
+      "community": 129,
+      "norm_label": "overview"
+    },
+    {
+      "label": "Files Changed",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_storage_calendar.md",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_storage_calendar_files_changed",
+      "community": 129,
+      "norm_label": "files changed"
+    },
+    {
+      "label": "Key Architecture Decisions",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_storage_calendar.md",
+      "source_location": "L24",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_storage_calendar_key_architecture_decisions",
+      "community": 129,
+      "norm_label": "key architecture decisions"
+    },
+    {
+      "label": "User Flow",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_storage_calendar.md",
+      "source_location": "L32",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_storage_calendar_user_flow",
+      "community": 129,
+      "norm_label": "user flow"
+    },
+    {
+      "label": "Feature 2: \ud83d\udcc5 Financial Calendar View",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_storage_calendar.md",
+      "source_location": "L44",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_storage_calendar_feature_2_financial_calendar_view",
+      "community": 129,
+      "norm_label": "feature 2: \ud83d\udcc5 financial calendar view"
+    },
+    {
+      "label": "Overview",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_storage_calendar.md",
+      "source_location": "L46",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_storage_calendar_overview_46",
+      "community": 129,
+      "norm_label": "overview"
+    },
+    {
+      "label": "Files Changed",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_storage_calendar.md",
+      "source_location": "L49",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_storage_calendar_files_changed_49",
+      "community": 129,
+      "norm_label": "files changed"
+    },
+    {
+      "label": "Features Detail",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_storage_calendar.md",
+      "source_location": "L59",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_storage_calendar_features_detail",
+      "community": 129,
+      "norm_label": "features detail"
+    },
+    {
+      "label": "Verification Results",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_storage_calendar.md",
+      "source_location": "L76",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_storage_calendar_verification_results",
+      "community": 129,
+      "norm_label": "verification results"
+    },
+    {
+      "label": "Build",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_storage_calendar.md",
+      "source_location": "L78",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_storage_calendar_build",
+      "community": 129,
+      "norm_label": "build"
+    },
+    {
+      "label": "Knowledge Graph",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_storage_calendar.md",
+      "source_location": "L86",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_storage_calendar_knowledge_graph",
+      "community": 129,
+      "norm_label": "knowledge graph"
+    },
+    {
+      "label": "Manual Testing Checklist",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_storage_calendar.md",
+      "source_location": "L91",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_storage_calendar_manual_testing_checklist",
+      "community": 129,
+      "norm_label": "manual testing checklist"
     },
     {
       "label": "README.md",
@@ -12145,9 +12375,9 @@
       "source_file": "frontend/src/services/storageService.js",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_storageservice",
-      "target": "lib_supabase",
-      "confidence_score": 1.0
+      "target": "lib_supabase"
     },
     {
       "relation": "imports_from",
@@ -12266,9 +12496,9 @@
       "source_file": "frontend/src/services/storageService.js",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_storageservice",
-      "target": "lib_supabase_supabase",
-      "confidence_score": 1.0
+      "target": "lib_supabase_supabase"
     },
     {
       "relation": "imports",
@@ -13269,9 +13499,9 @@
       "source_file": "frontend/src/locales/en.json",
       "source_location": "L65",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "locales_en_nav",
-      "target": "locales_en_nav_calendar",
-      "confidence_score": 1.0
+      "target": "locales_en_nav_calendar"
     },
     {
       "relation": "contains",
@@ -19340,9 +19570,9 @@
       "source_file": "frontend/src/locales/id.json",
       "source_location": "L65",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "locales_id_nav",
-      "target": "locales_id_nav_calendar",
-      "confidence_score": 1.0
+      "target": "locales_id_nav_calendar"
     },
     {
       "relation": "contains",
@@ -24927,9 +25157,9 @@
       "source_file": "frontend/src/services/storageService.js",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_storageservice",
-      "target": "services_storageservice_compressimage",
-      "confidence_score": 1.0
+      "target": "services_storageservice_compressimage"
     },
     {
       "relation": "contains",
@@ -24937,9 +25167,9 @@
       "source_file": "frontend/src/services/storageService.js",
       "source_location": "L85",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_storageservice",
-      "target": "services_storageservice_deletereceipt",
-      "confidence_score": 1.0
+      "target": "services_storageservice_deletereceipt"
     },
     {
       "relation": "contains",
@@ -24947,9 +25177,9 @@
       "source_file": "frontend/src/services/storageService.js",
       "source_location": "L71",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_storageservice",
-      "target": "services_storageservice_getreceiptsignedurl",
-      "confidence_score": 1.0
+      "target": "services_storageservice_getreceiptsignedurl"
     },
     {
       "relation": "contains",
@@ -24957,9 +25187,9 @@
       "source_file": "frontend/src/services/storageService.js",
       "source_location": "L45",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_storageservice",
-      "target": "services_storageservice_uploadreceipt",
-      "confidence_score": 1.0
+      "target": "services_storageservice_uploadreceipt"
     },
     {
       "relation": "calls",
@@ -24968,9 +25198,9 @@
       "source_file": "frontend/src/services/storageService.js",
       "source_location": "L48",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_storageservice_uploadreceipt",
-      "target": "services_storageservice_compressimage",
-      "confidence_score": 1.0
+      "target": "services_storageservice_compressimage"
     },
     {
       "relation": "contains",
@@ -25530,6 +25760,16 @@
       "confidence_score": 1.0,
       "source": "docs_implementation_plan",
       "target": "docs_implementation_plan_part_8_update_documentation_completed"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/implementation_plan.md",
+      "source_location": "L394",
+      "weight": 1.0,
+      "source": "docs_implementation_plan",
+      "target": "docs_implementation_plan_part_9_receipt_image_storage_financial_calendar_view_completed_2026_06_11",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -26334,6 +26574,66 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "docs/implementation_plan.md",
+      "source_location": "L398",
+      "weight": 1.0,
+      "source": "docs_implementation_plan_part_9_receipt_image_storage_financial_calendar_view_completed_2026_06_11",
+      "target": "docs_implementation_plan_feature_1_receipt_image_storage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/implementation_plan.md",
+      "source_location": "L409",
+      "weight": 1.0,
+      "source": "docs_implementation_plan_part_9_receipt_image_storage_financial_calendar_view_completed_2026_06_11",
+      "target": "docs_implementation_plan_feature_2_financial_calendar_view",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/implementation_plan.md",
+      "source_location": "L419",
+      "weight": 1.0,
+      "source": "docs_implementation_plan_part_9_receipt_image_storage_financial_calendar_view_completed_2026_06_11",
+      "target": "docs_implementation_plan_theming_compatibility_theme_audit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/implementation_plan.md",
+      "source_location": "L422",
+      "weight": 1.0,
+      "source": "docs_implementation_plan_part_9_receipt_image_storage_financial_calendar_view_completed_2026_06_11",
+      "target": "docs_implementation_plan_verification",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/implementation_plan.md",
+      "source_location": "L402",
+      "weight": 1.0,
+      "source": "docs_implementation_plan_feature_1_receipt_image_storage",
+      "target": "docs_implementation_plan_key_files",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/implementation_plan.md",
+      "source_location": "L413",
+      "weight": 1.0,
+      "source": "docs_implementation_plan_feature_2_financial_calendar_view",
+      "target": "docs_implementation_plan_key_files_413",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "docs/supabase-setup-guide.md",
       "source_location": "L1",
       "weight": 1.0,
@@ -26500,6 +26800,16 @@
       "confidence_score": 1.0,
       "source": "docs_task_family_finance_migration_integration_tasks",
       "target": "docs_task_part_8_update_documentation"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/task.md",
+      "source_location": "L69",
+      "weight": 1.0,
+      "source": "docs_task_family_finance_migration_integration_tasks",
+      "target": "docs_task_part_9_receipt_image_storage_financial_calendar_view",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -26764,6 +27074,146 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_storage_calendar.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_storage_calendar",
+      "target": "docs_walkthrough_receipt_storage_calendar_walkthrough_receipt_image_storage_financial_calendar_view",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_storage_calendar.md",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_storage_calendar_walkthrough_receipt_image_storage_financial_calendar_view",
+      "target": "docs_walkthrough_receipt_storage_calendar_feature_1_receipt_image_storage_supabase_storage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_storage_calendar.md",
+      "source_location": "L44",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_storage_calendar_walkthrough_receipt_image_storage_financial_calendar_view",
+      "target": "docs_walkthrough_receipt_storage_calendar_feature_2_financial_calendar_view",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_storage_calendar.md",
+      "source_location": "L76",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_storage_calendar_walkthrough_receipt_image_storage_financial_calendar_view",
+      "target": "docs_walkthrough_receipt_storage_calendar_verification_results",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_storage_calendar.md",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_storage_calendar_feature_1_receipt_image_storage_supabase_storage",
+      "target": "docs_walkthrough_receipt_storage_calendar_files_changed",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_storage_calendar.md",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_storage_calendar_feature_1_receipt_image_storage_supabase_storage",
+      "target": "docs_walkthrough_receipt_storage_calendar_key_architecture_decisions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_storage_calendar.md",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_storage_calendar_feature_1_receipt_image_storage_supabase_storage",
+      "target": "docs_walkthrough_receipt_storage_calendar_overview",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_storage_calendar.md",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_storage_calendar_feature_1_receipt_image_storage_supabase_storage",
+      "target": "docs_walkthrough_receipt_storage_calendar_user_flow",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_storage_calendar.md",
+      "source_location": "L59",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_storage_calendar_feature_2_financial_calendar_view",
+      "target": "docs_walkthrough_receipt_storage_calendar_features_detail",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_storage_calendar.md",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_storage_calendar_feature_2_financial_calendar_view",
+      "target": "docs_walkthrough_receipt_storage_calendar_files_changed_49",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_storage_calendar.md",
+      "source_location": "L46",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_storage_calendar_feature_2_financial_calendar_view",
+      "target": "docs_walkthrough_receipt_storage_calendar_overview_46",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_storage_calendar.md",
+      "source_location": "L78",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_storage_calendar_verification_results",
+      "target": "docs_walkthrough_receipt_storage_calendar_build",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_storage_calendar.md",
+      "source_location": "L86",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_storage_calendar_verification_results",
+      "target": "docs_walkthrough_receipt_storage_calendar_knowledge_graph",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_storage_calendar.md",
+      "source_location": "L91",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_storage_calendar_verification_results",
+      "target": "docs_walkthrough_receipt_storage_calendar_manual_testing_checklist",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "frontend/README.md",
       "source_location": "L1",
       "weight": 1.0,
@@ -26963,5 +27413,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "87936a79fbd8698a6038d3ab7d3dd33db16ffe20"
+  "built_at_commit": "02aa01463b58203991f804c53b5e80b35ba2e57b"
 }
