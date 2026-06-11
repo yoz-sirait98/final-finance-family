@@ -420,7 +420,7 @@ function formatCompact(val) {
 .calendar-cell {
   min-height: 90px;
   border-radius: 10px;
-  border: 1px solid var(--border-color, rgba(255,255,255,0.07));
+  border: 1px solid var(--input-border, rgba(0,0,0,0.08));
   background: var(--card-bg, rgba(255,255,255,0.03));
   padding: 6px 8px;
   cursor: pointer;
@@ -432,7 +432,7 @@ function formatCompact(val) {
 }
 
 .calendar-cell:hover {
-  border-color: var(--primary, #6c63ff);
+  border-color: var(--primary-color, #6c63ff);
   background: var(--card-bg-hover, rgba(108,99,255,0.07));
   transform: translateY(-1px);
 }
@@ -445,7 +445,7 @@ function formatCompact(val) {
 }
 
 .calendar-cell--today {
-  border-color: var(--primary, #6c63ff) !important;
+  border-color: var(--primary-color, #6c63ff) !important;
   background: rgba(108, 99, 255, 0.08) !important;
 }
 
@@ -464,7 +464,7 @@ function formatCompact(val) {
 }
 
 .calendar-day-number--today {
-  background: var(--primary, #6c63ff);
+  background: var(--primary-color, #6c63ff);
   color: #fff;
   width: 22px;
   height: 22px;

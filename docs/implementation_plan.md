@@ -416,5 +416,10 @@ Monthly calendar page with 7-column grid (Mon-Sun), colored dots per day (🟢 i
 - **[MODIFY]** `frontend/src/layouts/DashboardLayout.vue` — Calendar nav item
 - **[MODIFY]** `frontend/src/locales/en.json` & `id.json` — `nav.calendar` key
 
+## Theming Compatibility (Theme Audit)
+- **[MODIFY]** `frontend/src/pages/CalendarPage.vue` — updated styles to use theme variables (`--input-border`, `--primary-color`) rather than undefined/fallback variables (`--border-color`, `--primary`), solving invisible grid cells in light mode.
+
 ## Verification
-- Build: `✓ 1.52s, zero errors` | Graph: `1116 nodes, 1560 edges` | Commit: `7499a9e`
+- Build: compiled cleanly (`npm run build`)
+- Git commit + push to origin
+

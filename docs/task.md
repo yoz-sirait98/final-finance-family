@@ -77,3 +77,6 @@
 - `[x]` Task 58: Add Calendar nav item to `DashboardLayout.vue`
 - `[x]` Task 59: Add `nav.calendar` translation keys to `en.json` and `id.json`
 - `[x]` Task 60: Build verification (✓ 1.52s, zero errors) + graphify update (1116 nodes, 1560 edges)
+- `[x]` Task 61: Audit and update `CalendarPage.vue` styles to use theme variables (`--input-border`, `--primary-color`) for full light/dark mode compatibility
+- `[x]` Task 62: Rebuild and verify compilation
+

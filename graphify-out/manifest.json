@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "docs/implementation_plan.md": {
-    "mtime": 1781082170.0896013,
-    "ast_hash": "e6b91195c4282ffc58c233af32023614",
+    "mtime": 1781146438.575247,
+    "ast_hash": "3ad9d38063dd79106605f41b1c37b187",
     "semantic_hash": ""
   },
   "docs/supabase-setup-guide.md": {
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "docs/task.md": {
-    "mtime": 1781082155.055527,
-    "ast_hash": "0367596a89fb383358c1349072730d02",
+    "mtime": 1781146433.544502,
+    "ast_hash": "91595370dd5628803cad41d8ca97e8c5",
     "semantic_hash": ""
   },
   "docs/walkthrough_graphify.md": {
@@ -635,8 +635,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/CalendarPage.vue": {
-    "mtime": 1781143794.5008862,
-    "ast_hash": "d4cbf79aa78a97be3abe396fec0a9f72",
+    "mtime": 1781146421.2630434,
+    "ast_hash": "42291686089ec93692098ff00edb04e2",
     "semantic_hash": ""
   },
   "frontend/src/services/storageService.js": {
@@ -647,6 +647,11 @@
   "supabase/migrations/000022_add_receipt_url_to_transactions.sql": {
     "mtime": 1781143564.0391,
     "ast_hash": "c79663cbe546b2a81d746441ed055469",
+    "semantic_hash": ""
+  },
+  "docs/walkthrough_receipt_storage_calendar.md": {
+    "mtime": 1781145015.4114394,
+    "ast_hash": "4b2036c4f3888fab07e1ebf6bb592000",
     "semantic_hash": ""
   }
 }
