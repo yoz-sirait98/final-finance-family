@@ -427,6 +427,8 @@ Monthly calendar page with 7-column grid (Mon-Sun), colored dots per day (🟢 i
 ## Feature Description Accuracy Correction
 - **[MODIFY]** `README.md` — corrected inaccurate description of Feature 6 (which combined collaborative shopping list and offline OCR scanner into one item). Separated them into Feature 6 (**Daftar Belanja Kolaboratif**) and Feature 7 (**Scan Struk Offline (OCR)**) and renumbered subsequent items up to 15.
 - **[MODIFY]** `frontend/src/utils/receiptScanner.js` — refined Tesseract parsing with robust date formatting (2-digit years, dots/slashes), cash/change exclusions, and bottom-up scanner heuristics to solve inaccurate pre-fill issues.
+- **[MODIFY]** `frontend/src/pages/TransactionsPage.vue` — added dynamic family member matching by searching the scanned receipt's raw text for active family members' names.
+
 
 
 

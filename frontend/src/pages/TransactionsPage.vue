@@ -676,9 +676,14 @@ async function onReceiptSelected(event) {
       matchedAccountId = accounts.value[0].id;
     }
 
-    // Default member
+    // Heuristic mappings for Member
     let matchedMemberId = '';
-    if (members.value.length > 0) {
+    const rawTextLower = data.rawText ? data.rawText.toLowerCase() : '';
+    if (rawTextLower) {
+      const match = members.value.find(m => rawTextLower.includes(m.name.toLowerCase()));
+      if (match) matchedMemberId = match.id;
+    }
+    if (!matchedMemberId && members.value.length > 0) {
       matchedMemberId = members.value[0].id;
     }
 
