@@ -61,7 +61,8 @@
     "logout": "Keluar",
     "replayTour": "Ulang Panduan",
     "projectpockets": "Kantong Proyek",
-    "aiadvisor": "Asisten AI"
+    "aiadvisor": "Asisten AI",
+    "calendar": "Kalender"
   },
   "auth": {
     "login": {

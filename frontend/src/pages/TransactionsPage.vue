@@ -135,7 +135,10 @@
               <td class="fw-semibold" :class="getAmountClass(tx)">
                 {{ formatAmountWithSign(tx) }}
               </td>
-              <td>{{ tx.description || '-' }}</td>
+              <td>
+                {{ tx.description || '-' }}
+                <span v-if="tx.receipt_url" class="ms-1 text-muted" style="cursor:pointer" :title="localeStore.currentLocale === 'id' ? 'Lihat struk' : 'View receipt'" @click="openReceiptLightbox(tx)">📎</span>
+              </td>
               <td>
                 <div class="btn-group btn-group-sm">
                   <button v-if="tx.shopping_plans && tx.shopping_plans.length" class="btn btn-outline-info" @click="goToShoppingDetail(tx.shopping_plans[0].id)" title="View Shopping Plan"><i class="bi bi-cart"></i></button>
@@ -222,6 +225,35 @@
             <div class="mb-3">
               <label class="form-label" for="txDesc">{{ $t('common.description') }}</label>
               <input id="txDesc" name="description" v-model="form.description" type="text" class="form-control" />
+            </div>
+            <!-- Receipt image preview (scanned or already saved) -->
+            <div v-if="pendingReceiptFile || form.receipt_url" class="mb-3">
+              <label class="form-label"><i class="bi bi-image me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Foto Struk' : 'Receipt Image' }}</label>
+              <div class="d-flex align-items-center gap-3">
+                <img
+                  v-if="pendingReceiptPreview"
+                  :src="pendingReceiptPreview"
+                  alt="Receipt preview"
+                  class="rounded border"
+                  style="height:80px;width:60px;object-fit:cover;cursor:pointer"
+                  @click="receiptLightboxUrl = pendingReceiptPreview; showReceiptLightbox = true"
+                />
+                <img
+                  v-else-if="form.receipt_url && savedReceiptSignedUrl"
+                  :src="savedReceiptSignedUrl"
+                  alt="Receipt"
+                  class="rounded border"
+                  style="height:80px;width:60px;object-fit:cover;cursor:pointer"
+                  @click="receiptLightboxUrl = savedReceiptSignedUrl; showReceiptLightbox = true"
+                />
+                <div v-else class="text-muted small"><span class="spinner-border spinner-border-sm"></span> Loading...</div>
+                <div>
+                  <div class="small text-muted mb-1">{{ localeStore.currentLocale === 'id' ? 'Klik gambar untuk tampilkan penuh' : 'Click image to enlarge' }}</div>
+                  <button type="button" class="btn btn-sm btn-outline-danger" @click="clearReceiptImage">
+                    <i class="bi bi-x-lg me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Hapus Foto' : 'Remove Photo' }}
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
           <div class="modal-footer">
@@ -356,6 +388,18 @@
     </div>
 
   </div>
+
+  <!-- ===== Receipt Image Lightbox ===== -->
+  <div v-if="showReceiptLightbox" class="vue-modal-backdrop" style="z-index:2000;background:rgba(0,0,0,0.92)" @mousedown.self="showReceiptLightbox = false">
+    <div class="d-flex flex-column align-items-center justify-content-center h-100 position-relative p-3">
+      <button class="btn btn-outline-light btn-sm position-absolute top-0 end-0 m-3" @click="showReceiptLightbox = false">
+        <i class="bi bi-x-lg"></i>
+      </button>
+      <img :src="receiptLightboxUrl" alt="Receipt" class="rounded shadow" style="max-width:90vw;max-height:85vh;object-fit:contain" />
+      <p class="text-white-50 small mt-2 mb-0">{{ localeStore.currentLocale === 'id' ? 'Klik di luar gambar untuk menutup' : 'Click outside to close' }}</p>
+    </div>
+  </div>
+
 </template>
 
 <script setup>
@@ -370,10 +414,12 @@ import { memberService } from '../services/memberService';
 import { accountService } from '../services/accountService';
 import { categoryService } from '../services/categoryService';
 import { budgetService } from '../services/budgetService';
+import { uploadReceipt, getReceiptSignedUrl, deleteReceipt } from '../services/storageService';
 import { todayISO } from '../utils/date';
 import { useToastStore } from '../stores/toast';
 import { useBudgetStore } from '../stores/budgets';
 import { useLocaleStore } from '../stores/locale';
+import { useAuthStore } from '../stores/auth';
 
 const transactions = ref([]);
 const meta = ref({});
@@ -400,6 +446,18 @@ const toast = useToastStore();
 const receiptScannerInput = ref(null);
 const isScanning = ref(false);
 const scanProgress = ref(0);
+
+// Receipt image (pending upload after scan, or saved URL for existing record)
+const pendingReceiptFile = ref(null);   // raw File object from scanner
+const pendingReceiptPreview = ref('');  // local object-URL preview
+const savedReceiptSignedUrl = ref('');  // signed URL fetched from storage
+const receiptUrlToDelete = ref('');     // storage path to clean up on delete
+
+// Lightbox
+const showReceiptLightbox = ref(false);
+const receiptLightboxUrl = ref('');
+
+const authStore = useAuthStore();
 
 // Budget over-budget confirmation
 const showBudgetConfirm = ref(false);
@@ -515,9 +573,33 @@ function resetFilters() {
   fetchData();
 }
 
+function clearReceiptImage() {
+  if (pendingReceiptPreview.value) URL.revokeObjectURL(pendingReceiptPreview.value);
+  pendingReceiptFile.value = null;
+  pendingReceiptPreview.value = '';
+  form.value.receipt_url = '';
+  savedReceiptSignedUrl.value = '';
+  receiptUrlToDelete.value = form.value.receipt_url || receiptUrlToDelete.value;
+}
+
+async function openReceiptLightbox(tx) {
+  if (!tx.receipt_url) return;
+  try {
+    const url = await getReceiptSignedUrl(tx.receipt_url);
+    receiptLightboxUrl.value = url;
+    showReceiptLightbox.value = true;
+  } catch {
+    toast.error(localeStore.currentLocale === 'id' ? 'Gagal memuat gambar struk.' : 'Failed to load receipt image.');
+  }
+}
+
 function openCreate() {
   formError.value = '';
   editingId.value = null;
+  pendingReceiptFile.value = null;
+  pendingReceiptPreview.value = '';
+  savedReceiptSignedUrl.value = '';
+  receiptUrlToDelete.value = '';
   form.value = {
     type: 'expense',
     member_id: '',
@@ -525,7 +607,8 @@ function openCreate() {
     category_id: '',
     amount: '',
     transaction_date: todayISO(),
-    description: ''
+    description: '',
+    receipt_url: '',
   };
   showTxModal.value = true;
 }
@@ -550,7 +633,7 @@ async function onReceiptSelected(event) {
 
     // Heuristic mappings for Category
     let matchedCategoryId = '';
-    const catRec = data.heuristics.category; // e.g. 'food', 'groceries', 'health', 'utilities', 'transport'
+    const catRec = data.heuristics.category;
     const expenseCats = categories.value.filter(c => c.type === 'expense');
     
     if (catRec === 'food') {
@@ -576,7 +659,7 @@ async function onReceiptSelected(event) {
 
     // Heuristic mappings for Account
     let matchedAccountId = '';
-    const accRec = data.heuristics.account; // e.g. 'cash', 'wallet', 'bank'
+    const accRec = data.heuristics.account;
     
     if (accRec === 'cash') {
       const match = accounts.value.find(a => a.name.toLowerCase().match(/(cash|tunai|dompet|fisik)/));
@@ -599,9 +682,16 @@ async function onReceiptSelected(event) {
       matchedMemberId = members.value[0].id;
     }
 
+    // Store the image file for upload after save, and create a local preview
+    if (pendingReceiptPreview.value) URL.revokeObjectURL(pendingReceiptPreview.value);
+    pendingReceiptFile.value = data.imageFile;
+    pendingReceiptPreview.value = data.imageFile ? URL.createObjectURL(data.imageFile) : '';
+
     // Auto-fill and open modal
     formError.value = '';
     editingId.value = null;
+    savedReceiptSignedUrl.value = '';
+    receiptUrlToDelete.value = '';
     form.value = {
       type: 'expense',
       member_id: matchedMemberId,
@@ -609,23 +699,43 @@ async function onReceiptSelected(event) {
       category_id: matchedCategoryId,
       amount: data.totalAmount || '',
       transaction_date: data.date || todayISO(),
-      description: data.merchantName || ''
+      description: data.merchantName || '',
+      receipt_url: '',
     };
     showTxModal.value = true;
-    toast.success('Receipt scanned successfully!');
+    toast.success(localeStore.currentLocale === 'id' ? 'Struk berhasil dipindai!' : 'Receipt scanned successfully!');
 
   } catch (error) {
-    toast.error('Failed to parse receipt.');
+    toast.error(localeStore.currentLocale === 'id' ? 'Gagal memindai struk.' : 'Failed to parse receipt.');
   } finally {
     isScanning.value = false;
   }
 }
 
-function openEdit(tx) {
+async function openEdit(tx) {
   editingId.value = tx.id;
-  form.value = { type: tx.type, member_id: tx.member?.id, account_id: tx.account?.id, category_id: tx.category?.id || '', amount: tx.amount, transaction_date: tx.transaction_date_raw, description: tx.description || '' };
+  pendingReceiptFile.value = null;
+  pendingReceiptPreview.value = '';
+  savedReceiptSignedUrl.value = '';
+  receiptUrlToDelete.value = '';
+  form.value = {
+    type: tx.type,
+    member_id: tx.member?.id,
+    account_id: tx.account?.id,
+    category_id: tx.category?.id || '',
+    amount: tx.amount,
+    transaction_date: tx.transaction_date || tx.transaction_date_raw,
+    description: tx.description || '',
+    receipt_url: tx.receipt_url || '',
+  };
   formError.value = '';
   showTxModal.value = true;
+  // Fetch signed URL for existing receipt if present
+  if (tx.receipt_url) {
+    try {
+      savedReceiptSignedUrl.value = await getReceiptSignedUrl(tx.receipt_url);
+    } catch { /* non-fatal */ }
+  }
 }
 
 function openDuplicate(tx) {
@@ -690,16 +800,36 @@ async function doSaveTransaction() {
   showBudgetConfirm.value = false;
   formError.value = '';
   try {
+    let savedId = editingId.value;
+    const payload = { ...form.value };
+
     if (editingId.value) {
-      await transactionService.update(editingId.value, form.value);
-      toast.success(localeStore.t('common.success'));
+      await transactionService.update(editingId.value, payload);
     } else {
-      await transactionService.create(form.value);
-      toast.success(localeStore.t('common.success'));
+      const res = await transactionService.create(payload);
+      savedId = res?.data?.data?.id ?? null;
     }
+
+    // Upload pending receipt image after the transaction is saved
+    if (pendingReceiptFile.value && savedId && authStore.familyId) {
+      try {
+        const storagePath = await uploadReceipt(pendingReceiptFile.value, authStore.familyId);
+        await transactionService.update(savedId, { receipt_url: storagePath });
+      } catch (uploadErr) {
+        // Non-fatal — transaction is saved, image just didn't upload
+        console.warn('Receipt upload failed:', uploadErr);
+        toast.error(localeStore.currentLocale === 'id' ? 'Transaksi disimpan, tapi foto struk gagal diunggah.' : 'Transaction saved but receipt image upload failed.');
+      } finally {
+        if (pendingReceiptPreview.value) URL.revokeObjectURL(pendingReceiptPreview.value);
+        pendingReceiptFile.value = null;
+        pendingReceiptPreview.value = '';
+      }
+    }
+
+    toast.success(localeStore.t('common.success'));
     showTxModal.value = false;
     fetchData();
-    budgetStore.fetchAlerts(); // keep bell in sync after any transaction change
+    budgetStore.fetchAlerts();
   } catch (err) {
     showBudgetConfirm.value = false;
     formError.value = err.response?.data?.message || err.message || localeStore.t('common.error');
@@ -718,13 +848,18 @@ async function doDelete() {
   if (deleting.value) return;
   if (!deletingTx.value) return;
   deleting.value = true;
+  const receiptPathToClean = deletingTx.value.receipt_url || '';
   try {
     await transactionService.delete(deletingTx.value.id);
+    // Clean up receipt image from storage after transaction row is deleted
+    if (receiptPathToClean) {
+      deleteReceipt(receiptPathToClean).catch(() => {}); // best-effort, non-fatal
+    }
     toast.success(localeStore.t('common.success'));
     showDeleteModal.value = false;
     deletingTx.value = null;
     fetchData();
-    budgetStore.fetchAlerts(); // keep bell in sync after delete
+    budgetStore.fetchAlerts();
   } catch (err) {
     toast.error(err.response?.data?.message || err.message || localeStore.t('common.error'));
   } finally {

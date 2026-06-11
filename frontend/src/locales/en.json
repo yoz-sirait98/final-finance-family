@@ -61,7 +61,8 @@
     "logout": "Logout",
     "replayTour": "Replay tour",
     "projectpockets": "Project Pockets",
-    "aiadvisor": "AI Advisor"
+    "aiadvisor": "AI Advisor",
+    "calendar": "Calendar"
   },
   "auth": {
     "login": {

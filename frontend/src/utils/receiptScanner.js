@@ -194,6 +194,8 @@ export async function scanReceipt(imageFile, progressCallback) {
       category: recommendedCategoryType,
       account: recommendedAccountType
     },
-    rawText
+    rawText,
+    // Pass back the original file so callers can upload it to storage
+    imageFile,
   };
 }

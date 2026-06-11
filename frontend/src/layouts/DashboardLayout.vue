@@ -29,6 +29,12 @@
           </router-link>
         </div>
         <div class="nav-item">
+          <router-link to="/calendar" class="nav-link" @click="closeMobile">
+            <i class="bi bi-calendar3"></i>
+            <span class="nav-text">{{ $t('nav.calendar') || 'Calendar' }}</span>
+          </router-link>
+        </div>
+        <div class="nav-item">
           <router-link to="/accounts" class="nav-link" @click="closeMobile">
             <i class="bi bi-bank"></i>
             <span class="nav-text">{{ $t('nav.accounts') }}</span>

@@ -7,7 +7,7 @@ const crud = createCrudService('transactions');
 export const transactionService = {
   ...crud,
   list: async (params = {}) => {
-    let query = supabase.from('transactions').select('*, member:members(*), account:accounts(*), category:categories(*), shopping_plans(*)', { count: 'exact' });
+    let query = supabase.from('transactions').select('*, member:members(*), account:accounts(*), category:categories(*), shopping_plans(*), receipt_url', { count: 'exact' });
     
     if (params.type) query = query.eq('type', params.type);
     if (params.category_id) query = query.eq('category_id', params.category_id);
