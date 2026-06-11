@@ -36,7 +36,7 @@ async function compressImage(file, maxWidth = 1200, quality = 0.82) {
 /**
  * Upload a receipt image to Supabase Storage.
  *
- * Path convention: receipts/{familyId}/{timestamp}-{randomId}.jpg
+ * Path convention: {familyId}/{timestamp}-{randomId}.jpg
  *
  * @param {File} file - The original image file from the file input
  * @param {string} familyId - The authenticated family's UUID
@@ -48,7 +48,7 @@ export async function uploadReceipt(file, familyId) {
   const compressed = await compressImage(file);
   const ext = 'jpg';
   const fileName = `${Date.now()}-${Math.random().toString(36).slice(2, 9)}.${ext}`;
-  const storagePath = `receipts/${familyId}/${fileName}`;
+  const storagePath = `${familyId}/${fileName}`;
 
   const { error } = await supabase.storage
     .from('receipts')
