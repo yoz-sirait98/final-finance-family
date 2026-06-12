@@ -1730,7 +1730,7 @@
       "source_location": "L119",
       "_origin": "ast",
       "id": "locales_en_dashboard_insights",
-      "community": 39,
+      "community": 105,
       "norm_label": "insights"
     },
     {
@@ -2480,7 +2480,7 @@
       "source_location": "L199",
       "_origin": "ast",
       "id": "locales_en_accounts",
-      "community": 105,
+      "community": 131,
       "norm_label": "accounts"
     },
     {
@@ -2490,7 +2490,7 @@
       "source_location": "L200",
       "_origin": "ast",
       "id": "locales_en_accounts_title",
-      "community": 105,
+      "community": 131,
       "norm_label": "title"
     },
     {
@@ -2500,7 +2500,7 @@
       "source_location": "L201",
       "_origin": "ast",
       "id": "locales_en_accounts_subtitle",
-      "community": 105,
+      "community": 131,
       "norm_label": "subtitle"
     },
     {
@@ -2510,7 +2510,7 @@
       "source_location": "L202",
       "_origin": "ast",
       "id": "locales_en_accounts_addaccount",
-      "community": 105,
+      "community": 131,
       "norm_label": "addaccount"
     },
     {
@@ -2520,7 +2520,7 @@
       "source_location": "L203",
       "_origin": "ast",
       "id": "locales_en_accounts_editaccount",
-      "community": 105,
+      "community": 131,
       "norm_label": "editaccount"
     },
     {
@@ -2530,7 +2530,7 @@
       "source_location": "L204",
       "_origin": "ast",
       "id": "locales_en_accounts_accountname",
-      "community": 105,
+      "community": 131,
       "norm_label": "accountname"
     },
     {
@@ -2540,7 +2540,7 @@
       "source_location": "L205",
       "_origin": "ast",
       "id": "locales_en_accounts_accountnameplaceholder",
-      "community": 105,
+      "community": 131,
       "norm_label": "accountnameplaceholder"
     },
     {
@@ -2600,7 +2600,7 @@
       "source_location": "L212",
       "_origin": "ast",
       "id": "locales_en_accounts_balanceplaceholder",
-      "community": 105,
+      "community": 131,
       "norm_label": "balanceplaceholder"
     },
     {
@@ -2610,7 +2610,7 @@
       "source_location": "L213",
       "_origin": "ast",
       "id": "locales_en_accounts_walletdetails",
-      "community": 105,
+      "community": 131,
       "norm_label": "walletdetails"
     },
     {
@@ -2620,7 +2620,7 @@
       "source_location": "L214",
       "_origin": "ast",
       "id": "locales_en_accounts_validation",
-      "community": 11,
+      "community": 138,
       "norm_label": "validation"
     },
     {
@@ -2630,7 +2630,7 @@
       "source_location": "L215",
       "_origin": "ast",
       "id": "locales_en_validation_name",
-      "community": 11,
+      "community": 138,
       "norm_label": "name"
     },
     {
@@ -2640,7 +2640,7 @@
       "source_location": "L216",
       "_origin": "ast",
       "id": "locales_en_validation_type",
-      "community": 11,
+      "community": 138,
       "norm_label": "type"
     },
     {
@@ -2880,7 +2880,7 @@
       "source_location": "L245",
       "_origin": "ast",
       "id": "locales_en_categories_validation",
-      "community": 11,
+      "community": 138,
       "norm_label": "validation"
     },
     {
@@ -3000,7 +3000,7 @@
       "source_location": "L261",
       "_origin": "ast",
       "id": "locales_en_goals_selectaccount",
-      "community": 4,
+      "community": 25,
       "norm_label": "selectaccount"
     },
     {
@@ -3050,7 +3050,7 @@
       "source_location": "L269",
       "_origin": "ast",
       "id": "locales_en_recurring",
-      "community": 32,
+      "community": 22,
       "norm_label": "recurring"
     },
     {
@@ -3060,7 +3060,7 @@
       "source_location": "L270",
       "_origin": "ast",
       "id": "locales_en_recurring_title",
-      "community": 32,
+      "community": 22,
       "norm_label": "title"
     },
     {
@@ -3070,7 +3070,7 @@
       "source_location": "L271",
       "_origin": "ast",
       "id": "locales_en_recurring_subtitle",
-      "community": 32,
+      "community": 22,
       "norm_label": "subtitle"
     },
     {
@@ -3080,7 +3080,7 @@
       "source_location": "L272",
       "_origin": "ast",
       "id": "locales_en_recurring_addrecurring",
-      "community": 32,
+      "community": 22,
       "norm_label": "addrecurring"
     },
     {
@@ -3090,7 +3090,7 @@
       "source_location": "L273",
       "_origin": "ast",
       "id": "locales_en_recurring_editrecurring",
-      "community": 32,
+      "community": 22,
       "norm_label": "editrecurring"
     },
     {
@@ -3100,7 +3100,7 @@
       "source_location": "L274",
       "_origin": "ast",
       "id": "locales_en_recurring_interval",
-      "community": 32,
+      "community": 22,
       "norm_label": "interval"
     },
     {
@@ -3110,7 +3110,7 @@
       "source_location": "L275",
       "_origin": "ast",
       "id": "locales_en_recurring_nextdue",
-      "community": 32,
+      "community": 22,
       "norm_label": "nextdue"
     },
     {
@@ -3280,7 +3280,7 @@
       "source_location": "L301",
       "_origin": "ast",
       "id": "locales_en_members_validation",
-      "community": 11,
+      "community": 138,
       "norm_label": "validation"
     },
     {
@@ -3290,7 +3290,7 @@
       "source_location": "L303",
       "_origin": "ast",
       "id": "locales_en_validation_role",
-      "community": 11,
+      "community": 138,
       "norm_label": "role"
     },
     {
@@ -3610,7 +3610,7 @@
       "source_location": "L339",
       "_origin": "ast",
       "id": "locales_en_shopping_validation",
-      "community": 11,
+      "community": 138,
       "norm_label": "validation"
     },
     {
@@ -3870,7 +3870,7 @@
       "source_location": "L377",
       "_origin": "ast",
       "id": "locales_en_insights_title",
-      "community": 39,
+      "community": 105,
       "norm_label": "title"
     },
     {
@@ -3880,7 +3880,7 @@
       "source_location": "L378",
       "_origin": "ast",
       "id": "locales_en_insights_description",
-      "community": 39,
+      "community": 105,
       "norm_label": "description"
     },
     {
@@ -3890,7 +3890,7 @@
       "source_location": "L380",
       "_origin": "ast",
       "id": "locales_en_dashboard_charts",
-      "community": 29,
+      "community": 140,
       "norm_label": "charts"
     },
     {
@@ -3900,7 +3900,7 @@
       "source_location": "L381",
       "_origin": "ast",
       "id": "locales_en_charts_title",
-      "community": 29,
+      "community": 140,
       "norm_label": "title"
     },
     {
@@ -3910,7 +3910,7 @@
       "source_location": "L382",
       "_origin": "ast",
       "id": "locales_en_charts_description",
-      "community": 29,
+      "community": 140,
       "norm_label": "description"
     },
     {
@@ -3960,7 +3960,7 @@
       "source_location": "L390",
       "_origin": "ast",
       "id": "locales_en_transactions_add",
-      "community": 26,
+      "community": 124,
       "norm_label": "add"
     },
     {
@@ -3970,7 +3970,7 @@
       "source_location": "L391",
       "_origin": "ast",
       "id": "locales_en_add_title",
-      "community": 26,
+      "community": 124,
       "norm_label": "title"
     },
     {
@@ -3980,7 +3980,7 @@
       "source_location": "L392",
       "_origin": "ast",
       "id": "locales_en_add_description",
-      "community": 26,
+      "community": 124,
       "norm_label": "description"
     },
     {
@@ -3990,7 +3990,7 @@
       "source_location": "L394",
       "_origin": "ast",
       "id": "locales_en_transactions_transfer",
-      "community": 124,
+      "community": 141,
       "norm_label": "transfer"
     },
     {
@@ -4000,7 +4000,7 @@
       "source_location": "L395",
       "_origin": "ast",
       "id": "locales_en_transfer_title",
-      "community": 124,
+      "community": 141,
       "norm_label": "title"
     },
     {
@@ -4010,7 +4010,7 @@
       "source_location": "L396",
       "_origin": "ast",
       "id": "locales_en_transfer_description",
-      "community": 124,
+      "community": 141,
       "norm_label": "description"
     },
     {
@@ -4080,7 +4080,7 @@
       "source_location": "L407",
       "_origin": "ast",
       "id": "locales_en_tours_accounts",
-      "community": 26,
+      "community": 124,
       "norm_label": "accounts"
     },
     {
@@ -4100,7 +4100,7 @@
       "source_location": "L412",
       "_origin": "ast",
       "id": "locales_en_accounts_add",
-      "community": 26,
+      "community": 124,
       "norm_label": "add"
     },
     {
@@ -4160,7 +4160,7 @@
       "source_location": "L426",
       "_origin": "ast",
       "id": "locales_en_budgets_add",
-      "community": 26,
+      "community": 124,
       "norm_label": "add"
     },
     {
@@ -4180,7 +4180,7 @@
       "source_location": "L434",
       "_origin": "ast",
       "id": "locales_en_budgets_alerts",
-      "community": 124,
+      "community": 24,
       "norm_label": "alerts"
     },
     {
@@ -4190,7 +4190,7 @@
       "source_location": "L435",
       "_origin": "ast",
       "id": "locales_en_alerts_title",
-      "community": 124,
+      "community": 24,
       "norm_label": "title"
     },
     {
@@ -4200,7 +4200,7 @@
       "source_location": "L436",
       "_origin": "ast",
       "id": "locales_en_alerts_description",
-      "community": 124,
+      "community": 24,
       "norm_label": "description"
     },
     {
@@ -4250,7 +4250,7 @@
       "source_location": "L453",
       "_origin": "ast",
       "id": "locales_en_tours_recurring",
-      "community": 26,
+      "community": 124,
       "norm_label": "recurring"
     },
     {
@@ -4270,7 +4270,7 @@
       "source_location": "L458",
       "_origin": "ast",
       "id": "locales_en_recurring_add",
-      "community": 26,
+      "community": 124,
       "norm_label": "add"
     },
     {
@@ -4290,7 +4290,7 @@
       "source_location": "L467",
       "_origin": "ast",
       "id": "locales_en_tours_reports",
-      "community": 29,
+      "community": 124,
       "norm_label": "reports"
     },
     {
@@ -4300,7 +4300,7 @@
       "source_location": "L468",
       "_origin": "ast",
       "id": "locales_en_reports_header",
-      "community": 29,
+      "community": 124,
       "norm_label": "header"
     },
     {
@@ -4320,7 +4320,7 @@
       "source_location": "L476",
       "_origin": "ast",
       "id": "locales_en_reports_charts",
-      "community": 29,
+      "community": 140,
       "norm_label": "charts"
     },
     {
@@ -10400,7 +10400,7 @@
       "source_location": "L436",
       "_origin": "ast",
       "id": "docs_implementation_plan_part_11_magic_ui_ux_pass_compact_elegant_action_buttons",
-      "community": 136,
+      "community": 139,
       "norm_label": "part 11 \u2014 magic ui/ux pass: compact & elegant action buttons"
     },
     {
@@ -10410,7 +10410,7 @@
       "source_location": "L440",
       "_origin": "ast",
       "id": "docs_implementation_plan_proposed_changes_440",
-      "community": 136,
+      "community": 139,
       "norm_label": "proposed changes"
     },
     {
@@ -10420,7 +10420,7 @@
       "source_location": "L442",
       "_origin": "ast",
       "id": "docs_implementation_plan_modify_style_css_file_c_projects_final_finance_family_frontend_src_style_css",
-      "community": 136,
+      "community": 139,
       "norm_label": "[modify] [style.css](file:///c:/projects/final-finance-family/frontend/src/style.css)"
     },
     {
@@ -10430,7 +10430,7 @@
       "source_location": "L456",
       "_origin": "ast",
       "id": "docs_implementation_plan_verification_plan_456",
-      "community": 136,
+      "community": 139,
       "norm_label": "verification plan"
     },
     {
@@ -10440,7 +10440,7 @@
       "source_location": "L458",
       "_origin": "ast",
       "id": "docs_implementation_plan_manual_verification_458",
-      "community": 136,
+      "community": 139,
       "norm_label": "manual verification"
     },
     {
@@ -10842,6 +10842,86 @@
       "id": "docs_walkthrough_graphify_verification",
       "community": 37,
       "norm_label": "verification"
+    },
+    {
+      "label": "walkthrough_magic_buttons.md",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_magic_buttons.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_walkthrough_magic_buttons",
+      "community": 135,
+      "norm_label": "walkthrough_magic_buttons.md"
+    },
+    {
+      "label": "Walkthrough \u2014 Magic UI/UX Pass: Compact & Elegant Action Buttons",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_magic_buttons.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_walkthrough_magic_buttons_walkthrough_magic_ui_ux_pass_compact_elegant_action_buttons",
+      "community": 135,
+      "norm_label": "walkthrough \u2014 magic ui/ux pass: compact & elegant action buttons"
+    },
+    {
+      "label": "Core Refinements",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_magic_buttons.md",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "docs_walkthrough_magic_buttons_core_refinements",
+      "community": 135,
+      "norm_label": "core refinements"
+    },
+    {
+      "label": "1. Modern Button Mechanics & Typography",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_magic_buttons.md",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "docs_walkthrough_magic_buttons_1_modern_button_mechanics_typography",
+      "community": 135,
+      "norm_label": "1. modern button mechanics & typography"
+    },
+    {
+      "label": "2. Premium Theming & Colored Glows",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_magic_buttons.md",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "docs_walkthrough_magic_buttons_2_premium_theming_colored_glows",
+      "community": 135,
+      "norm_label": "2. premium theming & colored glows"
+    },
+    {
+      "label": "3. Adaptive Mobile Compaction",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_magic_buttons.md",
+      "source_location": "L19",
+      "_origin": "ast",
+      "id": "docs_walkthrough_magic_buttons_3_adaptive_mobile_compaction",
+      "community": 135,
+      "norm_label": "3. adaptive mobile compaction"
+    },
+    {
+      "label": "Key Files Affected",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_magic_buttons.md",
+      "source_location": "L27",
+      "_origin": "ast",
+      "id": "docs_walkthrough_magic_buttons_key_files_affected",
+      "community": 135,
+      "norm_label": "key files affected"
+    },
+    {
+      "label": "Verification Details",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_magic_buttons.md",
+      "source_location": "L30",
+      "_origin": "ast",
+      "id": "docs_walkthrough_magic_buttons_verification_details",
+      "community": 135,
+      "norm_label": "verification details"
     },
     {
       "label": "walkthrough_receipt_scanner_ai.md",
@@ -25908,9 +25988,9 @@
       "source_file": "supabase/.temp/linked-project.json",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "supabase_temp_linked_project_json_temp_linked_project",
-      "target": "supabase_temp_linked_project_json_temp_linked_project_name",
-      "confidence_score": 1.0
+      "target": "supabase_temp_linked_project_json_temp_linked_project_name"
     },
     {
       "relation": "contains",
@@ -25918,9 +25998,9 @@
       "source_file": "supabase/.temp/linked-project.json",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "supabase_temp_linked_project_json_temp_linked_project",
-      "target": "supabase_temp_linked_project_json_temp_linked_project_organization_id",
-      "confidence_score": 1.0
+      "target": "supabase_temp_linked_project_json_temp_linked_project_organization_id"
     },
     {
       "relation": "contains",
@@ -25928,9 +26008,9 @@
       "source_file": "supabase/.temp/linked-project.json",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "supabase_temp_linked_project_json_temp_linked_project",
-      "target": "supabase_temp_linked_project_json_temp_linked_project_organization_slug",
-      "confidence_score": 1.0
+      "target": "supabase_temp_linked_project_json_temp_linked_project_organization_slug"
     },
     {
       "relation": "contains",
@@ -25938,9 +26018,9 @@
       "source_file": "supabase/.temp/linked-project.json",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "supabase_temp_linked_project_json_temp_linked_project",
-      "target": "supabase_temp_linked_project_json_temp_linked_project_ref",
-      "confidence_score": 1.0
+      "target": "supabase_temp_linked_project_json_temp_linked_project_ref"
     },
     {
       "relation": "contains",
@@ -25948,9 +26028,9 @@
       "source_file": "supabase/migrations/supabase/.temp/linked-project.json",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "supabase_migrations_supabase_temp_linked_project_json_temp_linked_project",
-      "target": "supabase_migrations_supabase_temp_linked_project_json_temp_linked_project_name",
-      "confidence_score": 1.0
+      "target": "supabase_migrations_supabase_temp_linked_project_json_temp_linked_project_name"
     },
     {
       "relation": "contains",
@@ -25958,9 +26038,9 @@
       "source_file": "supabase/migrations/supabase/.temp/linked-project.json",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "supabase_migrations_supabase_temp_linked_project_json_temp_linked_project",
-      "target": "supabase_migrations_supabase_temp_linked_project_json_temp_linked_project_organization_id",
-      "confidence_score": 1.0
+      "target": "supabase_migrations_supabase_temp_linked_project_json_temp_linked_project_organization_id"
     },
     {
       "relation": "contains",
@@ -25968,9 +26048,9 @@
       "source_file": "supabase/migrations/supabase/.temp/linked-project.json",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "supabase_migrations_supabase_temp_linked_project_json_temp_linked_project",
-      "target": "supabase_migrations_supabase_temp_linked_project_json_temp_linked_project_organization_slug",
-      "confidence_score": 1.0
+      "target": "supabase_migrations_supabase_temp_linked_project_json_temp_linked_project_organization_slug"
     },
     {
       "relation": "contains",
@@ -25978,9 +26058,9 @@
       "source_file": "supabase/migrations/supabase/.temp/linked-project.json",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "supabase_migrations_supabase_temp_linked_project_json_temp_linked_project",
-      "target": "supabase_migrations_supabase_temp_linked_project_json_temp_linked_project_ref",
-      "confidence_score": 1.0
+      "target": "supabase_migrations_supabase_temp_linked_project_json_temp_linked_project_ref"
     },
     {
       "relation": "contains",
@@ -26018,9 +26098,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L436",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_implementation_plan",
-      "target": "docs_implementation_plan_part_11_magic_ui_ux_pass_compact_elegant_action_buttons",
-      "confidence_score": 1.0
+      "target": "docs_implementation_plan_part_11_magic_ui_ux_pass_compact_elegant_action_buttons"
     },
     {
       "relation": "contains",
@@ -26978,9 +27058,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L440",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_implementation_plan_part_11_magic_ui_ux_pass_compact_elegant_action_buttons",
-      "target": "docs_implementation_plan_proposed_changes_440",
-      "confidence_score": 1.0
+      "target": "docs_implementation_plan_proposed_changes_440"
     },
     {
       "relation": "contains",
@@ -26988,9 +27068,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L456",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_implementation_plan_part_11_magic_ui_ux_pass_compact_elegant_action_buttons",
-      "target": "docs_implementation_plan_verification_plan_456",
-      "confidence_score": 1.0
+      "target": "docs_implementation_plan_verification_plan_456"
     },
     {
       "relation": "contains",
@@ -26998,9 +27078,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L442",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_implementation_plan_proposed_changes_440",
-      "target": "docs_implementation_plan_modify_style_css_file_c_projects_final_finance_family_frontend_src_style_css",
-      "confidence_score": 1.0
+      "target": "docs_implementation_plan_modify_style_css_file_c_projects_final_finance_family_frontend_src_style_css"
     },
     {
       "relation": "contains",
@@ -27008,9 +27088,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L458",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_implementation_plan_verification_plan_456",
-      "target": "docs_implementation_plan_manual_verification_458",
-      "confidence_score": 1.0
+      "target": "docs_implementation_plan_manual_verification_458"
     },
     {
       "relation": "contains",
@@ -27118,9 +27198,9 @@
       "source_file": "docs/task.md",
       "source_location": "L93",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_task_family_finance_migration_integration_tasks",
-      "target": "docs_task_part_11_magic_ui_ux_pass_compact_elegant_action_buttons",
-      "confidence_score": 1.0
+      "target": "docs_task_part_11_magic_ui_ux_pass_compact_elegant_action_buttons"
     },
     {
       "relation": "contains",
@@ -27371,6 +27451,76 @@
       "confidence_score": 1.0,
       "source": "docs_walkthrough_graphify_what_was_done",
       "target": "docs_walkthrough_graphify_2_antigravity_skill_registration"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_magic_buttons.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_walkthrough_magic_buttons",
+      "target": "docs_walkthrough_magic_buttons_walkthrough_magic_ui_ux_pass_compact_elegant_action_buttons",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_magic_buttons.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "docs_walkthrough_magic_buttons_walkthrough_magic_ui_ux_pass_compact_elegant_action_buttons",
+      "target": "docs_walkthrough_magic_buttons_core_refinements",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_magic_buttons.md",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "docs_walkthrough_magic_buttons_walkthrough_magic_ui_ux_pass_compact_elegant_action_buttons",
+      "target": "docs_walkthrough_magic_buttons_key_files_affected",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_magic_buttons.md",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "docs_walkthrough_magic_buttons_walkthrough_magic_ui_ux_pass_compact_elegant_action_buttons",
+      "target": "docs_walkthrough_magic_buttons_verification_details",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_magic_buttons.md",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "docs_walkthrough_magic_buttons_core_refinements",
+      "target": "docs_walkthrough_magic_buttons_1_modern_button_mechanics_typography",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_magic_buttons.md",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "docs_walkthrough_magic_buttons_core_refinements",
+      "target": "docs_walkthrough_magic_buttons_2_premium_theming_colored_glows",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_magic_buttons.md",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "docs_walkthrough_magic_buttons_core_refinements",
+      "target": "docs_walkthrough_magic_buttons_3_adaptive_mobile_compaction",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -27824,5 +27974,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "32193d5f53d9e0f2cd11bc417b81677d6cf5bcd5"
+  "built_at_commit": "b54d6c8622650a30195602a223902580022a9c2c"
 }
