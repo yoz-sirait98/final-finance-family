@@ -6,7 +6,7 @@
         <p>{{ $t('categories.subtitle') }}</p>
       </div>
       <button class="btn btn-primary-gradient" @click="openCreate">
-        <i class="bi bi-plus-lg me-1"></i>{{ $t('categories.addCategory') }}
+        <i class="bi bi-plus-lg"></i><span class="d-none d-sm-inline">{{ $t('categories.addCategory') }}</span>
       </button>
     </div>
     <div class="row g-4">

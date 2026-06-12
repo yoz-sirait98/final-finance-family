@@ -6,7 +6,7 @@
         <p>{{ $t('recurring.subtitle') }}</p>
       </div>
       <button id="tour-recurring-add-btn" class="btn btn-primary-gradient" @click="openCreate">
-        <i class="bi bi-plus-lg me-1"></i>{{ $t('recurring.addRecurring') }}
+        <i class="bi bi-plus-lg"></i><span class="d-none d-sm-inline">{{ $t('recurring.addRecurring') }}</span>
       </button>
     </div>
     <div id="tour-recurring-list" class="table-card">

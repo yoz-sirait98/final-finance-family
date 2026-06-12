@@ -7,14 +7,14 @@
       </div>
       <div class="d-flex gap-2">
         <button class="btn btn-outline-info" @click="triggerScan" :disabled="isScanning">
-          <i class="bi bi-camera me-1"></i>{{ $t('common.scanReceipt') || 'Scan Receipt' }}
+          <i class="bi bi-camera"></i><span class="d-none d-sm-inline">{{ $t('common.scanReceipt') || 'Scan Receipt' }}</span>
         </button>
         <input type="file" ref="receiptScannerInput" accept="image/*" capture="environment" class="d-none" @change="onReceiptSelected" />
         <button id="tour-tx-transfer-btn" class="btn btn-outline-primary" @click="openTransfer">
-          <i class="bi bi-arrow-left-right me-1"></i>{{ $t('common.transfer') }}
+          <i class="bi bi-arrow-left-right"></i><span class="d-none d-sm-inline">{{ $t('common.transfer') }}</span>
         </button>
         <button id="tour-tx-add-btn" class="btn btn-primary-gradient" @click="openCreate">
-          <i class="bi bi-plus-lg me-1"></i>{{ $t('transactions.addTransaction') }}
+          <i class="bi bi-plus-lg"></i><span class="d-none d-sm-inline">{{ $t('transactions.addTransaction') }}</span>
         </button>
       </div>
     </div>
