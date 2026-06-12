@@ -95,18 +95,18 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/AccountsPage.vue": {
-    "mtime": 1780898274.3399985,
-    "ast_hash": "427ffe18ee750b8cbb9f3a6c7afe7e70",
+    "mtime": 1781249919.4386482,
+    "ast_hash": "5733d7cacb218f348ff23549820b58cf",
     "semantic_hash": ""
   },
   "frontend/src/pages/BudgetsPage.vue": {
-    "mtime": 1780891614.9877758,
-    "ast_hash": "e5b061228790b12eb4984120fd18f30e",
+    "mtime": 1781249921.5137172,
+    "ast_hash": "37c82413c43eb9f92d69bf94d87342c8",
     "semantic_hash": ""
   },
   "frontend/src/pages/CategoriesPage.vue": {
-    "mtime": 1780891623.9543116,
-    "ast_hash": "86d9f6fb7252d4f9025d003f21780fa8",
+    "mtime": 1781249923.525541,
+    "ast_hash": "7cf14b9871efda9d6fbf6e8649f33a16",
     "semantic_hash": ""
   },
   "frontend/src/pages/DashboardPage.vue": {
@@ -115,13 +115,13 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/GoalsPage.vue": {
-    "mtime": 1781066988.653436,
-    "ast_hash": "d60077e9c4967082c7e5a163ccd16e7a",
+    "mtime": 1781249925.5535514,
+    "ast_hash": "6fad371b5ee9a0039516e8cd96d81b42",
     "semantic_hash": ""
   },
   "frontend/src/pages/IconsGemPage.vue": {
-    "mtime": 1780656883.0354702,
-    "ast_hash": "8d34189a3e3c632135ee1d4b28e97213",
+    "mtime": 1781250621.288102,
+    "ast_hash": "7b8a66c3ff9a02ea61f10116c82517b4",
     "semantic_hash": ""
   },
   "frontend/src/pages/LoginPage.vue": {
@@ -130,13 +130,13 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/MembersPage.vue": {
-    "mtime": 1780891659.3614252,
-    "ast_hash": "dc7f82d053370acef9ae3ee6c1e634a4",
+    "mtime": 1781249957.1652646,
+    "ast_hash": "3183fbd6b3559b7ee329f65a467ed9d9",
     "semantic_hash": ""
   },
   "frontend/src/pages/RecurringPage.vue": {
-    "mtime": 1780891648.6964502,
-    "ast_hash": "f9d2d49ad4fe13ab51f59793bab54ab5",
+    "mtime": 1781249959.1925852,
+    "ast_hash": "4329ef6c56e341a800c81231d2524ead",
     "semantic_hash": ""
   },
   "frontend/src/pages/RegisterPage.vue": {
@@ -155,8 +155,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/TransactionsPage.vue": {
-    "mtime": 1781150692.3942633,
-    "ast_hash": "b93d2c28246a17bc637deb988a9e80d7",
+    "mtime": 1781249917.4235039,
+    "ast_hash": "7df51384aa3f28ff1f065d205d7e9cbd",
     "semantic_hash": ""
   },
   "frontend/src/router/index.js": {
@@ -395,8 +395,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ShoppingPage.vue": {
-    "mtime": 1780973275.8801785,
-    "ast_hash": "58f8fb90ce3490eb1b08f49ef9810b62",
+    "mtime": 1781249961.2182739,
+    "ast_hash": "c86f4c5101112f19d4bec23230376083",
     "semantic_hash": ""
   },
   "frontend/src/services/shoppingService.js": {
@@ -520,8 +520,8 @@
     "semantic_hash": "081c348d068770af78fcd90980521318"
   },
   "frontend/src/pages/ShoppingDetailPage.vue": {
-    "mtime": 1780997919.9147472,
-    "ast_hash": "3633fd5b822f6db71541165934057db0",
+    "mtime": 1781249963.2360582,
+    "ast_hash": "b0ef9d712de77fa5c37cef4f640f20e3",
     "semantic_hash": ""
   },
   "frontend/src/services/shoppingPlanService.js": {
@@ -605,8 +605,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/AiPage.vue": {
-    "mtime": 1781081220.2721367,
-    "ast_hash": "acc8464b2eec67beef867e64354cd551",
+    "mtime": 1781249935.5234857,
+    "ast_hash": "70e72306657a16b2f31aa633bda478a6",
     "semantic_hash": ""
   },
   "frontend/src/services/aiService.js": {
@@ -672,6 +672,11 @@
   "docs/walkthrough_magic_buttons.md": {
     "mtime": 1781243129.4755995,
     "ast_hash": "cc4b473d19dba3b2cebd69b9645989da",
+    "semantic_hash": ""
+  },
+  "docs/walkthrough_magic_ui.md": {
+    "mtime": 1781249984.970538,
+    "ast_hash": "723b42e2f9d5dd57c9dcd6801a7d2dfe",
     "semantic_hash": ""
   }
 }
