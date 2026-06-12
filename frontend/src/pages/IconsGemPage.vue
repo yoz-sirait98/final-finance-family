@@ -13,13 +13,13 @@
       <i class="bi bi-check-circle-fill me-2"></i> Copied <strong>{{ copied }}</strong> to clipboard!
     </div>
 
-    <div class="row g-3 mt-4">
-      <div v-for="icon in filteredIcons" :key="icon" class="col-6 col-sm-4 col-md-3 col-lg-2">
-        <div class="stat-card text-center cursor-pointer icon-card" @click="copyIcon(icon)">
-          <div class="mb-2" style="font-size: 2rem; color: var(--primary-color);">
+    <div class="row g-2 g-md-3 mt-4">
+      <div v-for="icon in filteredIcons" :key="icon" class="col-4 col-sm-3 col-md-2 col-lg-2">
+        <div class="stat-card text-center cursor-pointer icon-card p-2 p-md-3" @click="copyIcon(icon)">
+          <div class="mb-1 mb-md-2" style="font-size: 1.5rem; color: var(--primary-color);">
             <i :class="icon"></i>
           </div>
-          <div class="small text-muted font-monospace">{{ icon }}</div>
+          <div class="text-muted font-monospace text-truncate" style="font-size: 0.7rem;" :title="icon">{{ icon }}</div>
         </div>
       </div>
       
