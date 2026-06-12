@@ -90,10 +90,8 @@
 - `[x]` Task 69: Remove redundant receipts/ folder prefix in `storageService.js` to satisfy Supabase Storage RLS folder isolation
 - `[x]` Task 70: Create database migration `000023_add_storage_bucket_and_rls_policies.sql` to setup receipts bucket and configure storage.objects RLS policies
 
-
-
-
-
-
-
-
+## Part 11 — Magic UI/UX Pass: Compact & Elegant Action Buttons
+- `[x]` Task 71: Add elegant base button styling overrides in `style.css` (padding, border-radius, transition speeds)
+- `[x]` Task 72: Add theme-specific premium glows and hover/active animations for all button variants in `style.css` (primary-gradient, outline-primary, secondary, danger, warning, success, info)
+- `[x]` Task 73: Implement adaptive mobile compaction media query using `:has(i)` to hide header button text and round them on mobile in `style.css`
+- `[x]` Task 74: Run local build and verify layouts across different viewports and color themes (light/dark)
