@@ -270,16 +270,17 @@ body {
   position: fixed;
   top: 0;
   left: 0;
+  bottom: 0;
   width: var(--sidebar-width);
-  height: 100vh;
   background: var(--sidebar-bg);
   color: var(--sidebar-text);
   z-index: 1040;
-  transition: width var(--transition-speed) ease, background var(--transition-speed) ease;
+  transition: transform var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1), width var(--transition-speed) ease, background var(--transition-speed) ease;
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
   border-right: var(--card-border);
+  overscroll-behavior: contain;
 }
 
 .sidebar.collapsed {

@@ -370,6 +370,14 @@ function closeMobile() {
   mobileOpen.value = false;
 }
 
+watch(mobileOpen, (newVal) => {
+  if (newVal) {
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = '';
+  }
+});
+
 async function handleLogout() {
   userOpen.value = false;
   await authStore.logout();
