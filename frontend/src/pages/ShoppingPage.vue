@@ -6,7 +6,7 @@
         <p class="text-muted mb-0">{{ $t('shopping.subtitle') }}</p>
       </div>
       <button class="btn btn-primary-gradient" @click="openAddPlan">
-        <i class="bi bi-plus-lg me-1"></i>{{ $t('shopping.createPlan') || 'Create Plan' }}
+        <i class="bi bi-plus-lg"></i><span class="d-none d-sm-inline">{{ $t('shopping.createPlan') || 'Create Plan' }}</span>
       </button>
     </div>
 

@@ -6,7 +6,7 @@
         <p>{{ $t('goals.subtitle') }}</p>
       </div>
       <button id="tour-goals-add-btn" class="btn btn-primary-gradient" @click="openCreate">
-        <i class="bi bi-plus-lg me-1"></i>{{ $t('goals.addGoal') }}
+        <i class="bi bi-plus-lg"></i><span class="d-none d-sm-inline">{{ $t('goals.addGoal') }}</span>
       </button>
     </div>
     <div id="tour-goals-list" class="row g-3">

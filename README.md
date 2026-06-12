@@ -1,112 +1,120 @@
-# Sistem Manajemen Keuangan Keluarga
+# Sistem Manajemen Keuangan Keluarga (Final Finance Family)
 
-Aplikasi pencatatan keuangan keluarga yang siap digunakan pada lingkungan produksi (production-ready). Sistem ini dirancang untuk digunakan oleh satu keluarga (menggunakan satu akun utama sebagai pusat) dengan beberapa anggota individu yang dapat mencatat pemasukan, pengeluaran, anggaran, target tabungan, dan transaksi berulang dalam satu dashboard terpadu.
+Aplikasi pencatatan keuangan keluarga yang siap digunakan pada lingkungan produksi (production-ready). Sistem ini dirancang untuk digunakan oleh satu keluarga (menggunakan satu akun utama sebagai pusat) dengan beberapa anggota individu yang dapat mencatat pemasukan, pengeluaran, anggaran, target tabungan, kantong proyek, daftar belanja, struk otomatis, asisten AI, dan transaksi berulang dalam satu dashboard terpadu.
 
 Sistem ini menyediakan pencatatan akuntansi **dual-entry** untuk transfer antar akun serta **notifikasi real-time pada frontend** ketika penggunaan anggaran mendekati batas tertentu.
 
-## Struktur Proyek
+---
 
-Repositori ini menggunakan struktur **monorepo** yang berisi aplikasi frontend dan backend:
-
-- [`/supabase`](./supabase) - Database schema, migrations, Row Level Security (RLS) policies, and pg_cron definitions for automated background tasks.
-- [`/frontend`](./frontend) - Vue 3 Single Page Application (SPA). Antarmuka pengguna yang responsif dan dinamis yang dibangun menggunakan Vite, Vue Router, Pinia, Bootstrap, dan Chart.js. Terhubung langsung ke Supabase melalui `@supabase/supabase-js`.
-
-## Arsitektur
-
-- **Backend & Database**: Supabase (PostgreSQL 15+)
-- **Authentication**: Supabase Auth
-- **Business Logic**: PostgreSQL Functions (RPC) & Database Triggers
-- **Background Jobs**: pg_cron (Supabase Extension)
-- **Frontend Framework**: Vue 3 (Composition API)
-- **Build Tool**: Vite
-- **State Management**: Pinia
-- **Styling**: Custom CSS berbasis Bootstrap 5
-- **Charts**: Chart.js dengan Dynamic Golden Ratio Colors
-- **AI Engine**: Google Gemini API (`gemini-flash-lite-latest`)
-- **OCR Engine**: Tesseract.js (Offline Client-Side OCR)
-
-## Fitur Utama
+## 🌟 Fitur Utama
 
 1.  **Manajemen Anggota**: Menambahkan anggota keluarga dan mengaitkan transaksi kepada masing-masing anggota.
-2.  **Manajemen Akun**: Melacak saldo pada kas, rekening bank, dan e-wallet. Saldo terupdate otomatis menggunakan _Database Triggers_.
-3.  **Pencatatan Transaksi**: Mencatat pemasukan, pengeluaran, serta transfer antar akun.
-4.  **Anggaran (Budget)**: Menentukan batas pengeluaran bulanan per kategori dengan progress bar real-time serta **Budget Guardrail** (peringatan modal interaktif) dan notifikasi _bell_ jika mendekati/melebihi 80%.
-5.  **Kantong Proyek (Project Pockets)**: Memisahkan dana untuk acara/proyek besar secara independen. Pengeluaran di Kantong Proyek **tidak mengganggu** limit Anggaran Bulanan reguler.
-6.  **Daftar Belanja Kolaboratif**: Mencatat rencana belanja dan mengelolanya secara real-time bersama keluarga. Dilengkapi fitur Checkout untuk mengubah rencana belanja yang selesai menjadi transaksi pengeluaran secara otomatis.
-7.  **Scan Struk Offline (OCR)**: Fitur scan foto struk pada pencatatan transaksi yang diekstraksi secara offline (sisi client) menggunakan Tesseract.js untuk mendeteksi nama toko, tanggal, dan nominal transaksi secara otomatis.
-8.  **Target Tabungan (Saving Goals)**: Melacak target dana dengan progress persentase interaktif, terhubung dengan akun, dan terintegrasi mulus dengan Kantong Proyek saat target telah tercapai.
-9.  **Transaksi Berulang (Recurring Transactions)**: Sistem penjadwalan otomatis menggunakan **pg_cron** di level database yang mencatat pengeluaran berulang (mingguan, bulanan, tahunan) di belakang layar.
-10. **Dashboard Analitik**: Menyediakan laporan visual tren pengeluaran, perbandingan pemasukan/pengeluaran, dan pie chart distribusi kategori.
-11. **Modern UI/UX**: Tampilan dinamis, bersih, dan memanjakan mata dengan dukungan Light/Dark Mode serta transisi animasi yang mulus.
-12. **Eksport Laporan (_Client-Side_)**: Unduh laporan keuangan ke format **CSV** dan **PDF** terstruktur langsung dari browser.
-13. **Keamanan Berlapis (RLS)**: Row Level Security memastikan data satu keluarga terisolasi secara sempurna dan tidak bisa diakses oleh keluarga lain.
-14. **Asisten Keuangan AI (Aurora AI Advisor)**: Fitur konsultasi keuangan interaktif dengan tampilan glassmorphic premium. AI menganalisis kondisi keuangan keluarga (saldo, anggaran, pencapaian target tabungan, dan riwayat transaksi terbaru) untuk memberikan saran keuangan cerdas dan personal dalam Bahasa Indonesia maupun Inggris.
-15. **Sinkronisasi API Key Lintas Perangkat**: API Key Gemini dapat disimpan langsung ke profil keluarga di database Supabase yang diamankan oleh kebijakan Row Level Security (RLS). Semua anggota keluarga di berbagai perangkat/browser dapat menggunakan AI Advisor secara instan tanpa perlu memasukkan API Key berulang kali.
+2.  **Manajemen Akun (Rekening & Dompet)**: Melacak saldo pada kas, rekening bank, dan e-wallet. Saldo terupdate otomatis dengan *Database Triggers*.
+3.  **Pencatatan Transaksi**: Mencatat pemasukan, pengeluaran, transfer antar akun, dan penyesuaian saldo.
+4.  **Anggaran (Budgeting)**: Menentukan batas pengeluaran bulanan per kategori dengan *Budget Guardrail* interaktif dan notifikasi peringatan jika mencapai 80%.
+5.  **Kantong Proyek (Project Pockets)**: Memisahkan dana untuk acara/proyek besar. Pengeluaran proyek tidak mengganggu limit Anggaran Bulanan reguler.
+6.  **Daftar Belanja Kolaboratif (Shopping Lists)**: Rencana belanja real-time dengan fitur Checkout yang mengubah belanjaan selesai menjadi transaksi pengeluaran otomatis.
+7.  **Scan Struk Pintar (OCR)**: Ekstraksi foto struk secara offline di sisi *client* menggunakan Tesseract.js (otomatis mendeteksi nama toko, tanggal, dan nominal transaksi).
+8.  **Target Tabungan (Saving Goals)**: Melacak target dana tabungan secara interaktif, yang dapat dihubungkan menjadi *Kantong Proyek* saat target telah tercapai.
+9.  **Transaksi Berulang (Recurring)**: Penjadwalan otomatis di level database (pg_cron) untuk pengeluaran berulang harian, mingguan, bulanan, hingga tahunan.
+10. **Dashboard & Analitik Visual**: Menyediakan laporan tren keuangan, grafik pie, hingga kalender keuangan keluarga yang ditenagai oleh Chart.js.
+11. **Eksport Laporan (CSV & PDF)**: Unduh laporan transaksi keuangan langsung dari sisi browser tanpa membebani server.
+12. **Asisten Keuangan AI (Aurora AI Advisor)**: Asisten cerdas bertenaga Google Gemini yang dapat membaca keseluruhan kondisi keuangan keluarga Anda untuk memberikan saran yang dipersonalisasi. API Key sinkron otomatis lintas perangkat anggota keluarga.
+13. **Keamanan Berlapis (RLS)**: Row Level Security menjamin privasi dan mengisolasi data masing-masing keluarga secara ketat.
+14. **Modern, Magic UI/UX**: Tampilan elegan dengan elemen-elemen responsif, micro-animations, *glassmorphism*, *dark mode/light mode*, dan dukungan aksesibilitas tinggi untuk berbagai ukuran perangkat.
 
-## Setup AI Assistant (Graphify)
+---
 
-Repositori ini telah dikonfigurasi secara mendalam untuk menggunakan [Graphify](https://github.com/safishamsi/graphify) guna membangun *knowledge graph* arsitektur kode. Ini memungkinkan asisten AI (seperti Google Antigravity, Cursor, atau Claude) menavigasi codebase dengan instan tanpa menghabiskan banyak token API.
+## 🏗️ Arsitektur Proyek
 
-**Untuk Developer Baru yang Meng-clone Repo Ini:**
-1. Anda tidak perlu membangun *graph* dari awal! Kami sudah meng-commit folder `graphify-out/` sebagai *map* bawaan. AI Anda akan langsung membacanya.
-2. Silakan install tool CLI Graphify di komputer Anda jika belum ada (misal dengan `pipx install "graphifyy[gemini]"`).
-3. Jalankan `graphify hook install` di folder project ini. Hal ini akan memasang Git hook (`post-commit`) sehingga setiap kali Anda melakukan commit kode baru, Graphify akan otomatis mengupdate peta kode di latar belakang (tanpa biaya API).
+Proyek ini menggunakan struktur **monorepo**:
 
-## Roadmap Deployment
+- **Frontend (`/frontend`)**: Vue 3 (Composition API), Vite, Pinia, Vue Router, Bootstrap 5 (Custom Design System), Chart.js, Tesseract.js.
+- **Backend & Database (`/supabase`)**: Supabase (PostgreSQL 15+), Supabase Auth, PostgreSQL Triggers/Functions (RPC), pg_cron, dan Row Level Security (RLS).
 
-Aplikasi ini menggunakan arsitektur _BaaS (Backend-as-a-Service)_ berbasis Supabase. 
+---
 
-**Panduan Lengkap:** 👉 **[Lihat Panduan Konfigurasi & Integrasi Supabase](docs/supabase-setup-guide.md)**
+## 🚀 Panduan Instalasi & Menjalankan Aplikasi
 
-1. Database dan Backend dapat langsung dideploy ke project Supabase menggunakan Supabase CLI (`npx supabase db push`).
-2. Frontend dapat dideploy ke layanan _static hosting_ manapun (seperti Vercel, Netlify, atau Cloudflare Pages) dengan konfigurasi environment `VITE_SUPABASE_URL` dan `VITE_SUPABASE_PUBLISHABLE_KEY`.
+Berikut adalah langkah-langkah untuk melakukan *cloning*, setup database, dan menjalankan proyek ini di mesin lokal Anda.
 
-## Tangkapan Layar (Screenshots)
+### 1. Persyaratan Sistem (Prerequisites)
+- **Node.js** (v18 atau lebih baru)
+- **npm** atau **yarn**
+- **Docker Desktop** (untuk menjalankan Supabase lokal)
+- **Supabase CLI** (Instal via npm: `npm install -g supabase`)
+- **Git**
 
-Berikut adalah beberapa tampilan halaman dari aplikasi:
+### 2. Clone Repositori
+```bash
+git clone https://github.com/yoz-sirait98/final-finance-family.git
+cd final-finance-family
+```
 
-### 1. Dashboard Utama
+### 3. Setup Database Supabase Lokal
+Aplikasi ini bergantung pada Supabase untuk backend dan database.
 
-![Dashboard Utama](docs/screenshots/page_dashboard_1773716785210.png)
+1. Jalankan layanan Supabase secara lokal (pastikan Docker berjalan):
+   ```bash
+   supabase start
+   ```
+2. Terapkan semua migrasi database (skema tabel, fungsi, RLS, cron):
+   ```bash
+   supabase db push
+   ```
+3. *(Opsional)* Jika Anda butuh data contoh (seeder):
+   ```bash
+   supabase db reset
+   ```
+4. Setelah `supabase start` berhasil, CLI akan menampilkan kredensial lokal seperti **API URL** dan **anon key**. Catat kredensial ini.
 
-### 2. Transaksi (Transactions)
+### 4. Setup API Keys & Environment Frontend
+1. Masuk ke direktori frontend:
+   ```bash
+   cd frontend
+   ```
+2. Buat file `.env` (atau salin dari `.env.example` jika ada):
+   ```bash
+   cp .env.example .env
+   ```
+3. Edit file `.env` dan masukkan kredensial dari Supabase lokal Anda:
+   ```ini
+   VITE_SUPABASE_URL=http://127.0.0.1:54321
+   VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsIn...
+   ```
+4. Jika Anda ingin menggunakan fitur **AI Advisor**, dapatkan API Key gratis dari [Google AI Studio](https://aistudio.google.com/) dan Anda dapat menyimpannya nanti di menu *Settings* di dalam aplikasi.
 
-![Halaman Transaksi](docs/screenshots/page_transactions_1773716798644.png)
+### 5. Install Dependencies & Jalankan Frontend
+1. Instal semua paket Node.js:
+   ```bash
+   npm install
+   ```
+2. Jalankan development server:
+   ```bash
+   npm run dev
+   ```
+3. Buka browser dan akses aplikasi di: `http://localhost:5173`
 
-### 3. Anggaran (Budgets)
+---
 
-![Halaman Anggaran](docs/screenshots/page_budgets_1773716816705.png)
+## 📘 Konfigurasi AI Engine (Graphify)
 
-### 4. Target Tabungan (Goals)
+Aplikasi ini sudah dipetakan ke dalam bentuk *knowledge graph* menggunakan [Graphify](https://github.com/safishamsi/graphify). Ini membuat asisten AI koding (seperti Claude, Cursor, Antigravity) sangat mudah mengerti alur sistem.
 
-![Halaman Target Tabungan](docs/screenshots/page_goals_1773716819480.png)
+- **Developer Baru**: Anda tidak perlu menjalankan mapping ulang, karena folder `graphify-out/` sudah tersedia.
+- **Git Hook**: Agar *graph* tetap update otomatis setiap commit, jalankan:
+  ```bash
+  pipx install "graphifyy[gemini]"
+  graphify hook install
+  ```
 
-### 5. Laporan Analitik (Reports)
+---
 
-![Halaman Laporan](docs/screenshots/page_reports_1773716836363.png)
+## 🖼️ Tangkapan Layar (Screenshots)
 
-### 6. Transaksi Berulang (Recurring)
-
-![Halaman Transaksi Berulang](docs/screenshots/page_recurring_1773716827633.png)
-
-### 7. Kelola Anggota Kawanan (Members)
-
-![Halaman Anggota Keluarga](docs/screenshots/page_members_1773716830526.png)
-
-### 8. Rekening & Dompet (Accounts)
-
-![Halaman Akun](docs/screenshots/page_accounts_1773716805706.png)
-
-### 9. Kategori Pemasukan & Pengeluaran (Categories)
-
-![Halaman Kategori](docs/screenshots/page_categories_1773716814084.png)
-
-### 10. Pengaturan Profil (Settings)
-
-![Halaman Pengaturan](docs/screenshots/page_settings_1773716844257.png)
-
-### 11. Asisten Keuangan AI (AI Advisor)
-
-![Asisten Keuangan AI](docs/screenshots/page_ai_advisor.png)
-
-# f i n a l - f i n a n c e - f a m i l y
+*Tangkapan layar dapat dilihat lebih detail pada direktori `docs/screenshots/`.*
+* **Dashboard Utama**
+* **Asisten AI (AI Advisor)**
+* **Scan Struk Pintar**
+* **Kantong Proyek & Target Tabungan**
+* **Manajemen Anggaran & Laporan**

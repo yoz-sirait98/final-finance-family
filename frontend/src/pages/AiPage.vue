@@ -89,7 +89,7 @@
             :disabled="loading"
           />
           <button type="submit" class="btn btn-primary-gradient rounded-circle d-flex align-items-center justify-content-center send-btn" style="width: 42px; height: 42px;" :disabled="loading || !userInput.trim()">
-            <i class="bi bi-send-fill fs-5 text-white"></i>
+            <i class="bi bi-send-fill"></i>
           </button>
         </form>
       </div>
