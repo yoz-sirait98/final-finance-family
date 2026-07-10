@@ -55,8 +55,7 @@ BEGIN
                    COALESCE('👤 *Created by:* ' || v_creator_name || '\n', '') || 
                    '📅 *Date:*      ' || to_char(NEW.created_at, 'DD Mon YYYY') || '\n\n' ||
                    '*------------------------*\n' ||
-                   'Tap the link below to view the items and start shopping! 🛍️\n\n' ||
-                   '🔗 https://yjsfinance.my.id/#/shopping/' || NEW.id
+                   'Open the FamFin app to see and manage the items! 🛍️'
     );
 
     -- Send the HTTP POST request via pg_net asynchronously
