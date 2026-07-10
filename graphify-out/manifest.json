@@ -225,8 +225,8 @@
     "semantic_hash": ""
   },
   "frontend/src/stores/auth.js": {
-    "mtime": 1783652892.7653785,
-    "ast_hash": "814d6ddee81e391382d40182552a6a0f",
+    "mtime": 1783653161.3081782,
+    "ast_hash": "600b6d66fe12bb5b7baa5d333aa4bda8",
     "semantic_hash": ""
   },
   "frontend/src/stores/budgets.js": {
@@ -680,8 +680,8 @@
     "semantic_hash": ""
   },
   "docs/walkthrough_recurring_catchup_fix.md": {
-    "mtime": 1783652684.564433,
-    "ast_hash": "b6f4c1136d8ae87cd36fcd383ce1d63d",
+    "mtime": 1783652932.317796,
+    "ast_hash": "af85b782494fc1cc722d97652d3e19e4",
     "semantic_hash": ""
   }
 }

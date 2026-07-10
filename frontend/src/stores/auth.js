@@ -75,9 +75,13 @@ export const useAuthStore = defineStore('auth', {
         }
 
         // Trigger recurring transactions processing (non-blocking catch-up fallback)
-        supabase.rpc('process_recurring_transactions').catch(err => {
-          console.error('Error processing recurring transactions:', err);
-        });
+        (async () => {
+          try {
+            await supabase.rpc('process_recurring_transactions');
+          } catch (err) {
+            console.error('Error processing recurring transactions:', err);
+          }
+        })();
       }
     },
 
