@@ -235,8 +235,12 @@ async function savePlan() {
     console.log('[DEBUG] Supabase Success Response:', response);
     
     showAddModal.value = false;
-    toast.success(localeStore.t('common.success'));
+    toast.success(localeStore.t('common.success') + ' - Plan Saved!');
     fetchData(); 
+
+    // Fire off the WhatsApp Notification directly from the frontend
+    await sendWhatsAppNotification(payload);
+
   } catch (e) {
     console.error('[DEBUG] Supabase Error Trace:', e);
     console.error('[DEBUG] Error details:', e.response?.data || e.message);
@@ -269,6 +273,62 @@ async function doDeletePlan() {
 
 function goToDetail(planId) {
   router.push(`/shopping/${planId}`);
+}
+
+async function sendWhatsAppNotification(planPayload) {
+  try {
+    const isGroup = planForm.value.notificationTarget === 'group';
+    let targetGroupId = null;
+    let targetPhoneNumbers = null;
+    let assignedNamesStr = '';
+
+    const creator = members.value.find(m => m.id === planPayload.created_by);
+    const creatorName = creator ? creator.name : 'Unknown';
+
+    if (isGroup) {
+      if (!familyGroupId.value) return; 
+      targetGroupId = familyGroupId.value;
+    } else {
+      if (!planPayload.assigned_members || planPayload.assigned_members.length === 0) return;
+      const assignedMembers = members.value.filter(m => planPayload.assigned_members.includes(m.id) && m.whatsapp_number && m.notifications_enabled);
+      if (assignedMembers.length === 0) {
+         toast.warning('No assigned members have a valid WhatsApp number and notifications enabled. Notification skipped.');
+         return;
+      }
+      targetPhoneNumbers = assignedMembers.map(m => m.whatsapp_number);
+      assignedNamesStr = assignedMembers.map(m => m.name).join(', ');
+    }
+
+    const dateStr = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+    let message = `*========================*\n🛒  *NEW SHOPPING LIST*  🛒\n*========================*\n\nHi! 👋 A new shopping list has been created in the *Family Finance App*.\n\n📍 *Location:*  ${planPayload.location}\n👤 *Created by:* ${creatorName}\n`;
+    if (!isGroup && assignedNamesStr) {
+      message += `🎯 *Assigned to:* ${assignedNamesStr}\n`;
+    }
+    message += `📅 *Date:*      ${dateStr}\n\n*------------------------*\nOpen the FamFin app to see and manage the items! 🛍️`;
+
+    const apiPayload = { message: message };
+    if (isGroup) apiPayload.groupId = targetGroupId;
+    else apiPayload.numbers = targetPhoneNumbers;
+
+    toast.info('Sending WhatsApp notification...');
+
+    const response = await fetch('https://finance-family-3ac25ba9b522.herokuapp.com/api/notify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': 'YOUR_HEROKU_API_KEY_HERE'
+      },
+      body: JSON.stringify(apiPayload)
+    });
+
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || 'Failed to send message');
+
+    toast.success('WhatsApp Message Sent Successfully! 🚀');
+  } catch (err) {
+    console.error('WhatsApp Notification Error:', err);
+    toast.error(`WhatsApp Error: ${err.message}`);
+  }
 }
 
 function setupRealtime() {

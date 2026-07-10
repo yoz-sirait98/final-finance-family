@@ -395,8 +395,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ShoppingPage.vue": {
-    "mtime": 1783669856.8739614,
-    "ast_hash": "15c9fd2df870b15e28a2465a9982e0b3",
+    "mtime": 1783675554.0803802,
+    "ast_hash": "b05fa79aeca6666fba7364b6bb8e320d",
     "semantic_hash": ""
   },
   "frontend/src/services/shoppingService.js": {
@@ -702,6 +702,16 @@
   "supabase/migrations/000027_shopping_plan_assignees.sql": {
     "mtime": 1783672280.748911,
     "ast_hash": "45402863eba2b9dbe7429fe9b223a3f4",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/000028_whatsapp_groups.sql": {
+    "mtime": 1783674098.5706248,
+    "ast_hash": "177c556c82a3337038f94c4166497d24",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/000029_exclusive_notification.sql": {
+    "mtime": 1783675554.0817707,
+    "ast_hash": "d5935b8b3f35ce00c741e61c182a22c7",
     "semantic_hash": ""
   }
 }
