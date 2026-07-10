@@ -395,8 +395,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ShoppingPage.vue": {
-    "mtime": 1783668848.8743513,
-    "ast_hash": "0bca391f2ef63928d0c3be0dd3b095eb",
+    "mtime": 1783669856.8739614,
+    "ast_hash": "15c9fd2df870b15e28a2465a9982e0b3",
     "semantic_hash": ""
   },
   "frontend/src/services/shoppingService.js": {
@@ -697,6 +697,11 @@
   "docs/walkthrough_whatsapp_bot.md": {
     "mtime": 1783667833.1396794,
     "ast_hash": "8aa50c3d9ea6791399fed83950c6f84c",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/000027_shopping_plan_assignees.sql": {
+    "mtime": 1783671427.4107509,
+    "ast_hash": "b97607909912585d1549751bdc1a0c9e",
     "semantic_hash": ""
   }
 }
