@@ -473,6 +473,201 @@ This section documents the database locking mechanism, catch-up cursor loop, and
 ### Database Migration
 - **[NEW] `supabase/migrations/000024_fix_recurring_catchup_and_concurrency.sql`**:
   - Updates `process_recurring_transactions()` with a cursor loop to catch up all missed transaction dates (such as multi-month overrides) and `FOR UPDATE` concurrency locks to avoid race conditions between automated crons and concurrent user logins.
+1. Click "Scan Receipt" and upload a sample image of a supermarket receipt.
+2. Verify the "Scanning..." UI appears.
+3. Verify the "Add Transaction" modal opens automatically with the Total Amount, Date, and Merchant Name (Description) fields pre-filled.
+4. The user can then select the Category and Account manually before saving.
+
+---
+
+# Part 5 — Modular Agent Rules and Knowledge Base Rearrangement (Completed)
+
+This plan outlines the strategy that was executed to organize the agent instructions, system policies, constraints, and development guidelines into modular triggered rule files under `.agents/rules/` and restructure `.cursorrules` at the root directory.
+
+## Implementation Details
+
+### 1. Modular Rules Under `.agents/rules/`
+We split the large consolidated `.cursorrules` file into individual markdown files with YAML frontmatter:
+- **`supabase_network_restriction.md`**: Outlines the port `5432` block and HTTP REST client API or hotspot workarounds.
+- **`documentation_lifecycle.md`**: Covers the auto-update policy for task lists and plans, and the implementation plan archiving process.
+- **`walkthrough_artifacts.md`**: Covers guidelines for creating separate feature-specific walkthrough docs.
+- **`git_push_policy.md`**: Focuses on clean, incremental commits and the mandatory `ask_question` authorization before pushing.
+
+### 2. Root `.cursorrules` Reorganization
+- Converted `.cursorrules` into a clean, well-indexed directory mapping categories to their modular rule files.
+- Provided a consolidated reference outline for direct IDE use.
+
+## Verification Plan
+
+### Manual Verification
+1. Confirm that `.agents/rules/` contains the correct rule files and YAML frontmatter headers.
+2. Verify that the root `.cursorrules` file points to the correct absolute paths and lists the triggers correctly.
+3. Run `graphify update .` to rebuild the AST graph.
+
+---
+
+# Part 6 — Offline OCR Receipt Scanner & AI Financial Coach
+
+This plan outlines the implementation details for integrating Tesseract.js offline receipt scanning inside the transactions workflow, and adding a conversational Gemini AI Coach for family finance metrics.
+
+## Implementation Details
+
+### 1. Offline Receipt OCR Parsing
+- **Dependency**: Add `"tesseract.js": "^5.1.0"` in `frontend/package.json`.
+- **Parsing Engine (`receiptScanner.js`)**: Initialize Tesseract to recognize text locally in the browser. Regex engines extract the merchant name, currency amount, and date.
+- **Scanner integration (`TransactionsPage.vue`)**: Capture user uploads, display the visual laser scanning overlay, and pre-fill form parameters on finished OCR.
+
+### 2. Conversational AI Coach
+- **Gemini Key Configuration (`SettingsPage.vue`)**: Provide a text field to save user's Gemini API key locally in `localStorage` (`gemini_api_key`).
+- **Data Integration service (`aiService.js`)**: Query local Supabase assets, budget capacities, and category transaction sums. Format these metrics into a system prompt.
+- **Chat page (`AiPage.vue`)**: Add an interactive chat container styled with frosted glassmorphism elements, supporting streaming, loading states, and API key missing prompts.
+- **Navigation (`DashboardLayout.vue`)**: Link the new chat tab with a sparkling `bi-stars` icon in the sidebar.
+
+## Verification Plan
+
+### Automated / Build Verification
+- Execute `npm run build` inside `/frontend` to verify clean compilation with the new packages.
+
+### Manual Verification
+1. Configure a free Gemini API Key in the Settings panel.
+2. Open the AI Coach tab and verify that sending a message successfully retrieves financial advice based on the actual database numbers.
+3. Open the Transactions page, click the camera icon to upload a receipt image, and verify the scanning animation triggers and pre-fills the transaction details.
+
+---
+
+# Part 7 — Cross-Device Gemini API Key Syncing (Completed)
+
+This section outlines the strategy to synchronize the user's Gemini API Key across multiple devices and family members. It stores the verified key in the Supabase database (`families` table) and caches it in `localStorage` upon profile hydration.
+
+## Implementation Details
+
+1. **Database Schema Update**: Adds a `gemini_api_key TEXT` column to the `families` table. This column is secured by existing RLS policies, ensuring only family members can access it.
+2. **Auto-Hydration**: Upon logging in on any device, the user's profile and family details are loaded, and the API key is automatically cached in `localStorage`.
+3. **Backward Compatibility**: Preserves all direct `localStorage` read operations, preventing regressions in other parts of the app.
+
+## Proposed Changes
+
+### Supabase Database Migration
+- **[NEW] `supabase/migrations/000021_add_gemini_api_key_to_families.sql`**:
+  ```sql
+  ALTER TABLE public.families ADD COLUMN IF NOT EXISTS gemini_api_key TEXT;
+  ```
+
+### Frontend Services & Stores
+- **[MODIFY] `frontend/src/stores/auth.js`**:
+  - Add `family` to state.
+  - Modify `fetchProfile` to fetch the linked family record and automatically cache `family.gemini_api_key` in `localStorage` if it exists.
+- **[MODIFY] `frontend/src/pages/SettingsPage.vue`**:
+  - Update `saveGeminiKey` to update the `families` table record with the verified key or set it to `null` if cleared.
+
+## Verification Plan
+
+### Automated Tests
+- Run `npm run build` to check client compilation.
+
+### Manual Verification
+1. Input and save a valid key on Device A, and verify it writes to the database.
+2. Login to the same account on Device B, and verify the key is populated automatically in the Settings page.
+3. Chat with the AI Advisor on both devices.
+
+---
+
+# Part 8 — Update Documentation (Completed)
+
+This section outlines the final task of documenting the new features across all project README files.
+
+## Proposed Changes
+
+### Root Documentation
+- **[MODIFY] [README.md](file:///C:/Users/Yosua Jan/.gemini/antigravity/worktrees/final-finance-family/redesign-ui-supabase-stack/README.md)**: Updated Arsitektur, Fitur Utama, and screenshots list to document the offline OCR receipt scanner, Gemini AI Advisor, and the Supabase API Key synchronization.
+
+### Frontend Documentation
+- **[MODIFY] [frontend/README.md](file:///C:/Users/Yosua Jan/.gemini/antigravity/worktrees/final-finance-family/redesign-ui-supabase-stack/frontend/README.md)**: Added technical details on offline scanning (Tesseract.js, regex heuristics, camera capture) and Gemini AI integration (glassmorphic styling, Pinia auth syncing, model selection).
+
+---
+
+# Part 9 — Receipt Image Storage & Financial Calendar View (Completed 2026-06-11)
+
+Two new user-selected features implemented and shipped to `origin/redesign-ui-supabase-stack`.
+
+## Feature 1: Receipt Image Storage
+
+Scanned receipt photos are now compressed client-side (canvas 1200px max, JPEG 82%) and uploaded to a private Supabase Storage bucket (`receipts/{familyId}/{uuid}.jpg`), then linked to the transaction record via a new `receipt_url` column.
+
+### Key Files
+- **[NEW]** `supabase/migrations/000022_add_receipt_url_to_transactions.sql` — adds `receipt_url TEXT` column
+- **[NEW]** `frontend/src/services/storageService.js` — `uploadReceipt`, `getReceiptSignedUrl`, `deleteReceipt`
+- **[MODIFY]** `frontend/src/utils/receiptScanner.js` — returns `imageFile` in result
+- **[MODIFY]** `frontend/src/services/transactionService.js` — `receipt_url` in select query
+- **[MODIFY]** `frontend/src/pages/TransactionsPage.vue` — upload flow, thumbnail, lightbox, 📎 badge, delete cleanup
+
+## Feature 2: Financial Calendar View
+
+Monthly calendar page with 7-column grid (Mon-Sun), colored dots per day (🟢 income, 🔴 expense, 🔵 recurring, 🟡 goal), net chip, slide-up day detail panel, month navigation, summary strip, and mobile list-view fallback.
+
+### Key Files
+- **[NEW]** `frontend/src/pages/CalendarPage.vue`
+- **[MODIFY]** `frontend/src/router/index.js` — `/calendar` route
+- **[MODIFY]** `frontend/src/layouts/DashboardLayout.vue` — Calendar nav item
+- **[MODIFY]** `frontend/src/locales/en.json` & `id.json` — `nav.calendar` key
+
+## Theming Compatibility (Theme Audit & Mobile Bugfixes)
+- **[MODIFY]** `frontend/src/pages/CalendarPage.vue` — updated styles to use theme variables (`--input-border`, `--primary-color`) rather than undefined/fallback variables (`--border-color`, `--primary`), solving invisible grid cells in light mode. Expanded the mobile list details container to display recurring bills and saving goals, matching the desktop experience.
+- **[MODIFY]** `frontend/src/style.css` — added custom `.badge-recurring` and `.badge-goal` styles to prevent solid color overrides blocking amount visibility. Added custom `.btn-outline-primary` and `.btn-outline-secondary` overrides for premium theme-aware button colors. Fixed blurry tour popover buttons and text by forcing GPU hardware acceleration using `translate3d(0, 0, 0)`, `backface-visibility: hidden`, and proper font-smoothing configurations.
+
+## Verification
+- Build: compiled cleanly (`npm run build`)
+- Git commit + push to origin
+
+## Feature Description Accuracy Correction
+- **[MODIFY]** `README.md` — corrected inaccurate description of Feature 6 (which combined collaborative shopping list and offline OCR scanner into one item). Separated them into Feature 6 (**Daftar Belanja Kolaboratif**) and Feature 7 (**Scan Struk Offline (OCR)**) and renumbered subsequent items up to 15.
+- **[MODIFY]** `frontend/src/utils/receiptScanner.js` — refined Tesseract parsing with robust date formatting (2-digit years, dots/slashes), cash/change exclusions, and bottom-up scanner heuristics to solve inaccurate pre-fill issues.
+- **[MODIFY]** `frontend/src/pages/TransactionsPage.vue` — added dynamic family member matching by searching the scanned receipt's raw text for active family members' names.
+- **[MODIFY]** `frontend/src/services/storageService.js` — removed redundant `receipts/` path prefix from upload target to correctly conform to the Supabase Storage folder-level RLS policy.
+- **[NEW]** `supabase/migrations/000023_add_storage_bucket_and_rls_policies.sql` — database migration defining private `receipts` bucket and folder-level storage RLS policies for uploads/reads/deletes.
+
+---
+
+# Part 11 — Magic UI/UX Pass: Compact & Elegant Action Buttons
+
+This section outlines the UI/UX pass to refine all action buttons (Add Transaction, Transfer, Add Account, etc.) to make them compact, device-responsive, and elegant across Light and Dark themes.
+
+## Proposed Changes
+
+### [MODIFY] [style.css](file:///c:/Projects/final-finance-family/frontend/src/style.css)
+
+1. **Modern Typography & Padding**:
+   - Re-style the base `.btn` utility with a clean border-radius (`10px` for standard, `30px` pill style for main actions), medium font weight, and compact responsive padding.
+   - Introduce smooth transitions (`all 0.2s cubic-bezier(0.4, 0, 0.2, 1)`) and subtle click scales (`scale(0.97)` on active).
+
+2. **Subtle Glows & Premium Gradients**:
+   - Set up custom colored shadows for gradient and outline buttons that match their specific theme color instead of a flat gray shadow.
+   - Design custom states for `.btn-primary-gradient`, `.btn-outline-primary`, `.btn-outline-secondary`, `.btn-secondary`, `.btn-danger`, `.btn-warning`, `.btn-info`, and `.btn-success` across both **Light** and **Dark** themes.
+
+3. **Smart Mobile Compaction (Responsive layout)**:
+   - On screens smaller than `576px`, automatically convert header buttons with icons (e.g. `Add Transaction`, `Transfer`, `Add Account`) into elegant circular icon-only buttons.
+   - This is achieved in pure CSS using the `:has(i)` selector (e.g. `.page-header .btn:has(i)`), which sets the text font-size to `0`, overrides the icon margin to `0`, and applies a `50%` border-radius.
+
+## Verification Plan
+
+### Manual Verification
+1. **Desktop view**:
+   - Verify that all buttons have premium rounded borders, hover animations (lift, shadow glow), and standard texts.
+2. **Mobile view / Responsive mode**:
+   - Shrink browser width to `< 576px` and verify that header actions automatically condense into sleek, round icon-only action pills.
+   - Verify that light/dark theme contrast remains perfect on all buttons.
+
+---
+
+# Part 12 — Recurring Transaction Catch-up & Concurrency Fix (Completed 2026-07-10)
+
+This section documents the database locking mechanism, catch-up cursor loop, and client-side fallback triggers to address missing executions for recurring transactions.
+
+## Proposed Changes
+
+### Database Migration
+- **[NEW] `supabase/migrations/000024_fix_recurring_catchup_and_concurrency.sql`**:
+  - Updates `process_recurring_transactions()` with a cursor loop to catch up all missed transaction dates (such as multi-month overrides) and `FOR UPDATE` concurrency locks to avoid race conditions between automated crons and concurrent user logins.
 
 ### Frontend Auth Store
 - **[MODIFY] `frontend/src/stores/auth.js`**:
@@ -481,3 +676,73 @@ This section documents the database locking mechanism, catch-up cursor loop, and
 ## Verification
 - Build: compiled cleanly (`npm run build`)
 - Git commit + push to origin
+
+---
+
+# Part 13 — WhatsApp Push Notifications for Shopping Lists
+
+The goal of this feature is to send automated WhatsApp notifications to family members whenever a new Shopping List (Shopping Plan) is created, utilizing the `whatsapp-web.js` library to keep everything free.
+
+## User Review Required
+
+> [!IMPORTANT]
+> **Hosting the `whatsapp-web.js` Bot**
+> Because `whatsapp-web.js` requires running a headless Chrome browser (Puppeteer) and maintaining a persistent session, it **cannot** run inside a lightweight Supabase Edge Function.
+> 
+> Instead, we will build a standalone Node.js Express server (`whatsapp-bot`) that runs alongside your Supabase database. You will need to host this small Node.js app on a server (e.g., a VPS, Railway, Render, or a local server on your office network) that stays online 24/7.
+> 
+> *Are you okay with hosting a separate Node.js microservice for the WhatsApp bot?*
+
+## Open Questions
+
+> [!WARNING]
+> 1. **Who receives the notification?** Should we send the WhatsApp message to *all* active family members who have a registered WhatsApp number, or should we add an "Assignee" feature to the Shopping Plan?
+> 2. **Notification Toggle:** Should users be able to turn WhatsApp notifications ON/OFF in their Settings?
+
+## Proposed Changes
+
+### 1. Database Updates (Migration)
+
+#### [NEW] `supabase/migrations/000025_add_whatsapp_numbers.sql`
+- Add a `whatsapp_number` column (`VARCHAR(20)`) to the `public.members` table.
+- Add a `notifications_enabled` boolean column (default `true`) to allow members to opt-out.
+
+### 2. Standalone WhatsApp Bot (Node.js Microservice)
+
+#### [NEW] `whatsapp-bot/` (New Directory)
+- Create a new Node.js project for the WhatsApp bot utilizing `whatsapp-web.js` and `express`.
+- **`whatsapp-bot/index.js`**:
+  - Initializes the WhatsApp client with `LocalAuth` to persist the session (so you only scan the QR code once).
+  - Exposes a webhook endpoint `POST /api/send-message`.
+  - Endpoint logic: Receives an array of phone numbers and a message payload, and calls `client.sendMessage(number + '@c.us', message)`.
+  - Secures the endpoint with a custom `API_KEY` header so random people can't abuse the endpoint.
+
+### 3. Supabase Integration (Database Webhook)
+
+#### [NEW] `supabase/migrations/000026_shopping_plan_webhook.sql`
+- Instead of using a Supabase Edge Function, we will create a PostgreSQL trigger function that uses the `pg_net` extension (built into Supabase).
+- **Trigger Logic:**
+  - Fires `AFTER INSERT` on `public.shopping_plans`.
+  - Queries `public.members` for the family's active WhatsApp numbers.
+  - Constructs a JSON payload with the formatted message (e.g., *"🛒 New Shopping List created for [Location]! Check the FamFin app."*).
+  - Uses `net.http_post()` to send the payload directly to the Node.js `whatsapp-bot` URL.
+
+### 4. Frontend UI Updates
+
+#### [MODIFY] `frontend/src/pages/MembersPage.vue` & `frontend/src/components/MemberModal.vue`
+- Update the Members management UI to include an input field for **WhatsApp Number**.
+- Add a toggle switch for **Enable WhatsApp Notifications**.
+- Add validation to ensure the phone number is entered in the correct international format (e.g., starting with `62` without the `+` or leading `0`, as required by `whatsapp-web.js`).
+
+## Verification Plan
+
+### Automated Tests
+- N/A. The `whatsapp-web.js` library requires a physical device to scan the QR code for authentication.
+
+### Manual Verification
+1. Start the `whatsapp-bot` node server and scan the generated QR code with a WhatsApp account to authorize it.
+2. Add a test WhatsApp number to a family member in the frontend app.
+3. Create a new Shopping Plan.
+4. Verify the database trigger fires.
+5. Verify the `whatsapp-bot` server receives the webhook request and dispatches the message.
+6. Verify the WhatsApp message arrives on the test device with the correct formatting.
