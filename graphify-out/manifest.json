@@ -700,8 +700,8 @@
     "semantic_hash": ""
   },
   "supabase/migrations/000027_shopping_plan_assignees.sql": {
-    "mtime": 1783671427.4107509,
-    "ast_hash": "b97607909912585d1549751bdc1a0c9e",
+    "mtime": 1783672280.748911,
+    "ast_hash": "45402863eba2b9dbe7429fe9b223a3f4",
     "semantic_hash": ""
   }
 }

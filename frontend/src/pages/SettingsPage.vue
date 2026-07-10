@@ -56,6 +56,29 @@
       </div>
 
       <div class="col-lg-6">
+        <!-- WhatsApp Integration -->
+        <div class="stat-card mb-4">
+          <h6 class="fw-bold mb-3"><i class="bi bi-whatsapp me-2 text-success"></i>WhatsApp Group</h6>
+          <div class="mb-3">
+            <label class="form-label">Group ID</label>
+            <div class="input-group">
+              <input
+                v-model="whatsappGroupId"
+                type="text"
+                class="form-control"
+                placeholder="1234567890-987654@g.us"
+              />
+              <button class="btn btn-primary-gradient" @click="saveWhatsAppGroupId" :disabled="isSavingGroupId">
+                <span v-if="isSavingGroupId" class="spinner-border spinner-border-sm me-1"></span>
+                {{ isSavingGroupId ? 'Saving...' : 'Save' }}
+              </button>
+            </div>
+            <div class="form-text small text-muted mt-2">
+              <i class="bi bi-info-circle me-1"></i>Add your Bot to a WhatsApp Group, type <code>!groupinfo</code> inside the group, and paste the ID here.
+            </div>
+          </div>
+        </div>
+
         <!-- Change Password -->
         <div class="stat-card h-100">
           <h6 class="fw-bold mb-3"><i class="bi bi-lock me-2"></i>{{ $t('settings.changePassword') }}</h6>
@@ -86,7 +109,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useAuthStore } from '../stores/auth';
 import { useLocaleStore } from '../stores/locale';
 import { useToastStore } from '../stores/toast';
@@ -163,6 +186,33 @@ async function changePassword() {
     error.value = e.response?.data?.message || 'Failed';
   } finally {
     loading.value = false;
+  }
+}
+
+const whatsappGroupId = ref('');
+const isSavingGroupId = ref(false);
+
+onMounted(async () => {
+  if (authStore.familyId) {
+    const { data, error } = await supabase.from('families').select('whatsapp_group_id').eq('id', authStore.familyId).single();
+    if (data && data.whatsapp_group_id) {
+      whatsappGroupId.value = data.whatsapp_group_id;
+    }
+  }
+});
+
+async function saveWhatsAppGroupId() {
+  isSavingGroupId.value = true;
+  try {
+    const trimmedId = whatsappGroupId.value.trim();
+    const { error } = await supabase.from('families').update({ whatsapp_group_id: trimmedId || null }).eq('id', authStore.familyId);
+    if (error) throw error;
+    toast.success('WhatsApp Group ID saved!');
+  } catch (err) {
+    console.error('Failed to save Group ID:', err);
+    toast.error('Failed to save Group ID.');
+  } finally {
+    isSavingGroupId.value = false;
   }
 }
 </script>
