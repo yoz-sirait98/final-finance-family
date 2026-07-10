@@ -130,7 +130,7 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/MembersPage.vue": {
-    "mtime": 1783660331.0086467,
+    "mtime": 1783667833.1401966,
     "ast_hash": "2cbc983f5d1e3f4ba23b77e1a7a18cd9",
     "semantic_hash": ""
   },
@@ -395,8 +395,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ShoppingPage.vue": {
-    "mtime": 1781250073.2011676,
-    "ast_hash": "dbae40eb59fe062b63fb11d5e9497d82",
+    "mtime": 1783668848.8743513,
+    "ast_hash": "0bca391f2ef63928d0c3be0dd3b095eb",
     "semantic_hash": ""
   },
   "frontend/src/services/shoppingService.js": {
@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "docs/implementation_plan.md": {
-    "mtime": 1783655885.458891,
-    "ast_hash": "4f415ee1635c41acd5a982f35afdc96b",
+    "mtime": 1783667833.1386094,
+    "ast_hash": "1448c90ab777f6e140d66f798d36a517",
     "semantic_hash": ""
   },
   "docs/supabase-setup-guide.md": {
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "docs/task.md": {
-    "mtime": 1783660442.5423799,
-    "ast_hash": "bc40f72a8000c2fb9c968d35c1f33b03",
+    "mtime": 1783667833.139159,
+    "ast_hash": "8d885c6c80efcb5d4e63b4e23770db52",
     "semantic_hash": ""
   },
   "docs/walkthrough_graphify.md": {
@@ -685,18 +685,18 @@
     "semantic_hash": ""
   },
   "supabase/migrations/000025_add_whatsapp_numbers.sql": {
-    "mtime": 1783660278.4429688,
-    "ast_hash": "540cd32a055cfd2088903dd6a094f0e4",
+    "mtime": 1783667833.1407118,
+    "ast_hash": "d1d64119962ac4cb91443cda8887a6e5",
     "semantic_hash": ""
   },
   "supabase/migrations/000026_shopping_plan_webhook.sql": {
-    "mtime": 1783660291.1439004,
-    "ast_hash": "43459c316ef8d27dd583b0d944a069f2",
+    "mtime": 1783667833.1412313,
+    "ast_hash": "23bd5d1da9b0343caed9b4461ea9ce92",
     "semantic_hash": ""
   },
   "docs/walkthrough_whatsapp_bot.md": {
-    "mtime": 1783660518.2163138,
-    "ast_hash": "f136dd3383b505fbc4607279612e9cc0",
+    "mtime": 1783667833.1396794,
+    "ast_hash": "8aa50c3d9ea6791399fed83950c6f84c",
     "semantic_hash": ""
   }
 }

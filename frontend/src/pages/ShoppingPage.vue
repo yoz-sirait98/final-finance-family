@@ -51,7 +51,9 @@
             <span v-if="plan.status === 'done' && plan.transaction" class="fw-bold text-danger">
               Rp {{ parseFloat(plan.transaction.amount || 0).toLocaleString('id-ID') }}
             </span>
-            <span v-else class="text-muted small">Tap to view items</span>
+            <span v-else class="text-muted small">
+              <i class="bi bi-people me-1"></i> {{ plan.assigned_members?.length || 0 }} assigned
+            </span>
             <button class="btn btn-sm btn-outline-danger border-0" @click.stop="confirmDeletePlan(plan)">
               <i class="bi bi-trash"></i>
             </button>
@@ -75,10 +77,24 @@
             </div>
             <div class="mb-3">
               <label class="form-label">{{ $t('common.member') }} (Created By)</label>
-              <select v-model="planForm.created_by" class="form-select" required>
+              <select v-model="planForm.created_by" class="form-select" @change="onCreatorChange" required>
                 <option value="" disabled>- {{ $t('transactions.selectMember') }} -</option>
                 <option v-for="m in members" :key="m.id" :value="m.id">{{ m.name }}</option>
               </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold"><i class="bi bi-whatsapp text-success me-1"></i> Notify Members</label>
+              <div class="border rounded p-2 bg-light" style="max-height: 150px; overflow-y: auto;">
+                <div v-for="m in members" :key="'assign-'+m.id" class="form-check mb-1">
+                  <input class="form-check-input" type="checkbox" :value="m.id" :id="'assign-'+m.id" v-model="planForm.assigned_members">
+                  <label class="form-check-label d-flex align-items-center" :for="'assign-'+m.id">
+                    {{ m.name }}
+                    <span v-if="m.whatsapp_number && m.notifications_enabled" class="badge bg-success ms-2" style="font-size:0.65rem">Ready</span>
+                    <span v-else class="badge bg-secondary ms-2" style="font-size:0.65rem">No WA</span>
+                  </label>
+                </div>
+              </div>
+              <small class="text-muted mt-1 d-block"><i class="bi bi-info-circle me-1"></i>Only selected members with "Ready" status will receive a WhatsApp message.</small>
             </div>
           </div>
           <div class="modal-footer border-0 pt-0">
@@ -134,7 +150,7 @@ const showAddModal = ref(false);
 const showDeleteModal = ref(false);
 const deleting = ref(false);
 const planToDelete = ref(null);
-const planForm = ref({ location: '', created_by: '' });
+const planForm = ref({ location: '', created_by: '', assigned_members: [] });
 
 const authStore = useAuthStore();
 const toast = useToastStore();
@@ -164,8 +180,15 @@ async function fetchMembers() {
 }
 
 function openAddPlan() {
-  planForm.value = { location: '', created_by: '' };
+  planForm.value = { location: '', created_by: '', assigned_members: [] };
   showAddModal.value = true;
+}
+
+function onCreatorChange() {
+  // Automatically check the creator if they aren't already checked
+  if (planForm.value.created_by && !planForm.value.assigned_members.includes(planForm.value.created_by)) {
+    planForm.value.assigned_members.push(planForm.value.created_by);
+  }
 }
 
 async function savePlan() {
@@ -173,6 +196,7 @@ async function savePlan() {
   const payload = {
     location: planForm.value.location,
     created_by: planForm.value.created_by,
+    assigned_members: planForm.value.assigned_members,
     status: 'progress'
   };
   
