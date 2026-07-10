@@ -73,6 +73,11 @@ export const useAuthStore = defineStore('auth', {
             localStorage.setItem('gemini_api_key', family.gemini_api_key);
           }
         }
+
+        // Trigger recurring transactions processing (non-blocking catch-up fallback)
+        supabase.rpc('process_recurring_transactions').catch(err => {
+          console.error('Error processing recurring transactions:', err);
+        });
       }
     },
 

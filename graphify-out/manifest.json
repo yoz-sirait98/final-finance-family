@@ -225,8 +225,8 @@
     "semantic_hash": ""
   },
   "frontend/src/stores/auth.js": {
-    "mtime": 1781078963.280985,
-    "ast_hash": "39d64d9a83cf3554e29bfa0f61c62e0f",
+    "mtime": 1783652610.6616368,
+    "ast_hash": "814d6ddee81e391382d40182552a6a0f",
     "semantic_hash": ""
   },
   "frontend/src/stores/budgets.js": {
@@ -672,6 +672,11 @@
   "docs/walkthrough_receipt_storage_privilege_fix.md": {
     "mtime": 1781153191.1100976,
     "ast_hash": "b9c681f457dea78971d7d1e10ed68414",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/000024_fix_recurring_catchup_and_concurrency.sql": {
+    "mtime": 1783652607.064047,
+    "ast_hash": "f128bddca50b131d42850609cf469c9b",
     "semantic_hash": ""
   }
 }
