@@ -150,8 +150,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/SettingsPage.vue": {
-    "mtime": 1781081393.258424,
-    "ast_hash": "b3780e24c8c219c6b1b2caab4fee5266",
+    "mtime": 1783674098.5568357,
+    "ast_hash": "7a7086f2218c2c8bd179cf1c2fc29546",
     "semantic_hash": ""
   },
   "frontend/src/pages/TransactionsPage.vue": {

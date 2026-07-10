@@ -83,8 +83,24 @@
               </select>
             </div>
             <div class="mb-3">
-              <label class="form-label fw-bold"><i class="bi bi-whatsapp text-success me-1"></i> Notify Members</label>
-              <div class="border rounded p-2 bg-light" style="max-height: 150px; overflow-y: auto;">
+              <label class="form-label fw-bold"><i class="bi bi-whatsapp text-success me-1"></i> Notification Target</label>
+              
+              <div v-if="familyGroupId" class="mb-3 d-flex gap-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" id="targetGroup" value="group" v-model="planForm.notificationTarget">
+                  <label class="form-check-label" for="targetGroup">Family Group</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" id="targetMembers" value="members" v-model="planForm.notificationTarget">
+                  <label class="form-check-label" for="targetMembers">Specific Members</label>
+                </div>
+              </div>
+              <div v-else class="alert alert-secondary small py-2 mb-3">
+                <i class="bi bi-info-circle me-1"></i>Group notifications are disabled. Add a Group ID in Settings.
+              </div>
+
+              <!-- Only show checkboxes if target is 'members' or group is disabled -->
+              <div v-if="!familyGroupId || planForm.notificationTarget === 'members'" class="border rounded p-2 bg-light" style="max-height: 150px; overflow-y: auto;">
                 <div v-for="m in members" :key="'assign-'+m.id" class="form-check mb-1">
                   <input class="form-check-input" type="checkbox" :value="m.id" :id="'assign-'+m.id" v-model="planForm.assigned_members">
                   <label class="form-check-label d-flex align-items-center" :for="'assign-'+m.id">
@@ -94,7 +110,9 @@
                   </label>
                 </div>
               </div>
-              <small class="text-muted mt-1 d-block"><i class="bi bi-info-circle me-1"></i>Only selected members with "Ready" status will receive a WhatsApp message.</small>
+              
+              <small v-if="!familyGroupId || planForm.notificationTarget === 'members'" class="text-muted mt-1 d-block"><i class="bi bi-info-circle me-1"></i>Select at least one member. Only those with "Ready" status will receive a WhatsApp message.</small>
+              <small v-else class="text-muted mt-1 d-block"><i class="bi bi-info-circle me-1"></i>Message will be sent exclusively to the Family Group. This Shopping Plan will show 0 assigned members.</small>
             </div>
           </div>
           <div class="modal-footer border-0 pt-0">
@@ -150,7 +168,8 @@ const showAddModal = ref(false);
 const showDeleteModal = ref(false);
 const deleting = ref(false);
 const planToDelete = ref(null);
-const planForm = ref({ location: '', created_by: '', assigned_members: [] });
+const familyGroupId = ref('');
+const planForm = ref({ location: '', created_by: '', assigned_members: [], notificationTarget: 'members' });
 
 const authStore = useAuthStore();
 const toast = useToastStore();
@@ -180,7 +199,7 @@ async function fetchMembers() {
 }
 
 function openAddPlan() {
-  planForm.value = { location: '', created_by: '', assigned_members: [] };
+  planForm.value = { location: '', created_by: '', assigned_members: [], notificationTarget: familyGroupId.value ? 'group' : 'members' };
   showAddModal.value = true;
 }
 
@@ -192,6 +211,15 @@ function onCreatorChange() {
 }
 
 async function savePlan() {
+  if ((!familyGroupId.value || planForm.value.notificationTarget === 'members') && planForm.value.assigned_members.length === 0) {
+    toast.error('Please select at least one member to notify.');
+    return;
+  }
+  
+  if (familyGroupId.value && planForm.value.notificationTarget === 'group') {
+    planForm.value.assigned_members = []; // Clear members to trigger exclusive group notification
+  }
+  
   saving.value = true;
   const payload = {
     location: planForm.value.location,
@@ -252,10 +280,16 @@ function setupRealtime() {
     .subscribe();
 }
 
-onMounted(() => {
+onMounted(async () => {
   fetchData();
   fetchMembers();
   setupRealtime();
+  if (authStore.familyId) {
+    const { data } = await supabase.from('families').select('whatsapp_group_id').eq('id', authStore.familyId).single();
+    if (data?.whatsapp_group_id) {
+      familyGroupId.value = data.whatsapp_group_id;
+    }
+  }
 });
 
 onUnmounted(() => {
