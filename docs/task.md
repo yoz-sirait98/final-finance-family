@@ -95,3 +95,7 @@
 - `[x]` Task 72: Add theme-specific premium glows and hover/active animations for all button variants in `style.css` (primary-gradient, outline-primary, secondary, danger, warning, success, info)
 - `[x]` Task 73: Implement adaptive mobile compaction media query using `:has(i)` to hide header button text and round them on mobile in `style.css`
 - `[x]` Task 74: Run local build and verify layouts across different viewports and color themes (light/dark)
+
+## Part 12 — Recurring Transaction Catch-up & Concurrency Fix
+- `[x]` Task 75: Create database migration `000024_fix_recurring_catchup_and_concurrency.sql` to implement catch-up loop and row locks
+- `[x]` Task 76: Modify `frontend/src/stores/auth.js` to trigger the `process_recurring_transactions` RPC fallback on profile load

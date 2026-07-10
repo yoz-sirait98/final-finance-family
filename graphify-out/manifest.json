@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "docs/implementation_plan.md": {
-    "mtime": 1781248240.6583014,
-    "ast_hash": "abfdfcbf58e359b55cf59642baa4c1a2",
+    "mtime": 1783652706.6998987,
+    "ast_hash": "003468f8581d89185832a17446b4bc67",
     "semantic_hash": ""
   },
   "docs/supabase-setup-guide.md": {
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "docs/task.md": {
-    "mtime": 1781248240.6593034,
-    "ast_hash": "77bfccc15c95a5f6a0dc40d8647cea29",
+    "mtime": 1783652694.5006578,
+    "ast_hash": "06eb66f8f3ed1087c1e479dfd9b3054e",
     "semantic_hash": ""
   },
   "docs/walkthrough_graphify.md": {
@@ -677,6 +677,11 @@
   "supabase/migrations/000024_fix_recurring_catchup_and_concurrency.sql": {
     "mtime": 1783652607.064047,
     "ast_hash": "f128bddca50b131d42850609cf469c9b",
+    "semantic_hash": ""
+  },
+  "docs/walkthrough_recurring_catchup_fix.md": {
+    "mtime": 1783652684.564433,
+    "ast_hash": "b6f4c1136d8ae87cd36fcd383ce1d63d",
     "semantic_hash": ""
   }
 }

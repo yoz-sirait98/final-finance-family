@@ -461,3 +461,23 @@ This section outlines the UI/UX pass to refine all action buttons (Add Transacti
 2. **Mobile view / Responsive mode**:
    - Shrink browser width to `< 576px` and verify that header actions automatically condense into sleek, round icon-only action pills.
    - Verify that light/dark theme contrast remains perfect on all buttons.
+
+---
+
+# Part 12 — Recurring Transaction Catch-up & Concurrency Fix (Completed 2026-07-10)
+
+This section documents the database locking mechanism, catch-up cursor loop, and client-side fallback triggers to address missing executions for recurring transactions.
+
+## Proposed Changes
+
+### Database Migration
+- **[NEW] `supabase/migrations/000024_fix_recurring_catchup_and_concurrency.sql`**:
+  - Updates `process_recurring_transactions()` with a cursor loop to catch up all missed transaction dates (such as multi-month overrides) and `FOR UPDATE` concurrency locks to avoid race conditions between automated crons and concurrent user logins.
+
+### Frontend Auth Store
+- **[MODIFY] `frontend/src/stores/auth.js`**:
+  - Adds a call to the `process_recurring_transactions` RPC at the end of the `fetchProfile()` action (non-blocking catch-up fallback).
+
+## Verification
+- Build: compiled cleanly (`npm run build`)
+- Git commit + push to origin
