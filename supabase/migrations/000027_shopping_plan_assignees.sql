@@ -47,14 +47,14 @@ BEGIN
     -- Construct the notification message
     v_payload := jsonb_build_object(
         'numbers', v_phone_numbers,
-        'message', '*========================*\n' ||
-                   '🛒  *NEW SHOPPING LIST*  🛒\n' ||
-                   '*========================*\n\n' ||
-                   'Hi! 👋 You have been assigned to a new shopping list in the *Family Finance App*.\n\n' ||
-                   '📍 *Location:*  ' || NEW.location || '\n' ||
-                   COALESCE('👤 *Created by:* ' || v_creator_name || '\n', '') || 
-                   '📅 *Date:*      ' || to_char(NEW.created_at, 'DD Mon YYYY') || '\n\n' ||
-                   '*------------------------*\n' ||
+        'message', '*========================*' || CHR(10) ||
+                   '🛒  *NEW SHOPPING LIST*  🛒' || CHR(10) ||
+                   '*========================*' || CHR(10) || CHR(10) ||
+                   'Hi! 👋 You have been assigned to a new shopping list in the *Family Finance App*.' || CHR(10) || CHR(10) ||
+                   '📍 *Location:*  ' || NEW.location || CHR(10) ||
+                   COALESCE('👤 *Created by:* ' || v_creator_name || CHR(10), '') || 
+                   '📅 *Date:*      ' || to_char(NEW.created_at, 'DD Mon YYYY') || CHR(10) || CHR(10) ||
+                   '*------------------------*' || CHR(10) ||
                    'Open the FamFin app to see and manage the items! 🛍️'
     );
 
