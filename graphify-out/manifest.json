@@ -225,7 +225,7 @@
     "semantic_hash": ""
   },
   "frontend/src/stores/auth.js": {
-    "mtime": 1783653161.3081782,
+    "mtime": 1783653200.367134,
     "ast_hash": "600b6d66fe12bb5b7baa5d333aa4bda8",
     "semantic_hash": ""
   },
@@ -435,8 +435,8 @@
     "semantic_hash": ""
   },
   "frontend/index.html": {
-    "mtime": 1781060149.3607807,
-    "ast_hash": "5c062b3c506f8713ac7eda52a3d53760",
+    "mtime": 1783653390.0642705,
+    "ast_hash": "70a5bba348194e7aa662262a09dbd62e",
     "semantic_hash": ""
   },
   "frontend/public/404.html": {
