@@ -130,8 +130,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/MembersPage.vue": {
-    "mtime": 1781250073.1991625,
-    "ast_hash": "22674949db5ed142c568cfb616216ad8",
+    "mtime": 1783660331.0086467,
+    "ast_hash": "2cbc983f5d1e3f4ba23b77e1a7a18cd9",
     "semantic_hash": ""
   },
   "frontend/src/pages/RecurringPage.vue": {
@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "docs/implementation_plan.md": {
-    "mtime": 1783652892.7653785,
-    "ast_hash": "003468f8581d89185832a17446b4bc67",
+    "mtime": 1783655885.458891,
+    "ast_hash": "4f415ee1635c41acd5a982f35afdc96b",
     "semantic_hash": ""
   },
   "docs/supabase-setup-guide.md": {
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "docs/task.md": {
-    "mtime": 1783652892.7653785,
-    "ast_hash": "06eb66f8f3ed1087c1e479dfd9b3054e",
+    "mtime": 1783660442.5423799,
+    "ast_hash": "bc40f72a8000c2fb9c968d35c1f33b03",
     "semantic_hash": ""
   },
   "docs/walkthrough_graphify.md": {
@@ -435,7 +435,7 @@
     "semantic_hash": ""
   },
   "frontend/index.html": {
-    "mtime": 1783653390.0642705,
+    "mtime": 1783653427.451949,
     "ast_hash": "70a5bba348194e7aa662262a09dbd62e",
     "semantic_hash": ""
   },
@@ -682,6 +682,21 @@
   "docs/walkthrough_recurring_catchup_fix.md": {
     "mtime": 1783652932.317796,
     "ast_hash": "af85b782494fc1cc722d97652d3e19e4",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/000025_add_whatsapp_numbers.sql": {
+    "mtime": 1783660278.4429688,
+    "ast_hash": "540cd32a055cfd2088903dd6a094f0e4",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/000026_shopping_plan_webhook.sql": {
+    "mtime": 1783660291.1439004,
+    "ast_hash": "43459c316ef8d27dd583b0d944a069f2",
+    "semantic_hash": ""
+  },
+  "docs/walkthrough_whatsapp_bot.md": {
+    "mtime": 1783660518.2163138,
+    "ast_hash": "f136dd3383b505fbc4607279612e9cc0",
     "semantic_hash": ""
   }
 }

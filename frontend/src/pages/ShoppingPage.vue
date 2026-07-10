@@ -170,16 +170,24 @@ function openAddPlan() {
 
 async function savePlan() {
   saving.value = true;
+  const payload = {
+    location: planForm.value.location,
+    created_by: planForm.value.created_by,
+    status: 'progress'
+  };
+  
+  console.log('[DEBUG] Sending Shopping Plan payload to Supabase:', payload);
+  
   try {
-    await shoppingPlanService.create({
-      location: planForm.value.location,
-      created_by: planForm.value.created_by,
-      status: 'progress'
-    });
+    const response = await shoppingPlanService.create(payload);
+    console.log('[DEBUG] Supabase Success Response:', response);
+    
     showAddModal.value = false;
     toast.success(localeStore.t('common.success'));
     fetchData(); 
   } catch (e) {
+    console.error('[DEBUG] Supabase Error Trace:', e);
+    console.error('[DEBUG] Error details:', e.response?.data || e.message);
     toast.error(e.response?.data?.message || e.message);
   } finally {
     saving.value = false;

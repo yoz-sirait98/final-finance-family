@@ -225,8 +225,8 @@
     "semantic_hash": ""
   },
   "frontend/src/stores/auth.js": {
-    "mtime": 1783652610.6616368,
-    "ast_hash": "814d6ddee81e391382d40182552a6a0f",
+    "mtime": 1783653200.367134,
+    "ast_hash": "600b6d66fe12bb5b7baa5d333aa4bda8",
     "semantic_hash": ""
   },
   "frontend/src/stores/budgets.js": {
@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "docs/implementation_plan.md": {
-    "mtime": 1781248240.6583014,
-    "ast_hash": "abfdfcbf58e359b55cf59642baa4c1a2",
+    "mtime": 1783652892.7653785,
+    "ast_hash": "003468f8581d89185832a17446b4bc67",
     "semantic_hash": ""
   },
   "docs/supabase-setup-guide.md": {
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "docs/task.md": {
-    "mtime": 1781248240.6593034,
-    "ast_hash": "77bfccc15c95a5f6a0dc40d8647cea29",
+    "mtime": 1783652892.7653785,
+    "ast_hash": "06eb66f8f3ed1087c1e479dfd9b3054e",
     "semantic_hash": ""
   },
   "docs/walkthrough_graphify.md": {
@@ -435,8 +435,8 @@
     "semantic_hash": ""
   },
   "frontend/index.html": {
-    "mtime": 1781060149.3607807,
-    "ast_hash": "5c062b3c506f8713ac7eda52a3d53760",
+    "mtime": 1783653390.0642705,
+    "ast_hash": "70a5bba348194e7aa662262a09dbd62e",
     "semantic_hash": ""
   },
   "frontend/public/404.html": {
@@ -655,8 +655,8 @@
     "semantic_hash": ""
   },
   "supabase/migrations/000023_add_storage_bucket_and_rls_policies.sql": {
-    "mtime": 1781152967.673469,
-    "ast_hash": "1346b9eeb66b0a1eeb2100695467ad6c",
+    "mtime": 1783652892.7903585,
+    "ast_hash": "8fc09d9de0d7d849663700282e1fa6fa",
     "semantic_hash": ""
   },
   "docs/walkthrough_magic_buttons.md": {
@@ -670,13 +670,18 @@
     "semantic_hash": ""
   },
   "docs/walkthrough_receipt_storage_privilege_fix.md": {
-    "mtime": 1781153191.1100976,
-    "ast_hash": "b9c681f457dea78971d7d1e10ed68414",
+    "mtime": 1783652892.7653785,
+    "ast_hash": "84add0a7b164ad46489d59b4e7291f78",
     "semantic_hash": ""
   },
   "supabase/migrations/000024_fix_recurring_catchup_and_concurrency.sql": {
-    "mtime": 1783652607.064047,
-    "ast_hash": "f128bddca50b131d42850609cf469c9b",
+    "mtime": 1783652892.7913687,
+    "ast_hash": "2e55c3fdd1cc34276372a42b3d8214d7",
+    "semantic_hash": ""
+  },
+  "docs/walkthrough_recurring_catchup_fix.md": {
+    "mtime": 1783652932.317796,
+    "ast_hash": "af85b782494fc1cc722d97652d3e19e4",
     "semantic_hash": ""
   }
 }
