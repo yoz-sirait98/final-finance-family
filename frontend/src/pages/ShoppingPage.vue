@@ -316,7 +316,7 @@ async function sendWhatsAppNotification(planPayload) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': 'YOUR_HEROKU_API_KEY_HERE'
+        'x-api-key': 'D@rk4rdz03011998'
       },
       body: JSON.stringify(apiPayload)
     });
