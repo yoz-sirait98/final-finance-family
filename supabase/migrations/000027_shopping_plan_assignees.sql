@@ -47,9 +47,16 @@ BEGIN
     -- Construct the notification message
     v_payload := jsonb_build_object(
         'numbers', v_phone_numbers,
-        'message', '🛒 *New Shopping List Assigned to You!*\n\nLocation: ' || NEW.location || 
-                   COALESCE('\nCreated by: ' || v_creator_name, '') || 
-                   '\n\nOpen the FamFin app to see and manage the items.'
+        'message', '*========================*\n' ||
+                   '🛒  *NEW SHOPPING LIST*  🛒\n' ||
+                   '*========================*\n\n' ||
+                   'Hi! 👋 You have been assigned to a new shopping list in the *Family Finance App*.\n\n' ||
+                   '📍 *Location:*  ' || NEW.location || '\n' ||
+                   COALESCE('👤 *Created by:* ' || v_creator_name || '\n', '') || 
+                   '📅 *Date:*      ' || to_char(NEW.created_at, 'DD Mon YYYY') || '\n\n' ||
+                   '*------------------------*\n' ||
+                   'Tap the link below to view the items and start shopping! 🛍️\n\n' ||
+                   '🔗 https://yjsfinance.my.id/#/shopping/' || NEW.id
     );
 
     -- Send the HTTP POST request via pg_net asynchronously
