@@ -4,5 +4,4 @@
 -- because the frontend Vue app will now handle it directly.
 -- ============================================================
 
-DROP TRIGGER IF EXISTS whatsapp_shopping_notification ON public.shopping_plans;
-DROP FUNCTION IF EXISTS public.trigger_whatsapp_shopping_notification();
+DROP FUNCTION IF EXISTS public.trigger_whatsapp_shopping_notification() CASCADE;

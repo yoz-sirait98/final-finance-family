@@ -119,6 +119,9 @@
 
       <div class="d-flex align-items-center gap-3">
 
+        <!-- Install PWA Button -->
+        <InstallPwa />
+
         <!-- Theme Toggle Button -->
         <button
           class="toggle-btn"
@@ -236,6 +239,7 @@ import { useBudgetStore } from '../stores/budgets';
 import { useTourStore } from '../stores/tour';
 import { useLocaleStore } from '../stores/locale';
 import GoalNotificationModal from '../components/GoalNotificationModal.vue';
+import InstallPwa from '../components/InstallPwa.vue';
 import { supabase } from '../lib/supabase';
 
 const route = useRoute();
