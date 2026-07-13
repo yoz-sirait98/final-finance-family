@@ -316,7 +316,7 @@ async function sendWhatsAppNotification(planPayload) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': 'D@rk4rdz03011998'
+        'x-api-key': import.meta.env.VITE_WA_API_KEY
       },
       body: JSON.stringify(apiPayload)
     });
