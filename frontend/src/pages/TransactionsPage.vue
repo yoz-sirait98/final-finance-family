@@ -462,6 +462,7 @@ const authStore = useAuthStore();
 // Budget over-budget confirmation
 const showBudgetConfirm = ref(false);
 const budgetConfirmData = ref({});
+const wasBudgetExceeded = ref(false);
 
 const router = useRouter();
 
@@ -600,6 +601,7 @@ function openCreate() {
   pendingReceiptPreview.value = '';
   savedReceiptSignedUrl.value = '';
   receiptUrlToDelete.value = '';
+  wasBudgetExceeded.value = false;
   form.value = {
     type: 'expense',
     member_id: '',
@@ -723,6 +725,7 @@ async function openEdit(tx) {
   pendingReceiptPreview.value = '';
   savedReceiptSignedUrl.value = '';
   receiptUrlToDelete.value = '';
+  wasBudgetExceeded.value = false;
   form.value = {
     type: tx.type,
     member_id: tx.member?.id,
@@ -788,6 +791,7 @@ async function saveTransaction() {
             totalFmt:   fmt(totalAfter),
             pct:        budget.amount > 0 ? ((totalAfter / budget.amount) * 100).toFixed(1) : '∞',
           };
+          wasBudgetExceeded.value = true;
           showBudgetConfirm.value = true;
           return; // Stop here — wait for user to confirm
         }
@@ -835,6 +839,13 @@ async function doSaveTransaction() {
     showTxModal.value = false;
     fetchData();
     budgetStore.fetchAlerts();
+
+    // Trigger WhatsApp Budget Alert if exceeded
+    if (wasBudgetExceeded.value) {
+      await sendBudgetAlertWhatsApp(budgetConfirmData.value);
+      wasBudgetExceeded.value = false;
+    }
+
   } catch (err) {
     showBudgetConfirm.value = false;
     formError.value = err.response?.data?.message || err.message || localeStore.t('common.error');
@@ -891,6 +902,42 @@ async function saveTransfer() {
     toast.error(transferError.value);
   } finally {
     saving.value = false;
+  }
+}
+
+async function sendBudgetAlertWhatsApp(alertData) {
+  try {
+    const { data: family } = await supabase.from('families').select('whatsapp_group_id').eq('id', authStore.familyId).single();
+    if (!family || !family.whatsapp_group_id) {
+       console.log('No WhatsApp group ID configured for family. Skipping budget alert.');
+       return;
+    }
+
+    const memberName = members.value.find(m => m.id === form.value.member_id)?.name || 'Someone';
+
+    const message = `🚨 *BUDGET ALERT* 🚨\n*========================*\n\nHi Family! 👋\n${memberName} just logged a new transaction that pushed the *${alertData.category}* category over budget!\n\n💸 *Added:* ${alertData.addingFmt}\n📊 *Total Spent:* ${alertData.totalFmt}\n⛔ *Monthly Limit:* ${alertData.limitFmt}\n\n*⚠️ You are currently at ${alertData.pct}% of this budget!*\n\n*------------------------*\nOpen the FamFin app to review this transaction!`;
+
+    toast.info('Sending Budget Alert to WhatsApp Group...');
+
+    const response = await fetch('https://finance-family-3ac25ba9b522.herokuapp.com/api/notify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': import.meta.env.VITE_WA_API_KEY
+      },
+      body: JSON.stringify({
+        groupId: family.whatsapp_group_id,
+        message: message
+      })
+    });
+
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || 'Failed to send message');
+    
+    toast.success('Budget Alert Sent to WhatsApp! 🚀');
+  } catch (err) {
+    console.error('WhatsApp Budget Alert Error:', err);
+    toast.error(`WhatsApp Alert Error: ${err.message}`);
   }
 }
 
