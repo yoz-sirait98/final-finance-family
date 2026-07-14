@@ -323,8 +323,8 @@ async function updateCharts(d) {
       data: {
         labels: barData.map(d => d.month),
         datasets: [
-          { label: localeStore.t('common.income'),  data: barData.map(d => d.income),  backgroundColor: colors.incomeColor, borderRadius: 4 },
-          { label: localeStore.t('common.expense'), data: barData.map(d => d.expense), backgroundColor: colors.expenseColor, borderRadius: 4 },
+          { label: localeStore.t('common.income'),  data: barData.map(d => d.income),  backgroundColor: colors.incomeColor, borderColor: colors.incomeColor, borderWidth: 1, borderRadius: 4 },
+          { label: localeStore.t('common.expense'), data: barData.map(d => d.expense), backgroundColor: colors.expenseColor, borderColor: colors.expenseColor, borderWidth: 1, borderRadius: 4 },
         ],
       },
       options: { 
@@ -369,7 +369,9 @@ async function updateCharts(d) {
           fill: true, 
           tension: 0.4,
           pointRadius: 4,
-          pointBackgroundColor: colors.expenseColor
+          pointBackgroundColor: colors.expenseColor,
+          pointBorderColor: colors.expenseColor,
+          pointBorderWidth: 1
         }],
       },
       options: { 
@@ -411,7 +413,9 @@ async function updateCharts(d) {
           fill: true, 
           tension: 0.4, 
           pointRadius: 4, 
-          pointBackgroundColor: colors.accentColor 
+          pointBackgroundColor: colors.accentColor,
+          pointBorderColor: colors.accentColor,
+          pointBorderWidth: 1
         }],
       },
       options: { 
