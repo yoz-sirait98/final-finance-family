@@ -95,3 +95,12 @@
 - `[x]` Task 72: Add theme-specific premium glows and hover/active animations for all button variants in `style.css` (primary-gradient, outline-primary, secondary, danger, warning, success, info)
 - `[x]` Task 73: Implement adaptive mobile compaction media query using `:has(i)` to hide header button text and round them on mobile in `style.css`
 - `[x]` Task 74: Run local build and verify layouts across different viewports and color themes (light/dark)
+
+## Part 12 — Production Synchronization
+- `[x]` Task 75: Create local branch `sync-with-prod` for synchronization tracking
+- `[x]` Task 76: Verify Git remote state (local `main` is in sync with `origin/main` at commit `14ab442`)
+- `[x]` Task 77: Run and verify Vite production build locally
+- `[ ]` Task 78: Ask user to switch network to phone hotspot to bypass port 5432 blocking
+- `[ ]` Task 79: Run `npx supabase db push` to push database migrations to production Supabase database
+- `[ ]` Task 80: Re-run `graphify update .` to keep graph current
+

@@ -461,3 +461,37 @@ This section outlines the UI/UX pass to refine all action buttons (Add Transacti
 2. **Mobile view / Responsive mode**:
    - Shrink browser width to `< 576px` and verify that header actions automatically condense into sleek, round icon-only action pills.
    - Verify that light/dark theme contrast remains perfect on all buttons.
+
+---
+
+# Part 12 — Production Synchronization
+
+This plan details the steps required to synchronize the latest codebase and database migrations with the production environment.
+
+## User Review Required
+
+> [!IMPORTANT]
+> **Supabase Database Port Restriction Workaround**
+> Because the current network connection blocks port `5432` (PostgreSQL), the Supabase CLI cannot push migrations directly to production (`rvevxviktjncrtdkleda`). 
+> **To proceed with the database synchronization, please temporarily switch your computer's internet connection to a phone hotspot.** Once connected, we will execute the migration push and you can switch back to the office ethernet.
+
+## Proposed Steps
+
+1. **Verify Code Status**: The local branch `main` is already completely up to date with `origin/main` (commit `14ab442`). Pushing code to `main` triggers the automated GitHub Pages deployment for the frontend `yjsfinance.my.id`.
+2. **Build Validation**: A local production build of the frontend was run and verified to compile successfully with zero errors.
+3. **Database Migration Sync**: 
+   - A local branch `sync-with-prod` was created.
+   - Once the user switches to a phone hotspot, we will run `npx supabase db push` to apply any pending database migrations (up to migration `000023`) to the production Supabase database instance.
+
+## Verification Plan
+
+### Manual Verification
+- After switching to a hotspot, check the status of remote migrations:
+  ```bash
+  npx supabase migration list
+  ```
+- Run the migration push to sync with production:
+  ```bash
+  npx supabase db push
+  ```
+
