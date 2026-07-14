@@ -38,9 +38,9 @@ BEGIN
         v_end_date := (date_trunc('month', CURRENT_DATE) - INTERVAL '1 day')::DATE;
         v_title := '📊 *Monthly Family Finance Summary* 📊';
     ELSE
-        -- Default to weekly (last 7 days up to today)
+        -- Default to weekly (last 7 days up to today inclusive)
         v_end_date := CURRENT_DATE;
-        v_start_date := v_end_date - INTERVAL '7 days';
+        v_start_date := v_end_date - INTERVAL '6 days';
         v_title := '📊 *Weekly Family Finance Summary* 📊';
     END IF;
 
@@ -58,7 +58,7 @@ BEGIN
         FROM public.transactions
         WHERE family_id = v_family.id
           AND type = 'income'
-          AND transaction_date > v_start_date 
+          AND transaction_date >= v_start_date 
           AND transaction_date <= v_end_date;
 
         FOR v_category IN
@@ -67,7 +67,7 @@ BEGIN
             JOIN public.categories c ON t.category_id = c.id
             WHERE t.family_id = v_family.id
               AND t.type = 'expense'
-              AND t.transaction_date > v_start_date 
+              AND t.transaction_date >= v_start_date 
               AND t.transaction_date <= v_end_date
             GROUP BY c.name
             ORDER BY cat_total DESC
@@ -80,7 +80,7 @@ BEGIN
             
             v_message := v_title || E'\n' ||
                          '*' || v_family.name || ' Family*' || E'\n' ||
-                         '*Period:* ' || to_char(v_start_date + interval '1 day', 'DD Mon YYYY') || ' to ' || to_char(v_end_date, 'DD Mon YYYY') || E'\n\n' ||
+                         '*Period:* ' || to_char(v_start_date, 'DD Mon YYYY') || ' to ' || to_char(v_end_date, 'DD Mon YYYY') || E'\n\n' ||
                          '💸 *Total Income:* + Rp ' || to_char(v_total_income, v_currency_formatter) || E'\n' ||
                          '🛒 *Total Spent:* - Rp ' || to_char(v_total_spent, v_currency_formatter) || E'\n\n';
 
