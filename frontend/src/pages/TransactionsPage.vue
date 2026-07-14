@@ -114,14 +114,16 @@
           </thead>
           <tbody>
             <tr v-if="loading">
-              <td colspan="9" class="text-center py-4">
-                <div class="spinner-border spinner-border-sm text-primary"></div> {{ $t('common.loading') }}
+              <td colspan="9" class="p-0 border-0">
+                <SkeletonLoader type="table-row" v-for="i in 3" :key="i" />
               </td>
             </tr>
             <tr v-else-if="!transactions.length">
               <td colspan="9" class="text-center py-4 text-muted">{{ $t('dashboard.noTransactions') }}</td>
             </tr>
-            <tr v-for="tx in transactions" :key="tx.id">
+            <tr v-for="tx in transactions" :key="tx.id" 
+                @touchstart="onTouchStart" 
+                @touchend="onTouchEnd($event, tx)">
               <td>{{ tx.transaction_date }}</td>
               <td>{{ tx.member?.name || '-' }}</td>
               <td>{{ tx.account?.name || '-' }}</td>
@@ -407,6 +409,7 @@ import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { supabase } from '../lib/supabase';
 import { useRouter } from 'vue-router';
 import { useTour } from '../composables/useTour';
+import SkeletonLoader from '../components/SkeletonLoader.vue';
 import { transactionsTourSteps } from '../tours/transactionsTour';
 import { scanReceipt } from '../utils/receiptScanner';
 import { formatCurrency } from '../utils/format';
@@ -939,6 +942,41 @@ async function sendBudgetAlertWhatsApp(alertData) {
   } catch (err) {
     console.error('WhatsApp Budget Alert Error:', err);
     toast.error(`WhatsApp Alert Error: ${err.message}`);
+  }
+}
+
+const touchStartX = ref(0);
+const touchStartY = ref(0);
+
+function onTouchStart(e) {
+  touchStartX.value = e.changedTouches[0].screenX;
+  touchStartY.value = e.changedTouches[0].screenY;
+}
+
+function onTouchEnd(e, tx) {
+  const touchEndX = e.changedTouches[0].screenX;
+  const touchEndY = e.changedTouches[0].screenY;
+  
+  const deltaX = touchEndX - touchStartX.value;
+  const deltaY = touchEndY - touchStartY.value;
+  
+  // Only trigger if it's a mostly horizontal swipe (> 80px horizontal, < 50px vertical drift)
+  if (Math.abs(deltaX) > 80 && Math.abs(deltaY) < 50) {
+    if (deltaX < 0) {
+      // Swiped Left -> Delete
+      if (getTransactionModule(tx) === 'Manual' || getTransactionModule(tx) === 'Transfer') {
+         confirmDelete(tx);
+      } else {
+         toast.error(localeStore.currentLocale === 'id' ? 'Transaksi otomatis tidak dapat dihapus.' : 'Automated transactions cannot be deleted.');
+      }
+    } else {
+      // Swiped Right -> Edit
+      if (getTransactionModule(tx) === 'Manual' || getTransactionModule(tx) === 'Transfer') {
+         openEdit(tx);
+      } else {
+         toast.error(localeStore.currentLocale === 'id' ? 'Transaksi otomatis tidak dapat diedit.' : 'Automated transactions cannot be edited.');
+      }
+    }
   }
 }
 

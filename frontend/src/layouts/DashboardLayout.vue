@@ -272,17 +272,20 @@ function triggerTour() {
 const POLL_INTERVAL_MS = 120000; // 2 minutes
 const routeNamesToPollAlerts = ['Dashboard', 'Budgets', 'Transactions', 'Recurring'];
 
+import { useThemeStore } from '../stores/theme';
+import { storeToRefs } from 'pinia';
+
+const themeStore = useThemeStore();
+const { currentTheme: theme } = storeToRefs(themeStore);
+
 const sidebarCollapsed = ref(false);
 const mobileOpen = ref(false);
 const bellOpen = ref(false);
 const userOpen = ref(false);
 const langOpen = ref(false);
-const theme = ref(localStorage.getItem('theme') || 'light');
 
 function toggleTheme() {
-  theme.value = theme.value === 'dark' ? 'light' : 'dark';
-  localStorage.setItem('theme', theme.value);
-  document.documentElement.setAttribute('data-theme', theme.value);
+  themeStore.toggleTheme();
   window.dispatchEvent(new CustomEvent('theme-changed', { detail: theme.value }));
 }
 

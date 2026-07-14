@@ -746,3 +746,50 @@ The goal of this feature is to send automated WhatsApp notifications to family m
 4. Verify the database trigger fires.
 5. Verify the `whatsapp-bot` server receives the webhook request and dispatches the message.
 6. Verify the WhatsApp message arrives on the test device with the correct formatting.
+
+---
+
+# Part 13 — Premium UI/UX Refinements
+
+This section outlines the implementation of 4 high-impact UI/UX features to make the FamFin PWA feel like a premium, native mobile application.
+
+## Proposed Changes
+
+### 1. "Swipe-to-Action" on Mobile Transactions
+We will implement native-feeling swipe gestures on the Transactions list.
+- **[MODIFY] [frontend/src/pages/TransactionsPage.vue](file:///C:/Users/Yosua%20Jan/.gemini/antigravity/worktrees/final-finance-family/redesign-ui-supabase-stack/frontend/src/pages/TransactionsPage.vue)**:
+  - Add a CSS-based swipe-to-reveal mechanism (using horizontal scrolling with `scroll-snap-type: x mandatory`).
+  - Swiping left on a transaction row will reveal a hidden red "Delete" icon and a blue "Edit" icon underneath the row.
+
+### 2. Seamless Dark Mode Transition
+We will introduce a globally reactive Dark Mode toggle that switches CSS variables.
+- **[NEW] [frontend/src/stores/theme.js](file:///C:/Users/Yosua%20Jan/.gemini/antigravity/worktrees/final-finance-family/redesign-ui-supabase-stack/frontend/src/stores/theme.js)**:
+  - Create a Pinia store to manage `theme` ('light' or 'dark') and persist to `localStorage`.
+  - Apply a `data-theme="dark"` attribute to the `<html>` tag dynamically.
+- **[MODIFY] [frontend/src/style.css](file:///C:/Users/Yosua%20Jan/.gemini/antigravity/worktrees/final-finance-family/redesign-ui-supabase-stack/frontend/src/style.css)**:
+  - Define `:root[data-theme="dark"]` CSS variables mapping to OLED blacks (`#000000`), deep navys (`#0B0B14`), and glowing accents.
+- **[MODIFY] [frontend/src/layouts/DashboardLayout.vue](file:///C:/Users/Yosua%20Jan/.gemini/antigravity/worktrees/final-finance-family/redesign-ui-supabase-stack/frontend/src/layouts/DashboardLayout.vue)**:
+  - Add a Sun/Moon toggle button in the top navigation bar.
+
+### 3. Interactive Skeleton Loaders
+Replace generic spinners with skeleton loaders.
+- **[NEW] [frontend/src/components/SkeletonLoader.vue](file:///C:/Users/Yosua%20Jan/.gemini/antigravity/worktrees/final-finance-family/redesign-ui-supabase-stack/frontend/src/components/SkeletonLoader.vue)**:
+  - Create a reusable pulsing CSS skeleton component using `@keyframes pulse`.
+- **[MODIFY] [frontend/src/pages/DashboardPage.vue](file:///C:/Users/Yosua%20Jan/.gemini/antigravity/worktrees/final-finance-family/redesign-ui-supabase-stack/frontend/src/pages/DashboardPage.vue)** & **[TransactionsPage.vue](file:///C:/Users/Yosua%20Jan/.gemini/antigravity/worktrees/final-finance-family/redesign-ui-supabase-stack/frontend/src/pages/TransactionsPage.vue)**:
+  - Drop the `<SkeletonLoader />` into the `v-if="loading"` blocks instead of the Bootstrap spinner.
+
+### 4. Animated Dashboard Entrance
+Add micro-animations for dashboard numbers and charts.
+- **[NEW] [frontend/src/composables/useCountUp.js](file:///C:/Users/Yosua%20Jan/.gemini/antigravity/worktrees/final-finance-family/redesign-ui-supabase-stack/frontend/src/composables/useCountUp.js)**:
+  - A Vue composable `requestAnimationFrame` loop to smoothly count up numbers from 0 to their target value over 1.5 seconds.
+- **[MODIFY] [frontend/src/pages/DashboardPage.vue](file:///C:/Users/Yosua%20Jan/.gemini/antigravity/worktrees/final-finance-family/redesign-ui-supabase-stack/frontend/src/pages/DashboardPage.vue)**:
+  - Apply the `useCountUp` composable to the Total Balance, Income, and Expense cards.
+  - Add a staggered CSS `@keyframes slideUp` animation class to the chart containers so they load sequentially.
+
+## Verification Plan
+
+### Manual Verification
+1. **Swipe**: Open the app on a mobile device (or Chrome DevTools touch emulator) and swipe left on a transaction row. Verify buttons appear.
+2. **Dark Mode**: Click the Sun/Moon toggle. Verify the entire app instantly switches colors without a page reload.
+3. **Skeletons**: Refresh the page and observe the grey pulsing shapes before the data arrives from Supabase.
+4. **Animations**: Go to the Dashboard and verify the numbers count up dynamically from zero.
