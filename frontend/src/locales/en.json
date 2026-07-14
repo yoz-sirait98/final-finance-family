@@ -123,6 +123,7 @@
     "monthlyIncome": "Income — {period}",
     "monthlyExpense": "Expense — {period}",
     "monthlyNet": "Net — {period}",
+    "netIncome": "Net Income",
     "expenseByCategory": "Expense by Category",
     "incomeVsExpense": "Income vs Expense — {year}",
     "expenseTrend": "Expense Trend (Last 6 Months)",

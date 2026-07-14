@@ -216,6 +216,7 @@ function getChartColors() {
     accentColor: isDark ? '#8a2be2' : '#667eea',
     incomeColor: isDark ? '#10b981' : '#28a745',
     expenseColor: isDark ? '#f43f5e' : '#dc3545',
+    cardBg: isDark ? '#161626' : '#ffffff',
   };
 }
 
@@ -293,7 +294,7 @@ async function updateCharts(d) {
       type: 'pie',
       data: {
         labels: pieData.map(d => d.category),
-        datasets: [{ data: pieData.map(d => d.total), backgroundColor: pieData.map(d => d.color), borderWidth: 0 }],
+        datasets: [{ data: pieData.map(d => d.total), backgroundColor: pieData.map(d => d.color), borderColor: colors.cardBg, borderWidth: 2 }],
       },
       options: { 
         responsive: true, 
