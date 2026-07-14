@@ -80,13 +80,13 @@
     "semantic_hash": ""
   },
   "frontend/src/locales/en.json": {
-    "mtime": 1781250986.897256,
-    "ast_hash": "bcb458082add3ae39f549df1ebd37277",
+    "mtime": 1781145384.5254965,
+    "ast_hash": "c2699af303ed853efd52fb33176c8052",
     "semantic_hash": ""
   },
   "frontend/src/locales/id.json": {
-    "mtime": 1781250988.9385972,
-    "ast_hash": "47967dcda3a9e98e2e4111b95e09f538",
+    "mtime": 1781145384.5260928,
+    "ast_hash": "75fae73046affa4d89ff072ad24405a4",
     "semantic_hash": ""
   },
   "frontend/src/main.js": {
@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "docs/implementation_plan.md": {
-    "mtime": 1783650913.9146538,
-    "ast_hash": "ff2e7fd44df69e2be5e61047d1bc5339",
+    "mtime": 1781243049.7176971,
+    "ast_hash": "abfdfcbf58e359b55cf59642baa4c1a2",
     "semantic_hash": ""
   },
   "docs/supabase-setup-guide.md": {
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "docs/task.md": {
-    "mtime": 1783650917.9102917,
-    "ast_hash": "c682f54679ab29aec9856d51ca5c941d",
+    "mtime": 1781243143.6674035,
+    "ast_hash": "77bfccc15c95a5f6a0dc40d8647cea29",
     "semantic_hash": ""
   },
   "docs/walkthrough_graphify.md": {
