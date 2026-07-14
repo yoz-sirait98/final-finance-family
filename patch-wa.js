@@ -4,14 +4,15 @@ const path = require('path');
 const filePath = path.join(__dirname, 'frontend/src/pages/ShoppingPage.vue');
 let content = fs.readFileSync(filePath, 'utf8');
 
-const targetStr = `    const dateStr = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+// The exact substring to replace
+const oldBlock = `    const dateStr = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
     let message = \`*========================*\\n🛒  *NEW SHOPPING LIST*  🛒\\n*========================*\\n\\nHi! 👋 A new shopping list has been created in the *Family Finance App*.\\n\\n📍 *Location:*  \${planPayload.location}\\n👤 *Created by:* \${creatorName}\\n\`;
     if (!isGroup && assignedNamesStr) {
       message += \`🎯 *Assigned to:* \${assignedNamesStr}\\n\`;
     }
     message += \`📅 *Date:*      \${dateStr}\\n\\n*------------------------*\\nOpen the FamFin app to see and manage the items! 🛍️\`;`;
 
-const newStr = `    const isId = localeStore.currentLocale === 'id';
+const newBlock = `    const isId = localeStore.currentLocale === 'id';
     const dateStr = new Date().toLocaleDateString(isId ? 'id-ID' : 'en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
     
     let message = '';
@@ -29,7 +30,19 @@ const newStr = `    const isId = localeStore.currentLocale === 'id';
       message += \`📅 *Date:*      \${dateStr}\\n\\n*------------------------*\\nOpen the FamFin app to see and manage the items! 🛍️\`;
     }`;
 
-content = content.replace(targetStr, newStr);
-
-fs.writeFileSync(filePath, content);
-console.log('ShoppingPage.vue patched successfully');
+if (content.includes("    let message = `*========================*\\n🛒  *NEW SHOPPING LIST*  🛒")) {
+    content = content.replace(oldBlock, newBlock);
+    
+    // Check if localeStore is imported in ShoppingPage.vue
+    if (!content.includes('import { useLocaleStore } from')) {
+        content = content.replace("import { useToastStore } from '../stores/toast';", "import { useToastStore } from '../stores/toast';\\nimport { useLocaleStore } from '../stores/locale';");
+        
+        // Also inject instantiation
+        content = content.replace("const toast = useToastStore();", "const toast = useToastStore();\\nconst localeStore = useLocaleStore();");
+    }
+    
+    fs.writeFileSync(filePath, content);
+    console.log('Successfully patched ShoppingPage.vue');
+} else {
+    console.log('Could not find the target string in ShoppingPage.vue');
+}
