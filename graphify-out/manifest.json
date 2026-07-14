@@ -395,8 +395,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ShoppingPage.vue": {
-    "mtime": 1784019573.6895108,
-    "ast_hash": "3fb1e6bff6a3ce82dccfabf2ec92c67c",
+    "mtime": 1784020182.746233,
+    "ast_hash": "2b96b2dde143e86058ca27b6bfa0548c",
     "semantic_hash": ""
   },
   "frontend/src/services/shoppingService.js": {
