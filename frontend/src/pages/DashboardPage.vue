@@ -297,8 +297,8 @@ async function updateCharts(d) {
         datasets: [{ 
           data: pieData.map(d => d.total), 
           backgroundColor: pieData.map(d => d.color), 
-          borderColor: 'transparent', 
-          borderWidth: 0 
+          borderColor: pieData.map(d => d.color), 
+          borderWidth: 1 
         }],
       },
       options: { 
