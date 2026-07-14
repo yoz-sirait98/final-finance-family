@@ -404,6 +404,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { supabase } from '../lib/supabase';
 import { useRouter } from 'vue-router';
 import { useTour } from '../composables/useTour';
 import { transactionsTourSteps } from '../tours/transactionsTour';

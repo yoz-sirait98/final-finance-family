@@ -735,8 +735,8 @@
     "semantic_hash": ""
   },
   "supabase/migrations/000033_monthly_summary_engine.sql": {
-    "mtime": 1784000286.055354,
-    "ast_hash": "5abf3cecae3183f9aca3b9889f68a868",
+    "mtime": 1784000385.9083395,
+    "ast_hash": "5d91ebc8fb1d258632ea57a520440d81",
     "semantic_hash": ""
   }
 }
