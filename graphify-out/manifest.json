@@ -155,7 +155,7 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/TransactionsPage.vue": {
-    "mtime": 1784011565.005975,
+    "mtime": 1784018961.3701873,
     "ast_hash": "bead1472947523dfbe4158040afe0dd0",
     "semantic_hash": ""
   },
@@ -395,8 +395,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ShoppingPage.vue": {
-    "mtime": 1784011706.1457863,
-    "ast_hash": "6257a280265cbe90ca4ef985c60eaad9",
+    "mtime": 1784018934.5568054,
+    "ast_hash": "3fb1e6bff6a3ce82dccfabf2ec92c67c",
     "semantic_hash": ""
   },
   "frontend/src/services/shoppingService.js": {
@@ -520,8 +520,8 @@
     "semantic_hash": "081c348d068770af78fcd90980521318"
   },
   "frontend/src/pages/ShoppingDetailPage.vue": {
-    "mtime": 1784011706.1468258,
-    "ast_hash": "79e2a7614b37c7892e634093afcaeb53",
+    "mtime": 1784018824.0318186,
+    "ast_hash": "675224042887acba23033e3f9cd31438",
     "semantic_hash": ""
   },
   "frontend/src/services/shoppingPlanService.js": {
