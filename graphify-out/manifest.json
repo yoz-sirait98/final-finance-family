@@ -80,13 +80,13 @@
     "semantic_hash": ""
   },
   "frontend/src/locales/en.json": {
-    "mtime": 1783652132.584489,
-    "ast_hash": "bcb458082add3ae39f549df1ebd37277",
+    "mtime": 1784004436.589329,
+    "ast_hash": "3230dc3d3ceadb99aced59846c44d896",
     "semantic_hash": ""
   },
   "frontend/src/locales/id.json": {
-    "mtime": 1783652132.5855007,
-    "ast_hash": "47967dcda3a9e98e2e4111b95e09f538",
+    "mtime": 1784004445.0858803,
+    "ast_hash": "47948ffd2b19a7eba6cf4f677bf777e2",
     "semantic_hash": ""
   },
   "frontend/src/main.js": {
@@ -110,8 +110,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/DashboardPage.vue": {
-    "mtime": 1784001963.4268286,
-    "ast_hash": "003e659a279345c2bcc9b8397f3b786d",
+    "mtime": 1784004419.8702233,
+    "ast_hash": "c8882d587759442517657ce9a25440d4",
     "semantic_hash": ""
   },
   "frontend/src/pages/GoalsPage.vue": {

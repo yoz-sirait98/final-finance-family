@@ -294,7 +294,12 @@ async function updateCharts(d) {
       type: 'pie',
       data: {
         labels: pieData.map(d => d.category),
-        datasets: [{ data: pieData.map(d => d.total), backgroundColor: pieData.map(d => d.color), borderColor: colors.cardBg, borderWidth: 2 }],
+        datasets: [{ 
+          data: pieData.map(d => d.total), 
+          backgroundColor: pieData.map(d => d.color), 
+          borderColor: 'transparent', 
+          borderWidth: 0 
+        }],
       },
       options: { 
         responsive: true, 

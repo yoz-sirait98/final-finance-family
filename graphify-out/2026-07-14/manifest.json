@@ -25,8 +25,8 @@
     "semantic_hash": ""
   },
   "frontend/src/App.vue": {
-    "mtime": 1781060149.3647757,
-    "ast_hash": "5125dd8f34b7bcdefd57d35b0f941906",
+    "mtime": 1784001770.001964,
+    "ast_hash": "23da38e6b3bdacc7a64ca5d8aa2d600f",
     "semantic_hash": ""
   },
   "frontend/src/components/AppToast.vue": {
@@ -65,8 +65,8 @@
     "semantic_hash": ""
   },
   "frontend/src/layouts/DashboardLayout.vue": {
-    "mtime": 1783937533.2023687,
-    "ast_hash": "838ae869c426c975f7477dfb24b71553",
+    "mtime": 1784001807.9263563,
+    "ast_hash": "c933370c2a46d6678c751bd00ad9a2cd",
     "semantic_hash": ""
   },
   "frontend/src/lib/realtime.js": {
@@ -110,8 +110,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/DashboardPage.vue": {
-    "mtime": 1781061980.3011303,
-    "ast_hash": "47cc13d2a63e5bcf3cc1b40bf01cb34a",
+    "mtime": 1784001963.4268286,
+    "ast_hash": "003e659a279345c2bcc9b8397f3b786d",
     "semantic_hash": ""
   },
   "frontend/src/pages/GoalsPage.vue": {
@@ -155,8 +155,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/TransactionsPage.vue": {
-    "mtime": 1784000652.825765,
-    "ast_hash": "8400c3a56d214077a31ba64133a04640",
+    "mtime": 1784001864.8230278,
+    "ast_hash": "5d5773035e2bda45dd61c932727c24cb",
     "semantic_hash": ""
   },
   "frontend/src/router/index.js": {
@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "docs/implementation_plan.md": {
-    "mtime": 1783667833.1386094,
-    "ast_hash": "1448c90ab777f6e140d66f798d36a517",
+    "mtime": 1784001635.625348,
+    "ast_hash": "46927fdf17c65a3d59b6f8391b08ef16",
     "semantic_hash": ""
   },
   "docs/supabase-setup-guide.md": {
@@ -737,6 +737,21 @@
   "supabase/migrations/000033_monthly_summary_engine.sql": {
     "mtime": 1784000385.9083395,
     "ast_hash": "5d91ebc8fb1d258632ea57a520440d81",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/SkeletonLoader.vue": {
+    "mtime": 1784001856.2263901,
+    "ast_hash": "0f4990a4a1654cadf416c2bae61eac56",
+    "semantic_hash": ""
+  },
+  "frontend/src/composables/useCountUp.js": {
+    "mtime": 1784001887.3461397,
+    "ast_hash": "7d251ab4ee056ebac5787f6ec1cb6d48",
+    "semantic_hash": ""
+  },
+  "frontend/src/stores/theme.js": {
+    "mtime": 1784001764.072971,
+    "ast_hash": "4732a4298feb2d74265e77607c938d0b",
     "semantic_hash": ""
   }
 }
