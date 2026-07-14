@@ -730,8 +730,8 @@
     "semantic_hash": ""
   },
   "supabase/migrations/000032_weekly_summary_engine.sql": {
-    "mtime": 1783999588.9131472,
-    "ast_hash": "92f848f10422a1ec679c455e178f5f5d",
+    "mtime": 1783999945.4512818,
+    "ast_hash": "511d79ecc0fd54aa22a6f18862557e54",
     "semantic_hash": ""
   }
 }
