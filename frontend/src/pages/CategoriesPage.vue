@@ -1,11 +1,11 @@
 <template>
   <div class="categories-page fade-in">
-    <div class="page-header d-flex justify-content-between align-items-center">
+    <div id="tour-categories-header" class="page-header d-flex justify-content-between align-items-center">
       <div>
         <h4>{{ $t('categories.title') }}</h4>
         <p>{{ $t('categories.subtitle') }}</p>
       </div>
-      <button class="btn btn-primary-gradient" @click="openCreate">
+      <button id="tour-categories-add-btn" class="btn btn-primary-gradient" @click="openCreate">
         <i class="bi bi-plus-lg"></i><span class="d-none d-sm-inline">{{ $t('categories.addCategory') }}</span>
       </button>
     </div>
@@ -103,6 +103,12 @@
 </template>
 
 <script setup>
+import { useTour } from '../composables/useTour';
+import { categoriesTourSteps } from '../tours/categoriesTour';
+
+const { startAutoTour, startTour } = useTour('categories');
+const handleTour = () => startTour(categoriesTourSteps);
+
 import { ref, computed, onMounted } from 'vue';
 import { categoryService } from '../services/categoryService';
 import { useToastStore } from '../stores/toast';
@@ -178,4 +184,13 @@ async function doDelete() {
 }
 
 onMounted(fetchData);
+
+onMounted(() => {
+  startAutoTour(categoriesTourSteps);
+  window.addEventListener('start-categories-tour', handleTour);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('start-categories-tour', handleTour);
+});
 </script>

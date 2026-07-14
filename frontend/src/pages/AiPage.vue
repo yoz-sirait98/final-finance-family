@@ -1,6 +1,6 @@
 <template>
   <div class="ai-page fade-in h-100 d-flex flex-column">
-    <div class="page-header mb-3">
+    <div id="tour-ai-header" class="page-header mb-3">
       <h4>{{ $t('ai.title') || 'Aurora AI Advisor' }}</h4>
       <p class="text-muted mb-0">{{ $t('ai.subtitle') || 'Your personal family finance coach and budget advisor.' }}</p>
     </div>
@@ -98,6 +98,12 @@
 </template>
 
 <script setup>
+import { useTour } from '../composables/useTour';
+import { aiTourSteps } from '../tours/aiTour';
+
+const { startAutoTour, startTour } = useTour('ai');
+const handleTour = () => startTour(aiTourSteps);
+
 import { ref, computed, nextTick, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useLocaleStore } from '../stores/locale';
@@ -200,7 +206,14 @@ function formatMessage(text) {
 }
 
 onMounted(() => {
+  startAutoTour(aiTourSteps);
+  window.addEventListener('start-ai-tour', handleTour);
+
   scrollToBottom();
+});
+
+onUnmounted(() => {
+  window.removeEventListener('start-ai-tour', handleTour);
 });
 </script>
 

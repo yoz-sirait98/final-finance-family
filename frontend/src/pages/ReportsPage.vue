@@ -6,11 +6,11 @@
         <p>{{ $t('reports.subtitle') }}</p>
       </div>
       <!-- Export Buttons -->
-      <div id="tour-reports-export" class="d-flex gap-2">
-        <button class="btn btn-outline-success btn-sm" @click="exportCSV" :disabled="exporting">
+      <div class="d-flex gap-2">
+        <button id="tour-reports-csv-btn" class="btn btn-outline-success btn-sm" @click="exportCSV" :disabled="exporting">
           <i class="bi bi-filetype-csv me-1"></i>{{ exporting ? $t('reports.generating') : $t('reports.exportCsv') }}
         </button>
-        <button class="btn btn-outline-danger btn-sm" @click="exportPDF" :disabled="exporting">
+        <button id="tour-reports-pdf-btn" class="btn btn-outline-danger btn-sm" @click="exportPDF" :disabled="exporting">
           <span v-if="exporting" class="spinner-border spinner-border-sm me-1"></span>
           <i v-else class="bi bi-filetype-pdf me-1"></i>{{ exporting ? $t('reports.generating') : $t('reports.exportPdf') }}
         </button>

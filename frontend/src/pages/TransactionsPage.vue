@@ -6,7 +6,7 @@
         <p>{{ $t('transactions.subtitle') }}</p>
       </div>
       <div class="d-flex gap-2">
-        <button class="btn btn-outline-info" @click="triggerScan" :disabled="isScanning">
+        <button id="tour-tx-scan-btn" class="btn btn-outline-info" @click="triggerScan" :disabled="isScanning">
           <i class="bi bi-camera"></i><span class="d-none d-sm-inline">{{ $t('common.scanReceipt') || 'Scan Receipt' }}</span>
         </button>
         <input type="file" ref="receiptScannerInput" accept="image/*" capture="environment" class="d-none" @change="onReceiptSelected" />

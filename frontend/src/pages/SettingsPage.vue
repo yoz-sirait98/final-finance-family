@@ -1,6 +1,6 @@
 <template>
   <div class="settings-page fade-in">
-    <div class="page-header">
+    <div id="tour-settings-header" class="page-header">
       <h4>{{ $t('settings.title') }}</h4>
       <p>{{ $t('settings.subtitle') }}</p>
     </div>
@@ -43,7 +43,7 @@
                 class="form-control"
                 placeholder="AIzaSy..."
               />
-              <button class="btn btn-primary-gradient" @click="saveGeminiKey" :disabled="isSavingKey">
+              <button id="tour-settings-add-btn" class="btn btn-primary-gradient" @click="saveGeminiKey" :disabled="isSavingKey">
                 <span v-if="isSavingKey" class="spinner-border spinner-border-sm me-1"></span>
                 {{ isSavingKey ? ($t('common.loading') || 'Checking...') : ($t('common.save') || 'Save') }}
               </button>
@@ -109,6 +109,12 @@
 </template>
 
 <script setup>
+import { useTour } from '../composables/useTour';
+import { settingsTourSteps } from '../tours/settingsTour';
+
+const { startAutoTour, startTour } = useTour('settings');
+const handleTour = () => startTour(settingsTourSteps);
+
 import { ref, onMounted } from 'vue';
 import { useAuthStore } from '../stores/auth';
 import { useLocaleStore } from '../stores/locale';
@@ -193,6 +199,9 @@ const whatsappGroupId = ref('');
 const isSavingGroupId = ref(false);
 
 onMounted(async () => {
+  startAutoTour(settingsTourSteps);
+  window.addEventListener('start-settings-tour', handleTour);
+
   if (authStore.familyId) {
     const { data, error } = await supabase.from('families').select('whatsapp_group_id').eq('id', authStore.familyId).single();
     if (data && data.whatsapp_group_id) {
@@ -215,4 +224,8 @@ async function saveWhatsAppGroupId() {
     isSavingGroupId.value = false;
   }
 }
+
+onUnmounted(() => {
+  window.removeEventListener('start-settings-tour', handleTour);
+});
 </script>

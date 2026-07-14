@@ -258,6 +258,14 @@ const PAGE_TOUR_EVENTS = {
   Accounts: 'start-accounts-tour',
   Reports: 'start-reports-tour',
   Recurring: 'start-recurring-tour',
+  Calendar: 'start-calendar-tour',
+  Shopping: 'start-shopping-tour',
+  ShoppingDetail: 'start-shoppingdetail-tour',
+  Categories: 'start-categories-tour',
+  ProjectPockets: 'start-projects-tour',
+  Members: 'start-members-tour',
+  Settings: 'start-settings-tour',
+  Ai: 'start-ai-tour',
 };
 
 function triggerTour() {

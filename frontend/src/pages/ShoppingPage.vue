@@ -1,11 +1,11 @@
 <template>
   <div class="shopping-page fade-in">
-    <div class="page-header d-flex justify-content-between align-items-center mb-4">
+    <div id="tour-shopping-header" class="page-header d-flex justify-content-between align-items-center mb-4">
       <div>
         <h4>{{ $t('shopping.title') }}</h4>
         <p class="text-muted mb-0">{{ $t('shopping.subtitle') }}</p>
       </div>
-      <button class="btn btn-primary-gradient" @click="openAddPlan">
+      <button id="tour-shopping-add-btn" class="btn btn-primary-gradient" @click="openAddPlan">
         <i class="bi bi-plus-lg"></i><span class="d-none d-sm-inline">{{ $t('shopping.createPlan') || 'Create Plan' }}</span>
       </button>
     </div>
@@ -150,6 +150,12 @@
 </template>
 
 <script setup>
+import { useTour } from '../composables/useTour';
+import { shoppingTourSteps } from '../tours/shoppingTour';
+
+const { startAutoTour, startTour } = useTour('shopping');
+const handleTour = () => startTour(shoppingTourSteps);
+
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { shoppingPlanService } from '../services/shoppingPlanService';
@@ -341,6 +347,9 @@ function setupRealtime() {
 }
 
 onMounted(async () => {
+  startAutoTour(shoppingTourSteps);
+  window.addEventListener('start-shopping-tour', handleTour);
+
   fetchData();
   fetchMembers();
   setupRealtime();
@@ -353,6 +362,8 @@ onMounted(async () => {
 });
 
 onUnmounted(() => {
+  window.removeEventListener('start-shopping-tour', handleTour);
+
   if (subscription) {
     supabase.removeChannel(subscription);
   }

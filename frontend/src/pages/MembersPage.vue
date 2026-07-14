@@ -1,11 +1,11 @@
 <template>
   <div class="members-page fade-in">
-    <div class="page-header d-flex justify-content-between align-items-center">
+    <div id="tour-members-header" class="page-header d-flex justify-content-between align-items-center">
       <div>
         <h4>{{ $t('members.title') }}</h4>
         <p>{{ $t('members.subtitle') }}</p>
       </div>
-      <button class="btn btn-primary-gradient" @click="openCreate">
+      <button id="tour-members-add-btn" class="btn btn-primary-gradient" @click="openCreate">
         <i class="bi bi-plus-lg"></i><span class="d-none d-sm-inline">{{ $t('members.addMember') }}</span>
       </button>
     </div>
@@ -94,6 +94,12 @@
 </template>
 
 <script setup>
+import { useTour } from '../composables/useTour';
+import { membersTourSteps } from '../tours/membersTour';
+
+const { startAutoTour, startTour } = useTour('members');
+const handleTour = () => startTour(membersTourSteps);
+
 import { ref, onMounted } from 'vue';
 import { memberService } from '../services/memberService';
 import { useToastStore } from '../stores/toast';
@@ -181,4 +187,13 @@ async function doDelete() {
 }
 
 onMounted(fetchData);
+
+onMounted(() => {
+  startAutoTour(membersTourSteps);
+  window.addEventListener('start-members-tour', handleTour);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('start-members-tour', handleTour);
+});
 </script>

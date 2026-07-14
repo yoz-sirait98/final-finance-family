@@ -1,7 +1,7 @@
 <template>
   <div class="calendar-page fade-in">
     <!-- Header -->
-    <div class="page-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <div id="tour-calendar-header" class="page-header d-flex justify-content-between align-items-center flex-wrap gap-2">
       <div>
         <h4>{{ localeStore.currentLocale === 'id' ? 'Kalender Keuangan' : 'Financial Calendar' }}</h4>
         <p>{{ localeStore.currentLocale === 'id' ? 'Visualisasi arus kas harian keluarga Anda' : 'Visualize your family\'s daily cash flow at a glance' }}</p>
@@ -225,12 +225,18 @@
 </template>
 
 <script setup>
+import { useTour } from '../composables/useTour';
+import { calendarTourSteps } from '../tours/calendarTour';
+
 import { ref, computed, onMounted, watch } from 'vue';
 import { formatCurrency } from '../utils/format';
 import { transactionService } from '../services/transactionService';
 import { recurringService } from '../services/recurringService';
 import { goalService } from '../services/goalService';
 import { useLocaleStore } from '../stores/locale';
+
+const { startAutoTour, startTour } = useTour('calendar');
+const handleTour = () => startTour(calendarTourSteps);
 
 const localeStore = useLocaleStore();
 
@@ -426,6 +432,15 @@ function formatCompact(val) {
   if (n >= 1_000)     return sign + (n / 1_000).toFixed(0) + 'rb';
   return sign + 'Rp' + n;
 }
+
+onMounted(() => {
+  startAutoTour(calendarTourSteps);
+  window.addEventListener('start-calendar-tour', handleTour);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('start-calendar-tour', handleTour);
+});
 </script>
 
 <style scoped>

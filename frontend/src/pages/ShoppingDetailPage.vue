@@ -1,7 +1,7 @@
 <template>
   <div class="shopping-detail-page fade-in">
     <!-- Header with Back Button -->
-    <div class="page-header d-flex justify-content-between align-items-center mb-4">
+    <div id="tour-sd-header" class="page-header d-flex justify-content-between align-items-center mb-4">
       <div class="d-flex align-items-center gap-3">
         <button class="btn btn-outline-secondary btn-sm" @click="router.push('/shopping')">
           <i class="bi bi-arrow-left"></i>
@@ -95,7 +95,7 @@
           </div>
           <div class="modal-footer border-0 pt-0">
             <button type="button" class="btn btn-secondary" @click="showAddModal = false">{{ $t('common.done') || 'Done' }}</button>
-            <button type="submit" class="btn btn-primary-gradient" :disabled="saving">
+            <button type="submit" id="tour-shoppingDetail-add-btn" class="btn btn-primary-gradient" :disabled="saving">
               <span v-if="saving" class="spinner-border spinner-border-sm me-2"></span>
               {{ $t('common.add') || 'Add Item' }}
             </button>
@@ -179,6 +179,12 @@
 </template>
 
 <script setup>
+import { useTour } from '../composables/useTour';
+import { shoppingDetailTourSteps } from '../tours/shoppingDetailTour';
+
+const { startAutoTour, startTour } = useTour('shoppingDetail');
+const handleTour = () => startTour(shoppingDetailTourSteps);
+
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { shoppingPlanService } from '../services/shoppingPlanService';
@@ -361,6 +367,9 @@ function setupRealtime() {
 }
 
 onMounted(() => {
+  startAutoTour(shoppingDetailTourSteps);
+  window.addEventListener('start-shoppingDetail-tour', handleTour);
+
   fetchPlan();
   fetchItems();
   fetchDropdowns();
@@ -368,6 +377,8 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
+  window.removeEventListener('start-shoppingDetail-tour', handleTour);
+
   if (subscriptionPlans) supabase.removeChannel(subscriptionPlans);
   if (subscriptionItems) supabase.removeChannel(subscriptionItems);
 });

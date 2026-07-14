@@ -376,8 +376,8 @@
         "description": "Pemasukan dikurangi pengeluaran. Hijau menandakan Anda menabung, merah menandakan pengeluaran melebihi pemasukan."
       },
       "insights": {
-        "title": "✨ Analisis AI Keuangan",
-        "description": "Tips cerdas yang dihasilkan secara otomatis dari pola transaksi Anda. Klik judul untuk membuka rekomendasi pribadi."
+        "title": "Saran AI",
+        "description": "Ketuk di sini untuk melihat saran keuangan personal yang dibuat oleh AI berdasarkan pengeluaran Anda."
       },
       "charts": {
         "title": "📊 Grafik & Analisis",
@@ -404,6 +404,14 @@
       "table": {
         "title": "📋 Daftar Transaksi",
         "description": "Semua transaksi tercantum di sini. Klik kepala kolom untuk menyortir. Gunakan tombol aksi ✏️ Ubah, 📋 Duplikat, dan 🗑️ Hapus pada setiap baris."
+      },
+      "scan": {
+        "title": "Pindai Struk",
+        "description": "Gunakan AI Vision kami untuk otomatis mengekstrak barang dan harga dari foto struk belanja Anda!"
+      },
+      "swipe": {
+        "title": "Geser (Swipe)",
+        "description": "Di HP, geser transaksi ke kiri untuk Menghapus, atau ke kanan untuk Mengedit."
       }
     },
     "accounts": {
@@ -482,6 +490,130 @@
       "export": {
         "title": "📄 Ekspor ke PDF",
         "description": "Unduh laporan PDF terformat dari data keuangan Anda untuk dibagikan dengan keluarga atau disimpan sebagai arsip."
+      },
+      "csv": {
+        "title": "Ekspor CSV",
+        "description": "Unduh spreadsheet data keuangan Anda untuk dibuka di Excel atau Google Sheets."
+      },
+      "pdf": {
+        "title": "Ekspor PDF",
+        "description": "Buat laporan PDF dengan format rapi untuk arsip Anda atau akuntan."
+      }
+    },
+    "calendar": {
+      "header": {
+        "title": "Tampilan Kalender",
+        "description": "Lihat semua transaksi mendatang, tagihan rutin, dan rencana belanja per hari."
+      },
+      "grid": {
+        "title": "Grid Bulanan",
+        "description": "Klik pada hari apa saja untuk melihat detail keuangan yang terjadi pada tanggal tersebut."
+      },
+      "add": {
+        "title": "Tambah Jadwal",
+        "description": "Jadwalkan transaksi baru atau tagihan rutin langsung dari kalender."
+      }
+    },
+    "shopping": {
+      "header": {
+        "title": "Rencana Belanja",
+        "description": "Atur daftar belanja, wishlist, dan kebutuhan proyek Anda di sini."
+      },
+      "add": {
+        "title": "Buat Daftar",
+        "description": "Mulai daftar belanja baru."
+      },
+      "ai": {
+        "title": "Generator AI",
+        "description": "Biarkan AI otomatis membuatkan daftar belanja atau menu makanan dari prompt Anda!"
+      }
+    },
+    "shoppingDetail": {
+      "header": {
+        "title": "Detail Daftar",
+        "description": "Kelola barang-barang spesifik, centang saat dibeli, dan pantau total biayanya."
+      },
+      "add": {
+        "title": "Tambah Barang",
+        "description": "Tambahkan barang baru ke daftar ini secara manual."
+      },
+      "split": {
+        "title": "Bagi Tagihan",
+        "description": "Selesai belanja? Ubah daftar ini menjadi transaksi dan bagi tagihan dengan anggota keluarga!"
+      },
+      "buy": {
+        "title": "Selesaikan (Checkout)",
+        "description": "Tandai daftar ini sebagai selesai dan catat total pengeluarannya."
+      }
+    },
+    "categories": {
+      "header": {
+        "title": "Kategori",
+        "description": "Atur bagaimana Anda melacak pemasukan dan pengeluaran."
+      },
+      "add": {
+        "title": "Kategori Baru",
+        "description": "Buat kategori kustom baru dengan ikon dan warna pilihan."
+      },
+      "list": {
+        "title": "Daftar Kategori",
+        "description": "Lihat semua kategori aktif Anda beserta alokasinya."
+      }
+    },
+    "projects": {
+      "header": {
+        "title": "Kantong Proyek (Pockets)",
+        "description": "Menabung untuk tujuan besar seperti liburan, renovasi rumah, atau dana darurat."
+      },
+      "add": {
+        "title": "Buat Proyek",
+        "description": "Mulai kantong tabungan baru dan tetapkan target."
+      },
+      "fund": {
+        "title": "Tambah Dana",
+        "description": "Pindahkan uang dari rekening utama Anda ke kantong ini dan pantau progresnya!"
+      }
+    },
+    "members": {
+      "header": {
+        "title": "Anggota Keluarga",
+        "description": "Kelola semua orang yang memiliki akses ke ruang kerja keuangan ini."
+      },
+      "add": {
+        "title": "Undang Anggota",
+        "description": "Buat kode undangan aman untuk menambahkan pasangan, anak, atau akuntan."
+      },
+      "permissions": {
+        "title": "Hak Akses",
+        "description": "Atur siapa saja yang bisa melihat atau mengedit rekening dan anggaran tertentu."
+      }
+    },
+    "settings": {
+      "header": {
+        "title": "Pengaturan",
+        "description": "Sesuaikan tampilan dan cara kerja aplikasi."
+      },
+      "currency": {
+        "title": "Mata Uang & Regional",
+        "description": "Ubah tampilan mata uang utama dan format angka Anda."
+      },
+      "danger": {
+        "title": "Zona Bahaya",
+        "description": "Kelola data Anda, ekspor cadangan, atau hapus akun secara permanen."
+      }
+    },
+    "ai": {
+      "header": {
+        "title": "AI Keuangan",
+        "description": "Asisten AI pribadi Anda siap menganalisis pengeluaran atau memberikan saran."
+      },
+      "prompt": {
+        "title": "Tanya Apa Saja",
+        "description": "Ketik prompt seperti 'Bagaimana cara menghemat pengeluaran belanja bulan ini?'"
+      },
+      "clear": {
+        "title": "Hapus Riwayat",
+        "description": "Hapus percakapan saat ini untuk memulai obrolan baru."
       }
     }
   }

@@ -27,12 +27,21 @@ export const reportsTourSteps = [
     },
   },
   {
-    element: '#tour-reports-export',
+    element: '#tour-reports-csv-btn',
     popover: {
-      title: 'tours.reports.export.title',
-      description: 'tours.reports.export.description',
-      side: 'left',
-      align: 'start',
+      title: 'tours.reports.csv.title',
+      description: 'tours.reports.csv.description',
+      side: 'bottom',
+      align: 'center',
+    },
+  },
+  {
+    element: '#tour-reports-pdf-btn',
+    popover: {
+      title: 'tours.reports.pdf.title',
+      description: 'tours.reports.pdf.description',
+      side: 'bottom',
+      align: 'center',
     },
   },
 ];
