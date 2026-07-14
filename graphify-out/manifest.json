@@ -65,8 +65,8 @@
     "semantic_hash": ""
   },
   "frontend/src/layouts/DashboardLayout.vue": {
-    "mtime": 1784001807.9263563,
-    "ast_hash": "c933370c2a46d6678c751bd00ad9a2cd",
+    "mtime": 1784011715.7296383,
+    "ast_hash": "1e7f5ed96e9343d69cd5617a15db314e",
     "semantic_hash": ""
   },
   "frontend/src/lib/realtime.js": {
@@ -80,13 +80,13 @@
     "semantic_hash": ""
   },
   "frontend/src/locales/en.json": {
-    "mtime": 1784004436.589329,
-    "ast_hash": "3230dc3d3ceadb99aced59846c44d896",
+    "mtime": 1784011504.3814232,
+    "ast_hash": "b7ff473605a9c6c0efcf6e44717ca816",
     "semantic_hash": ""
   },
   "frontend/src/locales/id.json": {
-    "mtime": 1784004445.0858803,
-    "ast_hash": "47948ffd2b19a7eba6cf4f677bf777e2",
+    "mtime": 1784011504.3814232,
+    "ast_hash": "963c01ed5f3ccf0c0fab4d9a9d20ef6c",
     "semantic_hash": ""
   },
   "frontend/src/main.js": {
@@ -105,8 +105,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/CategoriesPage.vue": {
-    "mtime": 1781250073.1976295,
-    "ast_hash": "f17f5af36b303264b999fc15cf940827",
+    "mtime": 1784012109.1475892,
+    "ast_hash": "856e03124f6e052350c02f9e9f11b5f5",
     "semantic_hash": ""
   },
   "frontend/src/pages/DashboardPage.vue": {
@@ -130,8 +130,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/MembersPage.vue": {
-    "mtime": 1783667833.1401966,
-    "ast_hash": "2cbc983f5d1e3f4ba23b77e1a7a18cd9",
+    "mtime": 1784012110.2742643,
+    "ast_hash": "d408fba34e31b49b7a5bbacf33f77567",
     "semantic_hash": ""
   },
   "frontend/src/pages/RecurringPage.vue": {
@@ -145,18 +145,18 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ReportsPage.vue": {
-    "mtime": 1784011017.7792284,
-    "ast_hash": "7e076a7323db207911ddcf28e2d344b5",
+    "mtime": 1784011636.8317087,
+    "ast_hash": "93d19c92dea23149e5f1d4c347f6c86c",
     "semantic_hash": ""
   },
   "frontend/src/pages/SettingsPage.vue": {
-    "mtime": 1783674098.5568357,
-    "ast_hash": "7a7086f2218c2c8bd179cf1c2fc29546",
+    "mtime": 1784012110.4129736,
+    "ast_hash": "4d95d35612ab6639e0651d1c8dcd18e2",
     "semantic_hash": ""
   },
   "frontend/src/pages/TransactionsPage.vue": {
-    "mtime": 1784001864.8230278,
-    "ast_hash": "5d5773035e2bda45dd61c932727c24cb",
+    "mtime": 1784011565.005975,
+    "ast_hash": "bead1472947523dfbe4158040afe0dd0",
     "semantic_hash": ""
   },
   "frontend/src/router/index.js": {
@@ -295,13 +295,13 @@
     "semantic_hash": ""
   },
   "frontend/src/tours/reportsTour.js": {
-    "mtime": 1781060149.3931985,
-    "ast_hash": "f9d46f4b0ffa12c4af48b417b6cc6831",
+    "mtime": 1784011637.1406438,
+    "ast_hash": "95952c3d06156609345bff85bafbe2cf",
     "semantic_hash": ""
   },
   "frontend/src/tours/transactionsTour.js": {
-    "mtime": 1781060149.3931985,
-    "ast_hash": "ac8466479b6ee1d8523f64f1e909cb4b",
+    "mtime": 1784011565.0644846,
+    "ast_hash": "8d82886e5f0571863d23641a2bd83d43",
     "semantic_hash": ""
   },
   "frontend/src/utils/currency.js": {
@@ -395,8 +395,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ShoppingPage.vue": {
-    "mtime": 1783925234.9574833,
-    "ast_hash": "a845cf1fc6c09088d0a6e9ba3bc3817a",
+    "mtime": 1784011706.1457863,
+    "ast_hash": "6257a280265cbe90ca4ef985c60eaad9",
     "semantic_hash": ""
   },
   "frontend/src/services/shoppingService.js": {
@@ -520,8 +520,8 @@
     "semantic_hash": "081c348d068770af78fcd90980521318"
   },
   "frontend/src/pages/ShoppingDetailPage.vue": {
-    "mtime": 1781250073.2001684,
-    "ast_hash": "67c9779accc09a73cdf41c5f44d11650",
+    "mtime": 1784011706.1468258,
+    "ast_hash": "79e2a7614b37c7892e634093afcaeb53",
     "semantic_hash": ""
   },
   "frontend/src/services/shoppingPlanService.js": {
@@ -560,8 +560,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectPocketsPage.vue": {
-    "mtime": 1781070303.5774221,
-    "ast_hash": "3e787a321ebe634382fffc7a3acde2f7",
+    "mtime": 1784012110.288634,
+    "ast_hash": "afbff22dd7d941b0d77fdd61c1eb444c",
     "semantic_hash": ""
   },
   "supabase/migrations/000016_project_pockets_schema.sql": {
@@ -605,8 +605,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/AiPage.vue": {
-    "mtime": 1781250073.1958702,
-    "ast_hash": "70e72306657a16b2f31aa633bda478a6",
+    "mtime": 1784012106.5514376,
+    "ast_hash": "4e79b9372f1cb10001715e31fbba2956",
     "semantic_hash": ""
   },
   "frontend/src/services/aiService.js": {
@@ -635,8 +635,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/CalendarPage.vue": {
-    "mtime": 1781147244.7496564,
-    "ast_hash": "8d5688da6f17dfc033b4d133cda4526e",
+    "mtime": 1784012107.77973,
+    "ast_hash": "22e92fd81c6e5b8315c147bf5a302e5b",
     "semantic_hash": ""
   },
   "frontend/src/services/storageService.js": {
@@ -752,6 +752,46 @@
   "frontend/src/stores/theme.js": {
     "mtime": 1784001764.072971,
     "ast_hash": "4732a4298feb2d74265e77607c938d0b",
+    "semantic_hash": ""
+  },
+  "frontend/src/tours/aiTour.js": {
+    "mtime": 1784011666.3800678,
+    "ast_hash": "d6e81fd6be7a16a037723b1d9286d15e",
+    "semantic_hash": ""
+  },
+  "frontend/src/tours/calendarTour.js": {
+    "mtime": 1784011666.378067,
+    "ast_hash": "d65784a572f22aa9e6ccc458ac0adf33",
+    "semantic_hash": ""
+  },
+  "frontend/src/tours/categoriesTour.js": {
+    "mtime": 1784011666.3790672,
+    "ast_hash": "f7dad24f49b82cba42c98e2bffb04dfe",
+    "semantic_hash": ""
+  },
+  "frontend/src/tours/membersTour.js": {
+    "mtime": 1784011666.3800678,
+    "ast_hash": "9f84165050891a066b27d1d3cac461a0",
+    "semantic_hash": ""
+  },
+  "frontend/src/tours/projectsTour.js": {
+    "mtime": 1784011666.3790672,
+    "ast_hash": "fffd74a25774cb7a11968029ef5dc2f7",
+    "semantic_hash": ""
+  },
+  "frontend/src/tours/settingsTour.js": {
+    "mtime": 1784011666.3800678,
+    "ast_hash": "6ec60bd73bdb2f90bfdeb1030488c016",
+    "semantic_hash": ""
+  },
+  "frontend/src/tours/shoppingDetailTour.js": {
+    "mtime": 1784011666.3790672,
+    "ast_hash": "9ca41497223bd73b78eabacb751e30b5",
+    "semantic_hash": ""
+  },
+  "frontend/src/tours/shoppingTour.js": {
+    "mtime": 1784011666.378067,
+    "ast_hash": "98c58beebab8abd99b22835d5b2ddd77",
     "semantic_hash": ""
   }
 }

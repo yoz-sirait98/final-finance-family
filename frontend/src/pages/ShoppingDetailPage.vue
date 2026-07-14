@@ -196,6 +196,126 @@ import { useAuthStore } from '../stores/auth';
 import { useToastStore } from '../stores/toast';
 import { useLocaleStore } from '../stores/locale';
 import { supabase } from '../lib/supabase';
+import { formatCurrency } from '../utils/format';
+
+const route = useRoute();
+const router = useRouter();
+const authStore = useAuthStore();
+const toast = useToastStore();
+const localeStore = useLocaleStore();
+
+const planId = route.params.id;
+const plan = ref(null);
+const items = ref([]);
+const members = ref([]);
+const accounts = ref([]);
+const categories = ref([]);
+
+const showAddModal = ref(false);
+const showDeleteModal = ref(false);
+const itemToDelete = ref(null);
+const deleting = ref(false);
+const itemForm = ref({ name: '', price: '', added_by: '' });
+const saving = ref(false);
+
+const showCheckoutModal = ref(false);
+const checkoutForm = ref({ transaction_date: new Date().toISOString().split('T')[0], account_id: '', category_id: '', member_id: '' });
+const isCheckingOut = ref(false);
+
+const totalAmount = computed(() => {
+  return items.value.reduce((sum, item) => sum + (parseFloat(item.price) || 0), 0);
+});
+
+let subscriptionPlans;
+let subscriptionItems;
+
+async function fetchPlan() {
+  try {
+    const { data } = await shoppingPlanService.list();
+    plan.value = data.data.find(p => p.id === planId);
+  } catch (e) {}
+}
+
+async function fetchItems() {
+  try {
+    const { data } = await shoppingService.list({ shopping_plan_id: planId });
+    items.value = data.data;
+  } catch (e) {}
+}
+
+async function fetchDropdowns() {
+  try {
+    const [memRes, accRes, catRes] = await Promise.all([
+      memberService.list(),
+      accountService.list({ is_active: true }),
+      categoryService.list({ type: 'expense' })
+    ]);
+    members.value = memRes.data.data;
+    accounts.value = accRes.data.data;
+    categories.value = catRes.data.data;
+  } catch (e) {}
+}
+
+function openAddItem() {
+  itemForm.value = { name: '', price: '', added_by: authStore.user?.id || '' };
+  showAddModal.value = true;
+}
+
+async function saveItem() {
+  saving.value = true;
+  try {
+    await shoppingService.create({
+      shopping_plan_id: planId,
+      name: itemForm.value.name,
+      price: itemForm.value.price || 0,
+      added_by: itemForm.value.added_by
+    });
+    // showAddModal.value = false;
+    itemForm.value.name = '';
+    itemForm.value.price = '';
+    toast.success('Item added');
+    fetchItems();
+  } catch (e) {
+    toast.error('Failed to add item');
+  } finally {
+    saving.value = false;
+  }
+}
+
+async function updateItemPrice(item) {
+  try {
+    await shoppingService.update(item.id, { price: item.price || 0 });
+    // toast.success('Price updated');
+    // The trigger will automatically update the transaction if status is done!
+  } catch (e) {
+    toast.error('Failed to update price');
+    fetchItems();
+  }
+}
+
+async function toggleCheck(item) {
+  try {
+    await shoppingService.update(item.id, { is_checked: item.is_checked });
+  } catch (e) {
+    toast.error('Failed to update status');
+  }
+}
+
+function confirmDeleteItem(item) {
+  itemToDelete.value = item;
+  showDeleteModal.value = true;
+}
+
+async function doDeleteItem() {
+  if (!itemToDelete.value) return;
+  deleting.value = true;
+  try {
+    await shoppingService.delete(itemToDelete.value.id);
+    fetchItems();
+    showDeleteModal.value = false;
+  } catch (e) {
+    toast.error('Failed to delete item');
+import { formatCurrency } from '../utils/format';
 
 const route = useRoute();
 const router = useRouter();
@@ -342,6 +462,9 @@ async function processCheckout() {
       category_id: checkoutForm.value.category_id,
       transaction_date: checkoutForm.value.transaction_date
     });
+    
+    await sendCheckoutNotification();
+
     toast.success('Checkout successful!');
     showCheckoutModal.value = false;
     fetchPlan();
@@ -349,6 +472,46 @@ async function processCheckout() {
     toast.error('Checkout failed');
   } finally {
     isCheckingOut.value = false;
+  }
+}
+
+async function sendCheckoutNotification() {
+  try {
+    const { data: family } = await supabase.from('families').select('whatsapp_group_id').eq('id', authStore.familyId).single();
+    if (!family || !family.whatsapp_group_id) return;
+    
+    const buyer = members.value.find(m => m.id === checkoutForm.value.member_id);
+    const buyerName = buyer ? buyer.name : 'Unknown';
+    const loc = plan.value?.location || 'Unknown';
+    const dateStr = new Date().toLocaleDateString(localeStore.currentLocale === 'id' ? 'id-ID' : 'en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+    
+    let message = '';
+    if (localeStore.currentLocale === 'id') {
+      message = `*========================*\n🛍️  *BELANJA SELESAI*  🛍️\n*========================*\n\nHore! 👋 Daftar belanja telah selesai dan dicatat.\n\n📍 *Lokasi:* ${loc}\n👤 *Dibeli oleh:* ${buyerName}\n\n*Daftar Belanjaan:*\n`;
+    } else {
+      message = `*========================*\n🛍️  *SHOPPING COMPLETED*  🛍️\n*========================*\n\nGreat news! A shopping trip has just been completed and logged.\n\n📍 *Location:* ${loc}\n👤 *Bought by:* ${buyerName}\n\n*Items Purchased:*\n`;
+    }
+
+    items.value.forEach(item => {
+      const priceStr = formatCurrency(parseFloat(item.price) || 0);
+      message += `✅ ${item.name} - ${priceStr}\n`;
+    });
+
+    const totalStr = formatCurrency(totalAmount.value);
+    
+    if (localeStore.currentLocale === 'id') {
+      message += `\n*------------------------*\n💵 *Total Keseluruhan:* ${totalStr}\n*------------------------*`;
+    } else {
+      message += `\n*------------------------*\n💵 *Grand Total:* ${totalStr}\n*------------------------*`;
+    }
+
+    await fetch('https://finance-family-3ac25ba9b522.herokuapp.com/api/notify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-api-key': import.meta.env.VITE_WA_API_KEY },
+      body: JSON.stringify({ message: message, groupId: family.whatsapp_group_id })
+    });
+  } catch (err) {
+    console.error('Failed to send WA checkout notif', err);
   }
 }
 
@@ -369,7 +532,6 @@ function setupRealtime() {
 onMounted(() => {
   startAutoTour(shoppingDetailTourSteps);
   window.addEventListener('start-shoppingDetail-tour', handleTour);
-
   fetchPlan();
   fetchItems();
   fetchDropdowns();
