@@ -155,8 +155,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/TransactionsPage.vue": {
-    "mtime": 1783937981.564149,
-    "ast_hash": "5f005050742fa1e92a3531395e95db13",
+    "mtime": 1781250073.202169,
+    "ast_hash": "7df51384aa3f28ff1f065d205d7e9cbd",
     "semantic_hash": ""
   },
   "frontend/src/router/index.js": {
@@ -717,11 +717,6 @@
   "supabase/migrations/000030_drop_notification_trigger.sql": {
     "mtime": 1783937533.2039866,
     "ast_hash": "27a4a029b16c342512ddd9e23649c9dc",
-    "semantic_hash": ""
-  },
-  "frontend/src/components/InstallPwa.vue": {
-    "mtime": 1783937533.2010868,
-    "ast_hash": "5f4dbd9041dc00ca20120b9c81f38cbe",
     "semantic_hash": ""
   }
 }

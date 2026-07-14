@@ -394,16 +394,6 @@
       "norm_label": "helloworld.vue"
     },
     {
-      "label": "InstallPwa.vue",
-      "file_type": "code",
-      "source_file": "frontend/src/components/InstallPwa.vue",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_installpwa",
-      "community": 147,
-      "norm_label": "installpwa.vue"
-    },
-    {
       "label": "VirtualScrollList.vue",
       "file_type": "code",
       "source_file": "frontend/src/components/VirtualScrollList.vue",
@@ -26948,9 +26938,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L631",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan",
-      "target": "docs_implementation_plan_part_11_magic_ui_ux_pass_compact_elegant_action_buttons_631"
+      "target": "docs_implementation_plan_part_11_magic_ui_ux_pass_compact_elegant_action_buttons_631",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -26968,9 +26958,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L662",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan",
-      "target": "docs_implementation_plan_part_12_recurring_transaction_catch_up_concurrency_fix_completed_2026_07_10_662"
+      "target": "docs_implementation_plan_part_12_recurring_transaction_catch_up_concurrency_fix_completed_2026_07_10_662",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -26978,9 +26968,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L682",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan",
-      "target": "docs_implementation_plan_part_13_whatsapp_push_notifications_for_shopping_lists"
+      "target": "docs_implementation_plan_part_13_whatsapp_push_notifications_for_shopping_lists",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -27028,9 +27018,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L483",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan",
-      "target": "docs_implementation_plan_part_5_modular_agent_rules_and_knowledge_base_rearrangement_completed_483"
+      "target": "docs_implementation_plan_part_5_modular_agent_rules_and_knowledge_base_rearrangement_completed_483",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -27048,9 +27038,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L509",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan",
-      "target": "docs_implementation_plan_part_6_offline_ocr_receipt_scanner_ai_financial_coach_509"
+      "target": "docs_implementation_plan_part_6_offline_ocr_receipt_scanner_ai_financial_coach_509",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -27068,9 +27058,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L538",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan",
-      "target": "docs_implementation_plan_part_7_cross_device_gemini_api_key_syncing_completed_538"
+      "target": "docs_implementation_plan_part_7_cross_device_gemini_api_key_syncing_completed_538",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -27088,9 +27078,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L575",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan",
-      "target": "docs_implementation_plan_part_8_update_documentation_completed_575"
+      "target": "docs_implementation_plan_part_8_update_documentation_completed_575",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -27108,9 +27098,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L589",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan",
-      "target": "docs_implementation_plan_part_9_receipt_image_storage_financial_calendar_view_completed_2026_06_11_589"
+      "target": "docs_implementation_plan_part_9_receipt_image_storage_financial_calendar_view_completed_2026_06_11_589",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28058,9 +28048,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L487",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_part_5_modular_agent_rules_and_knowledge_base_rearrangement_completed_483",
-      "target": "docs_implementation_plan_implementation_details_487"
+      "target": "docs_implementation_plan_implementation_details_487",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28068,9 +28058,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L500",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_part_5_modular_agent_rules_and_knowledge_base_rearrangement_completed_483",
-      "target": "docs_implementation_plan_verification_plan_500"
+      "target": "docs_implementation_plan_verification_plan_500",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28078,9 +28068,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L489",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_implementation_details_487",
-      "target": "docs_implementation_plan_1_modular_rules_under_agents_rules_489"
+      "target": "docs_implementation_plan_1_modular_rules_under_agents_rules_489",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28088,9 +28078,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L496",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_implementation_details_487",
-      "target": "docs_implementation_plan_2_root_cursorrules_reorganization_496"
+      "target": "docs_implementation_plan_2_root_cursorrules_reorganization_496",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28098,9 +28088,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L502",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_verification_plan_500",
-      "target": "docs_implementation_plan_manual_verification_502"
+      "target": "docs_implementation_plan_manual_verification_502",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28108,9 +28098,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L513",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_part_6_offline_ocr_receipt_scanner_ai_financial_coach_509",
-      "target": "docs_implementation_plan_implementation_details_513"
+      "target": "docs_implementation_plan_implementation_details_513",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28118,9 +28108,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L526",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_part_6_offline_ocr_receipt_scanner_ai_financial_coach_509",
-      "target": "docs_implementation_plan_verification_plan_526"
+      "target": "docs_implementation_plan_verification_plan_526",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28128,9 +28118,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L515",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_implementation_details_513",
-      "target": "docs_implementation_plan_1_offline_receipt_ocr_parsing_515"
+      "target": "docs_implementation_plan_1_offline_receipt_ocr_parsing_515",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28138,9 +28128,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L520",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_implementation_details_513",
-      "target": "docs_implementation_plan_2_conversational_ai_coach_520"
+      "target": "docs_implementation_plan_2_conversational_ai_coach_520",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28148,9 +28138,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L528",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_verification_plan_526",
-      "target": "docs_implementation_plan_automated_build_verification_528"
+      "target": "docs_implementation_plan_automated_build_verification_528",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28158,9 +28148,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L531",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_verification_plan_526",
-      "target": "docs_implementation_plan_manual_verification_531"
+      "target": "docs_implementation_plan_manual_verification_531",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28168,9 +28158,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L542",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_part_7_cross_device_gemini_api_key_syncing_completed_538",
-      "target": "docs_implementation_plan_implementation_details_542"
+      "target": "docs_implementation_plan_implementation_details_542",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28178,9 +28168,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L548",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_part_7_cross_device_gemini_api_key_syncing_completed_538",
-      "target": "docs_implementation_plan_proposed_changes_548"
+      "target": "docs_implementation_plan_proposed_changes_548",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28188,9 +28178,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L563",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_part_7_cross_device_gemini_api_key_syncing_completed_538",
-      "target": "docs_implementation_plan_verification_plan_563"
+      "target": "docs_implementation_plan_verification_plan_563",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28198,9 +28188,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L556",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_proposed_changes_548",
-      "target": "docs_implementation_plan_frontend_services_stores_556"
+      "target": "docs_implementation_plan_frontend_services_stores_556",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28208,9 +28198,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L550",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_proposed_changes_548",
-      "target": "docs_implementation_plan_supabase_database_migration_550"
+      "target": "docs_implementation_plan_supabase_database_migration_550",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28218,9 +28208,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L565",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_verification_plan_563",
-      "target": "docs_implementation_plan_automated_tests_565"
+      "target": "docs_implementation_plan_automated_tests_565",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28228,9 +28218,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L568",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_verification_plan_563",
-      "target": "docs_implementation_plan_manual_verification_568"
+      "target": "docs_implementation_plan_manual_verification_568",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28238,9 +28228,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L579",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_part_8_update_documentation_completed_575",
-      "target": "docs_implementation_plan_proposed_changes_579"
+      "target": "docs_implementation_plan_proposed_changes_579",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28248,9 +28238,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L584",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_proposed_changes_579",
-      "target": "docs_implementation_plan_frontend_documentation_584"
+      "target": "docs_implementation_plan_frontend_documentation_584",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28258,9 +28248,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L581",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_proposed_changes_579",
-      "target": "docs_implementation_plan_root_documentation_581"
+      "target": "docs_implementation_plan_root_documentation_581",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28268,9 +28258,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L593",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_part_9_receipt_image_storage_financial_calendar_view_completed_2026_06_11_589",
-      "target": "docs_implementation_plan_feature_1_receipt_image_storage_593"
+      "target": "docs_implementation_plan_feature_1_receipt_image_storage_593",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28278,9 +28268,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L604",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_part_9_receipt_image_storage_financial_calendar_view_completed_2026_06_11_589",
-      "target": "docs_implementation_plan_feature_2_financial_calendar_view_604"
+      "target": "docs_implementation_plan_feature_2_financial_calendar_view_604",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28288,9 +28278,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L622",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_part_9_receipt_image_storage_financial_calendar_view_completed_2026_06_11_589",
-      "target": "docs_implementation_plan_feature_description_accuracy_correction_622"
+      "target": "docs_implementation_plan_feature_description_accuracy_correction_622",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28298,9 +28288,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L614",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_part_9_receipt_image_storage_financial_calendar_view_completed_2026_06_11_589",
-      "target": "docs_implementation_plan_theming_compatibility_theme_audit_mobile_bugfixes_614"
+      "target": "docs_implementation_plan_theming_compatibility_theme_audit_mobile_bugfixes_614",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28308,9 +28298,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L618",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_part_9_receipt_image_storage_financial_calendar_view_completed_2026_06_11_589",
-      "target": "docs_implementation_plan_verification_618"
+      "target": "docs_implementation_plan_verification_618",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28318,9 +28308,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L597",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_feature_1_receipt_image_storage_593",
-      "target": "docs_implementation_plan_key_files_597"
+      "target": "docs_implementation_plan_key_files_597",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28328,9 +28318,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L608",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_feature_2_financial_calendar_view_604",
-      "target": "docs_implementation_plan_key_files_608"
+      "target": "docs_implementation_plan_key_files_608",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28338,9 +28328,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L635",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_part_11_magic_ui_ux_pass_compact_elegant_action_buttons_631",
-      "target": "docs_implementation_plan_proposed_changes_635"
+      "target": "docs_implementation_plan_proposed_changes_635",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28348,9 +28338,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L651",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_part_11_magic_ui_ux_pass_compact_elegant_action_buttons_631",
-      "target": "docs_implementation_plan_verification_plan_651"
+      "target": "docs_implementation_plan_verification_plan_651",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28358,9 +28348,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L637",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_proposed_changes_635",
-      "target": "docs_implementation_plan_modify_style_css_file_c_projects_final_finance_family_frontend_src_style_css_637"
+      "target": "docs_implementation_plan_modify_style_css_file_c_projects_final_finance_family_frontend_src_style_css_637",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28368,9 +28358,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L653",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_verification_plan_651",
-      "target": "docs_implementation_plan_manual_verification_653"
+      "target": "docs_implementation_plan_manual_verification_653",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28378,9 +28368,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L666",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_part_12_recurring_transaction_catch_up_concurrency_fix_completed_2026_07_10_662",
-      "target": "docs_implementation_plan_proposed_changes_666"
+      "target": "docs_implementation_plan_proposed_changes_666",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28388,9 +28378,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L676",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_part_12_recurring_transaction_catch_up_concurrency_fix_completed_2026_07_10_662",
-      "target": "docs_implementation_plan_verification_676"
+      "target": "docs_implementation_plan_verification_676",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28398,9 +28388,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L668",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_proposed_changes_666",
-      "target": "docs_implementation_plan_database_migration_668"
+      "target": "docs_implementation_plan_database_migration_668",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28408,9 +28398,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L672",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_proposed_changes_666",
-      "target": "docs_implementation_plan_frontend_auth_store"
+      "target": "docs_implementation_plan_frontend_auth_store",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28418,9 +28408,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L696",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_part_13_whatsapp_push_notifications_for_shopping_lists",
-      "target": "docs_implementation_plan_open_questions_696"
+      "target": "docs_implementation_plan_open_questions_696",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28428,9 +28418,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L702",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_part_13_whatsapp_push_notifications_for_shopping_lists",
-      "target": "docs_implementation_plan_proposed_changes_702"
+      "target": "docs_implementation_plan_proposed_changes_702",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28438,9 +28428,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L686",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_part_13_whatsapp_push_notifications_for_shopping_lists",
-      "target": "docs_implementation_plan_user_review_required"
+      "target": "docs_implementation_plan_user_review_required",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28448,9 +28438,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L737",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_part_13_whatsapp_push_notifications_for_shopping_lists",
-      "target": "docs_implementation_plan_verification_plan_737"
+      "target": "docs_implementation_plan_verification_plan_737",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28458,9 +28448,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L704",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_proposed_changes_702",
-      "target": "docs_implementation_plan_1_database_updates_migration"
+      "target": "docs_implementation_plan_1_database_updates_migration",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28468,9 +28458,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L710",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_proposed_changes_702",
-      "target": "docs_implementation_plan_2_standalone_whatsapp_bot_node_js_microservice"
+      "target": "docs_implementation_plan_2_standalone_whatsapp_bot_node_js_microservice",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28478,9 +28468,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L720",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_proposed_changes_702",
-      "target": "docs_implementation_plan_3_supabase_integration_database_webhook"
+      "target": "docs_implementation_plan_3_supabase_integration_database_webhook",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28488,9 +28478,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L730",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_proposed_changes_702",
-      "target": "docs_implementation_plan_4_frontend_ui_updates"
+      "target": "docs_implementation_plan_4_frontend_ui_updates",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28498,9 +28488,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L706",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_1_database_updates_migration",
-      "target": "docs_implementation_plan_new_supabase_migrations_000025_add_whatsapp_numbers_sql"
+      "target": "docs_implementation_plan_new_supabase_migrations_000025_add_whatsapp_numbers_sql",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28508,9 +28498,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L712",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_2_standalone_whatsapp_bot_node_js_microservice",
-      "target": "docs_implementation_plan_new_whatsapp_bot_new_directory"
+      "target": "docs_implementation_plan_new_whatsapp_bot_new_directory",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28518,9 +28508,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L722",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_3_supabase_integration_database_webhook",
-      "target": "docs_implementation_plan_new_supabase_migrations_000026_shopping_plan_webhook_sql"
+      "target": "docs_implementation_plan_new_supabase_migrations_000026_shopping_plan_webhook_sql",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28528,9 +28518,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L732",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_4_frontend_ui_updates",
-      "target": "docs_implementation_plan_modify_frontend_src_pages_memberspage_vue_frontend_src_components_membermodal_vue"
+      "target": "docs_implementation_plan_modify_frontend_src_pages_memberspage_vue_frontend_src_components_membermodal_vue",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28538,9 +28528,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L739",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_verification_plan_737",
-      "target": "docs_implementation_plan_automated_tests_739"
+      "target": "docs_implementation_plan_automated_tests_739",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28548,9 +28538,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L742",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_implementation_plan_verification_plan_737",
-      "target": "docs_implementation_plan_manual_verification_742"
+      "target": "docs_implementation_plan_manual_verification_742",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28648,9 +28638,9 @@
       "source_file": "docs/task.md",
       "source_location": "L97",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_task",
-      "target": "docs_task_family_finance_migration_integration_tasks_97"
+      "target": "docs_task_family_finance_migration_integration_tasks_97",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28778,9 +28768,9 @@
       "source_file": "docs/task.md",
       "source_location": "L182",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_task_family_finance_migration_integration_tasks_97",
-      "target": "docs_task_part_10_feature_description_accuracy_correction_182"
+      "target": "docs_task_part_10_feature_description_accuracy_correction_182",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28788,9 +28778,9 @@
       "source_file": "docs/task.md",
       "source_location": "L189",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_task_family_finance_migration_integration_tasks_97",
-      "target": "docs_task_part_11_magic_ui_ux_pass_compact_elegant_action_buttons_189"
+      "target": "docs_task_part_11_magic_ui_ux_pass_compact_elegant_action_buttons_189",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28798,9 +28788,9 @@
       "source_file": "docs/task.md",
       "source_location": "L195",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_task_family_finance_migration_integration_tasks_97",
-      "target": "docs_task_part_12_recurring_transaction_catch_up_concurrency_fix"
+      "target": "docs_task_part_12_recurring_transaction_catch_up_concurrency_fix",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28808,9 +28798,9 @@
       "source_file": "docs/task.md",
       "source_location": "L199",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_task_family_finance_migration_integration_tasks_97",
-      "target": "docs_task_part_13_whatsapp_push_notifications_whatsapp_web_js"
+      "target": "docs_task_part_13_whatsapp_push_notifications_whatsapp_web_js",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28818,9 +28808,9 @@
       "source_file": "docs/task.md",
       "source_location": "L99",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_task_family_finance_migration_integration_tasks_97",
-      "target": "docs_task_part_1_supabase_migration_tasks_99"
+      "target": "docs_task_part_1_supabase_migration_tasks_99",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28828,9 +28818,9 @@
       "source_file": "docs/task.md",
       "source_location": "L120",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_task_family_finance_migration_integration_tasks_97",
-      "target": "docs_task_part_2_indonesian_language_mode_tasks_120"
+      "target": "docs_task_part_2_indonesian_language_mode_tasks_120",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28838,9 +28828,9 @@
       "source_file": "docs/task.md",
       "source_location": "L128",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_task_family_finance_migration_integration_tasks_97",
-      "target": "docs_task_part_3_reports_page_filtering_fix_128"
+      "target": "docs_task_part_3_reports_page_filtering_fix_128",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28848,9 +28838,9 @@
       "source_file": "docs/task.md",
       "source_location": "L134",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_task_family_finance_migration_integration_tasks_97",
-      "target": "docs_task_part_4_ai_assistant_graphify_integration_134"
+      "target": "docs_task_part_4_ai_assistant_graphify_integration_134",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28858,9 +28848,9 @@
       "source_file": "docs/task.md",
       "source_location": "L138",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_task_family_finance_migration_integration_tasks_97",
-      "target": "docs_task_part_5_modular_agent_rules_and_knowledge_reorganization_138"
+      "target": "docs_task_part_5_modular_agent_rules_and_knowledge_reorganization_138",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28868,9 +28858,9 @@
       "source_file": "docs/task.md",
       "source_location": "L144",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_task_family_finance_migration_integration_tasks_97",
-      "target": "docs_task_part_6_offline_ocr_receipt_scanner_ai_financial_coach_144"
+      "target": "docs_task_part_6_offline_ocr_receipt_scanner_ai_financial_coach_144",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28878,9 +28868,9 @@
       "source_file": "docs/task.md",
       "source_location": "L155",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_task_family_finance_migration_integration_tasks_97",
-      "target": "docs_task_part_7_cross_device_gemini_api_key_syncing_155"
+      "target": "docs_task_part_7_cross_device_gemini_api_key_syncing_155",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28888,9 +28878,9 @@
       "source_file": "docs/task.md",
       "source_location": "L161",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_task_family_finance_migration_integration_tasks_97",
-      "target": "docs_task_part_8_update_documentation_161"
+      "target": "docs_task_part_8_update_documentation_161",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -28898,9 +28888,9 @@
       "source_file": "docs/task.md",
       "source_location": "L165",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "docs_task_family_finance_migration_integration_tasks_97",
-      "target": "docs_task_part_9_receipt_image_storage_financial_calendar_view_165"
+      "target": "docs_task_part_9_receipt_image_storage_financial_calendar_view_165",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -29784,5 +29774,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "de47e2ae72c5363ef9d3131e23a97c9cc8bd6598"
+  "built_at_commit": "a3b354836a851cc574a3a2c9779da1f5c6137c42"
 }

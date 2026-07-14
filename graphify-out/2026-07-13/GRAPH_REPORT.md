@@ -1,16 +1,16 @@
-# Graph Report - redesign-ui-supabase-stack  (2026-07-13)
+# Graph Report - redesign-ui-supabase-stack  (2026-07-10)
 
 ## Corpus Check
-- 124 files · ~102,508 words
+- 120 files · ~100,702 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1259 nodes · 1699 edges · 148 communities (112 shown, 36 thin omitted)
+- 1258 nodes · 1699 edges · 147 communities (111 shown, 36 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `de47e2ae`
+- Built from commit: `a3b35483`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -162,7 +162,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (148 total, 36 thin omitted)
+## Communities (147 total, 36 thin omitted)
 
 ### Community 0 - "Common UI Actions"
 Cohesion: 0.08
@@ -504,12 +504,12 @@ Nodes (3): How to Deploy and Verify, Walkthrough: WhatsApp Push Notifications, W
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
+- **Why does `dashboard` connect `Virtual Scroll Component` to `Time Intervals`, `Database Backup Script`, `Community 111`, `Dashboard Analytics Metrics`, `Community 145`, `Community 122`, `Community 124`?**
+  _High betweenness centrality (0.065) - this node is a cross-community bridge._
 - **Why does `common` connect `Common UI Actions` to `Community 134`, `Community 106`, `Transactions Page View`, `Community 46`, `Community 143`, `Community 126`?**
   _High betweenness centrality (0.064) - this node is a cross-community bridge._
-- **Why does `dashboard` connect `Virtual Scroll Component` to `Time Intervals`, `Database Backup Script`, `Community 111`, `Dashboard Analytics Metrics`, `Community 145`, `Community 122`, `Community 124`?**
-  _High betweenness centrality (0.061) - this node is a cross-community bridge._
 - **Why does `dashboard` connect `Community 138` to `Family Member Roles`, `Community 134`, `Navigation and Management`, `Financial Data Export`, `Community 143`, `Community 113`, `Dashboard Analytics Metrics`?**
-  _High betweenness centrality (0.052) - this node is a cross-community bridge._
+  _High betweenness centrality (0.053) - this node is a cross-community bridge._
 - **What connects `recommendations`, `name`, `private` to the rest of the system?**
   _720 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Common UI Actions` be split into smaller, more focused modules?**
