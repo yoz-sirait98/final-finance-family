@@ -723,5 +723,15 @@
     "mtime": 1783937533.2010868,
     "ast_hash": "5f4dbd9041dc00ca20120b9c81f38cbe",
     "semantic_hash": ""
+  },
+  "supabase/migrations/000031_system_settings.sql": {
+    "mtime": 1783999475.7558703,
+    "ast_hash": "01a047d1238306487fcf02c8b997f8e2",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/000032_weekly_summary_engine.sql": {
+    "mtime": 1783999588.9131472,
+    "ast_hash": "92f848f10422a1ec679c455e178f5f5d",
+    "semantic_hash": ""
   }
 }

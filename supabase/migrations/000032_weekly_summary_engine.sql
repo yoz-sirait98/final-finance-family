@@ -40,8 +40,7 @@ BEGIN
     FOR v_family IN 
         SELECT id, name, whatsapp_group_id 
         FROM public.families 
-        WHERE is_active = true 
-          AND whatsapp_group_id IS NOT NULL 
+        WHERE whatsapp_group_id IS NOT NULL 
           AND length(trim(whatsapp_group_id)) > 0
     LOOP
         v_total_spent := 0;
