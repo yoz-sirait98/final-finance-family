@@ -115,7 +115,7 @@ import { settingsTourSteps } from '../tours/settingsTour';
 const { startAutoTour, startTour } = useTour('settings');
 const handleTour = () => startTour(settingsTourSteps);
 
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { useAuthStore } from '../stores/auth';
 import { useLocaleStore } from '../stores/locale';
 import { useToastStore } from '../stores/toast';

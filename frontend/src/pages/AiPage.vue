@@ -104,7 +104,7 @@ import { aiTourSteps } from '../tours/aiTour';
 const { startAutoTour, startTour } = useTour('ai');
 const handleTour = () => startTour(aiTourSteps);
 
-import { ref, computed, nextTick, onMounted } from 'vue';
+import { ref, computed, nextTick, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useLocaleStore } from '../stores/locale';
 import { aiService } from '../services/aiService';

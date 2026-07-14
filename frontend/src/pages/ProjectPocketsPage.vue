@@ -203,7 +203,7 @@ import { projectsTourSteps } from '../tours/projectsTour';
 const { startAutoTour, startTour } = useTour('projects');
 const handleTour = () => startTour(projectsTourSteps);
 
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useLocaleStore } from '../stores/locale';
 import { useToastStore } from '../stores/toast';

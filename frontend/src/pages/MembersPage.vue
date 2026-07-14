@@ -100,7 +100,7 @@ import { membersTourSteps } from '../tours/membersTour';
 const { startAutoTour, startTour } = useTour('members');
 const handleTour = () => startTour(membersTourSteps);
 
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { memberService } from '../services/memberService';
 import { useToastStore } from '../stores/toast';
 import { useLocaleStore } from '../stores/locale';

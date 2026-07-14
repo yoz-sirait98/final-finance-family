@@ -228,7 +228,7 @@
 import { useTour } from '../composables/useTour';
 import { calendarTourSteps } from '../tours/calendarTour';
 
-import { ref, computed, onMounted, watch } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { formatCurrency } from '../utils/format';
 import { transactionService } from '../services/transactionService';
 import { recurringService } from '../services/recurringService';

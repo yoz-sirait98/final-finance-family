@@ -109,7 +109,7 @@ import { categoriesTourSteps } from '../tours/categoriesTour';
 const { startAutoTour, startTour } = useTour('categories');
 const handleTour = () => startTour(categoriesTourSteps);
 
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { categoryService } from '../services/categoryService';
 import { useToastStore } from '../stores/toast';
 import { useLocaleStore } from '../stores/locale';
