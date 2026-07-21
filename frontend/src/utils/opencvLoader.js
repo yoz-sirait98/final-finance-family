@@ -12,7 +12,7 @@
 let cvInstance = null;
 let loadPromise = null;
 
-const OPENCV_CDN_URL = 'https://docs.opencv.org/4.10.0/opencv.js';
+const OPENCV_CDN_URL = 'https://docs.opencv.org/4.x/opencv.js';
 
 /**
  * Resolves when OpenCV.js is fully initialised.
