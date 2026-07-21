@@ -6,11 +6,11 @@
         <p>{{ $t('reports.subtitle') }}</p>
       </div>
       <!-- Export Buttons -->
-      <div id="tour-reports-export" class="d-flex gap-2">
-        <button class="btn btn-outline-success btn-sm" @click="exportCSV" :disabled="exporting">
+      <div class="d-flex gap-2">
+        <button id="tour-reports-csv-btn" class="btn btn-outline-success btn-sm" @click="exportCSV" :disabled="exporting">
           <i class="bi bi-filetype-csv me-1"></i>{{ exporting ? $t('reports.generating') : $t('reports.exportCsv') }}
         </button>
-        <button class="btn btn-outline-danger btn-sm" @click="exportPDF" :disabled="exporting">
+        <button id="tour-reports-pdf-btn" class="btn btn-outline-danger btn-sm" @click="exportPDF" :disabled="exporting">
           <span v-if="exporting" class="spinner-border spinner-border-sm me-1"></span>
           <i v-else class="bi bi-filetype-pdf me-1"></i>{{ exporting ? $t('reports.generating') : $t('reports.exportPdf') }}
         </button>
@@ -245,7 +245,7 @@ async function loadCharts() {
       type: 'pie',
       data: {
         labels: chartData.value.pie.map(d => d.category),
-        datasets: [{ data: chartData.value.pie.map(d => d.total), backgroundColor: chartData.value.pie.map(d => d.color), borderWidth: 0 }],
+        datasets: [{ data: chartData.value.pie.map(d => d.total), backgroundColor: chartData.value.pie.map(d => d.color), borderColor: chartData.value.pie.map(d => d.color), borderWidth: 1 }],
       },
       options: {
         responsive: true,
@@ -260,7 +260,7 @@ async function loadCharts() {
       type: 'doughnut',
       data: {
         labels: chartData.value.member.map(d => d.member),
-        datasets: [{ data: chartData.value.member.map(d => d.total), backgroundColor: chartData.value.member.map(d => d.color), borderWidth: 0 }],
+        datasets: [{ data: chartData.value.member.map(d => d.total), backgroundColor: chartData.value.member.map(d => d.color), borderColor: chartData.value.member.map(d => d.color), borderWidth: 1 }],
       },
       options: {
         responsive: true,
@@ -276,8 +276,8 @@ async function loadCharts() {
       data: {
         labels: chartData.value.bar.map(d => d.month),
         datasets: [
-          { label: localeStore.t('common.income'),  data: chartData.value.bar.map(d => d.income),  backgroundColor: '#28a745', borderRadius: 4 },
-          { label: localeStore.t('common.expense'), data: chartData.value.bar.map(d => d.expense), backgroundColor: '#dc3545', borderRadius: 4 },
+          { label: localeStore.t('common.income'),  data: chartData.value.bar.map(d => d.income),  backgroundColor: '#28a745', borderColor: '#28a745', borderWidth: 1, borderRadius: 4 },
+          { label: localeStore.t('common.expense'), data: chartData.value.bar.map(d => d.expense), backgroundColor: '#dc3545', borderColor: '#dc3545', borderWidth: 1, borderRadius: 4 },
         ],
       },
       options: {
@@ -294,7 +294,7 @@ async function loadCharts() {
       type: 'line',
       data: {
         labels: chartData.value.line.map(d => d.month),
-        datasets: [{ label: localeStore.t('common.expense'), data: chartData.value.line.map(d => d.expense), borderColor: '#dc3545', backgroundColor: 'rgba(220,53,69,0.1)', fill: true, tension: 0.4 }],
+        datasets: [{ label: localeStore.t('common.expense'), data: chartData.value.line.map(d => d.expense), borderColor: '#dc3545', backgroundColor: 'rgba(220,53,69,0.1)', pointBackgroundColor: '#dc3545', pointBorderColor: '#dc3545', pointBorderWidth: 1, fill: true, tension: 0.4 }],
       },
       options: {
         responsive: true,

@@ -6,7 +6,7 @@
         <p>{{ $t('transactions.subtitle') }}</p>
       </div>
       <div class="d-flex gap-2">
-        <button class="btn btn-outline-info" @click="triggerScan" :disabled="isScanning">
+        <button id="tour-tx-scan-btn" class="btn btn-outline-info" @click="triggerScan" :disabled="isScanning">
           <i class="bi bi-camera"></i><span class="d-none d-sm-inline">{{ $t('common.scanReceipt') || 'Scan Receipt' }}</span>
         </button>
         <input type="file" ref="receiptScannerInput" accept="image/*" capture="environment" class="d-none" @change="onReceiptSelected" />
@@ -31,7 +31,7 @@
           <!-- Laser Scan Line -->
           <div class="ocr-scan-line"></div>
         </div>
-        <h5 class="fw-bold"><i class="bi bi-cpu text-info me-2 spinner-border-sm"></i>{{ $t('common.scanning') || 'Analyzing Receipt...' }}</h5>
+        <h5 class="fw-bold"><i class="bi bi-cpu text-info me-2 spinner-border-sm"></i>{{ scanStatus || $t('common.scanning') || 'Analyzing Receipt...' }}</h5>
         <p class="text-muted small mb-0">{{ scanProgress }}% processed</p>
       </div>
     </div>
@@ -114,14 +114,16 @@
           </thead>
           <tbody>
             <tr v-if="loading">
-              <td colspan="9" class="text-center py-4">
-                <div class="spinner-border spinner-border-sm text-primary"></div> {{ $t('common.loading') }}
+              <td colspan="9" class="p-0 border-0">
+                <SkeletonLoader type="table-row" v-for="i in 3" :key="i" />
               </td>
             </tr>
             <tr v-else-if="!transactions.length">
               <td colspan="9" class="text-center py-4 text-muted">{{ $t('dashboard.noTransactions') }}</td>
             </tr>
-            <tr v-for="tx in transactions" :key="tx.id">
+            <tr v-for="tx in transactions" :key="tx.id" 
+                @touchstart="onTouchStart" 
+                @touchend="onTouchEnd($event, tx)">
               <td>{{ tx.transaction_date }}</td>
               <td>{{ tx.member?.name || '-' }}</td>
               <td>{{ tx.account?.name || '-' }}</td>
@@ -181,6 +183,18 @@
         <form @submit.prevent="saveTransaction">
           <div class="modal-body">
             <div v-if="formError" class="alert alert-danger small">{{ formError }}</div>
+
+            <!-- ✅ Duplicate detection warning -->
+            <div v-if="possibleDuplicate" class="alert alert-warning d-flex align-items-start gap-2 small py-2 mb-3">
+              <i class="bi bi-exclamation-triangle-fill mt-1 flex-shrink-0"></i>
+              <div>
+                <strong>{{ localeStore.currentLocale === 'id' ? 'Kemungkinan duplikat' : 'Possible duplicate' }}</strong><br />
+                {{ localeStore.currentLocale === 'id'
+                  ? `Transaksi serupa sudah ada: ${possibleDuplicate.description} — ${possibleDuplicate.amount} pada ${possibleDuplicate.date}`
+                  : `A similar transaction already exists: ${possibleDuplicate.description} — ${possibleDuplicate.amount} on ${possibleDuplicate.date}` }}
+              </div>
+            </div>
+
             <div class="mb-3">
               <label class="form-label" for="txType">{{ $t('common.type') }}</label>
               <select id="txType" name="type" v-model="form.type" class="form-select" required>
@@ -190,8 +204,13 @@
               </select>
             </div>
             <div class="mb-3">
-              <label class="form-label" for="txMember">{{ $t('common.member') }}</label>
-              <select id="txMember" name="member_id" v-model="form.member_id" class="form-select" required>
+              <label class="form-label d-flex align-items-center" for="txMember">
+                {{ $t('common.member') }}
+                <span v-if="scanConfidence?.member" :class="confidenceBadgeClass(scanConfidence.member)" class="badge rounded-pill fw-normal ms-2">
+                  {{ confidenceBadgeLabel(scanConfidence.member) }}
+                </span>
+              </label>
+              <select id="txMember" name="member_id" v-model="form.member_id" :class="['form-select', scanConfidence?.member === 'low' ? 'border-danger' : scanConfidence?.member === 'medium' ? 'border-warning' : '']" required>
                 <option value="" disabled>- {{ $t('common.member') }} -</option>
                 <template v-for="m in members" :key="m.id">
                   <option v-if="m.is_active || m.id === form.member_id" :value="m.id">{{ m.name }}{{ !m.is_active ? ' (' + $t('common.inactive') + ')' : '' }}</option>
@@ -199,8 +218,13 @@
               </select>
             </div>
             <div class="mb-3">
-              <label class="form-label" for="txAccount">{{ $t('common.account') }}</label>
-              <select id="txAccount" name="account_id" v-model="form.account_id" class="form-select" required>
+              <label class="form-label d-flex align-items-center" for="txAccount">
+                {{ $t('common.account') }}
+                <span v-if="scanConfidence?.account" :class="confidenceBadgeClass(scanConfidence.account)" class="badge rounded-pill fw-normal ms-2">
+                  {{ confidenceBadgeLabel(scanConfidence.account) }}
+                </span>
+              </label>
+              <select id="txAccount" name="account_id" v-model="form.account_id" :class="['form-select', scanConfidence?.account === 'low' ? 'border-danger' : scanConfidence?.account === 'medium' ? 'border-warning' : '']" required>
                 <option value="" disabled>- {{ $t('common.account') }} -</option>
                 <optgroup v-for="(group, type) in groupedAccounts" :key="type" :label="translateAccountType(type)">
                   <option v-for="a in group" :key="a.id" :value="a.id">{{ a.name }}</option>
@@ -208,24 +232,57 @@
               </select>
             </div>
             <div class="mb-3">
-              <label class="form-label" for="txCategory">{{ $t('common.category') }}</label>
-              <select id="txCategory" name="category_id" v-model="form.category_id" class="form-select">
+              <label class="form-label d-flex align-items-center" for="txCategory">
+                {{ $t('common.category') }}
+                <span v-if="scanConfidence?.category" :class="confidenceBadgeClass(scanConfidence.category)" class="badge rounded-pill fw-normal ms-2">
+                  {{ confidenceBadgeLabel(scanConfidence.category) }}
+                </span>
+              </label>
+              <select id="txCategory" name="category_id" v-model="form.category_id" :class="['form-select', scanConfidence?.category === 'low' ? 'border-danger' : scanConfidence?.category === 'medium' ? 'border-warning' : '']">
                 <option value="">- {{ $t('common.category') }} -</option>
                 <option v-for="c in filteredCategories" :key="c.id" :value="c.id">{{ c.name }}</option>
               </select>
             </div>
+
+            <!-- Amount + confidence badge -->
             <div class="mb-3">
-              <label class="form-label" for="txAmount">{{ $t('common.amount') }} (Rp)</label>
-              <input id="txAmount" name="amount" v-model.number="form.amount" type="number" class="form-control" min="1" required />
+              <label class="form-label d-flex align-items-center gap-2" for="txAmount">
+                {{ $t('common.amount') }} (Rp)
+                <span v-if="scanConfidence?.amount" :class="confidenceBadgeClass(scanConfidence.amount)" class="badge rounded-pill fw-normal">
+                  {{ confidenceBadgeLabel(scanConfidence.amount) }}
+                </span>
+              </label>
+              <input id="txAmount" name="amount" v-model.number="form.amount" type="number"
+                :class="['form-control', scanConfidence?.amount === 'low' ? 'border-danger' : scanConfidence?.amount === 'medium' ? 'border-warning' : '']"
+                min="1" required />
             </div>
+
+            <!-- Date + confidence badge -->
             <div class="mb-3">
-              <label class="form-label" for="txDate">{{ $t('common.date') }}</label>
-              <input id="txDate" name="transaction_date" v-model="form.transaction_date" type="date" class="form-control" required />
+              <label class="form-label d-flex align-items-center gap-2" for="txDate">
+                {{ $t('common.date') }}
+                <span v-if="scanConfidence?.date" :class="confidenceBadgeClass(scanConfidence.date)" class="badge rounded-pill fw-normal">
+                  {{ confidenceBadgeLabel(scanConfidence.date) }}
+                </span>
+              </label>
+              <input id="txDate" name="transaction_date" v-model="form.transaction_date" type="date"
+                :class="['form-control', scanConfidence?.date === 'low' ? 'border-danger' : scanConfidence?.date === 'medium' ? 'border-warning' : '']"
+                required />
             </div>
+
+            <!-- Description + confidence badge -->
             <div class="mb-3">
-              <label class="form-label" for="txDesc">{{ $t('common.description') }}</label>
-              <input id="txDesc" name="description" v-model="form.description" type="text" class="form-control" />
+              <label class="form-label d-flex align-items-center gap-2" for="txDesc">
+                {{ $t('common.description') }}
+                <span v-if="scanConfidence?.merchant" :class="confidenceBadgeClass(scanConfidence.merchant)" class="badge rounded-pill fw-normal">
+                  {{ confidenceBadgeLabel(scanConfidence.merchant) }}
+                </span>
+              </label>
+              <input id="txDesc" name="description" v-model="form.description" type="text"
+                :class="['form-control', scanConfidence?.merchant === 'low' ? 'border-danger' : scanConfidence?.merchant === 'medium' ? 'border-warning' : '']"
+              />
             </div>
+
             <!-- Receipt image preview (scanned or already saved) -->
             <div v-if="pendingReceiptFile || form.receipt_url" class="mb-3">
               <label class="form-label"><i class="bi bi-image me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Foto Struk' : 'Receipt Image' }}</label>
@@ -253,6 +310,18 @@
                     <i class="bi bi-x-lg me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Hapus Foto' : 'Remove Photo' }}
                   </button>
                 </div>
+              </div>
+            </div>
+
+            <!-- Raw OCR Text panel (collapsible) -->
+            <div v-if="scanRawText" class="mb-2">
+              <button type="button" class="btn btn-link btn-sm text-muted px-0 py-0 text-decoration-none d-flex align-items-center gap-1"
+                @click="showRawOcrPanel = !showRawOcrPanel">
+                <i :class="showRawOcrPanel ? 'bi bi-chevron-down' : 'bi bi-chevron-right'"></i>
+                <span class="small">{{ localeStore.currentLocale === 'id' ? 'Lihat teks OCR mentah' : 'View raw OCR text' }}</span>
+              </button>
+              <div v-if="showRawOcrPanel" class="mt-1 p-2 rounded border bg-black bg-opacity-25" style="max-height:160px;overflow-y:auto;">
+                <pre class="mb-0 small text-muted" style="white-space:pre-wrap;font-size:0.72rem;">{{ scanRawText }}</pre>
               </div>
             </div>
           </div>
@@ -404,8 +473,10 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { supabase } from '../lib/supabase';
 import { useRouter } from 'vue-router';
 import { useTour } from '../composables/useTour';
+import SkeletonLoader from '../components/SkeletonLoader.vue';
 import { transactionsTourSteps } from '../tours/transactionsTour';
 import { scanReceipt } from '../utils/receiptScanner';
 import { formatCurrency } from '../utils/format';
@@ -446,6 +517,13 @@ const toast = useToastStore();
 const receiptScannerInput = ref(null);
 const isScanning = ref(false);
 const scanProgress = ref(0);
+const scanStatus = ref('');
+
+// OpenCV + Tesseract scan result state
+const scanConfidence  = ref(null);   // { merchant, amount, date } → 'high'|'medium'|'low'
+const scanRawText     = ref('');     // raw OCR output for review panel
+const showRawOcrPanel = ref(false);  // toggle for collapsible raw OCR panel
+const possibleDuplicate = ref(null); // { description, amount, date } if duplicate detected
 
 // Receipt image (pending upload after scan, or saved URL for existing record)
 const pendingReceiptFile = ref(null);   // raw File object from scanner
@@ -462,6 +540,7 @@ const authStore = useAuthStore();
 // Budget over-budget confirmation
 const showBudgetConfirm = ref(false);
 const budgetConfirmData = ref({});
+const wasBudgetExceeded = ref(false);
 
 const router = useRouter();
 
@@ -593,6 +672,19 @@ async function openReceiptLightbox(tx) {
   }
 }
 
+// Confidence badge helpers
+function confidenceBadgeClass(level) {
+  if (level === 'high')   return 'bg-success text-white';
+  if (level === 'medium') return 'bg-warning text-dark';
+  return 'bg-danger text-white';
+}
+function confidenceBadgeLabel(level) {
+  const isId = localeStore.currentLocale === 'id';
+  if (level === 'high')   return isId ? 'Akurat' : 'Scanned';
+  if (level === 'medium') return isId ? 'Periksa' : 'Please verify';
+  return isId ? 'Mungkin salah' : 'Likely wrong';
+}
+
 function openCreate() {
   formError.value = '';
   editingId.value = null;
@@ -600,6 +692,11 @@ function openCreate() {
   pendingReceiptPreview.value = '';
   savedReceiptSignedUrl.value = '';
   receiptUrlToDelete.value = '';
+  wasBudgetExceeded.value = false;
+  scanConfidence.value  = null;
+  scanRawText.value     = '';
+  showRawOcrPanel.value = false;
+  possibleDuplicate.value = null;
   form.value = {
     type: 'expense',
     member_id: '',
@@ -623,94 +720,139 @@ async function onReceiptSelected(event) {
 
   isScanning.value = true;
   scanProgress.value = 0;
+  scanStatus.value = 'Starting scanner...';
+  // Reset scan-specific state
+  scanConfidence.value    = null;
+  scanRawText.value       = '';
+  showRawOcrPanel.value   = false;
+  possibleDuplicate.value = null;
+
   try {
-    const data = await scanReceipt(file, (progress) => {
+    const data = await scanReceipt(file, (progress, statusMsg) => {
       scanProgress.value = progress;
+      if (statusMsg) scanStatus.value = statusMsg;
     });
 
     // Reset the input so the same file can be selected again
     event.target.value = '';
 
-    // Heuristic mappings for Category
+    // ── Category mapping ──────────────────────────────────────────────────
     let matchedCategoryId = '';
-    const catRec = data.heuristics.category;
+    let categoryConf = 'low';
+    const catRec      = data.heuristics.category;
     const expenseCats = categories.value.filter(c => c.type === 'expense');
-    
-    if (catRec === 'food') {
-      const match = expenseCats.find(c => c.name.toLowerCase().match(/(makan|minum|food|drink|dining|cafe|kopi)/));
-      if (match) matchedCategoryId = match.id;
-    } else if (catRec === 'groceries') {
-      const match = expenseCats.find(c => c.name.toLowerCase().match(/(grocer|belanja|sembako|bulanan|pasar|dapur)/));
-      if (match) matchedCategoryId = match.id;
-    } else if (catRec === 'health') {
-      const match = expenseCats.find(c => c.name.toLowerCase().match(/(sehat|obat|medis|health|medical|apotek)/));
-      if (match) matchedCategoryId = match.id;
-    } else if (catRec === 'utilities') {
-      const match = expenseCats.find(c => c.name.toLowerCase().match(/(listrik|air|utilit|bill|telepon|internet|pulsa)/));
-      if (match) matchedCategoryId = match.id;
-    } else if (catRec === 'transport') {
-      const match = expenseCats.find(c => c.name.toLowerCase().match(/(transport|bensin|kendaraan|ojek|gojek|grab|bensin|fuel)/));
-      if (match) matchedCategoryId = match.id;
+    const catPatterns = {
+      food:          /(makan|minum|food|drink|dining|cafe|kopi|restoran)/,
+      groceries:     /(grocer|belanja|sembako|bulanan|pasar|dapur|market)/,
+      health:        /(sehat|obat|medis|health|medical|apotek|klinik)/,
+      utilities:     /(listrik|air|utilit|bill|telepon|internet|pulsa)/,
+      transport:     /(transport|bensin|kendaraan|ojek|gojek|grab|fuel|parkir)/,
+      entertainment: /(hiburan|entertain|cinema|bioskop|games|sport)/,
+      household:     /(rumah|perabot|elektronik|furniture|hardware)/,
+      shopping:      /(belanja|shop|fashion|baju|pakaian|sepatu)/,
+    };
+    for (const [cat, re] of Object.entries(catPatterns)) {
+      if (cat === catRec) {
+        const match = expenseCats.find(c => re.test(c.name.toLowerCase()));
+        if (match) { 
+          matchedCategoryId = match.id; 
+          categoryConf = 'high'; 
+          break; 
+        }
+      }
     }
-    
     if (!matchedCategoryId && expenseCats.length > 0) {
-      matchedCategoryId = expenseCats[0].id;
+      matchedCategoryId = expenseCats[0].id; // Fallback
     }
 
-    // Heuristic mappings for Account
+    // ── Account mapping ───────────────────────────────────────────────────
     let matchedAccountId = '';
+    let accountConf = 'low';
     const accRec = data.heuristics.account;
     
     if (accRec === 'cash') {
-      const match = accounts.value.find(a => a.name.toLowerCase().match(/(cash|tunai|dompet|fisik)/));
-      if (match) matchedAccountId = match.id;
+      const match = accounts.value.find(a => /(cash|tunai|dompet|fisik)/i.test(a.name));
+      if (match) { matchedAccountId = match.id; accountConf = 'high'; }
     } else if (accRec === 'wallet') {
-      const match = accounts.value.find(a => a.name.toLowerCase().match(/(wallet|gopay|ovo|dana|shopee|link|digital|qris)/));
-      if (match) matchedAccountId = match.id;
+      const match = accounts.value.find(a => /(wallet|gopay|ovo|dana|shopee|link|digital|qris|blu)/i.test(a.name));
+      if (match) { matchedAccountId = match.id; accountConf = 'high'; }
     } else if (accRec === 'bank') {
-      const match = accounts.value.find(a => a.name.toLowerCase().match(/(bank|mandiri|bca|bni|bri|cimb|debit|tabungan)/));
-      if (match) matchedAccountId = match.id;
+      const match = accounts.value.find(a => /(bank|mandiri|bca|bni|bri|cimb|debit|tabungan)/i.test(a.name));
+      if (match) { matchedAccountId = match.id; accountConf = 'high'; }
     }
     
     if (!matchedAccountId && accounts.value.length > 0) {
-      matchedAccountId = accounts.value[0].id;
+      matchedAccountId = accounts.value[0].id; // Fallback
     }
 
-    // Heuristic mappings for Member
+    // ── Member mapping ────────────────────────────────────────────────────
     let matchedMemberId = '';
-    const rawTextLower = data.rawText ? data.rawText.toLowerCase() : '';
-    if (rawTextLower) {
-      const match = members.value.find(m => rawTextLower.includes(m.name.toLowerCase()));
-      if (match) matchedMemberId = match.id;
+    let memberConf = 'low';
+    const rawLower = (data.rawText ?? '').toLowerCase();
+    if (rawLower) {
+      const match = members.value.find(m => rawLower.includes(m.name.toLowerCase()));
+      if (match) { matchedMemberId = match.id; memberConf = 'high'; }
     }
     if (!matchedMemberId && members.value.length > 0) {
-      matchedMemberId = members.value[0].id;
+      matchedMemberId = members.value[0].id; // Fallback
     }
 
-    // Store the image file for upload after save, and create a local preview
+    // ── Duplicate detection ───────────────────────────────────────────────
+    if (data.totalAmount && data.date) {
+      const fingerprint = `${data.totalAmount}|${data.date}|${(data.merchantName ?? '').toLowerCase()}`;
+      const scanDateObj  = new Date(data.date);
+      const dupMatch = transactions.value.find(tx => {
+        const txDate = new Date(tx.transaction_date);
+        const dateDiff = Math.abs(scanDateObj - txDate) / (1000 * 60 * 60 * 24);
+        const txFp = `${Math.abs(tx.amount)}|${tx.transaction_date}|${(tx.description ?? '').toLowerCase()}`;
+        return txFp === fingerprint || (
+          Math.abs(tx.amount) === data.totalAmount &&
+          dateDiff <= 1 &&
+          (tx.description ?? '').toLowerCase().includes((data.merchantName ?? '').toLowerCase().substring(0, 5))
+        );
+      });
+      if (dupMatch) {
+        possibleDuplicate.value = {
+          description: dupMatch.description || '-',
+          amount: `Rp ${Number(Math.abs(dupMatch.amount)).toLocaleString('id-ID')}`,
+          date: dupMatch.transaction_date,
+        };
+      }
+    }
+
+    // ── Receipt preview ───────────────────────────────────────────────────
     if (pendingReceiptPreview.value) URL.revokeObjectURL(pendingReceiptPreview.value);
-    pendingReceiptFile.value = data.imageFile;
+    pendingReceiptFile.value    = data.imageFile;
     pendingReceiptPreview.value = data.imageFile ? URL.createObjectURL(data.imageFile) : '';
 
-    // Auto-fill and open modal
-    formError.value = '';
-    editingId.value = null;
+    // ── Store scan meta for UI ────────────────────────────────────────────
+    const newConf = data.fieldConfidence ?? {};
+    newConf.member = memberConf;
+    newConf.account = accountConf;
+    newConf.category = categoryConf;
+    scanConfidence.value = newConf;
+    scanRawText.value    = data.rawText ?? '';
+
+    // ── Auto-fill form & open modal ───────────────────────────────────────
+    formError.value         = '';
+    editingId.value         = null;
     savedReceiptSignedUrl.value = '';
-    receiptUrlToDelete.value = '';
+    receiptUrlToDelete.value    = '';
     form.value = {
-      type: 'expense',
-      member_id: matchedMemberId,
-      account_id: matchedAccountId,
-      category_id: matchedCategoryId,
-      amount: data.totalAmount || '',
+      type:             'expense',
+      member_id:        matchedMemberId,
+      account_id:       matchedAccountId,
+      category_id:      matchedCategoryId,
+      amount:           data.totalAmount || '',
       transaction_date: data.date || todayISO(),
-      description: data.merchantName || '',
-      receipt_url: '',
+      description:      data.merchantName || '',
+      receipt_url:      '',
     };
     showTxModal.value = true;
     toast.success(localeStore.currentLocale === 'id' ? 'Struk berhasil dipindai!' : 'Receipt scanned successfully!');
 
   } catch (error) {
+    console.error('[Scanner] Scan failed:', error);
     toast.error(localeStore.currentLocale === 'id' ? 'Gagal memindai struk.' : 'Failed to parse receipt.');
   } finally {
     isScanning.value = false;
@@ -723,6 +865,7 @@ async function openEdit(tx) {
   pendingReceiptPreview.value = '';
   savedReceiptSignedUrl.value = '';
   receiptUrlToDelete.value = '';
+  wasBudgetExceeded.value = false;
   form.value = {
     type: tx.type,
     member_id: tx.member?.id,
@@ -788,6 +931,7 @@ async function saveTransaction() {
             totalFmt:   fmt(totalAfter),
             pct:        budget.amount > 0 ? ((totalAfter / budget.amount) * 100).toFixed(1) : '∞',
           };
+          wasBudgetExceeded.value = true;
           showBudgetConfirm.value = true;
           return; // Stop here — wait for user to confirm
         }
@@ -805,36 +949,51 @@ async function doSaveTransaction() {
   showBudgetConfirm.value = false;
   formError.value = '';
   try {
-    let savedId = editingId.value;
     const payload = { ...form.value };
 
-    if (editingId.value) {
-      await transactionService.update(editingId.value, payload);
-    } else {
-      const res = await transactionService.create(payload);
-      savedId = res?.data?.data?.id ?? null;
-    }
-
-    // Upload pending receipt image after the transaction is saved
-    if (pendingReceiptFile.value && savedId && authStore.familyId) {
+    // ── Phase 3: Upload-first atomic save ─────────────────────────────────
+    // Upload the receipt image BEFORE creating the transaction row so that
+    // receipt_url is included in the single CREATE call. This eliminates the
+    // old 2-step race condition where a network failure could leave an orphan
+    // transaction with no receipt_url.
+    if (pendingReceiptFile.value && !editingId.value && authStore.familyId) {
       try {
         const storagePath = await uploadReceipt(pendingReceiptFile.value, authStore.familyId);
-        await transactionService.update(savedId, { receipt_url: storagePath });
+        payload.receipt_url = storagePath; // attach atomically
       } catch (uploadErr) {
-        // Non-fatal — transaction is saved, image just didn't upload
-        console.warn('Receipt upload failed:', uploadErr);
-        toast.error(localeStore.currentLocale === 'id' ? 'Transaksi disimpan, tapi foto struk gagal diunggah.' : 'Transaction saved but receipt image upload failed.');
+        console.warn('[Scanner] Pre-upload failed, saving transaction without receipt:', uploadErr);
+        toast.error(localeStore.currentLocale === 'id'
+          ? 'Foto struk gagal diunggah. Transaksi akan disimpan tanpa foto.'
+          : 'Receipt image upload failed. Transaction will be saved without photo.');
       } finally {
         if (pendingReceiptPreview.value) URL.revokeObjectURL(pendingReceiptPreview.value);
-        pendingReceiptFile.value = null;
+        pendingReceiptFile.value    = null;
         pendingReceiptPreview.value = '';
       }
     }
 
+    if (editingId.value) {
+      await transactionService.update(editingId.value, payload);
+    } else {
+      await transactionService.create(payload);
+    }
+
     toast.success(localeStore.t('common.success'));
     showTxModal.value = false;
+    // Reset scan state after successful save
+    scanConfidence.value    = null;
+    scanRawText.value       = '';
+    showRawOcrPanel.value   = false;
+    possibleDuplicate.value = null;
     fetchData();
     budgetStore.fetchAlerts();
+
+    // Trigger WhatsApp Budget Alert if exceeded
+    if (wasBudgetExceeded.value) {
+      await sendBudgetAlertWhatsApp(budgetConfirmData.value);
+      wasBudgetExceeded.value = false;
+    }
+
   } catch (err) {
     showBudgetConfirm.value = false;
     formError.value = err.response?.data?.message || err.message || localeStore.t('common.error');
@@ -891,6 +1050,77 @@ async function saveTransfer() {
     toast.error(transferError.value);
   } finally {
     saving.value = false;
+  }
+}
+
+async function sendBudgetAlertWhatsApp(alertData) {
+  try {
+    const { data: family } = await supabase.from('families').select('whatsapp_group_id').eq('id', authStore.familyId).single();
+    if (!family || !family.whatsapp_group_id) {
+       console.log('No WhatsApp group ID configured for family. Skipping budget alert.');
+       return;
+    }
+
+    const memberName = members.value.find(m => m.id === form.value.member_id)?.name || 'Someone';
+
+    const message = `🚨 *BUDGET ALERT* 🚨\n*========================*\n\nHi Family! 👋\n${memberName} just logged a new transaction that pushed the *${alertData.category}* category over budget!\n\n💸 *Added:* ${alertData.addingFmt}\n📊 *Total Spent:* ${alertData.totalFmt}\n⛔ *Monthly Limit:* ${alertData.limitFmt}\n\n*⚠️ You are currently at ${alertData.pct}% of this budget!*\n\n*------------------------*\nOpen the FamFin app to review this transaction!`;
+
+    toast.info('Sending Budget Alert to WhatsApp Group...');
+
+    const response = await fetch('https://finance-family-3ac25ba9b522.herokuapp.com/api/notify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': import.meta.env.VITE_WA_API_KEY
+      },
+      body: JSON.stringify({
+        groupId: family.whatsapp_group_id,
+        message: message
+      })
+    });
+
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || 'Failed to send message');
+    
+    toast.success('Budget Alert Sent to WhatsApp! 🚀');
+  } catch (err) {
+    console.error('WhatsApp Budget Alert Error:', err);
+    toast.error(`WhatsApp Alert Error: ${err.message}`);
+  }
+}
+
+const touchStartX = ref(0);
+const touchStartY = ref(0);
+
+function onTouchStart(e) {
+  touchStartX.value = e.changedTouches[0].screenX;
+  touchStartY.value = e.changedTouches[0].screenY;
+}
+
+function onTouchEnd(e, tx) {
+  const touchEndX = e.changedTouches[0].screenX;
+  const touchEndY = e.changedTouches[0].screenY;
+  
+  const deltaX = touchEndX - touchStartX.value;
+  const deltaY = touchEndY - touchStartY.value;
+  
+  // Only trigger if it's a mostly horizontal swipe (> 80px horizontal, < 50px vertical drift)
+  if (Math.abs(deltaX) > 80 && Math.abs(deltaY) < 50) {
+    if (deltaX < 0) {
+      // Swiped Left -> Delete
+      if (getTransactionModule(tx) === 'Manual' || getTransactionModule(tx) === 'Transfer') {
+         confirmDelete(tx);
+      } else {
+         toast.error(localeStore.currentLocale === 'id' ? 'Transaksi otomatis tidak dapat dihapus.' : 'Automated transactions cannot be deleted.');
+      }
+    } else {
+      // Swiped Right -> Edit
+      if (getTransactionModule(tx) === 'Manual' || getTransactionModule(tx) === 'Transfer') {
+         openEdit(tx);
+      } else {
+         toast.error(localeStore.currentLocale === 'id' ? 'Transaksi otomatis tidak dapat diedit.' : 'Automated transactions cannot be edited.');
+      }
+    }
   }
 }
 

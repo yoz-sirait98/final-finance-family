@@ -1,11 +1,11 @@
 <template>
   <div class="shopping-page fade-in">
-    <div class="page-header d-flex justify-content-between align-items-center mb-4">
+    <div id="tour-shopping-header" class="page-header d-flex justify-content-between align-items-center mb-4">
       <div>
         <h4>{{ $t('shopping.title') }}</h4>
         <p class="text-muted mb-0">{{ $t('shopping.subtitle') }}</p>
       </div>
-      <button class="btn btn-primary-gradient" @click="openAddPlan">
+      <button id="tour-shopping-add-btn" class="btn btn-primary-gradient" @click="openAddPlan">
         <i class="bi bi-plus-lg"></i><span class="d-none d-sm-inline">{{ $t('shopping.createPlan') || 'Create Plan' }}</span>
       </button>
     </div>
@@ -51,7 +51,9 @@
             <span v-if="plan.status === 'done' && plan.transaction" class="fw-bold text-danger">
               Rp {{ parseFloat(plan.transaction.amount || 0).toLocaleString('id-ID') }}
             </span>
-            <span v-else class="text-muted small">Tap to view items</span>
+            <span v-else class="text-muted small">
+              <i class="bi bi-people me-1"></i> {{ plan.assigned_members?.length || 0 }} assigned
+            </span>
             <button class="btn btn-sm btn-outline-danger border-0" @click.stop="confirmDeletePlan(plan)">
               <i class="bi bi-trash"></i>
             </button>
@@ -75,10 +77,42 @@
             </div>
             <div class="mb-3">
               <label class="form-label">{{ $t('common.member') }} (Created By)</label>
-              <select v-model="planForm.created_by" class="form-select" required>
+              <select v-model="planForm.created_by" class="form-select" @change="onCreatorChange" required>
                 <option value="" disabled>- {{ $t('transactions.selectMember') }} -</option>
                 <option v-for="m in members" :key="m.id" :value="m.id">{{ m.name }}</option>
               </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold"><i class="bi bi-whatsapp text-success me-1"></i> Notification Target</label>
+              
+              <div v-if="familyGroupId" class="mb-3 d-flex gap-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" id="targetGroup" value="group" v-model="planForm.notificationTarget">
+                  <label class="form-check-label" for="targetGroup">Family Group</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" id="targetMembers" value="members" v-model="planForm.notificationTarget">
+                  <label class="form-check-label" for="targetMembers">Specific Members</label>
+                </div>
+              </div>
+              <div v-else class="alert alert-secondary small py-2 mb-3">
+                <i class="bi bi-info-circle me-1"></i>Group notifications are disabled. Add a Group ID in Settings.
+              </div>
+
+              <!-- Only show checkboxes if target is 'members' or group is disabled -->
+              <div v-if="!familyGroupId || planForm.notificationTarget === 'members'" class="border rounded p-2 bg-light" style="max-height: 150px; overflow-y: auto;">
+                <div v-for="m in members" :key="'assign-'+m.id" class="form-check mb-1">
+                  <input class="form-check-input" type="checkbox" :value="m.id" :id="'assign-'+m.id" v-model="planForm.assigned_members">
+                  <label class="form-check-label d-flex align-items-center" :for="'assign-'+m.id">
+                    {{ m.name }}
+                    <span v-if="m.whatsapp_number && m.notifications_enabled" class="badge bg-success ms-2" style="font-size:0.65rem">Ready</span>
+                    <span v-else class="badge bg-secondary ms-2" style="font-size:0.65rem">No WA</span>
+                  </label>
+                </div>
+              </div>
+              
+              <small v-if="!familyGroupId || planForm.notificationTarget === 'members'" class="text-muted mt-1 d-block"><i class="bi bi-info-circle me-1"></i>Select at least one member. Only those with "Ready" status will receive a WhatsApp message.</small>
+              <small v-else class="text-muted mt-1 d-block"><i class="bi bi-info-circle me-1"></i>Message will be sent exclusively to the Family Group. This Shopping Plan will show 0 assigned members.</small>
             </div>
           </div>
           <div class="modal-footer border-0 pt-0">
@@ -116,6 +150,12 @@
 </template>
 
 <script setup>
+import { useTour } from '../composables/useTour';
+import { shoppingTourSteps } from '../tours/shoppingTour';
+
+const { startAutoTour, startTour } = useTour('shopping');
+const handleTour = () => startTour(shoppingTourSteps);
+
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { shoppingPlanService } from '../services/shoppingPlanService';
@@ -134,7 +174,8 @@ const showAddModal = ref(false);
 const showDeleteModal = ref(false);
 const deleting = ref(false);
 const planToDelete = ref(null);
-const planForm = ref({ location: '', created_by: '' });
+const familyGroupId = ref('');
+const planForm = ref({ location: '', created_by: '', assigned_members: [], notificationTarget: 'members' });
 
 const authStore = useAuthStore();
 const toast = useToastStore();
@@ -164,22 +205,51 @@ async function fetchMembers() {
 }
 
 function openAddPlan() {
-  planForm.value = { location: '', created_by: '' };
+  planForm.value = { location: '', created_by: '', assigned_members: [], notificationTarget: familyGroupId.value ? 'group' : 'members' };
   showAddModal.value = true;
 }
 
+function onCreatorChange() {
+  // Automatically check the creator if they aren't already checked
+  if (planForm.value.created_by && !planForm.value.assigned_members.includes(planForm.value.created_by)) {
+    planForm.value.assigned_members.push(planForm.value.created_by);
+  }
+}
+
 async function savePlan() {
+  if ((!familyGroupId.value || planForm.value.notificationTarget === 'members') && planForm.value.assigned_members.length === 0) {
+    toast.error('Please select at least one member to notify.');
+    return;
+  }
+  
+  if (familyGroupId.value && planForm.value.notificationTarget === 'group') {
+    planForm.value.assigned_members = []; // Clear members to trigger exclusive group notification
+  }
+  
   saving.value = true;
+  const payload = {
+    location: planForm.value.location,
+    created_by: planForm.value.created_by,
+    assigned_members: planForm.value.assigned_members,
+    status: 'progress'
+  };
+  
+  console.log('[DEBUG] Sending Shopping Plan payload to Supabase:', payload);
+  
   try {
-    await shoppingPlanService.create({
-      location: planForm.value.location,
-      created_by: planForm.value.created_by,
-      status: 'progress'
-    });
+    const response = await shoppingPlanService.create(payload);
+    console.log('[DEBUG] Supabase Success Response:', response);
+    
     showAddModal.value = false;
-    toast.success(localeStore.t('common.success'));
+    toast.success(localeStore.t('common.success') + ' - Plan Saved!');
     fetchData(); 
+
+    // Fire off the WhatsApp Notification directly from the frontend
+    await sendWhatsAppNotification(payload);
+
   } catch (e) {
+    console.error('[DEBUG] Supabase Error Trace:', e);
+    console.error('[DEBUG] Error details:', e.response?.data || e.message);
     toast.error(e.response?.data?.message || e.message);
   } finally {
     saving.value = false;
@@ -211,6 +281,73 @@ function goToDetail(planId) {
   router.push(`/shopping/${planId}`);
 }
 
+async function sendWhatsAppNotification(planPayload) {
+  try {
+    const isGroup = planForm.value.notificationTarget === 'group';
+    let targetGroupId = null;
+    let targetPhoneNumbers = null;
+    let assignedNamesStr = '';
+
+    const creator = members.value.find(m => m.id === planPayload.created_by);
+    const creatorName = creator ? creator.name : 'Unknown';
+
+    if (isGroup) {
+      if (!familyGroupId.value) return; 
+      targetGroupId = familyGroupId.value;
+    } else {
+      if (!planPayload.assigned_members || planPayload.assigned_members.length === 0) return;
+      const assignedMembers = members.value.filter(m => planPayload.assigned_members.includes(m.id) && m.whatsapp_number && m.notifications_enabled);
+      if (assignedMembers.length === 0) {
+         toast.warning('No assigned members have a valid WhatsApp number and notifications enabled. Notification skipped.');
+         return;
+      }
+      targetPhoneNumbers = assignedMembers.map(m => m.whatsapp_number);
+      assignedNamesStr = assignedMembers.map(m => m.name).join(', ');
+    }
+
+    const isId = localeStore.currentLocale === 'id';
+    const dateStr = new Date().toLocaleDateString(isId ? 'id-ID' : 'en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+    
+    let message = '';
+    if (isId) {
+      message = `*========================*\n🛒  *DAFTAR BELANJA BARU*  🛒\n*========================*\n\nHalo! 👋 Daftar belanja baru telah dibuat.\n\n📍 *Lokasi:*  ${planPayload.location}\n👤 *Dibuat oleh:* ${creatorName}\n`;
+      if (!isGroup && assignedNamesStr) {
+        message += `🎯 *Ditugaskan ke:* ${assignedNamesStr}\n`;
+      }
+      message += `📅 *Tanggal:*   ${dateStr}\n\n*------------------------*\nBuka aplikasi FamFin untuk melihat dan mengelola barang belanjaan! 🛍️`;
+    } else {
+      message = `*========================*\n🛒  *NEW SHOPPING LIST*  🛒\n*========================*\n\nHi! 👋 A new shopping list has been created in the *Family Finance App*.\n\n📍 *Location:*  ${planPayload.location}\n👤 *Created by:* ${creatorName}\n`;
+      if (!isGroup && assignedNamesStr) {
+        message += `🎯 *Assigned to:* ${assignedNamesStr}\n`;
+      }
+      message += `📅 *Date:*      ${dateStr}\n\n*------------------------*\nOpen the FamFin app to see and manage the items! 🛍️`;
+    }
+
+    const apiPayload = { message: message };
+    if (isGroup) apiPayload.groupId = targetGroupId;
+    else apiPayload.numbers = targetPhoneNumbers;
+
+    toast.info('Sending WhatsApp notification...');
+
+    const response = await fetch('https://finance-family-3ac25ba9b522.herokuapp.com/api/notify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': import.meta.env.VITE_WA_API_KEY
+      },
+      body: JSON.stringify(apiPayload)
+    });
+
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || 'Failed to send message');
+
+    toast.success('WhatsApp Message Sent Successfully! 🚀');
+  } catch (err) {
+    console.error('WhatsApp Notification Error:', err);
+    toast.error(`WhatsApp Error: ${err.message}`);
+  }
+}
+
 function setupRealtime() {
   subscription = supabase
     .channel('public:shopping_plans')
@@ -220,13 +357,24 @@ function setupRealtime() {
     .subscribe();
 }
 
-onMounted(() => {
+onMounted(async () => {
+  startAutoTour(shoppingTourSteps);
+  window.addEventListener('start-shopping-tour', handleTour);
+
   fetchData();
   fetchMembers();
   setupRealtime();
+  if (authStore.familyId) {
+    const { data } = await supabase.from('families').select('whatsapp_group_id').eq('id', authStore.familyId).single();
+    if (data?.whatsapp_group_id) {
+      familyGroupId.value = data.whatsapp_group_id;
+    }
+  }
 });
 
 onUnmounted(() => {
+  window.removeEventListener('start-shopping-tour', handleTour);
+
   if (subscription) {
     supabase.removeChannel(subscription);
   }

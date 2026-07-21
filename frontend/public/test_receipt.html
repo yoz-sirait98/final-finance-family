@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head><title>Test Receipt</title></head>
+<body>
+  <h1>Test OpenCV Receipt</h1>
+  <div id="output"></div>
+  <script type="module">
+    import { preprocessReceiptImage } from '/src/utils/opencvPreprocess.js';
+    import { loadOpenCV } from '/src/utils/opencvLoader.js';
+
+    async function runTest() {
+      try {
+        console.log('Loading OpenCV...');
+        const cv = await loadOpenCV();
+        console.log('OpenCV loaded. Fetching image...');
+        
+        // Fetch the image as a Blob/File
+        const res = await fetch('/receipt.jpg');
+        const blob = await res.blob();
+        const file = new File([blob], 'receipt.jpg', { type: 'image/jpeg' });
+
+        console.log('Processing image...');
+        const canvas = await preprocessReceiptImage(file, cv);
+        document.body.appendChild(canvas);
+        console.log('PREPROCESS_SUCCESS');
+      } catch (err) {
+        console.error('ERROR:', err);
+      }
+    }
+    runTest();
+  </script>
+</body>
+</html>

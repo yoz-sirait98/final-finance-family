@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head><title>Test OpenCV</title></head>
+<body>
+  <h1>Test OpenCV</h1>
+  <div id="status">Loading...</div>
+  <script>
+    function log(msg) {
+      document.getElementById('status').innerText += '\n' + msg;
+      console.log(msg);
+    }
+    
+    window.Module = {
+      onRuntimeInitialized: () => {
+        log('window.Module.onRuntimeInitialized fired!');
+        log('cv.Mat exists: ' + !!window.cv.Mat);
+      }
+    };
+    
+    const script = document.createElement('script');
+    script.src = 'https://docs.opencv.org/4.x/opencv.js';
+    script.async = true;
+    script.onload = () => {
+      log('script.onload fired');
+      log('typeof cv: ' + typeof window.cv);
+      if (typeof window.cv === 'function') {
+         window.cv().then((instance) => {
+           log('window.cv() promise resolved. Mat exists: ' + !!instance.Mat);
+         }).catch(e => log('window.cv() promise rejected: ' + e));
+      } else {
+         log('window.cv is not a function');
+      }
+    };
+    script.onerror = () => log('script.onerror fired');
+    document.head.appendChild(script);
+  </script>
+</body>
+</html>

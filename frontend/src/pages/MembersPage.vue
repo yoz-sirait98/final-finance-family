@@ -1,11 +1,11 @@
 <template>
   <div class="members-page fade-in">
-    <div class="page-header d-flex justify-content-between align-items-center">
+    <div id="tour-members-header" class="page-header d-flex justify-content-between align-items-center">
       <div>
         <h4>{{ $t('members.title') }}</h4>
         <p>{{ $t('members.subtitle') }}</p>
       </div>
-      <button class="btn btn-primary-gradient" @click="openCreate">
+      <button id="tour-members-add-btn" class="btn btn-primary-gradient" @click="openCreate">
         <i class="bi bi-plus-lg"></i><span class="d-none d-sm-inline">{{ $t('members.addMember') }}</span>
       </button>
     </div>
@@ -19,6 +19,10 @@
             <span class="badge" :class="member.is_active ? 'bg-success' : 'bg-danger'">
               {{ member.is_active ? $t('common.active') : $t('common.inactive') }}
             </span>
+          </div>
+          <div class="mt-2 text-muted small" v-if="member.whatsapp_number">
+            <i class="bi bi-whatsapp text-success me-1"></i> +{{ member.whatsapp_number }}
+            <i class="bi" :class="member.notifications_enabled ? 'bi-bell-fill text-primary ms-2' : 'bi-bell-slash text-muted ms-2'" :title="member.notifications_enabled ? 'Notifications ON' : 'Notifications OFF'"></i>
           </div>
           <div class="mt-3 d-flex gap-1 justify-content-center">
             <button class="btn btn-sm btn-outline-primary" @click="openEdit(member)"><i class="bi bi-pencil"></i></button>
@@ -52,6 +56,15 @@
                 <option value="child">{{ $t('members.roles.child') }}</option>
               </select>
             </div>
+            <div class="mb-3">
+              <label class="form-label"><i class="bi bi-whatsapp text-success me-1"></i> WhatsApp Number (Optional)</label>
+              <input v-model="form.whatsapp_number" type="tel" class="form-control" placeholder="e.g. 628123456789 (No leading + or 0)" />
+              <div class="form-text small">Enter country code and number. Used for shopping list alerts.</div>
+            </div>
+            <div class="mb-3 form-check form-switch">
+              <input v-model="form.notifications_enabled" type="checkbox" class="form-check-input" id="notifSwitch" />
+              <label class="form-check-label" for="notifSwitch">Enable WhatsApp Notifications</label>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" @click="showModal = false">{{ $t('common.cancel') }}</button>
@@ -81,14 +94,20 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { useTour } from '../composables/useTour';
+import { membersTourSteps } from '../tours/membersTour';
+
+const { startAutoTour, startTour } = useTour('members');
+const handleTour = () => startTour(membersTourSteps);
+
+import { ref, onMounted, onUnmounted } from 'vue';
 import { memberService } from '../services/memberService';
 import { useToastStore } from '../stores/toast';
 import { useLocaleStore } from '../stores/locale';
 
 const members = ref([]);
 const editingId = ref(null);
-const form = ref({ name: '', role: '' });
+const form = ref({ name: '', role: '', whatsapp_number: '', notifications_enabled: true });
 const formError = ref('');
 const localeStore = useLocaleStore();
 
@@ -104,14 +123,19 @@ async function fetchData() {
 
 function openCreate() {
   editingId.value = null;
-  form.value = { name: '', role: '' };
+  form.value = { name: '', role: '', whatsapp_number: '', notifications_enabled: true };
   formError.value = '';
   showModal.value = true;
 }
 
 function openEdit(m) {
   editingId.value = m.id;
-  form.value = { name: m.name, role: m.role };
+  form.value = { 
+    name: m.name, 
+    role: m.role, 
+    whatsapp_number: m.whatsapp_number || '', 
+    notifications_enabled: m.notifications_enabled !== false 
+  };
   formError.value = '';
   showModal.value = true;
 }
@@ -163,4 +187,13 @@ async function doDelete() {
 }
 
 onMounted(fetchData);
+
+onMounted(() => {
+  startAutoTour(membersTourSteps);
+  window.addEventListener('start-members-tour', handleTour);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('start-members-tour', handleTour);
+});
 </script>

@@ -119,6 +119,9 @@
 
       <div class="d-flex align-items-center gap-3">
 
+        <!-- Install PWA Button -->
+        <InstallPwa />
+
         <!-- Theme Toggle Button -->
         <button
           class="toggle-btn"
@@ -236,6 +239,7 @@ import { useBudgetStore } from '../stores/budgets';
 import { useTourStore } from '../stores/tour';
 import { useLocaleStore } from '../stores/locale';
 import GoalNotificationModal from '../components/GoalNotificationModal.vue';
+import InstallPwa from '../components/InstallPwa.vue';
 import { supabase } from '../lib/supabase';
 
 const route = useRoute();
@@ -254,6 +258,14 @@ const PAGE_TOUR_EVENTS = {
   Accounts: 'start-accounts-tour',
   Reports: 'start-reports-tour',
   Recurring: 'start-recurring-tour',
+  Calendar: 'start-calendar-tour',
+  Shopping: 'start-shopping-tour',
+  ShoppingDetail: 'start-shoppingdetail-tour',
+  Categories: 'start-categories-tour',
+  ProjectPockets: 'start-projects-tour',
+  Members: 'start-members-tour',
+  Settings: 'start-settings-tour',
+  Ai: 'start-ai-tour',
 };
 
 function triggerTour() {
@@ -268,17 +280,20 @@ function triggerTour() {
 const POLL_INTERVAL_MS = 120000; // 2 minutes
 const routeNamesToPollAlerts = ['Dashboard', 'Budgets', 'Transactions', 'Recurring'];
 
+import { useThemeStore } from '../stores/theme';
+import { storeToRefs } from 'pinia';
+
+const themeStore = useThemeStore();
+const { currentTheme: theme } = storeToRefs(themeStore);
+
 const sidebarCollapsed = ref(false);
 const mobileOpen = ref(false);
 const bellOpen = ref(false);
 const userOpen = ref(false);
 const langOpen = ref(false);
-const theme = ref(localStorage.getItem('theme') || 'light');
 
 function toggleTheme() {
-  theme.value = theme.value === 'dark' ? 'light' : 'dark';
-  localStorage.setItem('theme', theme.value);
-  document.documentElement.setAttribute('data-theme', theme.value);
+  themeStore.toggleTheme();
   window.dispatchEvent(new CustomEvent('theme-changed', { detail: theme.value }));
 }
 

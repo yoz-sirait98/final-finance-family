@@ -39,7 +39,8 @@
           <div class="d-flex align-items-center justify-content-between">
             <div>
               <div class="stat-label">{{ $t('dashboard.totalBalance') }}</div>
-              <div class="stat-value" :title="formatRupiah(summary.total_balance)">{{ formatRupiah(summary.total_balance) }}</div>
+              <SkeletonLoader v-if="isLoading" height="32px" class="mt-1" style="width: 150px" />
+              <div v-else class="stat-value" :title="formatRupiah(summary.total_balance)">{{ formatRupiah(displayTotalBalance) }}</div>
             </div>
             <div class="stat-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">
               <i class="bi bi-wallet2"></i>
@@ -48,11 +49,12 @@
         </div>
       </div>
       <div class="col-xl-3 col-md-6">
-        <div id="tour-stat-income" class="stat-card">
+        <div id="tour-stat-income" class="stat-card" style="animation: slideUp 0.4s ease-out">
           <div class="d-flex align-items-center justify-content-between">
             <div>
               <div class="stat-label">{{ $t('dashboard.monthlyIncome', { period: currentMonthLabel }) }}</div>
-              <div class="stat-value text-success" :title="formatRupiah(summary.monthly_income)">{{ formatRupiah(summary.monthly_income) }}</div>
+              <SkeletonLoader v-if="isLoading" height="32px" class="mt-1" style="width: 120px" />
+              <div v-else class="stat-value text-success" :title="formatRupiah(summary.monthly_income)">{{ formatRupiah(displayMonthlyIncome) }}</div>
             </div>
             <div class="stat-icon" style="background: linear-gradient(135deg, #28a745, #20c997);">
               <i class="bi bi-arrow-down-circle"></i>
@@ -61,26 +63,26 @@
         </div>
       </div>
       <div class="col-xl-3 col-md-6">
-        <div id="tour-stat-expense" class="stat-card">
+        <div id="tour-stat-expense" class="stat-card" style="animation: slideUp 0.5s ease-out">
           <div class="d-flex align-items-center justify-content-between">
             <div>
               <div class="stat-label">{{ $t('dashboard.monthlyExpense', { period: currentMonthLabel }) }}</div>
-              <div class="stat-value text-danger" :title="formatRupiah(summary.monthly_expense)">{{ formatRupiah(summary.monthly_expense) }}</div>
+              <SkeletonLoader v-if="isLoading" height="32px" class="mt-1" style="width: 120px" />
+              <div v-else class="stat-value text-danger" :title="formatRupiah(summary.monthly_expense)">{{ formatRupiah(displayMonthlyExpense) }}</div>
             </div>
-            <div class="stat-icon" style="background: linear-gradient(135deg, #dc3545, #e83e8c);">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #dc3545, #f86fa1);">
               <i class="bi bi-arrow-up-circle"></i>
             </div>
           </div>
         </div>
       </div>
       <div class="col-xl-3 col-md-6">
-        <div id="tour-stat-net" class="stat-card">
+        <div id="tour-stat-net" class="stat-card" style="animation: slideUp 0.6s ease-out">
           <div class="d-flex align-items-center justify-content-between">
             <div>
-              <div class="stat-label">{{ $t('dashboard.monthlyNet', { period: currentMonthLabel }) }}</div>
-              <div class="stat-value" :class="summary.monthly_net >= 0 ? 'text-success' : 'text-danger'" :title="formatRupiah(summary.monthly_net)">
-                {{ formatRupiah(summary.monthly_net) }}
-              </div>
+              <div class="stat-label">{{ $t('dashboard.netIncome') }}</div>
+              <SkeletonLoader v-if="isLoading" height="32px" class="mt-1" style="width: 120px" />
+              <div v-else class="stat-value" :class="summary.monthly_net >= 0 ? 'text-success' : 'text-danger'" :title="formatRupiah(summary.monthly_net)">{{ formatRupiah(displayMonthlyNet) }}</div>
             </div>
             <div class="stat-icon" style="background: linear-gradient(135deg, #fd7e14, #ffc107);">
               <i class="bi bi-graph-up"></i>
@@ -148,6 +150,8 @@ import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue';
 import Chart from 'chart.js/auto';
 import { useDashboard } from '../composables/useDashboard';
 import { formatRupiah } from '../utils/currency';
+import SkeletonLoader from '../components/SkeletonLoader.vue';
+import { useCountUp } from '../composables/useCountUp';
 import { useTour } from '../composables/useTour';
 import { dashboardTourSteps } from '../tours/dashboardTour';
 import { useLocaleStore } from '../stores/locale';
@@ -185,6 +189,12 @@ const currentMonthLabel = computed(() => {
 
 // Chart & summary state
 const summary  = ref({ total_balance: 0, monthly_income: 0, monthly_expense: 0, monthly_net: 0 });
+
+const displayTotalBalance = useCountUp(computed(() => summary.value.total_balance));
+const displayMonthlyIncome = useCountUp(computed(() => summary.value.monthly_income));
+const displayMonthlyExpense = useCountUp(computed(() => summary.value.monthly_expense));
+const displayMonthlyNet = useCountUp(computed(() => summary.value.monthly_net));
+
 const insights = ref([]);
 const pieChart  = ref(null);
 const barChart  = ref(null);
@@ -206,6 +216,7 @@ function getChartColors() {
     accentColor: isDark ? '#8a2be2' : '#667eea',
     incomeColor: isDark ? '#10b981' : '#28a745',
     expenseColor: isDark ? '#f43f5e' : '#dc3545',
+    cardBg: isDark ? '#161626' : '#ffffff',
   };
 }
 
@@ -283,7 +294,12 @@ async function updateCharts(d) {
       type: 'pie',
       data: {
         labels: pieData.map(d => d.category),
-        datasets: [{ data: pieData.map(d => d.total), backgroundColor: pieData.map(d => d.color), borderWidth: 0 }],
+        datasets: [{ 
+          data: pieData.map(d => d.total), 
+          backgroundColor: pieData.map(d => d.color), 
+          borderColor: pieData.map(d => d.color), 
+          borderWidth: 1 
+        }],
       },
       options: { 
         responsive: true, 
@@ -307,8 +323,8 @@ async function updateCharts(d) {
       data: {
         labels: barData.map(d => d.month),
         datasets: [
-          { label: localeStore.t('common.income'),  data: barData.map(d => d.income),  backgroundColor: colors.incomeColor, borderRadius: 4 },
-          { label: localeStore.t('common.expense'), data: barData.map(d => d.expense), backgroundColor: colors.expenseColor, borderRadius: 4 },
+          { label: localeStore.t('common.income'),  data: barData.map(d => d.income),  backgroundColor: colors.incomeColor, borderColor: colors.incomeColor, borderWidth: 1, borderRadius: 4 },
+          { label: localeStore.t('common.expense'), data: barData.map(d => d.expense), backgroundColor: colors.expenseColor, borderColor: colors.expenseColor, borderWidth: 1, borderRadius: 4 },
         ],
       },
       options: { 
@@ -353,7 +369,9 @@ async function updateCharts(d) {
           fill: true, 
           tension: 0.4,
           pointRadius: 4,
-          pointBackgroundColor: colors.expenseColor
+          pointBackgroundColor: colors.expenseColor,
+          pointBorderColor: colors.expenseColor,
+          pointBorderWidth: 1
         }],
       },
       options: { 
@@ -395,7 +413,9 @@ async function updateCharts(d) {
           fill: true, 
           tension: 0.4, 
           pointRadius: 4, 
-          pointBackgroundColor: colors.accentColor 
+          pointBackgroundColor: colors.accentColor,
+          pointBorderColor: colors.accentColor,
+          pointBorderWidth: 1
         }],
       },
       options: { 

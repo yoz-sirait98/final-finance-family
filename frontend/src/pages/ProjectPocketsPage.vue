@@ -1,6 +1,6 @@
 <template>
   <div class="project-pockets-page fade-in">
-    <div class="page-header d-flex justify-content-between align-items-center mb-4">
+    <div id="tour-projects-header" class="page-header d-flex justify-content-between align-items-center mb-4">
       <div>
         <h4>{{ localeStore.currentLocale === 'id' ? 'Kantong Proyek' : 'Project Pockets' }}</h4>
         <p class="text-muted">{{ localeStore.currentLocale === 'id' ? 'Kelola pengeluaran khusus acara besar tanpa mengganggu anggaran bulanan' : 'Manage spending for large events without ruining your monthly budget' }}</p>
@@ -149,7 +149,7 @@
           </div>
           <div class="modal-footer border-top-0 pt-0">
             <button type="button" class="btn btn-light" @click="showModal = false" :disabled="saving">{{ $t('common.cancel') }}</button>
-            <button type="submit" class="btn btn-primary-gradient" :disabled="saving">
+            <button type="submit" id="tour-projects-add-btn" class="btn btn-primary-gradient" :disabled="saving">
               <span v-if="saving" class="spinner-border spinner-border-sm me-2"></span>
               {{ $t('common.save') }}
             </button>
@@ -197,7 +197,13 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { useTour } from '../composables/useTour';
+import { projectsTourSteps } from '../tours/projectsTour';
+
+const { startAutoTour, startTour } = useTour('projects');
+const handleTour = () => startTour(projectsTourSteps);
+
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useLocaleStore } from '../stores/locale';
 import { useToastStore } from '../stores/toast';
@@ -384,7 +390,14 @@ async function markPocketAsDone(pocket) {
 }
 
 onMounted(() => {
+  startAutoTour(projectsTourSteps);
+  window.addEventListener('start-projects-tour', handleTour);
+
   loadData();
+});
+
+onUnmounted(() => {
+  window.removeEventListener('start-projects-tour', handleTour);
 });
 </script>
 

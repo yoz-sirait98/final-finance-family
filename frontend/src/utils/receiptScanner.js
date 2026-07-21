@@ -1,313 +1,328 @@
 import Tesseract from 'tesseract.js';
+import { loadOpenCV } from './opencvLoader';
+import { preprocessReceiptImage } from './opencvPreprocess';
+import merchantsDb from './merchants.json';
 
-// Fuzzy month configurations for robust date extraction despite OCR errors
+// ---------------------------------------------------------------------------
+// Month fuzzy-matching for robust date extraction despite OCR errors
+// ---------------------------------------------------------------------------
 const fuzzyMonths = [
-  { pattern: /ja[nu|m|n]/i, val: '01' },
-  { pattern: /f[eb|p]|p[eb|p]/i, val: '02' },
-  { pattern: /ma[r|t]/i, val: '03' },
-  { pattern: /ap[r|l]/i, val: '04' },
-  { pattern: /me[iy]|ma[yi]/i, val: '05' },
-  { pattern: /ju[nmrhi][ei]?/i, val: '06' }, // Matches Jun, Juni, June, Jume, Jure, Juhi, etc.
-  { pattern: /ju[liy]/i, val: '07' },
-  { pattern: /au[gs]|ag[su]/i, val: '08' },
-  { pattern: /se[pt]/i, val: '09' },
-  { pattern: /ok[tc]|oc[tk]/i, val: '10' },
-  { pattern: /no[vw]/i, val: '11' },
-  { pattern: /de[sc]/i, val: '12' }
+  { pattern: /ja[nu|m|n]/i,         val: '01' },
+  { pattern: /f[eb|p]|p[eb|p]/i,    val: '02' },
+  { pattern: /ma[r|t]/i,            val: '03' },
+  { pattern: /ap[r|l]/i,            val: '04' },
+  { pattern: /me[iy]|ma[yi]/i,      val: '05' },
+  { pattern: /ju[nmrhi][ei]?/i,     val: '06' },
+  { pattern: /ju[liy]/i,            val: '07' },
+  { pattern: /au[gs]|ag[su]/i,      val: '08' },
+  { pattern: /se[pt]/i,             val: '09' },
+  { pattern: /ok[tc]|oc[tk]/i,      val: '10' },
+  { pattern: /no[vw]/i,             val: '11' },
+  { pattern: /de[sc]/i,             val: '12' },
 ];
 
+// Category → heuristic keyword fallback (used when merchant JSON has no match)
+const categoryKeywords = {
+  food:        /(cafe|kopi|coffee|starbucks|resto|bakso|mcd|kfc|burger|pizza|dunkin|roti|eat|warung|mie|makan)/,
+  health:      /(apotek|kimia|guardian|watsons|sehat|klinik|dokter|medicine|panadol|bodrex)/,
+  utilities:   /(pln|listrik|pdam|air|telkom|internet|pulsa|speedy)/,
+  transport:   /(pertamina|bensin|shell|gojek|go-jek|grab|grob|greb|taxi|toll|parkir|bensin|ride|fare|passenger|booking|trip|perjalanan|driver)/,
+};
+
+// ---------------------------------------------------------------------------
+// Number extraction helpers
+// ---------------------------------------------------------------------------
+
 /**
- * Clean and parse numbers from OCR lines
+ * Extract the RIGHTMOST valid Rupiah amount from a text line.
+ * Handles: 150.000 | 150,000 | Rp150.000 | Rp 150,000 | 150000
+ * Returns 0 if nothing found.
  */
-function extractNumbers(text) {
-  // Matches digits with optional dots, commas or spaces as thousands/decimals
-  // e.g. Rp 150.000,00 or 150,000 or 150000
-  const matches = text.match(/\b\d{1,3}(?:[.,\s]\d{3})*(?:[.,]\d{2})?\b/g);
-  if (!matches) return [];
-  
-  return matches.map(numStr => {
-    // Strip whitespace
-    let cleaned = numStr.replace(/\s/g, '');
-    
-    // If it ends with ,00 or .00, remove the decimal cents for clean integer math
-    if (cleaned.endsWith(',00') || cleaned.endsWith('.00')) {
-      cleaned = cleaned.slice(0, -3);
-    }
-    
-    // Strip remaining punctuation (commas, periods)
-    cleaned = cleaned.replace(/[.,]/g, '');
-    
-    return parseInt(cleaned, 10);
-  }).filter(n => !isNaN(n));
+function extractRightmostAmount(line) {
+  // Strip any Rp / IDR prefix so it does not interfere with number matching
+  const cleaned = line.replace(/\b(rp\.?|idr\.?)\s*/gi, ' ');
+
+  // Match numbers that look like Indonesian currency amounts
+  const matches = [...cleaned.matchAll(/\b\d{1,3}(?:[.,\s]\d{3})*(?:[.,]\d{2})?\b/g)];
+  if (!matches.length) return 0;
+
+  // Take the LAST (rightmost) match — two-column receipts put prices on the right
+  const raw = matches[matches.length - 1][0];
+  let s = raw.replace(/\s/g, '');
+
+  // Strip trailing ,00 / .00 (Indonesian cent notation)
+  if (s.endsWith(',00') || s.endsWith('.00')) s = s.slice(0, -3);
+
+  // Remove remaining thousand-separators
+  s = s.replace(/[.,]/g, '');
+
+  const n = parseInt(s, 10);
+  return isNaN(n) ? 0 : n;
 }
 
 /**
- * Clean dates and times from a line before extracting numbers to avoid false positives.
- * Uses ES2018 lookbehind/lookahead assertions to be resilient to missing word/number spacing.
+ * Remove date/time tokens from a line to prevent them being mistaken for amounts.
  */
-function cleanLineOfDatesAndTimes(line) {
-  let cleaned = line.toLowerCase();
-  
-  // Remove times (e.g. 10:34 or 10:34:15)
-  cleaned = cleaned.replace(/\b\d{1,2}:\d{2}(?::\d{2})?\b/g, ' ');
-  
-  // Remove dates with slashes, dashes, or dots (e.g. 11/06/2026, 11-06-26, 11.06.2026)
-  cleaned = cleaned.replace(/(?<!\d)\d{1,2}[/\-.]\d{1,2}[/\-.]\d{2,4}(?!\d)/g, ' ');
-  cleaned = cleaned.replace(/(?<!\d)\d{4}[/\-.]\d{1,2}[/\-.]\d{1,2}(?!\d)/g, ' ');
-  
-  // Remove word dates (e.g. 10 Jun 2026 or 10-Juni-2026)
-  const monthsPattern = '(?:jan|feb|mar|apr|mei|may|jun|jul|ags|aug|sep|okt|oct|nov|des|dec)[a-z]*';
-  const wordDateRegex = new RegExp(`(?<!\\d)\\d{1,2}[\\s/\\-.]*${monthsPattern}[\\s/\\-.]*\\d{2,4}(?!\\d)`, 'g');
-  cleaned = cleaned.replace(wordDateRegex, ' ');
-  
-  return cleaned;
+function stripDatesAndTimes(line) {
+  let s = line.toLowerCase();
+  s = s.replace(/\b\d{1,2}:\d{2}(?::\d{2})?\b/g, ' ');                             // times
+  s = s.replace(/(?<!\d)\d{1,2}[/\-.]\d{1,2}[/\-.]\d{2,4}(?!\d)/g, ' ');           // DD/MM/YY
+  s = s.replace(/(?<!\d)\d{4}[/\-.]\d{1,2}[/\-.]\d{1,2}(?!\d)/g, ' ');             // YYYY-MM-DD
+  const months = '(?:jan|feb|mar|apr|mei|may|jun|jul|ags|aug|sep|okt|oct|nov|des|dec)[a-z]*';
+  s = s.replace(new RegExp(`(?<!\\d)\\d{1,2}[\\s/\\-.]*${months}[\\s/\\-.]*\\d{2,4}(?!\\d)`, 'g'), ' ');
+  return s;
 }
 
-/**
- * Parse date string from text.
- * Uses ES2018 lookbehind/lookahead assertions to handle squeezed spaces (e.g. "on9 June 2026").
- */
+// ---------------------------------------------------------------------------
+// Date parser
+// ---------------------------------------------------------------------------
 function parseDate(text) {
-  const textLower = text.toLowerCase();
-  
-  // 1. Check standard DD/MM/YY(YY) or DD-MM-YY(YY) or DD.MM.YY(YY)
-  const standardDateRegex = /(?<!\d)(\d{1,2})[/\-.](\d{1,2})[/\-.](\d{2,4})(?!\d)/;
-  const matchStd = textLower.match(standardDateRegex);
-  if (matchStd) {
-    const day = parseInt(matchStd[1], 10);
-    const month = parseInt(matchStd[2], 10);
-    const yearStr = matchStd[3];
-    
-    if (day >= 1 && day <= 31 && month >= 1 && month <= 12) {
-      let year = parseInt(yearStr, 10);
-      if (yearStr.length === 2) {
-        year = 2000 + year; // assume 2000s
-      }
-      if (year >= 2000 && year <= 2099) {
-        return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-      }
+  const t = text.toLowerCase();
+
+  // DD/MM/YY(YY)
+  const m1 = t.match(/(?<!\d)(\d{1,2})[/\-.](\d{1,2})[/\-.](\d{2,4})(?!\d)/);
+  if (m1) {
+    const d = +m1[1], mo = +m1[2];
+    let y = +m1[3];
+    if (m1[3].length === 2) y += 2000;
+    if (d >= 1 && d <= 31 && mo >= 1 && mo <= 12 && y >= 2000 && y <= 2099)
+      return `${y}-${String(mo).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+  }
+
+  // YYYY-MM-DD
+  const m2 = t.match(/(?<!\d)(\d{4})[/\-.](\d{1,2})[/\-.](\d{1,2})(?!\d)/);
+  if (m2) {
+    const y = +m2[1], mo = +m2[2], d = +m2[3];
+    if (y >= 2000 && y <= 2099 && mo >= 1 && mo <= 12 && d >= 1 && d <= 31)
+      return `${y}-${String(mo).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+  }
+
+  // Word dates: "10 Juni 2026", "10-Jun-26"
+  for (const mItem of fuzzyMonths) {
+    const re = new RegExp(`(?<!\\d)(\\d{1,2})[\\s/\\-.]*(${mItem.pattern.source})[a-z]*[\\s/\\-.]*(\\d{2,4})(?!\\d)`, 'i');
+    const wm = t.match(re);
+    if (wm) {
+      const d = +wm[1];
+      let y = +wm[3];
+      if (wm[3].length === 2) y += 2000;
+      if (d >= 1 && d <= 31 && y >= 2000 && y <= 2099)
+        return `${y}-${mItem.val}-${String(d).padStart(2,'0')}`;
     }
   }
 
-  // 2. Check YYYY-MM-DD or YYYY/MM/DD or YYYY.MM.DD
-  const isoDateRegex = /(?<!\d)(\d{4})[/\-.](\d{1,2})[/\-.](\d{1,2})(?!\d)/;
-  const matchIso = textLower.match(isoDateRegex);
-  if (matchIso) {
-    const year = parseInt(matchIso[1], 10);
-    const month = parseInt(matchIso[2], 10);
-    const day = parseInt(matchIso[3], 10);
-    if (year >= 2000 && year <= 2099 && month >= 1 && month <= 12 && day >= 1 && day <= 31) {
-      return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-    }
-  }
-  
-  // 3. Check word dates with fuzzy matching
-  for (const mItem of fuzzyMonths) {
-    const wordRegex = new RegExp(`(?<!\\d)(\\d{1,2})[\\s/\\-.]*(${mItem.pattern.source})[a-z]*[\\s/\\-.]*(\\d{2,4})(?!\\d)`, 'i');
-    const wordMatch = textLower.match(wordRegex);
-    if (wordMatch) {
-      const day = parseInt(wordMatch[1], 10);
-      const yearStr = wordMatch[3];
-      if (day >= 1 && day <= 31) {
-        let year = parseInt(yearStr, 10);
-        if (yearStr.length === 2) {
-          year = 2000 + year;
-        }
-        if (year >= 2000 && year <= 2099) {
-          return `${year}-${mItem.val}-${String(day).padStart(2, '0')}`;
-        }
-      }
-    }
-  }
-  
   return null;
 }
 
+// ---------------------------------------------------------------------------
+// Confidence classifier
+// ---------------------------------------------------------------------------
+function classifyConfidence(score) {
+  if (score >= 80) return 'high';
+  if (score >= 50) return 'medium';
+  return 'low';
+}
+
+// ---------------------------------------------------------------------------
+// Main export
+// ---------------------------------------------------------------------------
+
 /**
- * Main Receipt Parser
+ * Scan a receipt image file.
+ *
+ * Steps:
+ *   1. Lazy-load OpenCV.js
+ *   2. Pre-process image through OpenCV pipeline
+ *   3. OCR via Tesseract.js (PSM 6, eng+ind)
+ *   4. Parse merchant, date, amount, heuristics, confidence
+ *
+ * @param {File}     imageFile        - Raw File from camera / file input
+ * @param {Function} progressCallback - Called with 0-100 during OCR recognition
+ * @returns {Promise<object>}
  */
 export async function scanReceipt(imageFile, progressCallback) {
-  // Perform OCR using Tesseract static method
+
+  // ── 1. Bypass OpenCV (Freezing Issue) ───────────────────────────────────
+  // OpenCV's WASM engine is too heavy for the main thread and freezes the browser.
+  // We use the raw image directly for Tesseract (which works perfectly).
+  const ocrInput = imageFile;
+
+  // ── 2. Tesseract OCR ────────────────────────────────────────────────────
+  if (progressCallback) progressCallback(10, 'Initializing OCR engine...');
   const ret = await Tesseract.recognize(
-    imageFile,
+    ocrInput,
     'eng+ind',
     {
       logger: m => {
-        if (progressCallback && m.status === 'recognizing text') {
-          progressCallback(Math.round(m.progress * 100));
+        if (progressCallback) {
+          // m.status values include: "loading tesseract core", "loading language traineddata", 
+          // "initializing api", "recognizing text"
+          const statusText = m.status ? m.status.charAt(0).toUpperCase() + m.status.slice(1) + '...' : 'Scanning...';
+          const p = Math.round((m.progress || 0) * 100);
+          progressCallback(p, statusText);
         }
-      }
-    }
+      },
+      // PSM 6 = "Assume a single uniform block of text"
+      // Works well for receipts which are narrow single-column documents
+      tessedit_pageseg_mode: '6',
+    },
   );
-  
-  const rawText = ret.data.text;
-  
-  // Split into clean lines
+
+  const rawText        = ret.data.text;
+  const overallScore   = Math.round(ret.data.confidence ?? 0); // 0-100
+
   const lines = rawText.split('\n')
-    .map(line => line.trim())
-    .filter(line => line.length > 0);
-    
+    .map(l => l.trim())
+    .filter(l => l.length > 0);
+
   if (lines.length === 0) {
     throw new Error('No text detected on the receipt image.');
   }
-  
-  // 1. EXTRACT DESCRIPTION (Merchant Name)
-  const commonMerchants = [
-    { pattern: /indomaret/i, name: 'Indomaret' },
-    { pattern: /alfamart/i, name: 'Alfamart' },
-    { pattern: /alfamidi/i, name: 'Alfamidi' },
-    { pattern: /super\s*indo/i, name: 'Superindo' },
-    { pattern: /hypermart/i, name: 'Hypermart' },
-    { pattern: /transmart/i, name: 'Transmart' },
-    { pattern: /starbucks/i, name: 'Starbucks' },
-    { pattern: /mcdonald/i, name: "McDonald's" },
-    { pattern: /\bkfc\b/i, name: 'KFC' },
-    { pattern: /kopi\s+kenangan/i, name: 'Kopi Kenangan' },
-    { pattern: /janji\s+jiwa/i, name: 'Kopi Janji Jiwa' },
-    { pattern: /cinema\s*xxi/i, name: 'Cinema XXI' },
-    { pattern: /pertamina/i, name: 'Pertamina' },
-    { pattern: /shell/i, name: 'Shell' },
-    { pattern: /grab|grob|greb|enjoyed your ride/i, name: 'Grab' },
-    { pattern: /gojek|go-jek/i, name: 'Gojek' }
-  ];
-  
-  let merchantName = '';
-  
-  // Try matching common merchants first from the entire raw text
-  for (const item of commonMerchants) {
-    if (item.pattern.test(rawText)) {
-      merchantName = item.name;
+
+  // ── 3. Merchant Name ─────────────────────────────────────────────────────
+  let merchantName     = '';
+  let merchantCategory = '';   // sourced from merchants.json
+
+  // Match against merchants.json (100+ patterns)
+  for (const entry of merchantsDb) {
+    const re = new RegExp(entry.pattern, 'i');
+    if (re.test(rawText)) {
+      merchantName     = entry.name;
+      merchantCategory = entry.category;
       break;
     }
   }
-  
-  // Fallback to line-by-line first clean line heuristic
+
+  // Fallback: first clean line heuristic
   if (!merchantName) {
-    const merchantBlacklist = [
-      'alamat', 'telp', 'npwp', 'tanggal', 'tgl', 'receipt', 'strip', 'kasir', 'cashier',
-      'welcome', 'terima', 'kasih', 'thank', 'you', 'invoice', 'member', 'no.', 'order',
-      'promo', 'discount', 'diskon', 'transaksi', 'merchant', 'jl.', 'jalan', 'raya',
-      'card', 'tunai', 'cash', 'debit'
+    const blacklist = [
+      'alamat','telp','npwp','tanggal','tgl','receipt','strip','kasir','cashier',
+      'welcome','terima','kasih','thank','you','invoice','member','no.','order',
+      'promo','discount','diskon','transaksi','merchant','jl.','jalan','raya',
+      'card','tunai','cash','debit',
     ];
-    
     for (let i = 0; i < Math.min(lines.length, 5); i++) {
-      const lineLower = lines[i].toLowerCase();
-      const isPureNumbers = /^\d+$/.test(lines[i].replace(/[.,\s]/g, ''));
-      const containsBlacklist = merchantBlacklist.some(word => lineLower.includes(word));
-      
-      if (lines[i].length > 2 && !isPureNumbers && !containsBlacklist) {
+      const ll  = lines[i].toLowerCase();
+      const num = /^\d+$/.test(lines[i].replace(/[.,\s]/g, ''));
+      const bad = blacklist.some(w => ll.includes(w));
+      if (lines[i].length > 2 && !num && !bad) {
         merchantName = lines[i];
         break;
       }
     }
   }
-  
-  if (!merchantName) {
-    merchantName = 'Receipt Scan';
-  }
-  
-  // 2. EXTRACT DATE
+
+  if (!merchantName) merchantName = 'Receipt Scan';
+
+  // ── 4. Date ──────────────────────────────────────────────────────────────
   let parsedDate = null;
   for (const line of lines) {
     const d = parseDate(line);
-    if (d) {
-      parsedDate = d;
-      break;
-    }
+    if (d) { parsedDate = d; break; }
   }
-  if (!parsedDate) {
-    parsedDate = new Date().toISOString().split('T')[0];
-  }
-  
-  // 3. EXTRACT TOTAL AMOUNT
-  const strictTotalKeywords = ['grand total', 'total belanja', 'total bayar', 'total due', 'total', 'harus dibayar', 'jumlah total', 'jumlah', 'netto', 'net', 'total harga'];
-  const secondaryTotalKeywords = ['subtotal', 'sub total', 'rp'];
-  const excludeKeywords = ['kembali', 'kembalian', 'change', 'tunai', 'cash', 'bayar cash', 'uang bayar', 'debit', 'credit', 'visa', 'mastercard', 'ovo', 'gopay', 'dana', 'shopeepay', 'linkaja', 'qris', 'card', 'non-tunai', 'edc', 'payment'];
+  if (!parsedDate) parsedDate = new Date().toISOString().split('T')[0];
+
+  // ── 5. Total Amount ──────────────────────────────────────────────────────
+  const strictKeywords = [
+    'grand total','total belanja','total bayar','total due',
+    'harus dibayar','jumlah total','total harga',
+    'total keseluruhan','total transaksi','total pembayaran',
+    'tagihan','netto','net','\\btotal\\b','\\bjumlah\\b',
+  ];
+  const secondaryKeywords = ['subtotal','sub total','\\brp\\b'];
+  const excludeKeywords   = [
+    'kembali','kembalian','change','tunai','cash','bayar cash','uang bayar',
+    'debit','credit','visa','mastercard','ovo','gopay','dana','shopeepay',
+    'linkaja','qris','card','non-tunai','edc','payment','cicilan',
+  ];
+
+  const MIN_AMOUNT = 100;
+  const MAX_AMOUNT = 50_000_000;
 
   let totalAmount = 0;
-  
-  // Heuristic 1: Scan bottom-to-top for strict total keywords and no exclusions
+
+  // Heuristic 1 — strict total keywords (scan bottom-to-top)
   for (let i = lines.length - 1; i >= 0; i--) {
-    const line = lines[i];
-    const lineLower = line.toLowerCase();
-    const hasStrictKeyword = strictTotalKeywords.some(kw => lineLower.includes(kw));
-    const hasExcludeKeyword = excludeKeywords.some(kw => lineLower.includes(kw));
-    
-    if (hasStrictKeyword && !hasExcludeKeyword) {
-      const cleanedLine = cleanLineOfDatesAndTimes(line);
-      const nums = extractNumbers(cleanedLine);
-      const validNums = nums.filter(val => val >= 500 && val < 50000000);
-      if (validNums.length > 0) {
-        totalAmount = validNums[validNums.length - 1]; // pick the last number in the line
-        break;
+    const ll      = lines[i].toLowerCase();
+    const hasKey  = strictKeywords.some(kw => new RegExp(kw).test(ll));
+    const hasExcl = excludeKeywords.some(kw => ll.includes(kw));
+    if (hasKey && !hasExcl) {
+      const n = extractRightmostAmount(stripDatesAndTimes(lines[i]));
+      if (n >= MIN_AMOUNT && n <= MAX_AMOUNT) { totalAmount = n; break; }
+    }
+  }
+
+  // Heuristic 2 — secondary keywords
+  if (!totalAmount) {
+    for (let i = lines.length - 1; i >= 0; i--) {
+      const ll      = lines[i].toLowerCase();
+      const hasKey  = secondaryKeywords.some(kw => new RegExp(kw).test(ll));
+      const hasExcl = excludeKeywords.some(kw => ll.includes(kw));
+      if (hasKey && !hasExcl) {
+        const n = extractRightmostAmount(stripDatesAndTimes(lines[i]));
+        if (n >= MIN_AMOUNT && n <= MAX_AMOUNT) { totalAmount = n; break; }
       }
     }
   }
-  
-  // Heuristic 2: Scan bottom-to-top for secondary keywords and no exclusions
-  if (totalAmount === 0) {
-    for (let i = lines.length - 1; i >= 0; i--) {
-      const line = lines[i];
-      const lineLower = line.toLowerCase();
-      const hasSecondaryKeyword = secondaryTotalKeywords.some(kw => lineLower.includes(kw));
-      const hasExcludeKeyword = excludeKeywords.some(kw => lineLower.includes(kw));
-      
-      if (hasSecondaryKeyword && !hasExcludeKeyword) {
-        const cleanedLine = cleanLineOfDatesAndTimes(line);
-        const nums = extractNumbers(cleanedLine);
-        const validNums = nums.filter(val => val >= 500 && val < 50000000);
-        if (validNums.length > 0) {
-          totalAmount = validNums[validNums.length - 1];
-          break;
-        }
-      }
+
+  // Heuristic 3 — largest number from bottom half of receipt
+  if (!totalAmount) {
+    const candidates = [];
+    const startIdx   = Math.floor(lines.length / 2); // skip item list header
+    for (let i = startIdx; i < lines.length; i++) {
+      const n = extractRightmostAmount(stripDatesAndTimes(lines[i]));
+      if (n >= MIN_AMOUNT && n <= MAX_AMOUNT) candidates.push(n);
+    }
+    if (candidates.length) totalAmount = Math.max(...candidates);
+  }
+
+  // ── 6. Category & Account Heuristics ────────────────────────────────────
+  const rawLower = rawText.toLowerCase();
+
+  // Category: prefer merchants.json category, else keyword fallback
+  let recommendedCategoryType = merchantCategory || 'groceries';
+  if (!merchantCategory) {
+    for (const [cat, re] of Object.entries(categoryKeywords)) {
+      if (re.test(rawLower)) { recommendedCategoryType = cat; break; }
     }
   }
-  
-  // Heuristic 3: Scan bottom-to-top for any valid numbers after date/time cleanup
-  if (totalAmount === 0) {
-    let allPossibleAmounts = [];
-    for (let i = lines.length - 1; i >= 0; i--) {
-      const cleanedLine = cleanLineOfDatesAndTimes(lines[i]);
-      const nums = extractNumbers(cleanedLine);
-      const validNums = nums.filter(val => val >= 500 && val < 50000000);
-      allPossibleAmounts.push(...validNums);
-    }
-    if (allPossibleAmounts.length > 0) {
-      totalAmount = Math.max(...allPossibleAmounts);
-    }
-  }
-  
-  // 4. RECOMMEND CATEGORY AND ACCOUNT HEURISTICS
-  const rawTextLower = rawText.toLowerCase();
-  
-  // Category Heuristics
-  let recommendedCategoryType = 'groceries'; // default fallback
-  if (rawTextLower.match(/(cafe|kopi|coffee|starbucks|resto|bakso|mcd|kfc|burger|pizza|dunkin|roti|eat|warung|mie|makan)/)) {
-    recommendedCategoryType = 'food';
-  } else if (rawTextLower.match(/(apotek|kimia|guardian|watsons|sehat|klinik|dokter|medicine|panadol|bodrex)/)) {
-    recommendedCategoryType = 'health';
-  } else if (rawTextLower.match(/(pln|listrik|pdam|air|telkom|internet|pulsa|speedy)/)) {
-    recommendedCategoryType = 'utilities';
-  } else if (rawTextLower.match(/(pertamina|bensin|shell|gojek|go-jek|grab|grob|greb|taxi|toll|parkir|bensin|ride|fare|passenger|booking|trip|perjalanan|driver)/)) {
-    recommendedCategoryType = 'transport';
-  }
-  
-  // Account Heuristics
-  let recommendedAccountType = 'bank'; // default fallback
-  if (rawTextLower.match(/(tunai|cash|kembalian|kembali)/)) {
+
+  // Account
+  let recommendedAccountType = null;
+  if (/\b(tunai|cash|kembalian|kembali)\b/i.test(rawLower))
     recommendedAccountType = 'cash';
-  } else if (rawTextLower.match(/(gopay|ovo|dana|linkaja|shopeepay|qris|e-money|flazz|brizzi)/)) {
+  else if (/\b(gopay|ovo|dana|linkaja|shopeepay|qris|e-money|flazz|brizzi|blu)\b/i.test(rawLower))
     recommendedAccountType = 'wallet';
-  }
-  
+  else if (/\b(debit|kredit|card|bca|mandiri|bni|bri|cimb|kartu)\b/i.test(rawLower))
+    recommendedAccountType = 'bank';
+
+  // ── 7. Per-field Confidence ──────────────────────────────────────────────
+  // We use overall Tesseract confidence as a proxy.
+  // Fields extracted via keyword match get a small boost; fallbacks get a penalty.
+  const merchantConfidenceScore = merchantCategory
+    ? Math.min(100, overallScore + 10)   // matched known merchant → bump
+    : Math.max(0, overallScore - 20);    // fallback heuristic → penalise
+
+  const amountConfidenceScore   = totalAmount > 0
+    ? overallScore
+    : 0;
+
+  const dateConfidenceScore     = parsedDate !== new Date().toISOString().split('T')[0]
+    ? overallScore          // parsed from text
+    : Math.max(0, overallScore - 30); // fell back to today
+
   return {
-    merchantName: merchantName,
-    totalAmount: totalAmount,
-    date: parsedDate,
+    merchantName,
+    totalAmount,
+    date:       parsedDate,
+    confidence: overallScore,
+    fieldConfidence: {
+      merchant: classifyConfidence(merchantConfidenceScore),
+      amount:   classifyConfidence(amountConfidenceScore),
+      date:     classifyConfidence(dateConfidenceScore),
+    },
     heuristics: {
       category: recommendedCategoryType,
-      account: recommendedAccountType
+      account:  recommendedAccountType,
     },
     rawText,
     imageFile,

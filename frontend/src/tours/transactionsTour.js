@@ -27,6 +27,15 @@ export const transactionsTourSteps = [
     },
   },
   {
+    element: '#tour-tx-scan-btn',
+    popover: {
+      title: 'tours.transactions.scan.title',
+      description: 'tours.transactions.scan.description',
+      side: 'bottom',
+      align: 'start',
+    },
+  },
+  {
     element: '#tour-tx-filters',
     popover: {
       title: 'tours.transactions.filters.title',
@@ -40,6 +49,15 @@ export const transactionsTourSteps = [
     popover: {
       title: 'tours.transactions.table.title',
       description: 'tours.transactions.table.description',
+      side: 'top',
+      align: 'center',
+    },
+  },
+  {
+    element: '#tour-tx-table',
+    popover: {
+      title: 'tours.transactions.swipe.title',
+      description: 'tours.transactions.swipe.description',
       side: 'top',
       align: 'center',
     },

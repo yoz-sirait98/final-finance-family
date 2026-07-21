@@ -3,9 +3,6 @@ INSERT INTO storage.buckets (id, name, public)
 VALUES ('receipts', 'receipts', false)
 ON CONFLICT (id) DO NOTHING;
 
--- Enable Row Level Security on storage.objects
-ALTER TABLE storage.objects ENABLE ROW LEVEL SECURITY;
-
 -- Allow authenticated users to upload/insert files to their own family_id folder in the receipts bucket
 DROP POLICY IF EXISTS "Allow authenticated uploads to family receipts folder" ON storage.objects;
 CREATE POLICY "Allow authenticated uploads to family receipts folder"

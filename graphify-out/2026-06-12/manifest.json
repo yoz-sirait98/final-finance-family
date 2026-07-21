@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "docs/task.md": {
-    "mtime": 1781243113.6285324,
-    "ast_hash": "799c96b5f485b0dd23341eed59e58e00",
+    "mtime": 1781243143.6674035,
+    "ast_hash": "77bfccc15c95a5f6a0dc40d8647cea29",
     "semantic_hash": ""
   },
   "docs/walkthrough_graphify.md": {
@@ -667,6 +667,11 @@
   "supabase/migrations/supabase/.temp/linked-project.json": {
     "mtime": 1780663436.9846969,
     "ast_hash": "34de4f7614dbad18adec76c1eb9d73af",
+    "semantic_hash": ""
+  },
+  "docs/walkthrough_magic_buttons.md": {
+    "mtime": 1781243129.4755995,
+    "ast_hash": "cc4b473d19dba3b2cebd69b9645989da",
     "semantic_hash": ""
   }
 }

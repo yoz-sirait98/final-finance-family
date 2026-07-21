@@ -1,7 +1,7 @@
 <template>
   <div class="shopping-detail-page fade-in">
     <!-- Header with Back Button -->
-    <div class="page-header d-flex justify-content-between align-items-center mb-4">
+    <div id="tour-sd-header" class="page-header d-flex justify-content-between align-items-center mb-4">
       <div class="d-flex align-items-center gap-3">
         <button class="btn btn-outline-secondary btn-sm" @click="router.push('/shopping')">
           <i class="bi bi-arrow-left"></i>
@@ -95,7 +95,7 @@
           </div>
           <div class="modal-footer border-0 pt-0">
             <button type="button" class="btn btn-secondary" @click="showAddModal = false">{{ $t('common.done') || 'Done' }}</button>
-            <button type="submit" class="btn btn-primary-gradient" :disabled="saving">
+            <button type="submit" id="tour-shoppingDetail-add-btn" class="btn btn-primary-gradient" :disabled="saving">
               <span v-if="saving" class="spinner-border spinner-border-sm me-2"></span>
               {{ $t('common.add') || 'Add Item' }}
             </button>
@@ -179,6 +179,12 @@
 </template>
 
 <script setup>
+import { useTour } from '../composables/useTour';
+import { shoppingDetailTourSteps } from '../tours/shoppingDetailTour';
+
+const { startAutoTour, startTour } = useTour('shoppingDetail');
+const handleTour = () => startTour(shoppingDetailTourSteps);
+
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { shoppingPlanService } from '../services/shoppingPlanService';
@@ -190,6 +196,7 @@ import { useAuthStore } from '../stores/auth';
 import { useToastStore } from '../stores/toast';
 import { useLocaleStore } from '../stores/locale';
 import { supabase } from '../lib/supabase';
+import { formatCurrency } from '../utils/format';
 
 const route = useRoute();
 const router = useRouter();
@@ -336,6 +343,9 @@ async function processCheckout() {
       category_id: checkoutForm.value.category_id,
       transaction_date: checkoutForm.value.transaction_date
     });
+    
+    await sendCheckoutNotification();
+
     toast.success('Checkout successful!');
     showCheckoutModal.value = false;
     fetchPlan();
@@ -345,6 +355,48 @@ async function processCheckout() {
     isCheckingOut.value = false;
   }
 }
+
+async function sendCheckoutNotification() {
+  try {
+    const { data: family } = await supabase.from('families').select('whatsapp_group_id').eq('id', authStore.familyId).single();
+    if (!family || !family.whatsapp_group_id) return;
+    
+    const buyer = members.value.find(m => m.id === checkoutForm.value.member_id);
+    const buyerName = buyer ? buyer.name : 'Unknown';
+    const loc = plan.value?.location || 'Unknown';
+    const isId = localeStore.currentLocale === 'id';
+    const dateStr = new Date().toLocaleDateString(isId ? 'id-ID' : 'en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+    
+    let message = '';
+    if (isId) {
+      message = "*========================*\n🛍️  *BELANJA SELESAI*  🛍️\n*========================*\n\nHore! 👋 Daftar belanja telah selesai dan dicatat.\n\n📍 *Lokasi:* " + loc + "\n👤 *Dibeli oleh:* " + buyerName + "\n\n*Daftar Belanjaan:*\n";
+    } else {
+      message = "*========================*\n🛍️  *SHOPPING COMPLETED*  🛍️\n*========================*\n\nGreat news! A shopping trip has just been completed and logged.\n\n📍 *Location:* " + loc + "\n👤 *Bought by:* " + buyerName + "\n\n*Items Purchased:*\n";
+    }
+
+    items.value.forEach(item => {
+      const priceStr = formatCurrency(parseFloat(item.price) || 0);
+      message += "✅ " + item.name + " - " + priceStr + "\n";
+    });
+
+    const totalStr = formatCurrency(totalAmount.value);
+    
+    if (isId) {
+      message += "\n*------------------------*\n💵 *Total Keseluruhan:* " + totalStr + "\n*------------------------*";
+    } else {
+      message += "\n*------------------------*\n💵 *Grand Total:* " + totalStr + "\n*------------------------*";
+    }
+
+    await fetch('https://finance-family-3ac25ba9b522.herokuapp.com/api/notify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-api-key': import.meta.env.VITE_WA_API_KEY },
+      body: JSON.stringify({ message: message, groupId: family.whatsapp_group_id })
+    });
+  } catch (err) {
+    console.error('Failed to send WA checkout notif', err);
+  }
+}
+
 
 function setupRealtime() {
   subscriptionPlans = supabase
@@ -361,6 +413,9 @@ function setupRealtime() {
 }
 
 onMounted(() => {
+  startAutoTour(shoppingDetailTourSteps);
+  window.addEventListener('start-shoppingDetail-tour', handleTour);
+
   fetchPlan();
   fetchItems();
   fetchDropdowns();
@@ -368,6 +423,8 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
+  window.removeEventListener('start-shoppingDetail-tour', handleTour);
+
   if (subscriptionPlans) supabase.removeChannel(subscriptionPlans);
   if (subscriptionItems) supabase.removeChannel(subscriptionItems);
 });
