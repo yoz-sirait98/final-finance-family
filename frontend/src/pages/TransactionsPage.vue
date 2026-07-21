@@ -183,6 +183,18 @@
         <form @submit.prevent="saveTransaction">
           <div class="modal-body">
             <div v-if="formError" class="alert alert-danger small">{{ formError }}</div>
+
+            <!-- ✅ Duplicate detection warning -->
+            <div v-if="possibleDuplicate" class="alert alert-warning d-flex align-items-start gap-2 small py-2 mb-3">
+              <i class="bi bi-exclamation-triangle-fill mt-1 flex-shrink-0"></i>
+              <div>
+                <strong>{{ localeStore.currentLocale === 'id' ? 'Kemungkinan duplikat' : 'Possible duplicate' }}</strong><br />
+                {{ localeStore.currentLocale === 'id'
+                  ? `Transaksi serupa sudah ada: ${possibleDuplicate.description} — ${possibleDuplicate.amount} pada ${possibleDuplicate.date}`
+                  : `A similar transaction already exists: ${possibleDuplicate.description} — ${possibleDuplicate.amount} on ${possibleDuplicate.date}` }}
+              </div>
+            </div>
+
             <div class="mb-3">
               <label class="form-label" for="txType">{{ $t('common.type') }}</label>
               <select id="txType" name="type" v-model="form.type" class="form-select" required>
@@ -216,18 +228,46 @@
                 <option v-for="c in filteredCategories" :key="c.id" :value="c.id">{{ c.name }}</option>
               </select>
             </div>
+
+            <!-- Amount + confidence badge -->
             <div class="mb-3">
-              <label class="form-label" for="txAmount">{{ $t('common.amount') }} (Rp)</label>
-              <input id="txAmount" name="amount" v-model.number="form.amount" type="number" class="form-control" min="1" required />
+              <label class="form-label d-flex align-items-center gap-2" for="txAmount">
+                {{ $t('common.amount') }} (Rp)
+                <span v-if="scanConfidence?.amount" :class="confidenceBadgeClass(scanConfidence.amount)" class="badge rounded-pill fw-normal">
+                  {{ confidenceBadgeLabel(scanConfidence.amount) }}
+                </span>
+              </label>
+              <input id="txAmount" name="amount" v-model.number="form.amount" type="number"
+                :class="['form-control', scanConfidence?.amount === 'low' ? 'border-danger' : scanConfidence?.amount === 'medium' ? 'border-warning' : '']"
+                min="1" required />
             </div>
+
+            <!-- Date + confidence badge -->
             <div class="mb-3">
-              <label class="form-label" for="txDate">{{ $t('common.date') }}</label>
-              <input id="txDate" name="transaction_date" v-model="form.transaction_date" type="date" class="form-control" required />
+              <label class="form-label d-flex align-items-center gap-2" for="txDate">
+                {{ $t('common.date') }}
+                <span v-if="scanConfidence?.date" :class="confidenceBadgeClass(scanConfidence.date)" class="badge rounded-pill fw-normal">
+                  {{ confidenceBadgeLabel(scanConfidence.date) }}
+                </span>
+              </label>
+              <input id="txDate" name="transaction_date" v-model="form.transaction_date" type="date"
+                :class="['form-control', scanConfidence?.date === 'low' ? 'border-danger' : scanConfidence?.date === 'medium' ? 'border-warning' : '']"
+                required />
             </div>
+
+            <!-- Description + confidence badge -->
             <div class="mb-3">
-              <label class="form-label" for="txDesc">{{ $t('common.description') }}</label>
-              <input id="txDesc" name="description" v-model="form.description" type="text" class="form-control" />
+              <label class="form-label d-flex align-items-center gap-2" for="txDesc">
+                {{ $t('common.description') }}
+                <span v-if="scanConfidence?.merchant" :class="confidenceBadgeClass(scanConfidence.merchant)" class="badge rounded-pill fw-normal">
+                  {{ confidenceBadgeLabel(scanConfidence.merchant) }}
+                </span>
+              </label>
+              <input id="txDesc" name="description" v-model="form.description" type="text"
+                :class="['form-control', scanConfidence?.merchant === 'low' ? 'border-danger' : scanConfidence?.merchant === 'medium' ? 'border-warning' : '']"
+              />
             </div>
+
             <!-- Receipt image preview (scanned or already saved) -->
             <div v-if="pendingReceiptFile || form.receipt_url" class="mb-3">
               <label class="form-label"><i class="bi bi-image me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Foto Struk' : 'Receipt Image' }}</label>
@@ -255,6 +295,18 @@
                     <i class="bi bi-x-lg me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Hapus Foto' : 'Remove Photo' }}
                   </button>
                 </div>
+              </div>
+            </div>
+
+            <!-- Raw OCR Text panel (collapsible) -->
+            <div v-if="scanRawText" class="mb-2">
+              <button type="button" class="btn btn-link btn-sm text-muted px-0 py-0 text-decoration-none d-flex align-items-center gap-1"
+                @click="showRawOcrPanel = !showRawOcrPanel">
+                <i :class="showRawOcrPanel ? 'bi bi-chevron-down' : 'bi bi-chevron-right'"></i>
+                <span class="small">{{ localeStore.currentLocale === 'id' ? 'Lihat teks OCR mentah' : 'View raw OCR text' }}</span>
+              </button>
+              <div v-if="showRawOcrPanel" class="mt-1 p-2 rounded border bg-black bg-opacity-25" style="max-height:160px;overflow-y:auto;">
+                <pre class="mb-0 small text-muted" style="white-space:pre-wrap;font-size:0.72rem;">{{ scanRawText }}</pre>
               </div>
             </div>
           </div>
@@ -451,6 +503,12 @@ const receiptScannerInput = ref(null);
 const isScanning = ref(false);
 const scanProgress = ref(0);
 
+// OpenCV + Tesseract scan result state
+const scanConfidence  = ref(null);   // { merchant, amount, date } → 'high'|'medium'|'low'
+const scanRawText     = ref('');     // raw OCR output for review panel
+const showRawOcrPanel = ref(false);  // toggle for collapsible raw OCR panel
+const possibleDuplicate = ref(null); // { description, amount, date } if duplicate detected
+
 // Receipt image (pending upload after scan, or saved URL for existing record)
 const pendingReceiptFile = ref(null);   // raw File object from scanner
 const pendingReceiptPreview = ref('');  // local object-URL preview
@@ -598,6 +656,19 @@ async function openReceiptLightbox(tx) {
   }
 }
 
+// Confidence badge helpers
+function confidenceBadgeClass(level) {
+  if (level === 'high')   return 'bg-success text-white';
+  if (level === 'medium') return 'bg-warning text-dark';
+  return 'bg-danger text-white';
+}
+function confidenceBadgeLabel(level) {
+  const isId = localeStore.currentLocale === 'id';
+  if (level === 'high')   return isId ? 'Akurat' : 'Scanned';
+  if (level === 'medium') return isId ? 'Periksa' : 'Please verify';
+  return isId ? 'Mungkin salah' : 'Likely wrong';
+}
+
 function openCreate() {
   formError.value = '';
   editingId.value = null;
@@ -606,6 +677,10 @@ function openCreate() {
   savedReceiptSignedUrl.value = '';
   receiptUrlToDelete.value = '';
   wasBudgetExceeded.value = false;
+  scanConfidence.value  = null;
+  scanRawText.value     = '';
+  showRawOcrPanel.value = false;
+  possibleDuplicate.value = null;
   form.value = {
     type: 'expense',
     member_id: '',
@@ -629,6 +704,12 @@ async function onReceiptSelected(event) {
 
   isScanning.value = true;
   scanProgress.value = 0;
+  // Reset scan-specific state
+  scanConfidence.value    = null;
+  scanRawText.value       = '';
+  showRawOcrPanel.value   = false;
+  possibleDuplicate.value = null;
+
   try {
     const data = await scanReceipt(file, (progress) => {
       scanProgress.value = progress;
@@ -637,86 +718,110 @@ async function onReceiptSelected(event) {
     // Reset the input so the same file can be selected again
     event.target.value = '';
 
-    // Heuristic mappings for Category
+    // ── Category mapping ──────────────────────────────────────────────────
     let matchedCategoryId = '';
-    const catRec = data.heuristics.category;
+    const catRec      = data.heuristics.category;
     const expenseCats = categories.value.filter(c => c.type === 'expense');
-    
-    if (catRec === 'food') {
-      const match = expenseCats.find(c => c.name.toLowerCase().match(/(makan|minum|food|drink|dining|cafe|kopi)/));
-      if (match) matchedCategoryId = match.id;
-    } else if (catRec === 'groceries') {
-      const match = expenseCats.find(c => c.name.toLowerCase().match(/(grocer|belanja|sembako|bulanan|pasar|dapur)/));
-      if (match) matchedCategoryId = match.id;
-    } else if (catRec === 'health') {
-      const match = expenseCats.find(c => c.name.toLowerCase().match(/(sehat|obat|medis|health|medical|apotek)/));
-      if (match) matchedCategoryId = match.id;
-    } else if (catRec === 'utilities') {
-      const match = expenseCats.find(c => c.name.toLowerCase().match(/(listrik|air|utilit|bill|telepon|internet|pulsa)/));
-      if (match) matchedCategoryId = match.id;
-    } else if (catRec === 'transport') {
-      const match = expenseCats.find(c => c.name.toLowerCase().match(/(transport|bensin|kendaraan|ojek|gojek|grab|bensin|fuel)/));
-      if (match) matchedCategoryId = match.id;
+    const catPatterns = {
+      food:          /(makan|minum|food|drink|dining|cafe|kopi|restoran)/,
+      groceries:     /(grocer|belanja|sembako|bulanan|pasar|dapur|market)/,
+      health:        /(sehat|obat|medis|health|medical|apotek|klinik)/,
+      utilities:     /(listrik|air|utilit|bill|telepon|internet|pulsa)/,
+      transport:     /(transport|bensin|kendaraan|ojek|gojek|grab|fuel|parkir)/,
+      entertainment: /(hiburan|entertain|cinema|bioskop|games|sport)/,
+      household:     /(rumah|perabot|elektronik|furniture|hardware)/,
+      shopping:      /(belanja|shop|fashion|baju|pakaian|sepatu)/,
+    };
+    for (const [cat, re] of Object.entries(catPatterns)) {
+      if (cat === catRec) {
+        const match = expenseCats.find(c => re.test(c.name.toLowerCase()));
+        if (match) { matchedCategoryId = match.id; break; }
+      }
     }
-    
     if (!matchedCategoryId && expenseCats.length > 0) {
       matchedCategoryId = expenseCats[0].id;
     }
 
-    // Heuristic mappings for Account
+    // ── Account mapping ───────────────────────────────────────────────────
     let matchedAccountId = '';
     const accRec = data.heuristics.account;
-    
     if (accRec === 'cash') {
-      const match = accounts.value.find(a => a.name.toLowerCase().match(/(cash|tunai|dompet|fisik)/));
+      const match = accounts.value.find(a => /(cash|tunai|dompet|fisik)/i.test(a.name));
       if (match) matchedAccountId = match.id;
     } else if (accRec === 'wallet') {
-      const match = accounts.value.find(a => a.name.toLowerCase().match(/(wallet|gopay|ovo|dana|shopee|link|digital|qris)/));
+      const match = accounts.value.find(a => /(wallet|gopay|ovo|dana|shopee|link|digital|qris)/i.test(a.name));
       if (match) matchedAccountId = match.id;
-    } else if (accRec === 'bank') {
-      const match = accounts.value.find(a => a.name.toLowerCase().match(/(bank|mandiri|bca|bni|bri|cimb|debit|tabungan)/));
+    } else {
+      const match = accounts.value.find(a => /(bank|mandiri|bca|bni|bri|cimb|debit|tabungan)/i.test(a.name));
       if (match) matchedAccountId = match.id;
     }
-    
     if (!matchedAccountId && accounts.value.length > 0) {
       matchedAccountId = accounts.value[0].id;
     }
 
-    // Heuristic mappings for Member
+    // ── Member mapping ────────────────────────────────────────────────────
     let matchedMemberId = '';
-    const rawTextLower = data.rawText ? data.rawText.toLowerCase() : '';
-    if (rawTextLower) {
-      const match = members.value.find(m => rawTextLower.includes(m.name.toLowerCase()));
+    const rawLower = (data.rawText ?? '').toLowerCase();
+    if (rawLower) {
+      const match = members.value.find(m => rawLower.includes(m.name.toLowerCase()));
       if (match) matchedMemberId = match.id;
     }
     if (!matchedMemberId && members.value.length > 0) {
       matchedMemberId = members.value[0].id;
     }
 
-    // Store the image file for upload after save, and create a local preview
+    // ── Duplicate detection ───────────────────────────────────────────────
+    if (data.totalAmount && data.date) {
+      const fingerprint = `${data.totalAmount}|${data.date}|${(data.merchantName ?? '').toLowerCase()}`;
+      const scanDateObj  = new Date(data.date);
+      const dupMatch = transactions.value.find(tx => {
+        const txDate = new Date(tx.transaction_date);
+        const dateDiff = Math.abs(scanDateObj - txDate) / (1000 * 60 * 60 * 24);
+        const txFp = `${Math.abs(tx.amount)}|${tx.transaction_date}|${(tx.description ?? '').toLowerCase()}`;
+        return txFp === fingerprint || (
+          Math.abs(tx.amount) === data.totalAmount &&
+          dateDiff <= 1 &&
+          (tx.description ?? '').toLowerCase().includes((data.merchantName ?? '').toLowerCase().substring(0, 5))
+        );
+      });
+      if (dupMatch) {
+        possibleDuplicate.value = {
+          description: dupMatch.description || '-',
+          amount: `Rp ${Number(Math.abs(dupMatch.amount)).toLocaleString('id-ID')}`,
+          date: dupMatch.transaction_date,
+        };
+      }
+    }
+
+    // ── Receipt preview ───────────────────────────────────────────────────
     if (pendingReceiptPreview.value) URL.revokeObjectURL(pendingReceiptPreview.value);
-    pendingReceiptFile.value = data.imageFile;
+    pendingReceiptFile.value    = data.imageFile;
     pendingReceiptPreview.value = data.imageFile ? URL.createObjectURL(data.imageFile) : '';
 
-    // Auto-fill and open modal
-    formError.value = '';
-    editingId.value = null;
+    // ── Store scan meta for UI ────────────────────────────────────────────
+    scanConfidence.value = data.fieldConfidence ?? null;
+    scanRawText.value    = data.rawText ?? '';
+
+    // ── Auto-fill form & open modal ───────────────────────────────────────
+    formError.value         = '';
+    editingId.value         = null;
     savedReceiptSignedUrl.value = '';
-    receiptUrlToDelete.value = '';
+    receiptUrlToDelete.value    = '';
     form.value = {
-      type: 'expense',
-      member_id: matchedMemberId,
-      account_id: matchedAccountId,
-      category_id: matchedCategoryId,
-      amount: data.totalAmount || '',
+      type:             'expense',
+      member_id:        matchedMemberId,
+      account_id:       matchedAccountId,
+      category_id:      matchedCategoryId,
+      amount:           data.totalAmount || '',
       transaction_date: data.date || todayISO(),
-      description: data.merchantName || '',
-      receipt_url: '',
+      description:      data.merchantName || '',
+      receipt_url:      '',
     };
     showTxModal.value = true;
     toast.success(localeStore.currentLocale === 'id' ? 'Struk berhasil dipindai!' : 'Receipt scanned successfully!');
 
   } catch (error) {
+    console.error('[Scanner] Scan failed:', error);
     toast.error(localeStore.currentLocale === 'id' ? 'Gagal memindai struk.' : 'Failed to parse receipt.');
   } finally {
     isScanning.value = false;
@@ -813,34 +918,42 @@ async function doSaveTransaction() {
   showBudgetConfirm.value = false;
   formError.value = '';
   try {
-    let savedId = editingId.value;
     const payload = { ...form.value };
 
-    if (editingId.value) {
-      await transactionService.update(editingId.value, payload);
-    } else {
-      const res = await transactionService.create(payload);
-      savedId = res?.data?.data?.id ?? null;
-    }
-
-    // Upload pending receipt image after the transaction is saved
-    if (pendingReceiptFile.value && savedId && authStore.familyId) {
+    // ── Phase 3: Upload-first atomic save ─────────────────────────────────
+    // Upload the receipt image BEFORE creating the transaction row so that
+    // receipt_url is included in the single CREATE call. This eliminates the
+    // old 2-step race condition where a network failure could leave an orphan
+    // transaction with no receipt_url.
+    if (pendingReceiptFile.value && !editingId.value && authStore.familyId) {
       try {
         const storagePath = await uploadReceipt(pendingReceiptFile.value, authStore.familyId);
-        await transactionService.update(savedId, { receipt_url: storagePath });
+        payload.receipt_url = storagePath; // attach atomically
       } catch (uploadErr) {
-        // Non-fatal — transaction is saved, image just didn't upload
-        console.warn('Receipt upload failed:', uploadErr);
-        toast.error(localeStore.currentLocale === 'id' ? 'Transaksi disimpan, tapi foto struk gagal diunggah.' : 'Transaction saved but receipt image upload failed.');
+        console.warn('[Scanner] Pre-upload failed, saving transaction without receipt:', uploadErr);
+        toast.error(localeStore.currentLocale === 'id'
+          ? 'Foto struk gagal diunggah. Transaksi akan disimpan tanpa foto.'
+          : 'Receipt image upload failed. Transaction will be saved without photo.');
       } finally {
         if (pendingReceiptPreview.value) URL.revokeObjectURL(pendingReceiptPreview.value);
-        pendingReceiptFile.value = null;
+        pendingReceiptFile.value    = null;
         pendingReceiptPreview.value = '';
       }
     }
 
+    if (editingId.value) {
+      await transactionService.update(editingId.value, payload);
+    } else {
+      await transactionService.create(payload);
+    }
+
     toast.success(localeStore.t('common.success'));
     showTxModal.value = false;
+    // Reset scan state after successful save
+    scanConfidence.value    = null;
+    scanRawText.value       = '';
+    showRawOcrPanel.value   = false;
+    possibleDuplicate.value = null;
     fetchData();
     budgetStore.fetchAlerts();
 
