@@ -520,8 +520,8 @@
     "semantic_hash": "081c348d068770af78fcd90980521318"
   },
   "frontend/src/pages/ShoppingDetailPage.vue": {
-    "mtime": 1784019142.8564186,
-    "ast_hash": "c5bf1477f7fd0e7ac99ceb84b7b4da87",
+    "mtime": 1784020535.8769526,
+    "ast_hash": "7664c65c91202bdba6be22a5f4d2cae9",
     "semantic_hash": ""
   },
   "frontend/src/services/shoppingPlanService.js": {
