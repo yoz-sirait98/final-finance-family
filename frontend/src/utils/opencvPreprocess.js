@@ -58,16 +58,23 @@ export async function preprocessReceiptImage(file, cv) {
   // Output canvas that will hold the final processed image
   const outputCanvas = document.createElement('canvas');
 
-  // Allocate all cv.Mat objects here so we can delete them in finally
-  const src         = new cv.Mat();
-  const gray        = new cv.Mat();
-  const blurred     = new cv.Mat();
-  const binary      = new cv.Mat();
-  const closed      = new cv.Mat();
-  const upscaled    = new cv.Mat();
-  const kernel      = cv.Mat.ones(2, 2, cv.CV_8U);
+  // Allocate all cv.Mat objects (except src, which is returned by imread)
+  let src = null;
+  let gray = null;
+  let blurred = null;
+  let binary = null;
+  let closed = null;
+  let upscaled = null;
+  let kernel = null;
 
   try {
+    gray = new cv.Mat();
+    blurred = new cv.Mat();
+    binary = new cv.Mat();
+    closed = new cv.Mat();
+    upscaled = new cv.Mat();
+    kernel = cv.Mat.ones(2, 2, cv.CV_8U);
+
     // ── Step 1: Load image into cv.Mat ────────────────────────────────────
     // Draw to a temp canvas first so cv.imread can access pixel data
     const tempCanvas = document.createElement('canvas');
@@ -75,7 +82,9 @@ export async function preprocessReceiptImage(file, cv) {
     tempCanvas.height = img.naturalHeight;
     const ctx = tempCanvas.getContext('2d');
     ctx.drawImage(img, 0, 0);
-    cv.imread(tempCanvas, src);
+    
+    // imread allocates and returns a new Mat
+    src = cv.imread(tempCanvas);
 
     // ── Step 2: Grayscale ─────────────────────────────────────────────────
     cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY);
@@ -126,13 +135,13 @@ export async function preprocessReceiptImage(file, cv) {
   } finally {
     // ── Step 8: MANDATORY memory cleanup ──────────────────────────────────
     // OpenCV.js uses C++ heap; leaks crash the tab after repeated scans
-    src.delete();
-    gray.delete();
-    blurred.delete();
-    binary.delete();
-    closed.delete();
-    upscaled.delete();
-    kernel.delete();
+    if (src) src.delete();
+    if (gray) gray.delete();
+    if (blurred) blurred.delete();
+    if (binary) binary.delete();
+    if (closed) closed.delete();
+    if (upscaled) upscaled.delete();
+    if (kernel) kernel.delete();
   }
 
   return outputCanvas;
