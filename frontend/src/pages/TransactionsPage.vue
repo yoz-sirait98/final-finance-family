@@ -31,7 +31,7 @@
           <!-- Laser Scan Line -->
           <div class="ocr-scan-line"></div>
         </div>
-        <h5 class="fw-bold"><i class="bi bi-cpu text-info me-2 spinner-border-sm"></i>{{ $t('common.scanning') || 'Analyzing Receipt...' }}</h5>
+        <h5 class="fw-bold"><i class="bi bi-cpu text-info me-2 spinner-border-sm"></i>{{ scanStatus || $t('common.scanning') || 'Analyzing Receipt...' }}</h5>
         <p class="text-muted small mb-0">{{ scanProgress }}% processed</p>
       </div>
     </div>
@@ -204,8 +204,13 @@
               </select>
             </div>
             <div class="mb-3">
-              <label class="form-label" for="txMember">{{ $t('common.member') }}</label>
-              <select id="txMember" name="member_id" v-model="form.member_id" class="form-select" required>
+              <label class="form-label d-flex align-items-center" for="txMember">
+                {{ $t('common.member') }}
+                <span v-if="scanConfidence?.member" :class="confidenceBadgeClass(scanConfidence.member)" class="badge rounded-pill fw-normal ms-2">
+                  {{ confidenceBadgeLabel(scanConfidence.member) }}
+                </span>
+              </label>
+              <select id="txMember" name="member_id" v-model="form.member_id" :class="['form-select', scanConfidence?.member === 'low' ? 'border-danger' : scanConfidence?.member === 'medium' ? 'border-warning' : '']" required>
                 <option value="" disabled>- {{ $t('common.member') }} -</option>
                 <template v-for="m in members" :key="m.id">
                   <option v-if="m.is_active || m.id === form.member_id" :value="m.id">{{ m.name }}{{ !m.is_active ? ' (' + $t('common.inactive') + ')' : '' }}</option>
@@ -213,8 +218,13 @@
               </select>
             </div>
             <div class="mb-3">
-              <label class="form-label" for="txAccount">{{ $t('common.account') }}</label>
-              <select id="txAccount" name="account_id" v-model="form.account_id" class="form-select" required>
+              <label class="form-label d-flex align-items-center" for="txAccount">
+                {{ $t('common.account') }}
+                <span v-if="scanConfidence?.account" :class="confidenceBadgeClass(scanConfidence.account)" class="badge rounded-pill fw-normal ms-2">
+                  {{ confidenceBadgeLabel(scanConfidence.account) }}
+                </span>
+              </label>
+              <select id="txAccount" name="account_id" v-model="form.account_id" :class="['form-select', scanConfidence?.account === 'low' ? 'border-danger' : scanConfidence?.account === 'medium' ? 'border-warning' : '']" required>
                 <option value="" disabled>- {{ $t('common.account') }} -</option>
                 <optgroup v-for="(group, type) in groupedAccounts" :key="type" :label="translateAccountType(type)">
                   <option v-for="a in group" :key="a.id" :value="a.id">{{ a.name }}</option>
@@ -222,8 +232,13 @@
               </select>
             </div>
             <div class="mb-3">
-              <label class="form-label" for="txCategory">{{ $t('common.category') }}</label>
-              <select id="txCategory" name="category_id" v-model="form.category_id" class="form-select">
+              <label class="form-label d-flex align-items-center" for="txCategory">
+                {{ $t('common.category') }}
+                <span v-if="scanConfidence?.category" :class="confidenceBadgeClass(scanConfidence.category)" class="badge rounded-pill fw-normal ms-2">
+                  {{ confidenceBadgeLabel(scanConfidence.category) }}
+                </span>
+              </label>
+              <select id="txCategory" name="category_id" v-model="form.category_id" :class="['form-select', scanConfidence?.category === 'low' ? 'border-danger' : scanConfidence?.category === 'medium' ? 'border-warning' : '']">
                 <option value="">- {{ $t('common.category') }} -</option>
                 <option v-for="c in filteredCategories" :key="c.id" :value="c.id">{{ c.name }}</option>
               </select>
@@ -502,6 +517,7 @@ const toast = useToastStore();
 const receiptScannerInput = ref(null);
 const isScanning = ref(false);
 const scanProgress = ref(0);
+const scanStatus = ref('');
 
 // OpenCV + Tesseract scan result state
 const scanConfidence  = ref(null);   // { merchant, amount, date } → 'high'|'medium'|'low'
@@ -704,6 +720,7 @@ async function onReceiptSelected(event) {
 
   isScanning.value = true;
   scanProgress.value = 0;
+  scanStatus.value = 'Starting scanner...';
   // Reset scan-specific state
   scanConfidence.value    = null;
   scanRawText.value       = '';
@@ -711,8 +728,9 @@ async function onReceiptSelected(event) {
   possibleDuplicate.value = null;
 
   try {
-    const data = await scanReceipt(file, (progress) => {
+    const data = await scanReceipt(file, (progress, statusMsg) => {
       scanProgress.value = progress;
+      if (statusMsg) scanStatus.value = statusMsg;
     });
 
     // Reset the input so the same file can be selected again
@@ -720,6 +738,7 @@ async function onReceiptSelected(event) {
 
     // ── Category mapping ──────────────────────────────────────────────────
     let matchedCategoryId = '';
+    let categoryConf = 'low';
     const catRec      = data.heuristics.category;
     const expenseCats = categories.value.filter(c => c.type === 'expense');
     const catPatterns = {
@@ -735,39 +754,47 @@ async function onReceiptSelected(event) {
     for (const [cat, re] of Object.entries(catPatterns)) {
       if (cat === catRec) {
         const match = expenseCats.find(c => re.test(c.name.toLowerCase()));
-        if (match) { matchedCategoryId = match.id; break; }
+        if (match) { 
+          matchedCategoryId = match.id; 
+          categoryConf = 'high'; 
+          break; 
+        }
       }
     }
     if (!matchedCategoryId && expenseCats.length > 0) {
-      matchedCategoryId = expenseCats[0].id;
+      matchedCategoryId = expenseCats[0].id; // Fallback
     }
 
     // ── Account mapping ───────────────────────────────────────────────────
     let matchedAccountId = '';
+    let accountConf = 'low';
     const accRec = data.heuristics.account;
+    
     if (accRec === 'cash') {
       const match = accounts.value.find(a => /(cash|tunai|dompet|fisik)/i.test(a.name));
-      if (match) matchedAccountId = match.id;
+      if (match) { matchedAccountId = match.id; accountConf = 'high'; }
     } else if (accRec === 'wallet') {
-      const match = accounts.value.find(a => /(wallet|gopay|ovo|dana|shopee|link|digital|qris)/i.test(a.name));
-      if (match) matchedAccountId = match.id;
-    } else {
+      const match = accounts.value.find(a => /(wallet|gopay|ovo|dana|shopee|link|digital|qris|blu)/i.test(a.name));
+      if (match) { matchedAccountId = match.id; accountConf = 'high'; }
+    } else if (accRec === 'bank') {
       const match = accounts.value.find(a => /(bank|mandiri|bca|bni|bri|cimb|debit|tabungan)/i.test(a.name));
-      if (match) matchedAccountId = match.id;
+      if (match) { matchedAccountId = match.id; accountConf = 'high'; }
     }
+    
     if (!matchedAccountId && accounts.value.length > 0) {
-      matchedAccountId = accounts.value[0].id;
+      matchedAccountId = accounts.value[0].id; // Fallback
     }
 
     // ── Member mapping ────────────────────────────────────────────────────
     let matchedMemberId = '';
+    let memberConf = 'low';
     const rawLower = (data.rawText ?? '').toLowerCase();
     if (rawLower) {
       const match = members.value.find(m => rawLower.includes(m.name.toLowerCase()));
-      if (match) matchedMemberId = match.id;
+      if (match) { matchedMemberId = match.id; memberConf = 'high'; }
     }
     if (!matchedMemberId && members.value.length > 0) {
-      matchedMemberId = members.value[0].id;
+      matchedMemberId = members.value[0].id; // Fallback
     }
 
     // ── Duplicate detection ───────────────────────────────────────────────
@@ -799,7 +826,11 @@ async function onReceiptSelected(event) {
     pendingReceiptPreview.value = data.imageFile ? URL.createObjectURL(data.imageFile) : '';
 
     // ── Store scan meta for UI ────────────────────────────────────────────
-    scanConfidence.value = data.fieldConfidence ?? null;
+    const newConf = data.fieldConfidence ?? {};
+    newConf.member = memberConf;
+    newConf.account = accountConf;
+    newConf.category = categoryConf;
+    scanConfidence.value = newConf;
     scanRawText.value    = data.rawText ?? '';
 
     // ── Auto-fill form & open modal ───────────────────────────────────────

@@ -34,41 +34,29 @@ export function loadOpenCV() {
       return resolve(cvInstance);
     }
 
-    // Emscripten checks `window.Module` at startup.
-    window.Module = {
-      onRuntimeInitialized: () => {
-        if (window.cv) {
-          cvInstance = window.cv;
-          resolve(cvInstance);
-        }
-      }
-    };
-
     const script = document.createElement('script');
     script.src = OPENCV_CDN_URL;
     script.async = true;
 
-    script.onload = () => {
-      if (window.cv) {
-        // Modern OpenCV 4.x factory can return a Promise-like function
-        if (typeof window.cv === 'function') {
-          window.cv().then((instance) => {
-            cvInstance = instance;
-            resolve(cvInstance);
-          }).catch(reject);
-        } 
-        // Synchronous or already initialized
-        else if (window.cv.Mat) {
-          cvInstance = window.cv;
-          resolve(cvInstance);
-        }
-        // If neither, we rely on window.Module.onRuntimeInitialized which will fire shortly
-      } else {
-        reject(new Error('OpenCV.js loaded but `cv` object not found on window.'));
+    let pollInterval = null;
+
+    // Poll for cv.Mat. Emscripten attaches C++ bindings (like Mat) only AFTER
+    // the WebAssembly binary is fully compiled and instantiated.
+    pollInterval = setInterval(() => {
+      if (window.cv && window.cv.Mat) {
+        clearInterval(pollInterval);
+        cvInstance = window.cv;
+        resolve(cvInstance);
       }
+    }, 100);
+
+    script.onload = () => {
+      // We don't resolve here, we let the poll interval handle it, 
+      // because WASM might still be compiling asynchronously.
     };
 
     script.onerror = () => {
+      if (pollInterval) clearInterval(pollInterval);
       loadPromise = null;
       reject(new Error('Failed to load OpenCV.js from CDN.'));
     };

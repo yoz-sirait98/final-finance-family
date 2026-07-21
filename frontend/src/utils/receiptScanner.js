@@ -141,26 +141,24 @@ function classifyConfidence(score) {
  */
 export async function scanReceipt(imageFile, progressCallback) {
 
-  // ── 1. Lazy-load OpenCV ─────────────────────────────────────────────────
-  let processedCanvas = null;
-  try {
-    const cv = await loadOpenCV();
-    processedCanvas = await preprocessReceiptImage(imageFile, cv);
-  } catch (cvErr) {
-    // OpenCV failed (e.g. CDN unreachable) — fall back to raw file
-    console.warn('[Scanner] OpenCV preprocessing failed, using raw image:', cvErr.message);
-  }
-
-  const ocrInput = processedCanvas ?? imageFile;
+  // ── 1. Bypass OpenCV (Freezing Issue) ───────────────────────────────────
+  // OpenCV's WASM engine is too heavy for the main thread and freezes the browser.
+  // We use the raw image directly for Tesseract (which works perfectly).
+  const ocrInput = imageFile;
 
   // ── 2. Tesseract OCR ────────────────────────────────────────────────────
+  if (progressCallback) progressCallback(10, 'Initializing OCR engine...');
   const ret = await Tesseract.recognize(
     ocrInput,
     'eng+ind',
     {
       logger: m => {
-        if (progressCallback && m.status === 'recognizing text') {
-          progressCallback(Math.round(m.progress * 100));
+        if (progressCallback) {
+          // m.status values include: "loading tesseract core", "loading language traineddata", 
+          // "initializing api", "recognizing text"
+          const statusText = m.status ? m.status.charAt(0).toUpperCase() + m.status.slice(1) + '...' : 'Scanning...';
+          const p = Math.round((m.progress || 0) * 100);
+          progressCallback(p, statusText);
         }
       },
       // PSM 6 = "Assume a single uniform block of text"
@@ -289,11 +287,13 @@ export async function scanReceipt(imageFile, progressCallback) {
   }
 
   // Account
-  let recommendedAccountType = 'bank';
-  if (/(tunai|cash|kembalian|kembali)/i.test(rawLower))
+  let recommendedAccountType = null;
+  if (/\b(tunai|cash|kembalian|kembali)\b/i.test(rawLower))
     recommendedAccountType = 'cash';
-  else if (/(gopay|ovo|dana|linkaja|shopeepay|qris|e-money|flazz|brizzi)/i.test(rawLower))
+  else if (/\b(gopay|ovo|dana|linkaja|shopeepay|qris|e-money|flazz|brizzi|blu)\b/i.test(rawLower))
     recommendedAccountType = 'wallet';
+  else if (/\b(debit|kredit|card|bca|mandiri|bni|bri|cimb|kartu)\b/i.test(rawLower))
+    recommendedAccountType = 'bank';
 
   // ── 7. Per-field Confidence ──────────────────────────────────────────────
   // We use overall Tesseract confidence as a proxy.

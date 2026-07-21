@@ -64,7 +64,6 @@ export async function preprocessReceiptImage(file, cv) {
   let blurred = null;
   let binary = null;
   let closed = null;
-  let upscaled = null;
   let kernel = null;
 
   try {
@@ -72,7 +71,6 @@ export async function preprocessReceiptImage(file, cv) {
     blurred = new cv.Mat();
     binary = new cv.Mat();
     closed = new cv.Mat();
-    upscaled = new cv.Mat();
     kernel = cv.Mat.ones(2, 2, cv.CV_8U);
 
     // ── Step 1: Load image into cv.Mat ────────────────────────────────────
@@ -85,6 +83,20 @@ export async function preprocessReceiptImage(file, cv) {
     
     // imread allocates and returns a new Mat
     src = cv.imread(tempCanvas);
+
+    // ── Resize immediately to MIN_HEIGHT_PX to drastically speed up processing ──
+    if (src.rows !== MIN_HEIGHT_PX) {
+      const scale = MIN_HEIGHT_PX / src.rows;
+      const newSize = new cv.Size(
+        Math.round(src.cols * scale),
+        MIN_HEIGHT_PX
+      );
+      const interpolation = src.rows > MIN_HEIGHT_PX ? cv.INTER_AREA : cv.INTER_CUBIC;
+      const resized = new cv.Mat();
+      cv.resize(src, resized, newSize, 0, 0, interpolation);
+      src.delete();
+      src = resized;
+    }
 
     // ── Step 2: Grayscale ─────────────────────────────────────────────────
     cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY);
@@ -113,24 +125,10 @@ export async function preprocessReceiptImage(file, cv) {
     // Fills small white gaps inside dark characters caused by printer dots or folds
     cv.morphologyEx(binary, closed, cv.MORPH_CLOSE, kernel);
 
-    // ── Step 6: Upscale if height is too small ─────────────────────────────
-    // Tesseract accuracy drops significantly below ~1800px height
-    let finalMat = closed;
-    if (closed.rows < MIN_HEIGHT_PX) {
-      const scale   = MIN_HEIGHT_PX / closed.rows;
-      const newSize = new cv.Size(
-        Math.round(closed.cols * scale),
-        MIN_HEIGHT_PX,
-      );
-      // INTER_CUBIC gives better quality for text upscaling
-      cv.resize(closed, upscaled, newSize, 0, 0, cv.INTER_CUBIC);
-      finalMat = upscaled;
-    }
-
-    // ── Step 7: Write result to output canvas ──────────────────────────────
-    outputCanvas.width  = finalMat.cols;
-    outputCanvas.height = finalMat.rows;
-    cv.imshow(outputCanvas, finalMat);
+    // ── Step 6: Write result to output canvas ──────────────────────────────
+    outputCanvas.width  = closed.cols;
+    outputCanvas.height = closed.rows;
+    cv.imshow(outputCanvas, closed);
 
   } finally {
     // ── Step 8: MANDATORY memory cleanup ──────────────────────────────────
@@ -140,7 +138,6 @@ export async function preprocessReceiptImage(file, cv) {
     if (blurred) blurred.delete();
     if (binary) binary.delete();
     if (closed) closed.delete();
-    if (upscaled) upscaled.delete();
     if (kernel) kernel.delete();
   }
 
