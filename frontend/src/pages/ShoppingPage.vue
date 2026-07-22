@@ -42,8 +42,9 @@
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-start mb-2">
               <h5 class="card-title fw-bold mb-0 text-primary">{{ plan.location }}</h5>
-              <span class="badge" :class="plan.status === 'done' ? 'bg-success' : 'bg-warning text-dark'">
-                {{ plan.status === 'done' ? ($t('shopping.done') || 'Done') : ($t('shopping.onProgress') || 'On Progress') }}
+              <span class="badge" :class="plan.status === 'locked' ? 'bg-secondary' : plan.status === 'done' ? 'bg-success' : 'bg-warning text-dark'">
+                <i v-if="plan.status === 'locked'" class="bi bi-lock-fill me-1"></i>
+                {{ plan.status === 'locked' ? (localeStore.currentLocale === 'id' ? 'Terkunci' : 'Locked') : plan.status === 'done' ? ($t('shopping.done') || 'Done') : ($t('shopping.onProgress') || 'On Progress') }}
               </span>
             </div>
             <p class="text-muted small mb-2">
@@ -54,13 +55,13 @@
             </p>
           </div>
           <div class="card-footer bg-white border-light d-flex justify-content-between align-items-center">
-            <span v-if="plan.status === 'done'" class="fw-bold text-danger">
+            <span v-if="plan.status === 'done' || plan.status === 'locked'" class="fw-bold text-danger">
               Rp {{ (plan.transaction ? parseFloat(plan.transaction.amount || 0) : (plan.shopping_items?.reduce((sum, item) => sum + (parseFloat(item.price) || 0), 0) || 0)).toLocaleString('id-ID') }}
             </span>
             <span v-else class="text-muted small">
               <i class="bi bi-people me-1"></i> {{ plan.assigned_members?.length || 0 }} assigned
             </span>
-            <button v-if="plan.status !== 'done'" class="btn btn-sm btn-outline-danger border-0" @click.stop="confirmDeletePlan(plan)">
+            <button v-if="plan.status !== 'locked'" class="btn btn-sm btn-outline-danger border-0" @click.stop="confirmDeletePlan(plan)">
               <i class="bi bi-trash"></i>
             </button>
             <span v-else class="badge bg-light text-muted border"><i class="bi bi-lock me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Terkunci' : 'Locked' }}</span>
@@ -285,7 +286,7 @@ const scannedItemsTotal = computed(() => {
 });
 
 const progressPlans = computed(() => plans.value.filter(p => p.status === 'progress'));
-const donePlans = computed(() => plans.value.filter(p => p.status === 'done'));
+const donePlans = computed(() => plans.value.filter(p => p.status === 'done' || p.status === 'locked'));
 const filteredPlans = computed(() => activeTab.value === 'progress' ? progressPlans.value : donePlans.value);
 
 let subscription;

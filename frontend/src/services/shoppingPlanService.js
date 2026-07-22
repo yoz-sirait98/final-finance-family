@@ -19,7 +19,6 @@ export const shoppingPlanService = {
 
   /**
    * Mark a shopping plan as done WITHOUT creating a transaction.
-   * Items become read-only display data.
    */
   markAsDone: async (planId) => {
     const { data, error } = await supabase.from('shopping_plans')
@@ -31,7 +30,20 @@ export const shoppingPlanService = {
   },
 
   /**
-   * Checkout: mark as done AND create a linked expense transaction.
+   * Lock a shopping plan (status = 'locked').
+   * Locked plans cannot be deleted and items become read-only.
+   */
+  lock: async (planId) => {
+    const { data, error } = await supabase.from('shopping_plans')
+      .update({ status: 'locked' })
+      .eq('id', planId)
+      .select();
+    if (error) throw error;
+    return { data };
+  },
+
+  /**
+   * Checkout: mark as locked AND create a linked expense transaction.
    */
   checkout: async (planId, transactionPayload) => {
     const family_id = useAuthStore().familyId;
@@ -56,9 +68,9 @@ export const shoppingPlanService = {
     
     if (txnError) throw txnError;
     
-    // 3. Mark the plan as done and link transaction
+    // 3. Mark the plan as locked and link transaction
     const { data: updatedPlan, error: updateErr } = await supabase.from('shopping_plans')
-        .update({ status: 'done', transaction_id: txn.id })
+        .update({ status: 'locked', transaction_id: txn.id })
         .eq('id', planId)
         .select();
         
@@ -107,15 +119,15 @@ export const shoppingPlanService = {
   },
 
   /**
-   * Delete a shopping plan. Plans with status 'done' CANNOT be deleted.
+   * Delete a shopping plan. Plans with status 'locked' CANNOT be deleted.
    */
   delete: async (id) => {
     // 0. Guard: check status
     const { data: plan, error: fetchErr } = await supabase.from('shopping_plans').select('status, transaction_id').eq('id', id).single();
     if (fetchErr && fetchErr.code !== 'PGRST116') throw fetchErr;
 
-    if (plan && plan.status === 'done') {
-      throw new Error('Completed shopping plans cannot be deleted.');
+    if (plan && plan.status === 'locked') {
+      throw new Error('Locked shopping plans cannot be deleted.');
     }
 
     // 1. If it has a transaction, delete the transaction

@@ -1,48 +1,35 @@
-# Walkthrough: Shopping List Revamp
+# Walkthrough: Shopping List Revamp & Done/Locked Refinement
 
 ## Overview
-This update revamps the Shopping List feature with three major changes:
+This update refines the Shopping List feature to distinguish between **Done** and **Locked** statuses:
 
-1. **Flexible Checkout** — Users now choose between "Mark as Done" (no transaction) or "Checkout & Record Transaction" when completing a shopping plan.
-2. **Done Plans are Protected** — Shopping plans with status `done` can no longer be deleted. A "Locked" badge replaces the delete button.
-3. **Receipt → Auto Shopping Plan** — Users can scan a receipt (OCR), review extracted line items, and auto-create a completed Shopping Plan.
+1. **Flexible Checkout Flow**:
+   - **Mark as Done**: Sets status to `done`. Items remain editable, and the plan **can still be deleted**. A "Lock Plan" button is provided for manual locking.
+   - **Checkout & Record Transaction**: Sets status to `locked` automatically, creating a linked expense transaction.
+
+2. **Done vs. Locked States**:
+   - **`done` status**: Plan can be deleted. Items inside the plan (prices, checkboxes, add/delete item) remain **editable**.
+   - **`locked` status**: Plan **cannot be deleted** (protected with "🔒 Locked" badge). Items inside become **read-only/disabled**.
 
 ---
 
 ## Changes Made
 
-### New File: `receiptItemParser.js`
-- **Purpose**: Extracts individual line items (name + price) from raw OCR text.
-- **Features**:
-  - Smart keyword filtering to skip headers, footers, totals, tax, payment lines.
-  - Handles Indonesian receipt formats (Rp prefix, thousand separators).
-  - Multi-line item support (name on one line, price on the next).
-  - Quantity extraction (`2x MILK`, `MILK x2`).
-  - Configurable price range validation (100 – 10,000,000).
-  - Deduplication utility for merging duplicate items.
-
 ### Modified: `shoppingPlanService.js`
-- **`markAsDone(planId)`**: New method that sets status to `done` without creating a transaction.
-- **`createFromReceipt(location, items, createdBy)`**: New method that creates a plan + bulk-inserts items with status `done`.
-- **`delete(id)`**: Now guards against deleting done plans with a clear error message.
+- **`lock(planId)`**: Sets plan status to `locked`.
+- **`checkout(...)`**: Sets plan status to `locked` automatically upon recording a transaction.
+- **`delete(id)`**: Guard now only prevents deletion if `plan.status === 'locked'`.
 
 ### Modified: `ShoppingDetailPage.vue`
-- **Choice Modal**: Clicking "Complete Plan" now shows a two-option choice card:
-  - ✅ "Mark as Done" — just marks done, items become read-only reference.
-  - 💳 "Checkout & Record Transaction" — opens the existing checkout form.
-- **Read-only Mode**: When a plan is done, item prices show as static text, checkboxes are disabled, and no delete/add buttons are visible.
+- **Item Editability**: Checkboxes, prices, add item, and delete item remain enabled for `progress` and `done` plans; disabled/read-only for `locked` plans.
+- **Lock Plan Button**: Added a "🔒 Lock Plan" (`Kunci Rencana`) button when a plan is in `done` status.
+- **Header Badge**: Shows "Done" (`bg-success`) for `done` status, and "Locked" (`bg-secondary` with lock icon) for `locked` status.
 
 ### Modified: `ShoppingPage.vue`
-- **"Scan Receipt" Button**: New button in the header that triggers the camera/file picker.
-- **OCR Scanning Overlay**: Shows progress bar while Tesseract.js processes the image.
-- **Review Modal**: After scanning, users see an editable table of extracted items with store name, individual prices, and a total. Users can add/remove/edit items before saving.
-- **Delete Protection**: Done plans show a "🔒 Locked" badge instead of a delete button.
+- **Tabs**: "Done" tab includes both `done` and `locked` plans.
+- **Deletion Protection**: Shows trash delete button for `progress` and `done` plans; shows "🔒 Locked" badge for `locked` plans.
 
 ---
 
 ## Verification
-- ✅ Production build compiled with zero errors.
-- Manual testing recommended for:
-  - Shopping Detail → "Complete Plan" → Choice modal flow.
-  - Shopping List → "Scan Receipt" → OCR → Review → Save.
-  - Verify done plans cannot be deleted (button hidden + service guard).
+- ✅ Production build (`vite build`) compiled cleanly with zero errors.
