@@ -80,13 +80,13 @@
     "semantic_hash": ""
   },
   "frontend/src/locales/en.json": {
-    "mtime": 1784696095.2557068,
-    "ast_hash": "50c2fab69df2604ceb5662f71b1ef506",
+    "mtime": 1784608237.8062882,
+    "ast_hash": "5c0a1757d1162e1ac567eddffa632c40",
     "semantic_hash": ""
   },
   "frontend/src/locales/id.json": {
-    "mtime": 1784696080.8232625,
-    "ast_hash": "ecdf5e3c15afc9e732ecf14995959537",
+    "mtime": 1784608237.8072958,
+    "ast_hash": "6b4f37171df68f727111dbbc6da8aedc",
     "semantic_hash": ""
   },
   "frontend/src/main.js": {
@@ -395,8 +395,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ShoppingPage.vue": {
-    "mtime": 1784693961.4202588,
-    "ast_hash": "04d920593dc1b5193ebf50dbbe783533",
+    "mtime": 1784608237.8133042,
+    "ast_hash": "e260139c9a88ee4d1ac3e327e656909a",
     "semantic_hash": ""
   },
   "frontend/src/services/shoppingService.js": {
@@ -520,13 +520,13 @@
     "semantic_hash": "081c348d068770af78fcd90980521318"
   },
   "frontend/src/pages/ShoppingDetailPage.vue": {
-    "mtime": 1784693887.647249,
-    "ast_hash": "edffd65fc2189e312f5508702b5419fc",
+    "mtime": 1784608237.812305,
+    "ast_hash": "1996dc38c69579ea3761f5c7eaada815",
     "semantic_hash": ""
   },
   "frontend/src/services/shoppingPlanService.js": {
-    "mtime": 1784695495.145678,
-    "ast_hash": "f9d6fe649b4e084e064bb6738f0d45f0",
+    "mtime": 1780997597.7201557,
+    "ast_hash": "1b8483b93103beb9e55ad6adedac529c",
     "semantic_hash": ""
   },
   "supabase/migrations/000013_shopping_plans_overhaul.sql": {
@@ -794,6 +794,11 @@
     "ast_hash": "2915e02fc08c99d1ba212415a04a35aa",
     "semantic_hash": ""
   },
+  "frontend/run-scanner.js": {
+    "mtime": 1784605219.8234174,
+    "ast_hash": "af1b7caa9431e165cabee8126033931a",
+    "semantic_hash": ""
+  },
   "frontend/src/utils/merchants.json": {
     "mtime": 1784608237.8182979,
     "ast_hash": "f1ac3e88c3d86f22b75c4ea71ce7c380",
@@ -829,14 +834,19 @@
     "ast_hash": "94f7edaf4088d3445afe67c6342d4e27",
     "semantic_hash": ""
   },
-  "frontend/src/utils/receiptItemParser.js": {
-    "mtime": 1784693777.5203059,
-    "ast_hash": "7b288d0ee6fd50f24cb4b2bec7f81ad0",
+  "frontend/public/opencv_test.html": {
+    "mtime": 1784604846.7920742,
+    "ast_hash": "a30d60ecd49d2a5ed50513617ee902b4",
     "semantic_hash": ""
   },
-  "docs/walkthrough_shopping_revamp.md": {
-    "mtime": 1784694007.0761006,
-    "ast_hash": "dc43b7b773be072737f90d6255370e4c",
+  "frontend/public/test_receipt.html": {
+    "mtime": 1784606565.5770354,
+    "ast_hash": "7e49307421d8ae07c3d369da02b73948",
+    "semantic_hash": ""
+  },
+  "frontend/public/receipt.jpg": {
+    "mtime": 1784604157.0458481,
+    "ast_hash": "f0ca12b357bfc9d73bebbe97d091018a",
     "semantic_hash": ""
   }
 }
