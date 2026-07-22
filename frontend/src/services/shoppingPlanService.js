@@ -43,7 +43,7 @@ export const shoppingPlanService = {
   },
 
   /**
-   * Checkout: mark as locked AND create a linked expense transaction.
+   * Checkout: mark as done AND create a linked expense transaction.
    */
   checkout: async (planId, transactionPayload) => {
     const family_id = useAuthStore().familyId;
@@ -68,9 +68,9 @@ export const shoppingPlanService = {
     
     if (txnError) throw txnError;
     
-    // 3. Mark the plan as locked and link transaction
+    // 3. Mark the plan as done and link transaction
     const { data: updatedPlan, error: updateErr } = await supabase.from('shopping_plans')
-        .update({ status: 'locked', transaction_id: txn.id })
+        .update({ status: 'done', transaction_id: txn.id })
         .eq('id', planId)
         .select();
         
@@ -80,7 +80,7 @@ export const shoppingPlanService = {
   },
 
   /**
-   * Create a shopping plan + items from a scanned receipt (auto-done).
+   * Create a shopping plan + items from a scanned receipt (auto-locked).
    * @param {string} location - Store/merchant name
    * @param {Array<{name: string, price: number, qty: number}>} items - Parsed items
    * @param {string} createdBy - Member ID who scanned the receipt
@@ -89,13 +89,13 @@ export const shoppingPlanService = {
   createFromReceipt: async (location, items, createdBy) => {
     const family_id = useAuthStore().familyId;
 
-    // 1. Create the plan with status = done
+    // 1. Create the plan with status = locked
     const { data: plan, error: planErr } = await supabase.from('shopping_plans')
       .insert([{
         family_id,
         location,
         created_by: createdBy,
-        status: 'done',
+        status: 'locked',
         assigned_members: []
       }])
       .select()
