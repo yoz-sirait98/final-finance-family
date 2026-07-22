@@ -90,10 +90,8 @@ export const shoppingPlanService = {
       .single();
     if (planErr) throw planErr;
 
-    // 2. Bulk-insert all items
     const itemRows = items.map(item => ({
       shopping_plan_id: plan.id,
-      family_id,
       name: item.name,
       price: item.price,
       added_by: createdBy,
