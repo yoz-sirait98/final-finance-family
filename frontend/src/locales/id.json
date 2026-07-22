@@ -63,7 +63,9 @@
     "projectpockets": "Kantong Proyek",
     "aiadvisor": "Asisten AI",
     "calendar": "Kalender",
-    "iconsgem": "Ikon Gem"
+    "iconsgem": "Ikon Gem",
+    "shopping": "Belanja",
+    "shoppingdetail": "Daftar Belanja"
   },
   "auth": {
     "login": {

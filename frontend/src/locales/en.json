@@ -63,7 +63,9 @@
     "projectpockets": "Project Pockets",
     "aiadvisor": "AI Advisor",
     "calendar": "Calendar",
-    "iconsgem": "Icons Gem"
+    "iconsgem": "Icons Gem",
+    "shopping": "Shopping",
+    "shoppingdetail": "Shopping Detail"
   },
   "auth": {
     "login": {
