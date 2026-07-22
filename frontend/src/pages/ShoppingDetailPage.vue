@@ -438,7 +438,8 @@ async function processCheckout() {
     showCheckoutModal.value = false;
     fetchPlan();
   } catch (e) {
-    toast.error('Checkout failed');
+    console.error('Checkout error:', e);
+    toast.error('Checkout failed: ' + (e.message || 'Unknown error'));
   } finally {
     isCheckingOut.value = false;
   }
