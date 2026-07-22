@@ -16,6 +16,23 @@ export const shoppingPlanService = {
     
     return { data: { data } };
   },
+
+  /**
+   * Mark a shopping plan as done WITHOUT creating a transaction.
+   * Items become read-only display data.
+   */
+  markAsDone: async (planId) => {
+    const { data, error } = await supabase.from('shopping_plans')
+      .update({ status: 'done' })
+      .eq('id', planId)
+      .select();
+    if (error) throw error;
+    return { data };
+  },
+
+  /**
+   * Checkout: mark as done AND create a linked expense transaction.
+   */
   checkout: async (planId, transactionPayload) => {
     const family_id = useAuthStore().familyId;
     
@@ -49,18 +66,67 @@ export const shoppingPlanService = {
     
     return { data: { transaction: txn, plan: updatedPlan } };
   },
+
+  /**
+   * Create a shopping plan + items from a scanned receipt (auto-done).
+   * @param {string} location - Store/merchant name
+   * @param {Array<{name: string, price: number, qty: number}>} items - Parsed items
+   * @param {string} createdBy - Member ID who scanned the receipt
+   * @returns plan + items
+   */
+  createFromReceipt: async (location, items, createdBy) => {
+    const family_id = useAuthStore().familyId;
+
+    // 1. Create the plan with status = done
+    const { data: plan, error: planErr } = await supabase.from('shopping_plans')
+      .insert([{
+        family_id,
+        location,
+        created_by: createdBy,
+        status: 'done',
+        assigned_members: []
+      }])
+      .select()
+      .single();
+    if (planErr) throw planErr;
+
+    // 2. Bulk-insert all items
+    const itemRows = items.map(item => ({
+      shopping_plan_id: plan.id,
+      family_id,
+      name: item.name,
+      price: item.price,
+      added_by: createdBy,
+      is_checked: true
+    }));
+
+    const { data: insertedItems, error: itemsErr } = await supabase.from('shopping_items')
+      .insert(itemRows)
+      .select();
+    if (itemsErr) throw itemsErr;
+
+    return { data: { plan, items: insertedItems } };
+  },
+
+  /**
+   * Delete a shopping plan. Plans with status 'done' CANNOT be deleted.
+   */
   delete: async (id) => {
-    // 1. Fetch the plan to see if it has a linked transaction
-    const { data: plan, error: fetchErr } = await supabase.from('shopping_plans').select('transaction_id').eq('id', id).single();
+    // 0. Guard: check status
+    const { data: plan, error: fetchErr } = await supabase.from('shopping_plans').select('status, transaction_id').eq('id', id).single();
     if (fetchErr && fetchErr.code !== 'PGRST116') throw fetchErr;
 
-    // 2. If it has a transaction, delete the transaction (this will cascade or SET NULL in other places)
+    if (plan && plan.status === 'done') {
+      throw new Error('Completed shopping plans cannot be deleted.');
+    }
+
+    // 1. If it has a transaction, delete the transaction
     if (plan && plan.transaction_id) {
       const { error: txnErr } = await supabase.from('transactions').delete().eq('id', plan.transaction_id);
       if (txnErr) throw txnErr;
     }
 
-    // 3. Delete the shopping plan
+    // 2. Delete the shopping plan
     const { data, error } = await supabase.from('shopping_plans').delete().eq('id', id).select();
     if (error) throw error;
     

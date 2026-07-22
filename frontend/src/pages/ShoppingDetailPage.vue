@@ -41,13 +41,20 @@
               </div>
             </div>
             <div class="d-flex align-items-center gap-3">
-              <div class="input-group input-group-sm" style="width: 140px;">
-                <span class="input-group-text border-light bg-light text-muted">Rp</span>
-                <input type="number" class="form-control border-light" v-model="item.price" @change="updateItemPrice(item)" placeholder="Est. Price" />
-              </div>
-              <button class="btn btn-sm btn-outline-danger border-0" @click="confirmDeleteItem(item)">
-                <i class="bi bi-trash"></i>
-              </button>
+              <!-- Price: editable only when plan is in progress -->
+              <template v-if="plan?.status === 'progress'">
+                <div class="input-group input-group-sm" style="width: 140px;">
+                  <span class="input-group-text border-light bg-light text-muted">Rp</span>
+                  <input type="number" class="form-control border-light" v-model="item.price" @change="updateItemPrice(item)" placeholder="Est. Price" />
+                </div>
+                <button class="btn btn-sm btn-outline-danger border-0" @click="confirmDeleteItem(item)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </template>
+              <!-- Read-only price when done -->
+              <template v-else>
+                <span class="fw-semibold text-muted">Rp {{ Number(item.price || 0).toLocaleString('id-ID') }}</span>
+              </template>
             </div>
           </div>
         </div>
@@ -60,9 +67,55 @@
 
     <!-- Checkout Action -->
     <div v-if="plan?.status === 'progress' && items.length > 0" class="d-flex justify-content-end">
-      <button class="btn btn-success px-5 rounded-pill shadow-sm" @click="openCheckoutModal">
-        <i class="bi bi-cart-check me-2"></i>Checkout Plan
+      <button class="btn btn-success px-5 rounded-pill shadow-sm" @click="openChoiceModal">
+        <i class="bi bi-cart-check me-2"></i>{{ localeStore.currentLocale === 'id' ? 'Selesaikan' : 'Complete Plan' }}
       </button>
+    </div>
+
+    <!-- ===== Choice Modal (Mark as Done vs. Checkout) ===== -->
+    <div v-if="showChoiceModal" class="vue-modal-backdrop" @mousedown.self="showChoiceModal = false">
+      <div class="vue-modal" style="max-width: 480px;">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title fw-bold"><i class="bi bi-check2-square me-2 text-success"></i>{{ localeStore.currentLocale === 'id' ? 'Selesaikan Belanja' : 'Complete Shopping Plan' }}</h5>
+          <button type="button" class="btn-close" @click="showChoiceModal = false"></button>
+        </div>
+        <div class="modal-body">
+          <p class="text-muted mb-4">{{ localeStore.currentLocale === 'id' ? 'Bagaimana Anda ingin menyelesaikan rencana belanja ini?' : 'How would you like to finalize this plan?' }}</p>
+
+          <!-- Option A: Mark as Done only -->
+          <div class="choice-card p-3 mb-3 rounded-3 border" :class="{ 'border-primary bg-primary bg-opacity-10': selectedChoice === 'done' }" role="button" @click="selectedChoice = 'done'">
+            <div class="d-flex align-items-start gap-3">
+              <div class="choice-icon rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 44px; height: 44px; background: linear-gradient(135deg, #10b981, #059669);">
+                <i class="bi bi-check-lg text-white fs-5"></i>
+              </div>
+              <div>
+                <h6 class="fw-bold mb-1">{{ localeStore.currentLocale === 'id' ? 'Tandai Selesai Saja' : 'Mark as Done' }}</h6>
+                <small class="text-muted">{{ localeStore.currentLocale === 'id' ? 'Selesaikan rencana tanpa mencatat ke transaksi. Daftar belanja disimpan sebagai referensi.' : 'Complete the plan without recording a transaction. Items are kept as reference.' }}</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Option B: Checkout & Record Transaction -->
+          <div class="choice-card p-3 mb-1 rounded-3 border" :class="{ 'border-primary bg-primary bg-opacity-10': selectedChoice === 'checkout' }" role="button" @click="selectedChoice = 'checkout'">
+            <div class="d-flex align-items-start gap-3">
+              <div class="choice-icon rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 44px; height: 44px; background: linear-gradient(135deg, #667eea, #764ba2);">
+                <i class="bi bi-credit-card text-white fs-5"></i>
+              </div>
+              <div>
+                <h6 class="fw-bold mb-1">{{ localeStore.currentLocale === 'id' ? 'Checkout & Catat Transaksi' : 'Checkout & Record Transaction' }}</h6>
+                <small class="text-muted">{{ localeStore.currentLocale === 'id' ? 'Selesaikan dan otomatis buat transaksi pengeluaran sebesar total belanja.' : 'Complete the plan AND create an expense transaction for the total amount.' }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer border-0 pt-0">
+          <button class="btn btn-secondary" @click="showChoiceModal = false">{{ $t('common.cancel') }}</button>
+          <button class="btn btn-primary-gradient" :disabled="!selectedChoice || isMarkingDone" @click="proceedWithChoice">
+            <span v-if="isMarkingDone" class="spinner-border spinner-border-sm me-2"></span>
+            {{ localeStore.currentLocale === 'id' ? 'Lanjutkan' : 'Continue' }}
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- Add Item Modal -->
@@ -222,6 +275,11 @@ const showCheckoutModal = ref(false);
 const checkoutForm = ref({ transaction_date: new Date().toISOString().split('T')[0], account_id: '', category_id: '', member_id: '' });
 const isCheckingOut = ref(false);
 
+// Choice modal state
+const showChoiceModal = ref(false);
+const selectedChoice = ref('');
+const isMarkingDone = ref(false);
+
 const totalAmount = computed(() => {
   return items.value.reduce((sum, item) => sum + (parseFloat(item.price) || 0), 0);
 });
@@ -320,14 +378,44 @@ async function doDeleteItem() {
   }
 }
 
-function openCheckoutModal() {
+// ===== Choice Modal Logic =====
+
+function openChoiceModal() {
   // Validate prices
   const missingPrices = items.value.some(i => !i.price || parseFloat(i.price) <= 0);
   if (missingPrices) {
     toast.warning(localeStore.t('shopping.zeroPriceWarning') || 'All items must have a price. Please fill the price or delete the item.');
     return;
   }
-  
+  selectedChoice.value = '';
+  showChoiceModal.value = true;
+}
+
+async function proceedWithChoice() {
+  if (selectedChoice.value === 'done') {
+    await markAsDoneOnly();
+  } else if (selectedChoice.value === 'checkout') {
+    showChoiceModal.value = false;
+    openCheckoutModal();
+  }
+}
+
+async function markAsDoneOnly() {
+  isMarkingDone.value = true;
+  try {
+    await shoppingPlanService.markAsDone(planId);
+    await sendCheckoutNotification();
+    toast.success(localeStore.currentLocale === 'id' ? 'Rencana belanja ditandai selesai!' : 'Shopping plan marked as done!');
+    showChoiceModal.value = false;
+    fetchPlan();
+  } catch (e) {
+    toast.error(localeStore.currentLocale === 'id' ? 'Gagal menandai selesai' : 'Failed to mark as done');
+  } finally {
+    isMarkingDone.value = false;
+  }
+}
+
+function openCheckoutModal() {
   if (plan.value?.created_by) {
     checkoutForm.value.member_id = plan.value.created_by;
   }
@@ -361,7 +449,7 @@ async function sendCheckoutNotification() {
     const { data: family } = await supabase.from('families').select('whatsapp_group_id').eq('id', authStore.familyId).single();
     if (!family || !family.whatsapp_group_id) return;
     
-    const buyer = members.value.find(m => m.id === checkoutForm.value.member_id);
+    const buyer = members.value.find(m => m.id === checkoutForm.value.member_id) || members.value.find(m => m.id === plan.value?.created_by);
     const buyerName = buyer ? buyer.name : 'Unknown';
     const loc = plan.value?.location || 'Unknown';
     const isId = localeStore.currentLocale === 'id';
@@ -429,3 +517,14 @@ onUnmounted(() => {
   if (subscriptionItems) supabase.removeChannel(subscriptionItems);
 });
 </script>
+
+<style scoped>
+.choice-card {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.choice-card:hover {
+  border-color: var(--primary-color) !important;
+  background-color: rgba(102, 126, 234, 0.05);
+}
+</style>
