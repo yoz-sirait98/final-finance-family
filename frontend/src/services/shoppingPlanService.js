@@ -7,7 +7,7 @@ const crud = createCrudService('shopping_plans');
 export const shoppingPlanService = {
   ...crud,
   list: async (params = {}) => {
-    let query = supabase.from('shopping_plans').select('*, created_by_member:members!created_by(id, name), transaction:transactions(*)').order('created_at', { ascending: false });
+    let query = supabase.from('shopping_plans').select('*, created_by_member:members!created_by(id, name), transaction:transactions(*), shopping_items(price)').order('created_at', { ascending: false });
     
     if (params.status) query = query.eq('status', params.status);
     

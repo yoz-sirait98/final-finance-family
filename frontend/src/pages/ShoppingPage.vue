@@ -54,8 +54,8 @@
             </p>
           </div>
           <div class="card-footer bg-white border-light d-flex justify-content-between align-items-center">
-            <span v-if="plan.status === 'done' && plan.transaction" class="fw-bold text-danger">
-              Rp {{ parseFloat(plan.transaction.amount || 0).toLocaleString('id-ID') }}
+            <span v-if="plan.status === 'done'" class="fw-bold text-danger">
+              Rp {{ (plan.transaction ? parseFloat(plan.transaction.amount || 0) : (plan.shopping_items?.reduce((sum, item) => sum + (parseFloat(item.price) || 0), 0) || 0)).toLocaleString('id-ID') }}
             </span>
             <span v-else class="text-muted small">
               <i class="bi bi-people me-1"></i> {{ plan.assigned_members?.length || 0 }} assigned
