@@ -653,12 +653,16 @@ function resetFilters() {
 }
 
 function clearReceiptImage() {
-  if (pendingReceiptPreview.value) URL.revokeObjectURL(pendingReceiptPreview.value);
+  if (form.value.receipt_url) {
+    receiptUrlToDelete.value = form.value.receipt_url;
+    form.value.receipt_url = '';
+    savedReceiptSignedUrl.value = '';
+  }
+  if (pendingReceiptPreview.value) {
+    URL.revokeObjectURL(pendingReceiptPreview.value);
+    pendingReceiptPreview.value = '';
+  }
   pendingReceiptFile.value = null;
-  pendingReceiptPreview.value = '';
-  form.value.receipt_url = '';
-  savedReceiptSignedUrl.value = '';
-  receiptUrlToDelete.value = form.value.receipt_url || receiptUrlToDelete.value;
 }
 
 async function openReceiptLightbox(tx) {
@@ -834,10 +838,12 @@ async function onReceiptSelected(event) {
     scanRawText.value    = data.rawText ?? '';
 
     // ── Auto-fill form & open modal ───────────────────────────────────────
-    formError.value         = '';
-    editingId.value         = null;
+    formError.value             = '';
+    editingId.value             = null;
     savedReceiptSignedUrl.value = '';
     receiptUrlToDelete.value    = '';
+    pendingReceiptFile.value    = file;
+    pendingReceiptPreview.value = URL.createObjectURL(file);
     form.value = {
       type:             'expense',
       member_id:        matchedMemberId,
@@ -951,12 +957,8 @@ async function doSaveTransaction() {
   try {
     const payload = { ...form.value };
 
-    // ── Phase 3: Upload-first atomic save ─────────────────────────────────
-    // Upload the receipt image BEFORE creating the transaction row so that
-    // receipt_url is included in the single CREATE call. This eliminates the
-    // old 2-step race condition where a network failure could leave an orphan
-    // transaction with no receipt_url.
-    if (pendingReceiptFile.value && !editingId.value && authStore.familyId) {
+    // ── Upload pending receipt image if present ────────────────────────────
+    if (pendingReceiptFile.value && authStore.familyId) {
       try {
         const storagePath = await uploadReceipt(pendingReceiptFile.value, authStore.familyId);
         payload.receipt_url = storagePath; // attach atomically
@@ -976,6 +978,14 @@ async function doSaveTransaction() {
       await transactionService.update(editingId.value, payload);
     } else {
       await transactionService.create(payload);
+    }
+
+    // Clean up old receipt image from Supabase Storage if user removed/replaced it
+    if (receiptUrlToDelete.value) {
+      deleteReceipt(receiptUrlToDelete.value).catch(err => {
+        console.error('[Storage] Error deleting old receipt image:', err);
+      });
+      receiptUrlToDelete.value = '';
     }
 
     toast.success(localeStore.t('common.success'));
