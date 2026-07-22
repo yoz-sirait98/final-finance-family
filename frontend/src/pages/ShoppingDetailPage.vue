@@ -430,7 +430,8 @@ async function lockPlan() {
     toast.success(localeStore.currentLocale === 'id' ? 'Rencana belanja dikunci!' : 'Shopping plan locked!');
     fetchPlan();
   } catch (e) {
-    toast.error(localeStore.currentLocale === 'id' ? 'Gagal mengunci rencana' : 'Failed to lock plan');
+    console.error('Lock error:', e);
+    toast.error(localeStore.currentLocale === 'id' ? 'Gagal mengunci rencana: ' + (e.message || '') : 'Failed to lock plan: ' + (e.message || ''));
   } finally {
     isLocking.value = false;
   }
