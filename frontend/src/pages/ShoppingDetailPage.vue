@@ -35,29 +35,32 @@
         <div v-else class="list-group list-group-flush">
           <div v-for="item in items" :key="item.id" class="list-group-item d-flex justify-content-between align-items-center py-3" :class="{'bg-light': item.is_checked}">
             <div class="d-flex align-items-center gap-3">
-              <input type="checkbox" class="form-check-input mt-0 cursor-pointer" style="width: 1.5em; height: 1.5em;" v-model="item.is_checked" @change="toggleCheck(item)" :disabled="plan?.status === 'locked'">
+              <input type="checkbox" class="form-check-input mt-0 cursor-pointer" style="width: 1.5em; height: 1.5em;" v-model="item.is_checked" @change="toggleCheck(item)" :disabled="plan?.status === 'locked' || plan?.status === 'done'">
               <div>
                 <h6 class="mb-0 fw-bold" :class="{'text-decoration-line-through text-muted': plan?.status === 'locked' || item.is_checked}">{{ item.name }}</h6>
                 <small class="text-muted">Added by {{ item.added_by_member?.name || 'Unknown' }}</small>
               </div>
             </div>
             <div class="d-flex align-items-center gap-3">
-              <!-- Price: editable when in progress or done (read-only only when locked) -->
-              <template v-if="plan?.status !== 'locked'">
+              <!-- Price Display: input for 'progress', read-only for 'done' & 'locked' -->
+              <template v-if="plan?.status === 'progress' || !plan?.status">
                 <div class="input-group input-group-sm" style="width: 140px;">
                   <span class="input-group-text border-light bg-light text-muted">Rp</span>
                   <input type="number" class="form-control border-light" v-model="item.price" @change="updateItemPrice(item)" placeholder="Est. Price" />
                 </div>
-                <button class="btn btn-sm btn-outline-primary border-0" @click="openEditItem(item)">
+              </template>
+              <template v-else>
+                <span class="fw-semibold text-muted">Rp {{ Number(item.price || 0).toLocaleString('id-ID') }}</span>
+              </template>
+
+              <!-- Action Buttons: visible for 'progress' & 'done', hidden for 'locked' -->
+              <template v-if="plan?.status !== 'locked'">
+                <button class="btn btn-sm btn-outline-primary border-0 ms-2" @click="openEditItem(item)">
                   <i class="bi bi-pencil"></i>
                 </button>
                 <button class="btn btn-sm btn-outline-danger border-0" @click="confirmDeleteItem(item)">
                   <i class="bi bi-trash"></i>
                 </button>
-              </template>
-              <!-- Read-only price when locked -->
-              <template v-else>
-                <span class="fw-semibold text-muted">Rp {{ Number(item.price || 0).toLocaleString('id-ID') }}</span>
               </template>
             </div>
           </div>
