@@ -65,8 +65,8 @@
     "semantic_hash": ""
   },
   "frontend/src/layouts/DashboardLayout.vue": {
-    "mtime": 1784777529.7765634,
-    "ast_hash": "0b3a86aa99ddb868a0e058fa9f0f31e6",
+    "mtime": 1784608237.8062882,
+    "ast_hash": "1e7f5ed96e9343d69cd5617a15db314e",
     "semantic_hash": ""
   },
   "frontend/src/lib/realtime.js": {
@@ -150,13 +150,13 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/SettingsPage.vue": {
-    "mtime": 1784777626.0388472,
-    "ast_hash": "c493be8be0659e55ace408f866e1ce12",
+    "mtime": 1784608237.8113055,
+    "ast_hash": "7b7163e7ee043e1dbff594c4fa4e3a65",
     "semantic_hash": ""
   },
   "frontend/src/pages/TransactionsPage.vue": {
-    "mtime": 1784780151.3397105,
-    "ast_hash": "ee13c55388a4275a9c5348fe96fef91f",
+    "mtime": 1784608237.8133042,
+    "ast_hash": "f18cc72ba0ea242b04143b3241984b5d",
     "semantic_hash": ""
   },
   "frontend/src/router/index.js": {
@@ -245,8 +245,8 @@
     "semantic_hash": ""
   },
   "frontend/src/stores/locale.js": {
-    "mtime": 1784777488.1185422,
-    "ast_hash": "06ea69f3a6d05e920a26ccf884d276c6",
+    "mtime": 1780891440.4830837,
+    "ast_hash": "a52b164ede21b12440f425befc09fb7b",
     "semantic_hash": ""
   },
   "frontend/src/stores/members.js": {
@@ -325,8 +325,8 @@
     "semantic_hash": ""
   },
   "frontend/vite.config.js": {
-    "mtime": 1784777458.5191624,
-    "ast_hash": "4da3c9c9850527e5a63ae0c9c8daa1ea",
+    "mtime": 1780657740.0916429,
+    "ast_hash": "ce14b1ecd0f455316616b62887358533",
     "semantic_hash": ""
   },
   "skills-lock.json": {
@@ -395,8 +395,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ShoppingPage.vue": {
-    "mtime": 1784780117.388525,
-    "ast_hash": "28d425475dd3ac88afddc948e38203a2",
+    "mtime": 1784693961.4202588,
+    "ast_hash": "04d920593dc1b5193ebf50dbbe783533",
     "semantic_hash": ""
   },
   "frontend/src/services/shoppingService.js": {
@@ -520,13 +520,13 @@
     "semantic_hash": "081c348d068770af78fcd90980521318"
   },
   "frontend/src/pages/ShoppingDetailPage.vue": {
-    "mtime": 1784780136.2883928,
-    "ast_hash": "4d5f34eb591669e825bf047ed53cad4d",
+    "mtime": 1784693887.647249,
+    "ast_hash": "edffd65fc2189e312f5508702b5419fc",
     "semantic_hash": ""
   },
   "frontend/src/services/shoppingPlanService.js": {
-    "mtime": 1784709773.1100903,
-    "ast_hash": "5b1132d080acf68614d3a3eb5a2bfb4e",
+    "mtime": 1784695495.145678,
+    "ast_hash": "f9d6fe649b4e084e064bb6738f0d45f0",
     "semantic_hash": ""
   },
   "supabase/migrations/000013_shopping_plans_overhaul.sql": {
@@ -640,8 +640,8 @@
     "semantic_hash": ""
   },
   "frontend/src/services/storageService.js": {
-    "mtime": 1784710655.8522887,
-    "ast_hash": "b1ad19ffe67a5d2f94b5f81054dd3fbc",
+    "mtime": 1781151442.0643013,
+    "ast_hash": "5d072381cbc4fe3a48ff0c6e35215f5c",
     "semantic_hash": ""
   },
   "supabase/migrations/000022_add_receipt_url_to_transactions.sql": {
@@ -835,48 +835,8 @@
     "semantic_hash": ""
   },
   "docs/walkthrough_shopping_revamp.md": {
-    "mtime": 1784708557.2066836,
-    "ast_hash": "78f977f623689c36f9d0abb1ebf0e533",
-    "semantic_hash": ""
-  },
-  "frontend/src/components/PushNotificationToggle.vue": {
-    "mtime": 1784777511.847007,
-    "ast_hash": "d59367f38ccf9dce678895d911ff3d09",
-    "semantic_hash": ""
-  },
-  "frontend/src/services/pushDispatcherService.js": {
-    "mtime": 1784780848.6381884,
-    "ast_hash": "2a8dcab511ea70017207d73615417394",
-    "semantic_hash": ""
-  },
-  "frontend/src/services/pushNotificationService.js": {
-    "mtime": 1784777477.2543054,
-    "ast_hash": "3ee6b6c7c30b2663575d3c34332424c0",
-    "semantic_hash": ""
-  },
-  "frontend/src/sw.js": {
-    "mtime": 1784777647.0419025,
-    "ast_hash": "0b0d4c17d02daaa10672132f497db227",
-    "semantic_hash": ""
-  },
-  "frontend/src/utils/pushUtils.js": {
-    "mtime": 1784779377.5749657,
-    "ast_hash": "edaaf2acd0d0b5beae36b647ab0f3acd",
-    "semantic_hash": ""
-  },
-  "supabase/migrations/000028_allow_locked_status.sql": {
-    "mtime": 1784709226.514825,
-    "ast_hash": "2e77d5a24b473e929f39b96919e2d87d",
-    "semantic_hash": ""
-  },
-  "supabase/migrations/000029_push_subscriptions.sql": {
-    "mtime": 1784777443.1520097,
-    "ast_hash": "59846a3a0f693fe759dcbb6821e54590",
-    "semantic_hash": ""
-  },
-  "docs/walkthrough_push_notifications.md": {
-    "mtime": 1784781362.2431064,
-    "ast_hash": "9f4a6f18d2d636006565e5e4a2ac60c2",
+    "mtime": 1784694007.0761006,
+    "ast_hash": "dc43b7b773be072737f90d6255370e4c",
     "semantic_hash": ""
   }
 }
