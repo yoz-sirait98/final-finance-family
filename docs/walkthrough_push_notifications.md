@@ -30,8 +30,14 @@ This feature implements native **PWA Web Push Notifications** for Family Finance
   - 💸 Large Expense Recorded
   - 🎯 Project Pocket Savings Goal Reached
 - Reads each recipient member's preferred `locale` and formats titles/bodies in their chosen language.
+- **Cross-Device Delivery**: Filters subscriptions to exclude the exact browser endpoint triggering the event, ensuring that actions taken on a PC still trigger notifications on the user's mobile device.
+- **Fire-and-Forget Architecture**: Dispatches payloads via `fetch` wrapped in a `.catch()` block, guaranteeing that push notification failures never interrupt critical flows (e.g., WhatsApp notifications).
 
-### 5. UI Integration & Settings Toggle (`src/components/PushNotificationToggle.vue`)
+### 5. Backend Push Engine (Heroku WhatsApp Bot)
+- **Web-Push Integration**: Added the `web-push` library and VAPID key configuration to the Express microservice (`famfin-whatsapp-bot`).
+- **`/api/push` Endpoint**: Created a secure, rate-limited endpoint on Heroku that accepts push payloads and subscription credentials to deliver notifications globally to FCM / APNs.
+
+### 6. UI Integration & Settings Toggle (`src/components/PushNotificationToggle.vue`)
 - Created a `<PushNotificationToggle />` component with active bell indicator and subscription toggle.
 - Added toggle to the Top Navbar in `DashboardLayout.vue` and a dedicated PWA Push section in `SettingsPage.vue`.
 
@@ -40,3 +46,4 @@ This feature implements native **PWA Web Push Notifications** for Family Finance
 ## Verification
 - ✅ Executed `npx vite build` — `injectManifest` built `dist/sw.js` with zero errors.
 - ✅ Verified `useLocaleStore.setLocale()` automatically syncs `locale` to `push_subscriptions`.
+- ✅ Validated cross-device delivery by verifying that Heroku successfully pushes payloads to different endpoints.
