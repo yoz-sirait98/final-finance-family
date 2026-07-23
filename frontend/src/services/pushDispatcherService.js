@@ -160,8 +160,18 @@ export const pushDispatcherService = {
 
       if (!subscriptions || subscriptions.length === 0) return;
 
-      // Filter out current user if excludeSelf is true
-      const eligibleSubs = subscriptions.filter(sub => !excludeSelf || sub.user_id !== currentUserId);
+      // Determine current device's endpoint to exclude ONLY this browser
+      let currentEndpoint = null;
+      if (excludeSelf && 'serviceWorker' in navigator) {
+        try {
+          const reg = await navigator.serviceWorker.ready;
+          const sub = await reg.pushManager.getSubscription();
+          if (sub) currentEndpoint = sub.endpoint;
+        } catch (e) {}
+      }
+
+      // Filter out current device (if excludeSelf is true)
+      const eligibleSubs = subscriptions.filter(sub => !excludeSelf || sub.endpoint !== currentEndpoint);
 
       for (const sub of eligibleSubs) {
         // Select recipient's language choice ('id' or 'en', default to 'en')
