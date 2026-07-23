@@ -418,7 +418,7 @@ async function markAsDoneOnly() {
       templateKey: 'SHOPPING_PLAN_DONE',
       params: { location: plan.value?.location || 'Store' },
       url: `/shopping/${planId}`
-    });
+    }).catch(() => {});
     toast.success(localeStore.currentLocale === 'id' ? 'Rencana belanja ditandai selesai!' : 'Shopping plan marked as done!');
     showChoiceModal.value = false;
     fetchPlan();
@@ -437,7 +437,7 @@ async function lockPlan() {
       templateKey: 'SHOPPING_PLAN_LOCKED',
       params: { location: plan.value?.location || 'Store', amount: totalAmount.value.toLocaleString('id-ID') },
       url: `/shopping/${planId}`
-    });
+    }).catch(() => {});
     toast.success(localeStore.currentLocale === 'id' ? 'Rencana belanja dikunci!' : 'Shopping plan locked!');
     fetchPlan();
   } catch (e) {

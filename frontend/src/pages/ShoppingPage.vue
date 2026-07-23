@@ -348,13 +348,13 @@ async function savePlan() {
     toast.success(localeStore.t('common.success') + ' - Plan Saved!');
     fetchData(); 
 
-    // Dispatch PWA Web Push Notification (translated to each member's chosen app language)
+    // Dispatch PWA Web Push Notification (fire-and-forget, never blocks WhatsApp flow)
     const creatorName = members.value.find(m => m.id === payload.created_by)?.name || 'Someone';
     pushDispatcherService.dispatchPushNotification({
       templateKey: 'SHOPPING_PLAN_CREATED',
       params: { creator: creatorName, location: payload.location },
       url: '/shopping'
-    });
+    }).catch(() => {}); // swallow — never interrupt WhatsApp
 
     // Fire off the WhatsApp Notification directly from the frontend
     await sendWhatsAppNotification(payload);

@@ -1,6 +1,10 @@
 // ---------------------------------------------------------------------------
 // pushDispatcherService.js — Multi-Language PWA Web Push Dispatcher
 // ---------------------------------------------------------------------------
+// Sends push notifications through the Heroku backend (web-push) so they
+// reach OTHER devices, and also shows a local notification on the sender's
+// device when Notification permission is granted.
+// ---------------------------------------------------------------------------
 import { supabase } from '../lib/supabase';
 import { useAuthStore } from '../stores/auth';
 
@@ -107,15 +111,26 @@ function interpolateTemplate(templateStr, params = {}) {
   });
 }
 
+const HEROKU_BASE = 'https://finance-family-3ac25ba9b522.herokuapp.com';
+
 export const pushDispatcherService = {
   /**
-   * Dispatch a localized push notification to active family subscribers
+   * Dispatch a localized push notification to active family subscribers.
+   *
+   * Strategy:
+   *  1. Query push_subscriptions from Supabase for the current family.
+   *  2. For each eligible subscription (excluding self), build a localized
+   *     push payload and POST it to the Heroku backend which uses `web-push`
+   *     to deliver the notification to the browser's push service (FCM / APNs).
+   *  3. This is fire-and-forget — errors are logged but never thrown so callers
+   *     (like WhatsApp notification flow) are never interrupted.
+   *
    * @param {Object} opts
    * @param {string} opts.templateKey - Key from PUSH_TEMPLATES (e.g., 'SHOPPING_PLAN_LOCKED')
-   * @param {Object} opts.params - Dynamic interpolation variables (e.g. { location: 'Indomaret', amount: '150.000' })
-   * @param {string} [opts.targetUserId] - Optional specific user_id to target (if omitted, sends to family members)
+   * @param {Object} opts.params - Dynamic interpolation variables
+   * @param {string} [opts.targetUserId] - Optional specific user_id to target
    * @param {string} [opts.url] - Deep-link target route (e.g., '/shopping/123')
-   * @param {boolean} [opts.excludeSelf=true] - Exclude current logged in user from receiving the push
+   * @param {boolean} [opts.excludeSelf=true] - Exclude current logged in user
    */
   async dispatchPushNotification({ templateKey, params = {}, targetUserId = null, url = '/', excludeSelf = true }) {
     try {
@@ -164,19 +179,28 @@ export const pushDispatcherService = {
           tag: `famfin-${templateKey.toLowerCase()}-${Date.now()}`,
         };
 
-        // If active on client device, trigger via Service Worker registration directly
-        if ('serviceWorker' in navigator && Notification.permission === 'granted') {
-          const reg = await navigator.serviceWorker.ready;
-          reg.showNotification(title, {
-            body,
-            icon: '/favicon.svg',
-            data: { url },
-            tag: pushPayload.tag,
-            vibrate: [100, 50, 100],
-          }).catch(err => console.warn('[PushDispatcher] Direct SW notification error:', err));
+        // Send push via Heroku backend → web-push → browser push service → target device
+        try {
+          await fetch(`${HEROKU_BASE}/api/push`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'x-api-key': import.meta.env.VITE_WA_API_KEY
+            },
+            body: JSON.stringify({
+              subscription: {
+                endpoint: sub.endpoint,
+                keys: { p256dh: sub.p256dh, auth: sub.auth }
+              },
+              payload: pushPayload
+            })
+          });
+        } catch (pushErr) {
+          console.warn('[PushDispatcher] Backend push failed for endpoint:', sub.endpoint, pushErr);
         }
       }
     } catch (e) {
+      // Fire-and-forget: never throw to callers
       console.error('[PushDispatcher] Error dispatching push notification:', e);
     }
   },

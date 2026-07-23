@@ -1009,7 +1009,7 @@ async function doSaveTransaction() {
           pct: budgetConfirmData.value.pct || '100'
         },
         url: '/transactions'
-      });
+      }).catch(() => {}); // fire-and-forget — never interrupt WhatsApp alert
       await sendBudgetAlertWhatsApp(budgetConfirmData.value);
       wasBudgetExceeded.value = false;
     }
