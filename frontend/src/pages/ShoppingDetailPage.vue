@@ -248,13 +248,14 @@ const handleTour = () => startTour(shoppingDetailTourSteps);
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { shoppingPlanService } from '../services/shoppingPlanService';
-import { shoppingService } from '../services/shoppingService';
 import { memberService } from '../services/memberService';
 import { accountService } from '../services/accountService';
 import { categoryService } from '../services/categoryService';
-import { useAuthStore } from '../stores/auth';
-import { useToastStore } from '../stores/toast';
+import { shoppingService } from '../services/shoppingService';
 import { useLocaleStore } from '../stores/locale';
+import { useToastStore } from '../stores/toast';
+import { useAuthStore } from '../stores/auth';
+import { pushDispatcherService } from '../services/pushDispatcherService';
 import { supabase } from '../lib/supabase';
 import { formatCurrency } from '../utils/format';
 
@@ -413,6 +414,11 @@ async function markAsDoneOnly() {
   try {
     await shoppingPlanService.markAsDone(planId);
     await sendCheckoutNotification();
+    pushDispatcherService.dispatchPushNotification({
+      templateKey: 'SHOPPING_PLAN_DONE',
+      params: { location: plan.value?.location || 'Store' },
+      url: `/shopping/${planId}`
+    });
     toast.success(localeStore.currentLocale === 'id' ? 'Rencana belanja ditandai selesai!' : 'Shopping plan marked as done!');
     showChoiceModal.value = false;
     fetchPlan();
@@ -427,6 +433,11 @@ async function lockPlan() {
   isLocking.value = true;
   try {
     await shoppingPlanService.lock(planId);
+    pushDispatcherService.dispatchPushNotification({
+      templateKey: 'SHOPPING_PLAN_LOCKED',
+      params: { location: plan.value?.location || 'Store', amount: totalAmount.value.toLocaleString('id-ID') },
+      url: `/shopping/${planId}`
+    });
     toast.success(localeStore.currentLocale === 'id' ? 'Rencana belanja dikunci!' : 'Shopping plan locked!');
     fetchPlan();
   } catch (e) {

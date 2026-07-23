@@ -122,6 +122,9 @@
         <!-- Install PWA Button -->
         <InstallPwa />
 
+        <!-- Push Notification Toggle Button -->
+        <PushNotificationToggle />
+
         <!-- Theme Toggle Button -->
         <button
           class="toggle-btn"
@@ -240,6 +243,7 @@ import { useTourStore } from '../stores/tour';
 import { useLocaleStore } from '../stores/locale';
 import GoalNotificationModal from '../components/GoalNotificationModal.vue';
 import InstallPwa from '../components/InstallPwa.vue';
+import PushNotificationToggle from '../components/PushNotificationToggle.vue';
 import { supabase } from '../lib/supabase';
 
 const route = useRoute();

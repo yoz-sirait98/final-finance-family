@@ -491,6 +491,7 @@ import { useToastStore } from '../stores/toast';
 import { useBudgetStore } from '../stores/budgets';
 import { useLocaleStore } from '../stores/locale';
 import { useAuthStore } from '../stores/auth';
+import { pushDispatcherService } from '../services/pushDispatcherService';
 
 const transactions = ref([]);
 const meta = ref({});
@@ -998,8 +999,17 @@ async function doSaveTransaction() {
     fetchData();
     budgetStore.fetchAlerts();
 
-    // Trigger WhatsApp Budget Alert if exceeded
+    // Trigger WhatsApp & PWA Web Push Budget Alert if exceeded
     if (wasBudgetExceeded.value) {
+      pushDispatcherService.dispatchPushNotification({
+        templateKey: 'BUDGET_EXCEEDED',
+        params: {
+          category: budgetConfirmData.value.category || 'Category',
+          description: form.value.description || 'Expense',
+          pct: budgetConfirmData.value.pct || '100'
+        },
+        url: '/transactions'
+      });
       await sendBudgetAlertWhatsApp(budgetConfirmData.value);
       wasBudgetExceeded.value = false;
     }

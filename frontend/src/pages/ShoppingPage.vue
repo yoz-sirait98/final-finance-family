@@ -252,6 +252,7 @@ import { useLocaleStore } from '../stores/locale';
 import { supabase } from '../lib/supabase';
 import { scanReceipt } from '../utils/receiptScanner';
 import { parseReceiptItems } from '../utils/receiptItemParser';
+import { pushDispatcherService } from '../services/pushDispatcherService';
 
 const plans = ref([]);
 const members = ref([]);
@@ -346,6 +347,14 @@ async function savePlan() {
     showAddModal.value = false;
     toast.success(localeStore.t('common.success') + ' - Plan Saved!');
     fetchData(); 
+
+    // Dispatch PWA Web Push Notification (translated to each member's chosen app language)
+    const creatorName = members.value.find(m => m.id === payload.created_by)?.name || 'Someone';
+    pushDispatcherService.dispatchPushNotification({
+      templateKey: 'SHOPPING_PLAN_CREATED',
+      params: { creator: creatorName, location: payload.location },
+      url: '/shopping'
+    });
 
     // Fire off the WhatsApp Notification directly from the frontend
     await sendWhatsAppNotification(payload);

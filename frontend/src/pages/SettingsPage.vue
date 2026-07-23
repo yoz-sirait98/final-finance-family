@@ -31,6 +31,20 @@
           </div>
         </div>
 
+        <!-- PWA Push Notifications -->
+        <div class="stat-card mb-4">
+          <h6 class="fw-bold mb-3"><i class="bi bi-bell me-2 text-primary"></i>{{ localeStore.currentLocale === 'id' ? 'Notifikasi PWA Push' : 'PWA Push Notifications' }}</h6>
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <div class="fw-semibold small">{{ localeStore.currentLocale === 'id' ? 'Status Notifikasi Browser' : 'Browser Push Status' }}</div>
+              <div class="text-muted small">
+                {{ localeStore.currentLocale === 'id' ? 'Bahasa notifikasi otomatis menyesuaikan dengan pilihan aplikasi (' + localeStore.currentLocale.toUpperCase() + ').' : 'Push notifications automatically match your selected app language (' + localeStore.currentLocale.toUpperCase() + ').' }}
+              </div>
+            </div>
+            <PushNotificationToggle />
+          </div>
+        </div>
+
         <!-- AI Configuration -->
         <div class="stat-card">
           <h6 class="fw-bold mb-3"><i class="bi bi-stars me-2"></i>{{ $t('settings.aiConfig') || 'AI Configuration' }}</h6>
@@ -120,6 +134,7 @@ import { useAuthStore } from '../stores/auth';
 import { useLocaleStore } from '../stores/locale';
 import { useToastStore } from '../stores/toast';
 import { authService } from '../services/authService';
+import PushNotificationToggle from '../components/PushNotificationToggle.vue';
 import { supabase } from '../lib/supabase';
 
 const authStore = useAuthStore();

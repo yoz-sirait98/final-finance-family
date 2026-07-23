@@ -3,6 +3,8 @@ import { ref } from 'vue';
 import en from '../locales/en.json';
 import id from '../locales/id.json';
 
+import { pushNotificationService } from '../services/pushNotificationService';
+
 const LOCAL_STORAGE_KEY = 'ff_selected_locale';
 
 export const useLocaleStore = defineStore('locale', () => {
@@ -16,6 +18,9 @@ export const useLocaleStore = defineStore('locale', () => {
       
       // Update HTML lang attribute for accessibility/SEO
       document.documentElement.setAttribute('lang', locale);
+
+      // Sync push subscription locale preference if subscribed
+      pushNotificationService.syncLocale(locale);
     }
   }
 
