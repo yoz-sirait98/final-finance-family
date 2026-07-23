@@ -23,7 +23,7 @@
     <div class="card border-0 shadow-sm mb-4">
       <div class="card-header bg-white border-light d-flex justify-content-between align-items-center py-3">
         <h6 class="mb-0 fw-bold">Shopping Items</h6>
-        <button v-if="plan?.status !== 'locked'" class="btn btn-sm btn-primary-gradient" @click="openAddItem">
+        <button v-if="plan?.status !== 'locked' && plan?.status !== 'done'" class="btn btn-sm btn-primary-gradient" @click="openAddItem">
           <i class="bi bi-plus-lg"></i><span class="d-none d-sm-inline">Add Item</span>
         </button>
       </div>
