@@ -48,6 +48,9 @@
                   <span class="input-group-text border-light bg-light text-muted">Rp</span>
                   <input type="number" class="form-control border-light" v-model="item.price" @change="updateItemPrice(item)" placeholder="Est. Price" />
                 </div>
+                <button class="btn btn-sm btn-outline-primary border-0" @click="openEditItem(item)">
+                  <i class="bi bi-pencil"></i>
+                </button>
                 <button class="btn btn-sm btn-outline-danger border-0" @click="confirmDeleteItem(item)">
                   <i class="bi bi-trash"></i>
                 </button>
@@ -125,12 +128,12 @@
       </div>
     </div>
 
-    <!-- Add Item Modal -->
-    <div v-if="showAddModal" class="vue-modal-backdrop" @mousedown.self="showAddModal = false">
+    <!-- Item Modal (Add/Edit) -->
+    <div v-if="showItemModal" class="vue-modal-backdrop" @mousedown.self="showItemModal = false">
       <div class="vue-modal">
         <div class="modal-header border-0 pb-0">
-          <h5 class="modal-title fw-bold">Add Item</h5>
-          <button type="button" class="btn-close" @click="showAddModal = false"></button>
+          <h5 class="modal-title fw-bold">{{ isEditingItem ? 'Edit Item' : 'Add Item' }}</h5>
+          <button type="button" class="btn-close" @click="showItemModal = false"></button>
         </div>
         <form @submit.prevent="saveItem">
           <div class="modal-body">
@@ -154,10 +157,10 @@
             </div>
           </div>
           <div class="modal-footer border-0 pt-0">
-            <button type="button" class="btn btn-secondary" @click="showAddModal = false">{{ $t('common.done') || 'Done' }}</button>
+            <button type="button" class="btn btn-secondary" @click="showItemModal = false">{{ $t('common.cancel') || 'Cancel' }}</button>
             <button type="submit" id="tour-shoppingDetail-add-btn" class="btn btn-primary-gradient" :disabled="saving">
               <span v-if="saving" class="spinner-border spinner-border-sm me-2"></span>
-              {{ $t('common.add') || 'Add Item' }}
+              {{ isEditingItem ? ($t('common.save') || 'Save') : ($t('common.add') || 'Add Item') }}
             </button>
           </div>
         </form>
@@ -272,11 +275,12 @@ const members = ref([]);
 const accounts = ref([]);
 const categories = ref([]);
 
-const showAddModal = ref(false);
+const showItemModal = ref(false);
+const isEditingItem = ref(false);
 const showDeleteModal = ref(false);
 const itemToDelete = ref(null);
 const deleting = ref(false);
-const itemForm = ref({ name: '', price: '', added_by: '' });
+const itemForm = ref({ id: null, name: '', price: '', added_by: '' });
 const saving = ref(false);
 
 const showCheckoutModal = ref(false);
@@ -324,26 +328,42 @@ async function fetchDropdowns() {
 }
 
 function openAddItem() {
-  itemForm.value = { name: '', price: '', added_by: authStore.user?.id || '' };
-  showAddModal.value = true;
+  isEditingItem.value = false;
+  itemForm.value = { id: null, name: '', price: '', added_by: authStore.user?.id || '' };
+  showItemModal.value = true;
+}
+
+function openEditItem(item) {
+  isEditingItem.value = true;
+  itemForm.value = { id: item.id, name: item.name, price: item.price || '', added_by: item.added_by || '' };
+  showItemModal.value = true;
 }
 
 async function saveItem() {
   saving.value = true;
   try {
-    await shoppingService.create({
+    const payload = {
       shopping_plan_id: planId,
       name: itemForm.value.name,
       price: itemForm.value.price || 0,
       added_by: itemForm.value.added_by
-    });
-    // showAddModal.value = false;
-    itemForm.value.name = '';
-    itemForm.value.price = '';
-    toast.success('Item added');
+    };
+
+    if (isEditingItem.value) {
+      await shoppingService.update(itemForm.value.id, payload);
+      toast.success('Item updated');
+      showItemModal.value = false;
+    } else {
+      await shoppingService.create(payload);
+      toast.success('Item added');
+      // Keep modal open to add more items, just reset fields
+      itemForm.value.name = '';
+      itemForm.value.price = '';
+    }
+    
     fetchItems();
   } catch (e) {
-    toast.error('Failed to add item');
+    toast.error('Failed to save item');
   } finally {
     saving.value = false;
   }
