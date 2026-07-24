@@ -25,12 +25,15 @@ export async function loadOpenCV() {
       const cvModule = await import('@techstark/opencv-js');
       
       // Depending on the bundler/environment, the default export might be nested
-      const cv = cvModule.default || cvModule;
+      let cv = cvModule.default || cvModule;
 
       // The techstark opencv-js might need to initialize WASM asynchronously
-      if (cv instanceof Promise) {
-        cvInstance = await cv;
-      } else if (cv.onRuntimeInitialized) {
+      if (cv && typeof cv.then === 'function') {
+        // Explicitly bind to avoid "Method Promise.prototype.then called on incompatible receiver"
+        cvInstance = await new Promise((res, rej) => {
+          cv.then(res).catch(rej);
+        });
+      } else if (cv && cv.onRuntimeInitialized) {
         // If it's a module that requires initialization
         cv.onRuntimeInitialized = () => {
           cvInstance = cv;
