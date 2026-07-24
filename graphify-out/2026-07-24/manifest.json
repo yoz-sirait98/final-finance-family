@@ -520,8 +520,8 @@
     "semantic_hash": "081c348d068770af78fcd90980521318"
   },
   "frontend/src/pages/ShoppingDetailPage.vue": {
-    "mtime": 1784788068.3537233,
-    "ast_hash": "790fd7645a7ff24785ceb09da40cbf8f",
+    "mtime": 1784780136.2883928,
+    "ast_hash": "4d5f34eb591669e825bf047ed53cad4d",
     "semantic_hash": ""
   },
   "frontend/src/services/shoppingPlanService.js": {
@@ -535,8 +535,8 @@
     "semantic_hash": ""
   },
   "frontend/src/utils/receiptScanner.js": {
-    "mtime": 1784859961.1818733,
-    "ast_hash": "2a21c0784414fd580fa35d2cce24c381",
+    "mtime": 1784608237.819299,
+    "ast_hash": "42d284c54c2cc5efd3b5ccfcecfc7297",
     "semantic_hash": ""
   },
   "graphify-out/memory/query_20260609_044005_recurring.md": {
@@ -800,8 +800,8 @@
     "semantic_hash": ""
   },
   "frontend/src/utils/opencvLoader.js": {
-    "mtime": 1784866937.3446646,
-    "ast_hash": "b27b7584fc68bfe8f92860b786a73332",
+    "mtime": 1784608237.8182979,
+    "ast_hash": "d1f2d429e660773f90ea5f77c7f9c48a",
     "semantic_hash": ""
   },
   "frontend/src/utils/opencvPreprocess.js": {
@@ -830,8 +830,8 @@
     "semantic_hash": ""
   },
   "frontend/src/utils/receiptItemParser.js": {
-    "mtime": 1784859971.836911,
-    "ast_hash": "c8193a43c35e8e282ad2c4aef3b92504",
+    "mtime": 1784693777.5203059,
+    "ast_hash": "7b288d0ee6fd50f24cb4b2bec7f81ad0",
     "semantic_hash": ""
   },
   "docs/walkthrough_shopping_revamp.md": {
@@ -877,16 +877,6 @@
   "docs/walkthrough_push_notifications.md": {
     "mtime": 1784781362.2431064,
     "ast_hash": "9f4a6f18d2d636006565e5e4a2ac60c2",
-    "semantic_hash": ""
-  },
-  "frontend/opencv.js": {
-    "mtime": 1784865693.8507657,
-    "ast_hash": "10a1f0874b3df9ca5c4d8bb199020ce5",
-    "semantic_hash": ""
-  },
-  "frontend/test_ocr.js": {
-    "mtime": 1784859911.3852375,
-    "ast_hash": "a8c43dc1ae9aa1d8a76096e28b3a6cbe",
     "semantic_hash": ""
   }
 }
