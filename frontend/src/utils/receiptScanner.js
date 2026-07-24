@@ -193,31 +193,41 @@ export async function scanReceipt(imageFile, progressCallback) {
   let merchantName     = '';
   let merchantCategory = '';   // sourced from merchants.json
 
-  // Match against merchants.json (100+ patterns)
-  for (const entry of merchantsDb) {
-    const re = new RegExp(entry.pattern, 'i');
-    if (re.test(rawText)) {
-      merchantName     = entry.name;
-      merchantCategory = entry.category;
-      break;
-    }
-  }
-
-  // Fallback: first clean line heuristic
-  if (!merchantName) {
-    const blacklist = [
-      'alamat','telp','npwp','tanggal','tgl','receipt','strip','kasir','cashier',
-      'welcome','terima','kasih','thank','you','invoice','member','no.','order',
-      'promo','discount','diskon','transaksi','merchant','jl.','jalan','raya',
-      'card','tunai','cash','debit',
-    ];
-    for (let i = 0; i < Math.min(lines.length, 5); i++) {
-      const ll  = lines[i].toLowerCase();
-      const num = /^\d+$/.test(lines[i].replace(/[.,\s]/g, ''));
-      const bad = blacklist.some(w => ll.includes(w));
-      if (lines[i].length > 2 && !num && !bad) {
-        merchantName = lines[i];
+  // Hardcoded specific matchers for exact brand keywords
+  const rawLower = rawText.toLowerCase();
+  if (rawLower.includes('klikindomaret') || rawLower.includes('indomaret')) {
+    merchantName = 'INDOMARET';
+    merchantCategory = 'groceries';
+  } else if (rawLower.includes('@kopikenangan.id') || rawLower.includes('kopi kenangan') || rawLower.includes('kenangan')) {
+    merchantName = 'Kopi Kenangan';
+    merchantCategory = 'food';
+  } else {
+    // Match against merchants.json (100+ patterns)
+    for (const entry of merchantsDb) {
+      const re = new RegExp(entry.pattern, 'i');
+      if (re.test(rawText)) {
+        merchantName     = entry.name;
+        merchantCategory = entry.category;
         break;
+      }
+    }
+
+    // Fallback: first clean line heuristic
+    if (!merchantName) {
+      const blacklist = [
+        'alamat','telp','npwp','tanggal','tgl','receipt','strip','kasir','cashier',
+        'welcome','terima','kasih','thank','you','invoice','member','no.','order',
+        'promo','discount','diskon','transaksi','merchant','jl.','jalan','raya',
+        'card','tunai','cash','debit',
+      ];
+      for (let i = 0; i < Math.min(lines.length, 5); i++) {
+        const ll  = lines[i].toLowerCase();
+        const num = /^\d+$/.test(lines[i].replace(/[.,\s]/g, ''));
+        const bad = blacklist.some(w => ll.includes(w));
+        if (lines[i].length > 2 && !num && !bad) {
+          merchantName = lines[i];
+          break;
+        }
       }
     }
   }
@@ -299,12 +309,27 @@ export async function scanReceipt(imageFile, progressCallback) {
 
   // Account
   let recommendedAccountType = null;
-  if (/\b(tunai|cash|kembalian|kembali)\b/i.test(rawLower))
-    recommendedAccountType = 'cash';
-  else if (/\b(gopay|ovo|dana|linkaja|shopeepay|qris|e-money|flazz|brizzi|blu)\b/i.test(rawLower))
+  let accountHint = null;
+  let memberHint = null;
+
+  if (/\b(blu)\b/i.test(rawLower)) {
     recommendedAccountType = 'wallet';
-  else if (/\b(debit|kredit|card|bca|mandiri|bni|bri|cimb|kartu)\b/i.test(rawLower))
+    accountHint = 'blu';
+  } else if (/\b(livin)\b/i.test(rawLower)) {
     recommendedAccountType = 'bank';
+    accountHint = 'mandiri';
+  } else if (/\b(tunai|cash|kembalian|kembali)\b/i.test(rawLower)) {
+    recommendedAccountType = 'cash';
+  } else if (/\b(gopay|ovo|dana|linkaja|shopeepay|qris|e-money|flazz|brizzi)\b/i.test(rawLower)) {
+    recommendedAccountType = 'wallet';
+  } else if (/\b(debit|kredit|card|bca|mandiri|bni|bri|cimb|kartu)\b/i.test(rawLower)) {
+    recommendedAccountType = 'bank';
+  }
+
+  // Member Hint
+  if (/\b(yosua)\b/i.test(rawLower)) {
+    memberHint = 'yosua';
+  }
 
   // ── 7. Per-field Confidence ──────────────────────────────────────────────
   // We use overall Tesseract confidence as a proxy.
@@ -334,6 +359,8 @@ export async function scanReceipt(imageFile, progressCallback) {
     heuristics: {
       category: recommendedCategoryType,
       account:  recommendedAccountType,
+      accountHint,
+      memberHint,
     },
     rawText,
     imageFile,

@@ -23,6 +23,8 @@ const SKIP_KEYWORDS = [
   // Tax / discount summary
   'ppn', 'pajak', 'tax', 'vat', 'disc', 'diskon', 'discount', 'potongan',
   'promo', 'voucher', 'saving', 'hemat', 'anda hemat',
+  // Delivery and service fees
+  'delivery', 'ongkir', 'service', 'layanan', 'biaya', 'fee', 'charge',
   // Store header / footer
   'terima kasih', 'thank you', 'struk', 'receipt', 'invoice', 'nota',
   'kasir', 'cashier', 'welcome', 'selamat datang', 'selamat berbelanja',
@@ -73,7 +75,7 @@ function extractPrice(line) {
  * Returns { qty, cleanedName } or null if no quantity pattern found.
  */
 function extractQuantity(name) {
-  // Pattern: "2 x ITEM" or "2x ITEM" at the start
+  // Pattern: Kopi Kenangan "1 x  Buy 1 Only 20RB" or "1x Buy 1"
   let m = name.match(/^(\d+)\s*[xX×]\s+(.+)/);
   if (m) return { qty: parseInt(m[1], 10), cleanedName: m[2].trim() };
 
@@ -85,9 +87,21 @@ function extractQuantity(name) {
   if (m) return { qty: parseInt(m[2], 10), cleanedName: m[1].trim() };
 
   // Pattern for minimarkets (Indomaret/Alfamart): "ITEM NAME [Qty] [UnitPrice]"
-  // e.g., "INDOMI SOTO MIE 70GR 3 3100" -> Name="INDOMI SOTO MIE 70GR", Qty="3", UnitPrice="3100"
+  // e.g., "INDOMI SOTO MIE 70GR 3 3100" -> Name="INDOMI SOTO MIE 70GR", Qty="3"
+  // Note: the last number (Total Price) was already extracted by extractPrice.
+  // The remaining string is "INDOMI SOTO MIE 70GR 3 3100"
   m = name.match(/^(.+?)\s+(\d+)\s+(\d{3,})\s*$/);
-  if (m) return { qty: parseInt(m[2], 10), cleanedName: m[1].trim() };
+  if (m) {
+    // If the unit price is present, we discard it from the name
+    return { qty: parseInt(m[2], 10), cleanedName: m[1].trim() };
+  }
+
+  // Handle cases where Unit Price might not be exactly matched
+  m = name.match(/^(.+?)\s+(\d+)\s*$/);
+  if (m && m[2].length < 3) {
+    // If the last thing is a small number, it's likely a quantity
+    return { qty: parseInt(m[2], 10), cleanedName: m[1].trim() };
+  }
 
   return null;
 }
@@ -128,8 +142,9 @@ function cleanItemName(name) {
   // Remove Rp / IDR prefixes that might be stuck to the name
   s = s.replace(/\b(rp\.?|idr\.?)\s*/gi, '');
 
-  // Remove trailing numbers that look like prices (already extracted)
-  s = s.replace(/\s+\d{1,3}([.,]\d{3})*([.,]\d{2})?\s*$/, '');
+  // Remove trailing numbers that look like prices ONLY if they have thousands separators/decimals
+  // Avoid stripping standard product sizes like '50' or '70GR'
+  s = s.replace(/\s+\d{1,3}(?:[.,]\d{3})+(?:[.,]\d{2})?\s*$/, '');
 
   // Remove quantity indicators if still present
   s = s.replace(/\s*\d+\s*[xX×]\s*$/, '');

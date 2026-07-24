@@ -774,16 +774,25 @@ async function onReceiptSelected(event) {
     let matchedAccountId = '';
     let accountConf = 'low';
     const accRec = data.heuristics.account;
-    
-    if (accRec === 'cash') {
-      const match = accounts.value.find(a => /(cash|tunai|dompet|fisik)/i.test(a.name));
+    const accHint = data.heuristics.accountHint;
+
+    if (accHint) {
+      // Prioritize explicit hints like 'blu' or 'mandiri'
+      const match = accounts.value.find(a => new RegExp(accHint, 'i').test(a.name));
       if (match) { matchedAccountId = match.id; accountConf = 'high'; }
-    } else if (accRec === 'wallet') {
-      const match = accounts.value.find(a => /(wallet|gopay|ovo|dana|shopee|link|digital|qris|blu)/i.test(a.name));
-      if (match) { matchedAccountId = match.id; accountConf = 'high'; }
-    } else if (accRec === 'bank') {
-      const match = accounts.value.find(a => /(bank|mandiri|bca|bni|bri|cimb|debit|tabungan)/i.test(a.name));
-      if (match) { matchedAccountId = match.id; accountConf = 'high'; }
+    }
+
+    if (!matchedAccountId) {
+      if (accRec === 'cash') {
+        const match = accounts.value.find(a => /(cash|tunai|dompet|fisik)/i.test(a.name));
+        if (match) { matchedAccountId = match.id; accountConf = 'high'; }
+      } else if (accRec === 'wallet') {
+        const match = accounts.value.find(a => /(wallet|gopay|ovo|dana|shopee|link|digital|qris|blu)/i.test(a.name));
+        if (match) { matchedAccountId = match.id; accountConf = 'high'; }
+      } else if (accRec === 'bank') {
+        const match = accounts.value.find(a => /(bank|mandiri|bca|bni|bri|cimb|debit|tabungan|livin)/i.test(a.name));
+        if (match) { matchedAccountId = match.id; accountConf = 'high'; }
+      }
     }
     
     if (!matchedAccountId && accounts.value.length > 0) {
@@ -793,11 +802,21 @@ async function onReceiptSelected(event) {
     // ── Member mapping ────────────────────────────────────────────────────
     let matchedMemberId = '';
     let memberConf = 'low';
-    const rawLower = (data.rawText ?? '').toLowerCase();
-    if (rawLower) {
-      const match = members.value.find(m => rawLower.includes(m.name.toLowerCase()));
+    const memberHint = data.heuristics.memberHint;
+
+    if (memberHint) {
+      const match = members.value.find(m => new RegExp(memberHint, 'i').test(m.name));
       if (match) { matchedMemberId = match.id; memberConf = 'high'; }
     }
+
+    if (!matchedMemberId) {
+      const rawLower = (data.rawText ?? '').toLowerCase();
+      if (rawLower) {
+        const match = members.value.find(m => rawLower.includes(m.name.toLowerCase()));
+        if (match) { matchedMemberId = match.id; memberConf = 'high'; }
+      }
+    }
+
     if (!matchedMemberId && members.value.length > 0) {
       matchedMemberId = members.value[0].id; // Fallback
     }
