@@ -51,7 +51,8 @@ function extractPrice(line) {
   const cleaned = line.replace(/\b(rp\.?|idr\.?)\s*/gi, ' ');
 
   // Match numbers that look like currency amounts
-  const matches = [...cleaned.matchAll(/\b\d{1,3}(?:[.,\s]\d{3})*(?:[.,]\d{2})?\b/g)];
+  // Supports: separated (15.000, 15 000, 15,000) AND unseparated (15000)
+  const matches = [...cleaned.matchAll(/\b(?:\d{1,3}(?:[.,\s]\d{3})+|\d+)(?:[.,]\d{2})?\b/g)];
   if (!matches.length) return 0;
 
   // Take the LAST (rightmost) match — prices are on the right side of receipts
@@ -136,8 +137,8 @@ function shouldSkipLine(line) {
 function cleanItemName(name) {
   let s = name;
 
-  // Remove leading/trailing special chars
-  s = s.replace(/^[\-*#.\s]+/, '').replace(/[\-*#.\s]+$/, '');
+  // Remove leading/trailing special chars and common OCR misreads of "1x " (like «, T+, 1x., etc)
+  s = s.replace(/^[\-*#.\s«+T]+/, '').replace(/[\-*#.\s«+]+$/, '');
 
   // Remove Rp / IDR prefixes that might be stuck to the name
   s = s.replace(/\b(rp\.?|idr\.?)\s*/gi, '');
@@ -194,11 +195,11 @@ export function parseReceiptItems(rawText) {
 
     if (price > 0) {
       // This line has a price — extract the name part (everything before the price)
-      // Remove the price portion from the line to get the name
       let namePart = line;
 
       // Remove the rightmost number (price) from the line to isolate the name
-      const priceMatch = [...line.matchAll(/\b\d{1,3}(?:[.,\s]\d{3})*(?:[.,]\d{2})?\b/g)];
+      // Use the updated price regex that supports unseparated numbers
+      const priceMatch = [...line.matchAll(/\b(?:\d{1,3}(?:[.,\s]\d{3})+|\d+)(?:[.,]\d{2})?\b/g)];
       if (priceMatch.length > 0) {
         const lastMatch = priceMatch[priceMatch.length - 1];
         namePart = line.substring(0, lastMatch.index).trim();
@@ -232,7 +233,6 @@ export function parseReceiptItems(rawText) {
       pendingName = null;
     } else {
       // This line has no price — it might be an item name on a separate line
-      // (common in receipts where name and price are on different lines)
       const cleaned = cleanItemName(line);
       if (cleaned && cleaned.length >= MIN_ITEM_NAME_LENGTH) {
         // Check if next line has a price (look-ahead)
@@ -243,7 +243,6 @@ export function parseReceiptItems(rawText) {
           // This is likely a name line, next is the price line
           pendingName = cleaned;
         }
-        // If next line also has no price, this is probably a standalone description line — skip it
       }
     }
   }

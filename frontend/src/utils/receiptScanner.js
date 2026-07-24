@@ -43,7 +43,8 @@ function extractRightmostAmount(line) {
   const cleaned = line.replace(/\b(rp\.?|idr\.?)\s*/gi, ' ');
 
   // Match numbers that look like Indonesian currency amounts
-  const matches = [...cleaned.matchAll(/\b\d{1,3}(?:[.,\s]\d{3})*(?:[.,]\d{2})?\b/g)];
+  // Supports: separated (15.000, 15 000, 15,000) AND unseparated (15000)
+  const matches = [...cleaned.matchAll(/\b(?:\d{1,3}(?:[.,\s]\d{3})+|\d+)(?:[.,]\d{2})?\b/g)];
   if (!matches.length) return 0;
 
   // Take the LAST (rightmost) match — two-column receipts put prices on the right
