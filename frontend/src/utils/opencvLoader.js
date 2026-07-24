@@ -14,61 +14,60 @@ let loadPromise = null;
 
 const OPENCV_CDN_URL = 'https://docs.opencv.org/4.x/opencv.js';
 
-export function loadOpenCV() {
-  if (cvInstance) return Promise.resolve(cvInstance);
+export async function loadOpenCV() {
+  if (cvInstance) return cvInstance;
   if (loadPromise) return loadPromise;
 
-  loadPromise = new Promise((resolve, reject) => {
-    // If it's already fully loaded
-    if (window.cv && window.cv.Mat) {
-      cvInstance = window.cv;
-      return resolve(cvInstance);
-    }
+  loadPromise = new Promise(async (resolve, reject) => {
+    try {
+      // Dynamically import the npm package so it gets code-split by Vite
+      // and doesn't conflict with other Emscripten globals (like Tesseract's window.Module)
+      const cvModule = await import('@techstark/opencv-js');
+      
+      // Depending on the bundler/environment, the default export might be nested
+      const cv = cvModule.default || cvModule;
 
-    // Set up Emscripten Module to catch the initialization event
-    window.Module = {
-      onRuntimeInitialized() {
-        if (window.cv && window.cv.Mat) {
-          cvInstance = window.cv;
+      // The techstark opencv-js might need to initialize WASM asynchronously
+      if (cv instanceof Promise) {
+        cvInstance = await cv;
+      } else if (cv.onRuntimeInitialized) {
+        // If it's a module that requires initialization
+        cv.onRuntimeInitialized = () => {
+          cvInstance = cv;
           resolve(cvInstance);
-        } else {
-          reject(new Error('OpenCV loaded but cv.Mat is missing.'));
+        };
+        // It might already be initialized if Mat exists
+        if (cv.Mat) {
+           cvInstance = cv;
+           resolve(cvInstance);
         }
+        return; 
+      } else {
+        // Already initialized synchronously
+        cvInstance = cv;
       }
-    };
-
-    const script = document.createElement('script');
-    // Use a specific, stable version to prevent unexpected 301 redirects or changes
-    script.src = 'https://docs.opencv.org/4.8.0/opencv.js';
-    script.async = true;
-
-    // Fallback poll in case onRuntimeInitialized is bypassed by a specific build
-    const pollInterval = setInterval(() => {
-      if (window.cv && window.cv.Mat) {
-        clearInterval(pollInterval);
-        cvInstance = window.cv;
-        resolve(cvInstance);
+      
+      // Wait a tiny bit just to ensure Mat is ready if it's doing some lazy init
+      if (!cvInstance.Mat) {
+         let attempts = 0;
+         const interval = setInterval(() => {
+           attempts++;
+           if (cvInstance.Mat) {
+             clearInterval(interval);
+             resolve(cvInstance);
+           } else if (attempts > 50) { // 5 seconds
+             clearInterval(interval);
+             reject(new Error('OpenCV initialized but cv.Mat is missing after 5 seconds.'));
+           }
+         }, 100);
+         return;
       }
-    }, 200);
 
-    const timeoutId = setTimeout(() => {
-      clearInterval(pollInterval);
+      resolve(cvInstance);
+    } catch (err) {
       loadPromise = null;
-      reject(new Error('OpenCV.js load timeout (30s). Check your connection.'));
-    }, 30000);
-
-    script.onerror = () => {
-      clearInterval(pollInterval);
-      clearTimeout(timeoutId);
-      loadPromise = null;
-      reject(new Error('Failed to load OpenCV.js from CDN.'));
-    };
-    
-    script.onload = () => {
-       // We don't resolve here, we wait for onRuntimeInitialized or the poll
-    };
-
-    document.head.appendChild(script);
+      reject(err);
+    }
   });
 
   return loadPromise;
