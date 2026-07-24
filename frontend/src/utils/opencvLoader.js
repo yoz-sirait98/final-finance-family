@@ -39,16 +39,39 @@ export function loadOpenCV() {
     script.async = true;
 
     let pollInterval = null;
+    let timeoutId = null;
 
-    // Poll for cv.Mat. Emscripten attaches C++ bindings (like Mat) only AFTER
-    // the WebAssembly binary is fully compiled and instantiated.
+    // Poll for cv.Mat. Modern OpenCV WASM binds can take a few shapes.
     pollInterval = setInterval(() => {
-      if (window.cv && window.cv.Mat) {
-        clearInterval(pollInterval);
-        cvInstance = window.cv;
-        resolve(cvInstance);
+      if (window.cv) {
+        // If cv is a Promise (or behaves like one), await it
+        if (typeof window.cv.then === 'function') {
+          clearInterval(pollInterval);
+          clearTimeout(timeoutId);
+          window.cv.then((target) => {
+            window.cv = target;
+            cvInstance = target;
+            resolve(cvInstance);
+          }).catch(err => {
+            loadPromise = null;
+            reject(err);
+          });
+        } else if (window.cv.Mat) {
+          // It's already the initialized module
+          clearInterval(pollInterval);
+          clearTimeout(timeoutId);
+          cvInstance = window.cv;
+          resolve(cvInstance);
+        }
       }
     }, 100);
+
+    // Add a 30-second timeout so it doesn't freeze forever on slow connections
+    timeoutId = setTimeout(() => {
+      if (pollInterval) clearInterval(pollInterval);
+      loadPromise = null;
+      reject(new Error('OpenCV.js load timeout (30s). Check your connection.'));
+    }, 30000);
 
     script.onload = () => {
       // We don't resolve here, we let the poll interval handle it, 
@@ -57,6 +80,7 @@ export function loadOpenCV() {
 
     script.onerror = () => {
       if (pollInterval) clearInterval(pollInterval);
+      if (timeoutId) clearTimeout(timeoutId);
       loadPromise = null;
       reject(new Error('Failed to load OpenCV.js from CDN.'));
     };
