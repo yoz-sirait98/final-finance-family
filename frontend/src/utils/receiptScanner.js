@@ -297,8 +297,6 @@ export async function scanReceipt(imageFile, progressCallback) {
   }
 
   // ── 6. Category & Account Heuristics ────────────────────────────────────
-  const rawLower = rawText.toLowerCase();
-
   // Category: prefer merchants.json category, else keyword fallback
   let recommendedCategoryType = merchantCategory || 'groceries';
   if (!merchantCategory) {
