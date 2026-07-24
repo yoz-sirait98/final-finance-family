@@ -17,7 +17,7 @@ export default defineConfig({
       injectRegister: 'auto',
       injectManifest: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
-        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+        maximumFileSizeToCacheInBytes: 20 * 1024 * 1024,
       },
       manifest: {
         name: 'Family Finance',
