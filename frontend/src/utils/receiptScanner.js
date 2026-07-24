@@ -141,13 +141,24 @@ function classifyConfidence(score) {
  */
 export async function scanReceipt(imageFile, progressCallback) {
 
-  // ── 1. Bypass OpenCV (Freezing Issue) ───────────────────────────────────
-  // OpenCV's WASM engine is too heavy for the main thread and freezes the browser.
-  // We use the raw image directly for Tesseract (which works perfectly).
-  const ocrInput = imageFile;
+  // ── 1. OpenCV Preprocessing ───────────────────────────────────
+  if (progressCallback) progressCallback(5, 'Loading image processing engine...');
+  // Yield to main thread so the UI can render the progress message
+  await new Promise(resolve => setTimeout(resolve, 50));
+  
+  let ocrInput = imageFile;
+  try {
+    const cv = await loadOpenCV();
+    if (progressCallback) progressCallback(10, 'Enhancing image for OCR...');
+    await new Promise(resolve => setTimeout(resolve, 50));
+    
+    ocrInput = await preprocessReceiptImage(imageFile, cv);
+  } catch (err) {
+    console.warn('OpenCV preprocessing failed, falling back to raw image:', err);
+  }
 
   // ── 2. Tesseract OCR ────────────────────────────────────────────────────
-  if (progressCallback) progressCallback(10, 'Initializing OCR engine...');
+  if (progressCallback) progressCallback(15, 'Initializing OCR engine...');
   const ret = await Tesseract.recognize(
     ocrInput,
     'eng+ind',

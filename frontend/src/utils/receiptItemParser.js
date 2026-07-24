@@ -84,6 +84,11 @@ function extractQuantity(name) {
   m = name.match(/^(.+?)\s+[xX×]\s*(\d+)\s*$/);
   if (m) return { qty: parseInt(m[2], 10), cleanedName: m[1].trim() };
 
+  // Pattern for minimarkets (Indomaret/Alfamart): "ITEM NAME [Qty] [UnitPrice]"
+  // e.g., "INDOMI SOTO MIE 70GR 3 3100" -> Name="INDOMI SOTO MIE 70GR", Qty="3", UnitPrice="3100"
+  m = name.match(/^(.+?)\s+(\d+)\s+(\d{3,})\s*$/);
+  if (m) return { qty: parseInt(m[2], 10), cleanedName: m[1].trim() };
+
   return null;
 }
 
