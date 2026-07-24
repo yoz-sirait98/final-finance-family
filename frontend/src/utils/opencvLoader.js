@@ -40,24 +40,54 @@ export function loadOpenCV() {
 
     let pollInterval = null;
     let timeoutId = null;
+    let isInitializing = false;
 
     // Poll for cv.Mat. Modern OpenCV WASM binds can take a few shapes.
     pollInterval = setInterval(() => {
-      if (window.cv) {
+      if (window.cv && !isInitializing) {
+        // If cv is a factory function (OpenCV 4.x modularized), call it!
+        if (typeof window.cv === 'function' && !window.cv.Mat) {
+          isInitializing = true;
+          const maybePromise = window.cv();
+          if (maybePromise && typeof maybePromise.then === 'function') {
+            maybePromise.then((target) => {
+              clearInterval(pollInterval);
+              clearTimeout(timeoutId);
+              window.cv = target;
+              cvInstance = target;
+              resolve(cvInstance);
+            }).catch(err => {
+              clearInterval(pollInterval);
+              clearTimeout(timeoutId);
+              loadPromise = null;
+              reject(err);
+            });
+          } else if (maybePromise && maybePromise.Mat) {
+            clearInterval(pollInterval);
+            clearTimeout(timeoutId);
+            window.cv = maybePromise;
+            cvInstance = maybePromise;
+            resolve(cvInstance);
+          }
+        }
         // If cv is a Promise (or behaves like one), await it
-        if (typeof window.cv.then === 'function') {
-          clearInterval(pollInterval);
-          clearTimeout(timeoutId);
+        else if (typeof window.cv.then === 'function') {
+          isInitializing = true;
           window.cv.then((target) => {
+            clearInterval(pollInterval);
+            clearTimeout(timeoutId);
             window.cv = target;
             cvInstance = target;
             resolve(cvInstance);
           }).catch(err => {
+            clearInterval(pollInterval);
+            clearTimeout(timeoutId);
             loadPromise = null;
             reject(err);
           });
-        } else if (window.cv.Mat) {
-          // It's already the initialized module
+        } 
+        // If it's already the initialized module with Mat
+        else if (window.cv.Mat) {
           clearInterval(pollInterval);
           clearTimeout(timeoutId);
           cvInstance = window.cv;
