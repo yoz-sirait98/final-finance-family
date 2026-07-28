@@ -6,7 +6,8 @@ import merchantsDb from './merchants.json';
  * Replaces Tesseract.js & regex parsing with Gemini 1.5 Flash multimodal AI.
  */
 
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
+const GEMINI_FALLBACK_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent';
 
 const RECEIPT_PROMPT = `
 You are a high-precision Indonesian receipt OCR and parser for a family finance app.
@@ -81,13 +82,24 @@ export async function scanReceipt(imageFile, progressCallback) {
     },
   };
 
-  const response = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
+  let response = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(payload),
   });
+
+  if (!response.ok && response.status === 404) {
+    console.warn('Primary Gemini model endpoint returned 404, trying fallback endpoint...');
+    response = await fetch(`${GEMINI_FALLBACK_URL}?key=${apiKey}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+  }
 
   if (progressCallback) progressCallback(85, 'Parsing AI response...');
 
