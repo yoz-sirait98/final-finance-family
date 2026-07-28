@@ -20,8 +20,8 @@
     "semantic_hash": ""
   },
   "frontend/package.json": {
-    "mtime": 1784867884.528236,
-    "ast_hash": "94643a2721241fadb6ab5aac85d986b3",
+    "mtime": 1780974212.7666373,
+    "ast_hash": "a5d9a746e5a0f9dd7fcd741df05fb64c",
     "semantic_hash": ""
   },
   "frontend/src/App.vue": {
@@ -155,8 +155,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/TransactionsPage.vue": {
-    "mtime": 1784877977.7603595,
-    "ast_hash": "75ae5a4cf55e3e129a948ab6c4ab3153",
+    "mtime": 1784780151.3397105,
+    "ast_hash": "ee13c55388a4275a9c5348fe96fef91f",
     "semantic_hash": ""
   },
   "frontend/src/router/index.js": {
@@ -325,8 +325,8 @@
     "semantic_hash": ""
   },
   "frontend/vite.config.js": {
-    "mtime": 1784873193.26008,
-    "ast_hash": "5d2142e682be8e44795d3d4fc62bb773",
+    "mtime": 1784777458.5191624,
+    "ast_hash": "4da3c9c9850527e5a63ae0c9c8daa1ea",
     "semantic_hash": ""
   },
   "skills-lock.json": {
@@ -535,8 +535,8 @@
     "semantic_hash": ""
   },
   "frontend/src/utils/receiptScanner.js": {
-    "mtime": 1785205352.543037,
-    "ast_hash": "afa7b6f53e9609cdf6e4d8cc00ad76d5",
+    "mtime": 1784859961.1818733,
+    "ast_hash": "2a21c0784414fd580fa35d2cce24c381",
     "semantic_hash": ""
   },
   "graphify-out/memory/query_20260609_044005_recurring.md": {
@@ -584,6 +584,11 @@
     "ast_hash": "f4c1ba35d452156dfaa8b4e23a6012e6",
     "semantic_hash": ""
   },
+  "frontend/test_ocr.mjs": {
+    "mtime": 1781058041.5372658,
+    "ast_hash": "25f81eb15249d9de9ef28eafc88c376c",
+    "semantic_hash": ""
+  },
   "frontend/test_ocr2.mjs": {
     "mtime": 1781058058.7489164,
     "ast_hash": "f2b2f25f4f7981ef559d389fd9d3fb57",
@@ -610,8 +615,8 @@
     "semantic_hash": ""
   },
   "docs/walkthrough_receipt_scanner_ai.md": {
-    "mtime": 1785211455.542866,
-    "ast_hash": "c3260903f278fdab508ecd023de996ad",
+    "mtime": 1781075242.9750316,
+    "ast_hash": "ba176b60348e79f5fd554d72564ee9e4",
     "semantic_hash": ""
   },
   "supabase/migrations/000021_add_gemini_api_key_to_families.sql": {
@@ -790,18 +795,18 @@
     "semantic_hash": ""
   },
   "frontend/src/utils/merchants.json": {
-    "mtime": 1785201329.1071298,
-    "ast_hash": "a10fe4ff4bf460b493b70b6ae0f4e76f",
+    "mtime": 1784608237.8182979,
+    "ast_hash": "f1ac3e88c3d86f22b75c4ea71ce7c380",
     "semantic_hash": ""
   },
   "frontend/src/utils/opencvLoader.js": {
-    "mtime": 1784880111.7403886,
-    "ast_hash": "68849c7f516e15f45451523327dd7c51",
+    "mtime": 1784866937.3446646,
+    "ast_hash": "b27b7584fc68bfe8f92860b786a73332",
     "semantic_hash": ""
   },
   "frontend/src/utils/opencvPreprocess.js": {
-    "mtime": 1785202786.7517612,
-    "ast_hash": "8361a1be9960d514edb00d6e7ac09a47",
+    "mtime": 1784608237.819299,
+    "ast_hash": "5a0d08d52c96bb7430fc0a09505e9bdd",
     "semantic_hash": ""
   },
   "supabase/.temp/linked-project.json": {
@@ -825,8 +830,8 @@
     "semantic_hash": ""
   },
   "frontend/src/utils/receiptItemParser.js": {
-    "mtime": 1784887508.368295,
-    "ast_hash": "71f9818cfdcd10776955384648c8f268",
+    "mtime": 1784859971.836911,
+    "ast_hash": "c8193a43c35e8e282ad2c4aef3b92504",
     "semantic_hash": ""
   },
   "docs/walkthrough_shopping_revamp.md": {
@@ -882,11 +887,6 @@
   "frontend/test_ocr.js": {
     "mtime": 1784859911.3852375,
     "ast_hash": "a8c43dc1ae9aa1d8a76096e28b3a6cbe",
-    "semantic_hash": ""
-  },
-  "frontend/test.html": {
-    "mtime": 1784868052.7179177,
-    "ast_hash": "1d4dcb61a0b07a532f8969c5b14f2416",
     "semantic_hash": ""
   }
 }

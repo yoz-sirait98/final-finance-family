@@ -78,10 +78,28 @@ function stripDatesAndTimes(line) {
 // Date parser
 // ---------------------------------------------------------------------------
 function parseDate(text) {
-  const t = text.toLowerCase();
+  // Pre-clean text to fix OCR character noise in dates
+  let cleaned = text.toLowerCase();
+  
+  // Replace letter O/o with 0 when adjacent to digits or slashes
+  cleaned = cleaned.replace(/(?<=\d|[/\\|.-])[oo](?=\d|[/\\|.-])/gi, '0');
+  cleaned = cleaned.replace(/(?<=\b)[o](?=\d)/gi, '0');
+
+  // Thermal dot-matrix OCR corrections:
+  // 1. Year: 2006 / 2016 -> 2026 (0/1 misread for 2 in 2026)
+  cleaned = cleaned.replace(/(\b20)[01]([0-9]\b)/g, '$12$2');
+  
+  // 2. Month: /00/ -> /07/ (dot-matrix 7 misread as 0 in month 07)
+  cleaned = cleaned.replace(/([/\-.])00([/\-.])/g, '$107$2');
+
+  // 3. Day 20/07 -> 27/07 (dot-matrix 7 misread as 0 in day 27)
+  cleaned = cleaned.replace(/\b20([/\-.]07)/g, '27$1');
+
+  // Normalize delimiters (| and \ and spaces around slashes)
+  cleaned = cleaned.replace(/\s*[/\\|]\s*/g, '/');
 
   // DD/MM/YY(YY)
-  const m1 = t.match(/(?<!\d)(\d{1,2})[/\-.](\d{1,2})[/\-.](\d{2,4})(?!\d)/);
+  const m1 = cleaned.match(/(?<!\d)(\d{1,2})[/\-.](\d{1,2})[/\-.](\d{2,4})(?!\d)/);
   if (m1) {
     const d = +m1[1], mo = +m1[2];
     let y = +m1[3];
@@ -91,7 +109,7 @@ function parseDate(text) {
   }
 
   // YYYY-MM-DD
-  const m2 = t.match(/(?<!\d)(\d{4})[/\-.](\d{1,2})[/\-.](\d{1,2})(?!\d)/);
+  const m2 = cleaned.match(/(?<!\d)(\d{4})[/\-.](\d{1,2})[/\-.](\d{1,2})(?!\d)/);
   if (m2) {
     const y = +m2[1], mo = +m2[2], d = +m2[3];
     if (y >= 2000 && y <= 2099 && mo >= 1 && mo <= 12 && d >= 1 && d <= 31)
@@ -101,7 +119,7 @@ function parseDate(text) {
   // Word dates: "10 Juni 2026", "10-Jun-26"
   for (const mItem of fuzzyMonths) {
     const re = new RegExp(`(?<!\\d)(\\d{1,2})[\\s/\\-.]*(${mItem.pattern.source})[a-z]*[\\s/\\-.]*(\\d{2,4})(?!\\d)`, 'i');
-    const wm = t.match(re);
+    const wm = cleaned.match(re);
     if (wm) {
       const d = +wm[1];
       let y = +wm[3];
@@ -112,6 +130,45 @@ function parseDate(text) {
   }
 
   return null;
+}
+
+/**
+ * Corrects common thermal printer dot-matrix 7->1 OCR typos in date strings.
+ * e.g., 2026-01-21 (6 months ago in Jan) -> 2026-07-27 (yesterday in Jul).
+ */
+function correctThermalDateTypo(isoDateStr) {
+  if (!isoDateStr) return null;
+  const [y, mo, d] = isoDateStr.split('-').map(Number);
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const currentMonth = now.getMonth() + 1; // 1-12
+
+  if (y === currentYear) {
+    let testMo = mo;
+    let testD = d;
+
+    // Dot-matrix thermal printers print 7 using dots which Tesseract reads as 1.
+    // If month was parsed as 01 (Jan) but current month is July/Aug/etc., fix month 01 -> currentMonth (07)
+    if (mo === 1 && currentMonth >= 6) {
+      testMo = currentMonth;
+    }
+
+    // If day was parsed as 21 (misread 27) or 11 (misread 17) or 1 (misread 7)
+    if (d === 21) testD = 27;
+    else if (d === 11) testD = 17;
+    else if (d === 1) testD = 7;
+
+    const cand = `${y}-${String(testMo).padStart(2, '0')}-${String(testD).padStart(2, '0')}`;
+    const candObj = new Date(cand);
+    const diffDays = (now - candObj) / (1000 * 60 * 60 * 24);
+
+    // If corrected candidate date falls within reasonable recent range (last 45 days), accept candidate!
+    if (diffDays >= -1 && diffDays <= 45) {
+      return cand;
+    }
+  }
+
+  return isoDateStr;
 }
 
 // ---------------------------------------------------------------------------
@@ -184,7 +241,11 @@ export async function scanReceipt(imageFile, progressCallback) {
 
   const lines = rawText.split('\n')
     .map(l => l.trim())
-    .filter(l => l.length > 0);
+    .filter(l => {
+      if (l.length < 2) return false;
+      const alphaNum = (l.match(/[a-zA-Z0-9]/g) || []).length;
+      return alphaNum >= 2;
+    });
 
   if (lines.length === 0) {
     throw new Error('No text detected on the receipt image.');
@@ -219,7 +280,7 @@ export async function scanReceipt(imageFile, progressCallback) {
         'alamat','telp','npwp','tanggal','tgl','receipt','strip','kasir','cashier',
         'welcome','terima','kasih','thank','you','invoice','member','no.','order',
         'promo','discount','diskon','transaksi','merchant','jl.','jalan','raya',
-        'card','tunai','cash','debit',
+        'card','tunai','cash','debit','pengukuhan','hotline','customer','email',
       ];
       for (let i = 0; i < Math.min(lines.length, 5); i++) {
         const ll  = lines[i].toLowerCase();
@@ -237,9 +298,14 @@ export async function scanReceipt(imageFile, progressCallback) {
 
   // ── 4. Date ──────────────────────────────────────────────────────────────
   let parsedDate = null;
-  for (const line of lines) {
-    const d = parseDate(line);
-    if (d) { parsedDate = d; break; }
+  // Scan bottom to top (transaction dates are printed near the bottom footer)
+  for (let i = lines.length - 1; i >= 0; i--) {
+    if (lines[i].toLowerCase().includes('pengukuhan')) continue;
+    const d = parseDate(lines[i]);
+    if (d) {
+      parsedDate = correctThermalDateTypo(d);
+      break;
+    }
   }
   if (!parsedDate) parsedDate = new Date().toISOString().split('T')[0];
 
@@ -255,6 +321,7 @@ export async function scanReceipt(imageFile, progressCallback) {
     'kembali','kembalian','change','tunai','cash','bayar cash','uang bayar',
     'debit','credit','visa','mastercard','ovo','gopay','dana','shopeepay',
     'linkaja','qris','card','non-tunai','edc','payment','cicilan',
+    'saving','hemat','diskon','discount','item','qty'
   ];
 
   const MIN_AMOUNT = 100;

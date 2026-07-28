@@ -58,33 +58,27 @@ export async function preprocessReceiptImage(file, cv) {
   // Output canvas that will hold the final processed image
   const outputCanvas = document.createElement('canvas');
 
-  // Allocate all cv.Mat objects (except src, which is returned by imread)
   let src = null;
+  let cropped = null;
   let gray = null;
   let blurred = null;
   let binary = null;
-  let closed = null;
-  let kernel = null;
 
   try {
     gray = new cv.Mat();
     blurred = new cv.Mat();
     binary = new cv.Mat();
-    closed = new cv.Mat();
-    kernel = cv.Mat.ones(2, 2, cv.CV_8U);
 
     // ── Step 1: Load image into cv.Mat ────────────────────────────────────
-    // Draw to a temp canvas first so cv.imread can access pixel data
     const tempCanvas = document.createElement('canvas');
     tempCanvas.width  = img.naturalWidth;
     tempCanvas.height = img.naturalHeight;
     const ctx = tempCanvas.getContext('2d');
     ctx.drawImage(img, 0, 0);
     
-    // imread allocates and returns a new Mat
     src = cv.imread(tempCanvas);
 
-    // ── Resize immediately to MIN_HEIGHT_PX to drastically speed up processing ──
+    // ── Step 2: Resize to MIN_HEIGHT_PX ──────────────────────────────────
     if (src.rows !== MIN_HEIGHT_PX) {
       const scale = MIN_HEIGHT_PX / src.rows;
       const newSize = new cv.Size(
@@ -98,47 +92,44 @@ export async function preprocessReceiptImage(file, cv) {
       src = resized;
     }
 
-    // ── Step 2: Grayscale ─────────────────────────────────────────────────
-    cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY);
+    // ── Step 3: Margin Crop (Remove surrounding table background) ────────
+    // Strip 10% left & right outer margins where table wood grain & hands usually sit
+    const cropX = Math.round(src.cols * 0.10);
+    const cropW = Math.round(src.cols * 0.80);
+    const cropROI = new cv.Rect(cropX, 0, cropW, src.rows);
+    cropped = src.roi(cropROI);
 
-    // ── Step 3: Gaussian Blur (denoise) ──────────────────────────────────
-    // 5×5 kernel, σ = 0 (auto-computed from kernel size)
+    // ── Step 4: Grayscale Conversion ─────────────────────────────────────
+    cv.cvtColor(cropped, gray, cv.COLOR_RGBA2GRAY);
+
+    // ── Step 5: Gaussian Blur ──────────────────────────────────────────────
     const ksize = new cv.Size(5, 5);
     cv.GaussianBlur(gray, blurred, ksize, 0, 0, cv.BORDER_DEFAULT);
 
-    // ── Step 4: Adaptive Threshold ────────────────────────────────────────
-    // ADAPTIVE_THRESH_GAUSSIAN_C: weight neighbours by Gaussian distribution
-    // THRESH_BINARY: foreground = 255 (white text on black bg is handled by Tesseract)
-    // blockSize = 15: neighbourhood for threshold computation (must be odd)
-    // C = 4: constant subtracted from the mean — tuned for receipt paper
+    // ── Step 6: Adaptive Thresholding ──────────────────────────────────────
+    // blockSize = 31, C = 10: Makes paper background pure white (255) and ink crisp black (0)
     cv.adaptiveThreshold(
       blurred,
       binary,
       255,
       cv.ADAPTIVE_THRESH_GAUSSIAN_C,
       cv.THRESH_BINARY,
-      15,
-      4,
+      31,
+      10,
     );
 
-    // ── Step 5: Morphological Close ────────────────────────────────────────
-    // Fills small white gaps inside dark characters caused by printer dots or folds
-    cv.morphologyEx(binary, closed, cv.MORPH_CLOSE, kernel);
-
-    // ── Step 6: Write result to output canvas ──────────────────────────────
-    outputCanvas.width  = closed.cols;
-    outputCanvas.height = closed.rows;
-    cv.imshow(outputCanvas, closed);
+    // ── Step 7: Write result to output canvas ──────────────────────────────
+    outputCanvas.width  = binary.cols;
+    outputCanvas.height = binary.rows;
+    cv.imshow(outputCanvas, binary);
 
   } finally {
-    // ── Step 8: MANDATORY memory cleanup ──────────────────────────────────
-    // OpenCV.js uses C++ heap; leaks crash the tab after repeated scans
+    // ── Step 8: Memory cleanup ─────────────────────────────────────────────
     if (src) src.delete();
+    if (cropped) cropped.delete();
     if (gray) gray.delete();
     if (blurred) blurred.delete();
     if (binary) binary.delete();
-    if (closed) closed.delete();
-    if (kernel) kernel.delete();
   }
 
   return outputCanvas;
