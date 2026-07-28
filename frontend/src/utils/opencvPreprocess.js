@@ -29,6 +29,7 @@ function fileToImageElement(file) {
 
 /**
  * Native Canvas Preprocessing
+ * Applies contrast stretching and scaling without destructive binary clipping or edge cropping.
  */
 export async function preprocessReceiptImage(file) {
   const img = await fileToImageElement(file);
@@ -37,36 +38,49 @@ export async function preprocessReceiptImage(file) {
   const targetW = Math.round(img.naturalWidth * scale);
   const targetH = Math.round(img.naturalHeight * scale);
 
-  // Auto-crop 10% margins to remove background clutter
-  const cropX = Math.round(targetW * 0.10);
-  const cropW = Math.round(targetW * 0.80);
-
   const canvas = document.createElement('canvas');
-  canvas.width = cropW;
+  canvas.width = targetW;
   canvas.height = targetH;
   const ctx = canvas.getContext('2d');
 
-  // Draw cropped and scaled image onto canvas
-  ctx.drawImage(img, cropX / scale, 0, cropW / scale, img.naturalHeight, 0, 0, cropW, targetH);
+  // Draw full image scaled (0% margin crop so left/right margins are not cut off)
+  ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight, 0, 0, targetW, targetH);
 
-  // Grayscale & Contrast Binarization
-  const imgData = ctx.getImageData(0, 0, cropW, targetH);
+  const imgData = ctx.getImageData(0, 0, targetW, targetH);
   const d = imgData.data;
 
-  // We use a simple global threshold for speed and reliability.
-  // In practice, thermal receipts have very dark text and light background.
-  // This pure JS loop takes ~50ms on mobile.
+  // 1. Calculate min and max luminance for dynamic contrast stretching
+  let minGray = 255;
+  let maxGray = 0;
+  
+  // Sample loop to find min/max
+  for (let i = 0; i < d.length; i += 16) {
+    const g = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
+    if (g < minGray) minGray = g;
+    if (g > maxGray) maxGray = g;
+  }
+
+  const range = (maxGray - minGray) || 1;
+
+  // 2. Grayscale + Dynamic Contrast Stretch (preserves text anti-aliasing for Tesseract)
   for (let i = 0; i < d.length; i += 4) {
     const gray = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
-    // Contrast binarization: crisp black ink (0), white paper (255)
-    const val = gray < 145 ? 0 : 255;
-    d[i]     = val;
-    d[i + 1] = val;
-    d[i + 2] = val;
+    let normalized = ((gray - minGray) / range) * 255;
+    
+    // Mild contrast boost to sharpen dark text against light paper
+    if (normalized < 128) {
+      normalized = Math.max(0, normalized - 25);
+    } else {
+      normalized = Math.min(255, normalized + 25);
+    }
+
+    d[i]     = normalized;
+    d[i + 1] = normalized;
+    d[i + 2] = normalized;
     d[i + 3] = 255;
   }
 
   ctx.putImageData(imgData, 0, 0);
-  canvas.processedImageDataUrl = canvas.toDataURL('image/jpeg', 0.8);
+  canvas.processedImageDataUrl = canvas.toDataURL('image/jpeg', 0.85);
   return canvas;
 }
