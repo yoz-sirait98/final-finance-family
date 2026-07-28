@@ -186,18 +186,32 @@
 
           <!-- Scanned items -->
           <div class="mb-3">
-            <label class="form-label fw-bold">{{ localeStore.currentLocale === 'id' ? 'Daftar Belanjaan' : 'Items' }} ({{ scannedItems.length }})</label>
-            <div class="border rounded" style="max-height: 300px; overflow-y: auto;">
-              <div v-for="(item, idx) in scannedItems" :key="idx" class="d-flex align-items-center gap-2 p-2 border-bottom">
-                <span class="badge bg-secondary">{{ idx + 1 }}</span>
-                <input v-model="item.name" class="form-control form-control-sm" style="flex: 2;" />
-                <div class="input-group input-group-sm" style="flex: 1; min-width: 120px;">
-                  <span class="input-group-text">Rp</span>
-                  <input type="number" v-model.number="item.price" class="form-control" />
+            <label class="form-label fw-bold d-flex justify-content-between">
+              <span>{{ localeStore.currentLocale === 'id' ? 'Daftar Belanjaan' : 'Items' }} ({{ scannedItems.length }})</span>
+              <span v-if="scannedItemsTotal > 0" class="text-muted small">Subtotal: Rp {{ scannedItemsTotal.toLocaleString('id-ID') }}</span>
+            </label>
+            <div class="border rounded p-1 bg-light" style="max-height: 320px; overflow-y: auto;">
+              <div v-for="(item, idx) in scannedItems" :key="idx" class="p-2 border-bottom bg-white rounded mb-1 shadow-sm">
+                <div class="d-flex align-items-center gap-2 mb-1">
+                  <span class="badge bg-secondary">{{ idx + 1 }}</span>
+                  <input v-model="item.name" class="form-control form-control-sm fw-semibold" :placeholder="localeStore.currentLocale === 'id' ? 'Nama Item' : 'Item Name'" />
+                  <button class="btn btn-sm btn-outline-danger border-0" @click="scannedItems.splice(idx, 1)">
+                    <i class="bi bi-x-lg"></i>
+                  </button>
                 </div>
-                <button class="btn btn-sm btn-outline-danger border-0" @click="scannedItems.splice(idx, 1)">
-                  <i class="bi bi-x-lg"></i>
-                </button>
+                <div class="d-flex align-items-center gap-2 ps-4">
+                  <div class="input-group input-group-sm" style="max-width: 95px;">
+                    <span class="input-group-text px-1">Qty</span>
+                    <input type="number" min="1" v-model.number="item.qty" class="form-control px-1 text-center" />
+                  </div>
+                  <div class="input-group input-group-sm" style="flex: 1;">
+                    <span class="input-group-text">Rp</span>
+                    <input type="number" v-model.number="item.price" class="form-control text-end fw-bold text-primary" placeholder="Total Price" />
+                  </div>
+                </div>
+                <div v-if="item.qty > 1 && item.price > 0" class="ps-4 mt-1 text-muted" style="font-size: 0.72rem;">
+                  <i class="bi bi-calculator me-1"></i>{{ item.qty }}x @ Rp {{ Math.round(item.price / item.qty).toLocaleString('id-ID') }} / unit
+                </div>
               </div>
             </div>
           </div>
@@ -252,12 +266,15 @@ import { useLocaleStore } from '../stores/locale';
 import { supabase } from '../lib/supabase';
 import { scanReceipt } from '../utils/receiptScanner';
 import { parseReceiptItems } from '../utils/receiptItemParser';
+import { useScannerMapping } from '../composables/useScannerMapping';
 import { pushDispatcherService } from '../services/pushDispatcherService';
 
 const plans = ref([]);
 const members = ref([]);
 const activeTab = ref('progress');
 const saving = ref(false);
+
+const { mapMember } = useScannerMapping(ref([]), ref([]), members);
 
 const showAddModal = ref(false);
 const showDeleteModal = ref(false);
@@ -511,15 +528,18 @@ async function onReceiptSelected(event) {
       scanStatusText.value = status;
     });
 
-    // Parse line items from raw OCR text
-    const parsedItems = parseReceiptItems(result.rawText);
+    // Use items pre-parsed inside scanReceipt(), fallback to parseReceiptItems if needed
+    const parsedItems = result.items?.length > 0
+      ? result.items
+      : parseReceiptItems(result.rawText);
 
-    receiptStoreName.value = result.merchantName || 'Receipt Scan';
+    receiptStoreName.value = result.merchant?.name || result.merchantName || 'Receipt Scan';
     scannedItems.value = parsedItems.length > 0
       ? parsedItems.map(i => ({ name: i.name, price: i.price, qty: i.qty || 1 }))
-      : [{ name: '', price: result.totalAmount || 0, qty: 1 }]; // Fallback: single item with total
+      : [{ name: '', price: result.amount?.total || result.totalAmount || 0, qty: 1 }];
 
-    receiptCreatedBy.value = authStore.user?.id || '';
+    const { memberId } = mapMember(result);
+    receiptCreatedBy.value = memberId || authStore.user?.id || (members.value[0]?.id || '');
     isScanning.value = false;
     showReceiptReview.value = true;
   } catch (err) {
@@ -527,7 +547,6 @@ async function onReceiptSelected(event) {
     isScanning.value = false;
     toast.error(localeStore.currentLocale === 'id' ? 'Gagal memindai struk: ' + err.message : 'Failed to scan receipt: ' + err.message);
   } finally {
-    // Reset file input
     if (receiptInput.value) receiptInput.value.value = '';
   }
 }

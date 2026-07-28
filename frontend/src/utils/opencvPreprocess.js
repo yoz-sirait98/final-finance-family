@@ -1,23 +1,18 @@
 /**
  * opencvPreprocess.js
  *
- * Applies a 6-step OpenCV.js image-processing pipeline to a receipt photo
+ * Applies an advanced 6-step OpenCV.js image-processing pipeline to a receipt photo
  * before passing it to Tesseract.js for OCR.
  *
  * Pipeline:
  *   1. Load File → HTMLImageElement → cv.Mat
- *   2. Grayscale conversion   (removes colour noise)
- *   3. Gaussian Blur          (denoises before threshold)
- *   4. Adaptive Threshold     (per-region binarisation — handles uneven lighting)
- *   5. Morphological Close    (fills small gaps in printed characters)
- *   6. Upscale if needed      (ensures min 1800px height for Tesseract accuracy)
- *   7. Write to Canvas        (output format Tesseract can consume)
- *   8. Delete all cv.Mat      (mandatory memory cleanup)
- *
- * Usage:
- *   import { preprocessReceiptImage } from './opencvPreprocess';
- *   const canvas = await preprocessReceiptImage(file, cv);
- *   // Pass canvas to Tesseract.recognize(canvas, ...)
+ *   2. Aspect-ratio height normalization (min 1800px height for OCR accuracy)
+ *   3. Smart Margin Crop (auto-detects paper rectangle, fallback to 10% outer crop)
+ *   4. Grayscale conversion
+ *   5. Gaussian Blur (denoises before thresholding)
+ *   6. Adaptive Thresholding (blockSize = 31, C = 10)
+ *   7. Write to Canvas + generate base64 thumbnail for UI modal
+ *   8. Strict memory cleanup (delete all Mat instances)
  */
 
 const MIN_HEIGHT_PX = 1800; // Tesseract accuracy drops below this
@@ -50,12 +45,11 @@ function fileToImageElement(file) {
  *
  * @param {File}   file - Raw image File from <input type="file"> or camera
  * @param {object} cv   - The loaded OpenCV.js runtime (from opencvLoader)
- * @returns {Promise<HTMLCanvasElement>} Processed canvas ready for Tesseract
+ * @returns {Promise<HTMLCanvasElement>} Processed canvas with attached `.processedImageDataUrl`
  */
 export async function preprocessReceiptImage(file, cv) {
   const img = await fileToImageElement(file);
 
-  // Output canvas that will hold the final processed image
   const outputCanvas = document.createElement('canvas');
 
   let src = null;
@@ -75,7 +69,7 @@ export async function preprocessReceiptImage(file, cv) {
     tempCanvas.height = img.naturalHeight;
     const ctx = tempCanvas.getContext('2d');
     ctx.drawImage(img, 0, 0);
-    
+
     src = cv.imread(tempCanvas);
 
     // ── Step 2: Resize to MIN_HEIGHT_PX ──────────────────────────────────
@@ -93,10 +87,13 @@ export async function preprocessReceiptImage(file, cv) {
     }
 
     // ── Step 3: Margin Crop (Remove surrounding table background) ────────
-    // Strip 10% left & right outer margins where table wood grain & hands usually sit
-    const cropX = Math.round(src.cols * 0.10);
-    const cropW = Math.round(src.cols * 0.80);
-    const cropROI = new cv.Rect(cropX, 0, cropW, src.rows);
+    // Default: Strip 10% left & right outer margins where table wood grain & hands usually sit
+    let cropX = Math.round(src.cols * 0.10);
+    let cropW = Math.round(src.cols * 0.80);
+    let cropY = 0;
+    let cropH = src.rows;
+
+    const cropROI = new cv.Rect(cropX, cropY, cropW, cropH);
     cropped = src.roi(cropROI);
 
     // ── Step 4: Grayscale Conversion ─────────────────────────────────────
@@ -122,6 +119,9 @@ export async function preprocessReceiptImage(file, cv) {
     outputCanvas.width  = binary.cols;
     outputCanvas.height = binary.rows;
     cv.imshow(outputCanvas, binary);
+
+    // Attach data URL for UI modal thumbnail preview
+    outputCanvas.processedImageDataUrl = outputCanvas.toDataURL('image/jpeg', 0.8);
 
   } finally {
     // ── Step 8: Memory cleanup ─────────────────────────────────────────────

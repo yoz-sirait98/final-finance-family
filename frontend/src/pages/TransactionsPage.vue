@@ -479,6 +479,7 @@ import { useTour } from '../composables/useTour';
 import SkeletonLoader from '../components/SkeletonLoader.vue';
 import { transactionsTourSteps } from '../tours/transactionsTour';
 import { scanReceipt } from '../utils/receiptScanner';
+import { useScannerMapping } from '../composables/useScannerMapping';
 import { formatCurrency } from '../utils/format';
 import { transactionService } from '../services/transactionService';
 import { memberService } from '../services/memberService';
@@ -507,6 +508,9 @@ const editingId = ref(null);
 const localeStore = useLocaleStore();
 const budgetStore = useBudgetStore();
 
+// Scanner Mapping Composable
+const { mapCategory, mapAccount, mapMember } = useScannerMapping(accounts, categories, members);
+
 // Modal visibility
 const showTxModal = ref(false);
 const showTransferModal = ref(false);
@@ -521,10 +525,11 @@ const scanProgress = ref(0);
 const scanStatus = ref('');
 
 // OpenCV + Tesseract scan result state
-const scanConfidence  = ref(null);   // { merchant, amount, date } → 'high'|'medium'|'low'
-const scanRawText     = ref('');     // raw OCR output for review panel
-const showRawOcrPanel = ref(false);  // toggle for collapsible raw OCR panel
-const possibleDuplicate = ref(null); // { description, amount, date } if duplicate detected
+const scanConfidence     = ref(null);   // { merchant, amount, date } → 'high'|'medium'|'low'
+const scanRawText        = ref('');     // raw OCR output for review panel
+const scanProcessedImage = ref('');     // base64 thumbnail of OpenCV preprocessed image
+const showRawOcrPanel    = ref(false);  // toggle for collapsible raw OCR panel
+const possibleDuplicate  = ref(null); // { description, amount, date } if duplicate detected
 
 // Receipt image (pending upload after scan, or saved URL for existing record)
 const pendingReceiptFile = ref(null);   // raw File object from scanner
@@ -741,98 +746,26 @@ async function onReceiptSelected(event) {
     // Reset the input so the same file can be selected again
     event.target.value = '';
 
-    // ── Category mapping ──────────────────────────────────────────────────
-    let matchedCategoryId = '';
-    let categoryConf = 'low';
-    const catRec      = data.heuristics.category;
-    const expenseCats = categories.value.filter(c => c.type === 'expense');
-    const catPatterns = {
-      food:          /(makan|minum|food|drink|dining|cafe|kopi|restoran)/,
-      groceries:     /(grocer|belanja|sembako|bulanan|pasar|dapur|market)/,
-      health:        /(sehat|obat|medis|health|medical|apotek|klinik)/,
-      utilities:     /(listrik|air|utilit|bill|telepon|internet|pulsa)/,
-      transport:     /(transport|bensin|kendaraan|ojek|gojek|grab|fuel|parkir)/,
-      entertainment: /(hiburan|entertain|cinema|bioskop|games|sport)/,
-      household:     /(rumah|perabot|elektronik|furniture|hardware)/,
-      shopping:      /(belanja|shop|fashion|baju|pakaian|sepatu)/,
-    };
-    for (const [cat, re] of Object.entries(catPatterns)) {
-      if (cat === catRec) {
-        const match = expenseCats.find(c => re.test(c.name.toLowerCase()));
-        if (match) { 
-          matchedCategoryId = match.id; 
-          categoryConf = 'high'; 
-          break; 
-        }
-      }
-    }
-    if (!matchedCategoryId && expenseCats.length > 0) {
-      matchedCategoryId = expenseCats[0].id; // Fallback
-    }
-
-    // ── Account mapping ───────────────────────────────────────────────────
-    let matchedAccountId = '';
-    let accountConf = 'low';
-    const accRec = data.heuristics.account;
-    const accHint = data.heuristics.accountHint;
-
-    if (accHint) {
-      // Prioritize explicit hints like 'blu' or 'mandiri'
-      const match = accounts.value.find(a => new RegExp(accHint, 'i').test(a.name));
-      if (match) { matchedAccountId = match.id; accountConf = 'high'; }
-    }
-
-    if (!matchedAccountId) {
-      if (accRec === 'cash') {
-        const match = accounts.value.find(a => /(cash|tunai|dompet|fisik)/i.test(a.name));
-        if (match) { matchedAccountId = match.id; accountConf = 'high'; }
-      } else if (accRec === 'wallet') {
-        const match = accounts.value.find(a => /(wallet|gopay|ovo|dana|shopee|link|digital|qris|blu)/i.test(a.name));
-        if (match) { matchedAccountId = match.id; accountConf = 'high'; }
-      } else if (accRec === 'bank') {
-        const match = accounts.value.find(a => /(bank|mandiri|bca|bni|bri|cimb|debit|tabungan|livin)/i.test(a.name));
-        if (match) { matchedAccountId = match.id; accountConf = 'high'; }
-      }
-    }
-    
-    if (!matchedAccountId && accounts.value.length > 0) {
-      matchedAccountId = accounts.value[0].id; // Fallback
-    }
-
-    // ── Member mapping ────────────────────────────────────────────────────
-    let matchedMemberId = '';
-    let memberConf = 'low';
-    const memberHint = data.heuristics.memberHint;
-
-    if (memberHint) {
-      const match = members.value.find(m => new RegExp(memberHint, 'i').test(m.name));
-      if (match) { matchedMemberId = match.id; memberConf = 'high'; }
-    }
-
-    if (!matchedMemberId) {
-      const rawLower = (data.rawText ?? '').toLowerCase();
-      if (rawLower) {
-        const match = members.value.find(m => rawLower.includes(m.name.toLowerCase()));
-        if (match) { matchedMemberId = match.id; memberConf = 'high'; }
-      }
-    }
-
-    if (!matchedMemberId && members.value.length > 0) {
-      matchedMemberId = members.value[0].id; // Fallback
-    }
+    // ── Map DB entities using shared composable ────────────────────────────
+    const { categoryId: matchedCategoryId, confidence: categoryConf } = mapCategory(data);
+    const { accountId: matchedAccountId, confidence: accountConf }   = mapAccount(data);
+    const { memberId: matchedMemberId, confidence: memberConf }     = mapMember(data);
 
     // ── Duplicate detection ───────────────────────────────────────────────
-    if (data.totalAmount && data.date) {
-      const fingerprint = `${data.totalAmount}|${data.date}|${(data.merchantName ?? '').toLowerCase()}`;
+    const scanTotalAmount = data.amount?.total || data.totalAmount || 0;
+    const scanMerchantName = data.merchant?.name || data.merchantName || '';
+
+    if (scanTotalAmount && data.date) {
+      const fingerprint = `${scanTotalAmount}|${data.date}|${scanMerchantName.toLowerCase()}`;
       const scanDateObj  = new Date(data.date);
       const dupMatch = transactions.value.find(tx => {
         const txDate = new Date(tx.transaction_date);
         const dateDiff = Math.abs(scanDateObj - txDate) / (1000 * 60 * 60 * 24);
         const txFp = `${Math.abs(tx.amount)}|${tx.transaction_date}|${(tx.description ?? '').toLowerCase()}`;
         return txFp === fingerprint || (
-          Math.abs(tx.amount) === data.totalAmount &&
+          Math.abs(tx.amount) === scanTotalAmount &&
           dateDiff <= 1 &&
-          (tx.description ?? '').toLowerCase().includes((data.merchantName ?? '').toLowerCase().substring(0, 5))
+          (tx.description ?? '').toLowerCase().includes(scanMerchantName.toLowerCase().substring(0, 5))
         );
       });
       if (dupMatch) {
@@ -854,8 +787,9 @@ async function onReceiptSelected(event) {
     newConf.member = memberConf;
     newConf.account = accountConf;
     newConf.category = categoryConf;
-    scanConfidence.value = newConf;
-    scanRawText.value    = data.rawText ?? '';
+    scanConfidence.value     = newConf;
+    scanRawText.value        = data.rawText ?? '';
+    scanProcessedImage.value = data.processedImageDataUrl ?? '';
 
     // ── Auto-fill form & open modal ───────────────────────────────────────
     formError.value             = '';
@@ -869,9 +803,9 @@ async function onReceiptSelected(event) {
       member_id:        matchedMemberId,
       account_id:       matchedAccountId,
       category_id:      matchedCategoryId,
-      amount:           data.totalAmount || '',
+      amount:           scanTotalAmount || '',
       transaction_date: data.date || todayISO(),
-      description:      data.merchantName || '',
+      description:      scanMerchantName || '',
       receipt_url:      '',
     };
     showTxModal.value = true;

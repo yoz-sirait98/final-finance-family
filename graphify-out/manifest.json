@@ -155,8 +155,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/TransactionsPage.vue": {
-    "mtime": 1784877977.7603595,
-    "ast_hash": "75ae5a4cf55e3e129a948ab6c4ab3153",
+    "mtime": 1785214742.9135807,
+    "ast_hash": "4dc46b2c4e165a4a624ff50967dd6cd1",
     "semantic_hash": ""
   },
   "frontend/src/router/index.js": {
@@ -395,8 +395,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ShoppingPage.vue": {
-    "mtime": 1784780117.388525,
-    "ast_hash": "28d425475dd3ac88afddc948e38203a2",
+    "mtime": 1785214770.142532,
+    "ast_hash": "3b2617a5dbc57e6f94c2e801f31d5e9e",
     "semantic_hash": ""
   },
   "frontend/src/services/shoppingService.js": {
@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "docs/implementation_plan.md": {
-    "mtime": 1784608247.1585963,
-    "ast_hash": "cd7f076374872054e09c336379cf2bb7",
+    "mtime": 1785214687.3246918,
+    "ast_hash": "06953937a7a206424f276122cd5461df",
     "semantic_hash": ""
   },
   "docs/supabase-setup-guide.md": {
@@ -535,8 +535,8 @@
     "semantic_hash": ""
   },
   "frontend/src/utils/receiptScanner.js": {
-    "mtime": 1785205352.543037,
-    "ast_hash": "afa7b6f53e9609cdf6e4d8cc00ad76d5",
+    "mtime": 1785214718.6518712,
+    "ast_hash": "79f020e13cd02df49ee02e3fc28715e6",
     "semantic_hash": ""
   },
   "graphify-out/memory/query_20260609_044005_recurring.md": {
@@ -800,8 +800,8 @@
     "semantic_hash": ""
   },
   "frontend/src/utils/opencvPreprocess.js": {
-    "mtime": 1785202786.7517612,
-    "ast_hash": "8361a1be9960d514edb00d6e7ac09a47",
+    "mtime": 1785214702.0131476,
+    "ast_hash": "4ef96d6c423585e8436693ea265be673",
     "semantic_hash": ""
   },
   "supabase/.temp/linked-project.json": {
@@ -825,8 +825,8 @@
     "semantic_hash": ""
   },
   "frontend/src/utils/receiptItemParser.js": {
-    "mtime": 1784887508.368295,
-    "ast_hash": "71f9818cfdcd10776955384648c8f268",
+    "mtime": 1785214708.7023065,
+    "ast_hash": "5570b70565cfbf82c1d4d129b32dd23a",
     "semantic_hash": ""
   },
   "docs/walkthrough_shopping_revamp.md": {
@@ -887,6 +887,11 @@
   "frontend/test.html": {
     "mtime": 1784868052.7179177,
     "ast_hash": "1d4dcb61a0b07a532f8969c5b14f2416",
+    "semantic_hash": ""
+  },
+  "frontend/src/composables/useScannerMapping.js": {
+    "mtime": 1785214693.8829474,
+    "ast_hash": "3ba956c9b41f8f9729358f7aee8b2af3",
     "semantic_hash": ""
   }
 }

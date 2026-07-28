@@ -2,6 +2,7 @@ import Tesseract from 'tesseract.js';
 import { loadOpenCV } from './opencvLoader';
 import { preprocessReceiptImage } from './opencvPreprocess';
 import merchantsDb from './merchants.json';
+import { parseReceiptItems } from './receiptItemParser';
 
 // ---------------------------------------------------------------------------
 // Month fuzzy-matching for robust date extraction despite OCR errors
@@ -21,12 +22,12 @@ const fuzzyMonths = [
   { pattern: /de[sc]/i,             val: '12' },
 ];
 
-// Category → heuristic keyword fallback (used when merchant JSON has no match)
+// Category → heuristic keyword fallback
 const categoryKeywords = {
-  food:        /(cafe|kopi|coffee|starbucks|resto|bakso|mcd|kfc|burger|pizza|dunkin|roti|eat|warung|mie|makan)/,
-  health:      /(apotek|kimia|guardian|watsons|sehat|klinik|dokter|medicine|panadol|bodrex)/,
-  utilities:   /(pln|listrik|pdam|air|telkom|internet|pulsa|speedy)/,
-  transport:   /(pertamina|bensin|shell|gojek|go-jek|grab|grob|greb|taxi|toll|parkir|bensin|ride|fare|passenger|booking|trip|perjalanan|driver)/,
+  food:        /(cafe|kopi|coffee|starbucks|resto|bakso|mcd|kfc|burger|pizza|dunkin|roti|eat|warung|mie|makan)/i,
+  health:      /(apotek|kimia|guardian|watsons|sehat|klinik|dokter|medicine|panadol|bodrex)/i,
+  utilities:   /(pln|listrik|pdam|air|telkom|internet|pulsa|speedy)/i,
+  transport:   /(pertamina|bensin|shell|gojek|go-jek|grab|grob|greb|taxi|toll|parkir|ride|fare|passenger|booking|trip|perjalanan|driver)/i,
 };
 
 // ---------------------------------------------------------------------------
@@ -35,26 +36,17 @@ const categoryKeywords = {
 
 /**
  * Extract the RIGHTMOST valid Rupiah amount from a text line.
- * Handles: 150.000 | 150,000 | Rp150.000 | Rp 150,000 | 150000
  * Returns 0 if nothing found.
  */
 function extractRightmostAmount(line) {
-  // Strip any Rp / IDR prefix so it does not interfere with number matching
   const cleaned = line.replace(/\b(rp\.?|idr\.?)\s*/gi, ' ');
-
-  // Match numbers that look like Indonesian currency amounts
-  // Supports: separated (15.000, 15 000, 15,000) AND unseparated (15000)
   const matches = [...cleaned.matchAll(/\b(?:\d{1,3}(?:[.,\s]\d{3})+|\d+)(?:[.,]\d{2})?\b/g)];
   if (!matches.length) return 0;
 
-  // Take the LAST (rightmost) match — two-column receipts put prices on the right
   const raw = matches[matches.length - 1][0];
   let s = raw.replace(/\s/g, '');
 
-  // Strip trailing ,00 / .00 (Indonesian cent notation)
   if (s.endsWith(',00') || s.endsWith('.00')) s = s.slice(0, -3);
-
-  // Remove remaining thousand-separators
   s = s.replace(/[.,]/g, '');
 
   const n = parseInt(s, 10);
@@ -66,57 +58,53 @@ function extractRightmostAmount(line) {
  */
 function stripDatesAndTimes(line) {
   let s = line.toLowerCase();
-  s = s.replace(/\b\d{1,2}:\d{2}(?::\d{2})?\b/g, ' ');                             // times
-  s = s.replace(/(?<!\d)\d{1,2}[/\-.]\d{1,2}[/\-.]\d{2,4}(?!\d)/g, ' ');           // DD/MM/YY
-  s = s.replace(/(?<!\d)\d{4}[/\-.]\d{1,2}[/\-.]\d{1,2}(?!\d)/g, ' ');             // YYYY-MM-DD
+  s = s.replace(/\b\d{1,2}:\d{2}(?::\d{2})?\b/g, ' ');
+  s = s.replace(/(?<!\d)\d{1,2}[/\-.]\d{1,2}[/\-.]\d{2,4}(?!\d)/g, ' ');
+  s = s.replace(/(?<!\d)\d{4}[/\-.]\d{1,2}[/\-.]\d{1,2}(?!\d)/g, ' ');
   const months = '(?:jan|feb|mar|apr|mei|may|jun|jul|ags|aug|sep|okt|oct|nov|des|dec)[a-z]*';
   s = s.replace(new RegExp(`(?<!\\d)\\d{1,2}[\\s/\\-.]*${months}[\\s/\\-.]*\\d{2,4}(?!\\d)`, 'g'), ' ');
   return s;
 }
 
 // ---------------------------------------------------------------------------
-// Date parser
+// Date Candidate Scoring Engine
 // ---------------------------------------------------------------------------
-function parseDate(text) {
-  // Pre-clean text to fix OCR character noise in dates
+
+function parseDateCandidatesFromLine(text, lineIdx, totalLines) {
+  const candidates = [];
   let cleaned = text.toLowerCase();
-  
-  // Replace letter O/o with 0 when adjacent to digits or slashes
+
+  // Normalize delimiters & common OCR noise
   cleaned = cleaned.replace(/(?<=\d|[/\\|.-])[oo](?=\d|[/\\|.-])/gi, '0');
-  cleaned = cleaned.replace(/(?<=\b)[o](?=\d)/gi, '0');
-
-  // Thermal dot-matrix OCR corrections:
-  // 1. Year: 2006 / 2016 -> 2026 (0/1 misread for 2 in 2026)
-  cleaned = cleaned.replace(/(\b20)[01]([0-9]\b)/g, '$12$2');
-  
-  // 2. Month: /00/ -> /07/ (dot-matrix 7 misread as 0 in month 07)
-  cleaned = cleaned.replace(/([/\-.])00([/\-.])/g, '$107$2');
-
-  // 3. Day 20/07 -> 27/07 (dot-matrix 7 misread as 0 in day 27)
-  cleaned = cleaned.replace(/\b20([/\-.]07)/g, '27$1');
-
-  // Normalize delimiters (| and \ and spaces around slashes)
   cleaned = cleaned.replace(/\s*[/\\|]\s*/g, '/');
 
-  // DD/MM/YY(YY)
+  // Regex patterns
   const m1 = cleaned.match(/(?<!\d)(\d{1,2})[/\-.](\d{1,2})[/\-.](\d{2,4})(?!\d)/);
   if (m1) {
     const d = +m1[1], mo = +m1[2];
     let y = +m1[3];
     if (m1[3].length === 2) y += 2000;
-    if (d >= 1 && d <= 31 && mo >= 1 && mo <= 12 && y >= 2000 && y <= 2099)
-      return `${y}-${String(mo).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    if (d >= 1 && d <= 31 && mo >= 1 && mo <= 12 && y >= 2000 && y <= 2099) {
+      candidates.push({
+        iso: `${y}-${String(mo).padStart(2,'0')}-${String(d).padStart(2,'0')}`,
+        raw: m1[0],
+        lineIdx,
+      });
+    }
   }
 
-  // YYYY-MM-DD
   const m2 = cleaned.match(/(?<!\d)(\d{4})[/\-.](\d{1,2})[/\-.](\d{1,2})(?!\d)/);
   if (m2) {
     const y = +m2[1], mo = +m2[2], d = +m2[3];
-    if (y >= 2000 && y <= 2099 && mo >= 1 && mo <= 12 && d >= 1 && d <= 31)
-      return `${y}-${String(mo).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    if (y >= 2000 && y <= 2099 && mo >= 1 && mo <= 12 && d >= 1 && d <= 31) {
+      candidates.push({
+        iso: `${y}-${String(mo).padStart(2,'0')}-${String(d).padStart(2,'0')}`,
+        raw: m2[0],
+        lineIdx,
+      });
+    }
   }
 
-  // Word dates: "10 Juni 2026", "10-Jun-26"
   for (const mItem of fuzzyMonths) {
     const re = new RegExp(`(?<!\\d)(\\d{1,2})[\\s/\\-.]*(${mItem.pattern.source})[a-z]*[\\s/\\-.]*(\\d{2,4})(?!\\d)`, 'i');
     const wm = cleaned.match(re);
@@ -124,51 +112,99 @@ function parseDate(text) {
       const d = +wm[1];
       let y = +wm[3];
       if (wm[3].length === 2) y += 2000;
-      if (d >= 1 && d <= 31 && y >= 2000 && y <= 2099)
-        return `${y}-${mItem.val}-${String(d).padStart(2,'0')}`;
+      if (d >= 1 && d <= 31 && y >= 2000 && y <= 2099) {
+        candidates.push({
+          iso: `${y}-${mItem.val}-${String(d).padStart(2,'0')}`,
+          raw: wm[0],
+          lineIdx,
+        });
+      }
     }
   }
 
-  return null;
+  return candidates;
 }
 
 /**
- * Corrects common thermal printer dot-matrix 7->1 OCR typos in date strings.
- * e.g., 2026-01-21 (6 months ago in Jan) -> 2026-07-27 (yesterday in Jul).
+ * Score date candidates to pick the most plausible transaction date.
  */
-function correctThermalDateTypo(isoDateStr) {
-  if (!isoDateStr) return null;
-  const [y, mo, d] = isoDateStr.split('-').map(Number);
+function scoreAndSelectBestDate(lines) {
   const now = new Date();
   const currentYear = now.getFullYear();
-  const currentMonth = now.getMonth() + 1; // 1-12
+  const currentMonth = now.getMonth() + 1;
 
-  if (y === currentYear) {
-    let testMo = mo;
-    let testD = d;
+  const allCandidates = [];
 
-    // Dot-matrix thermal printers print 7 using dots which Tesseract reads as 1.
-    // If month was parsed as 01 (Jan) but current month is July/Aug/etc., fix month 01 -> currentMonth (07)
-    if (mo === 1 && currentMonth >= 6) {
-      testMo = currentMonth;
-    }
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (line.toLowerCase().includes('pengukuhan')) continue; // Skip tax registration header date
 
-    // If day was parsed as 21 (misread 27) or 11 (misread 17) or 1 (misread 7)
-    if (d === 21) testD = 27;
-    else if (d === 11) testD = 17;
-    else if (d === 1) testD = 7;
+    const cands = parseDateCandidatesFromLine(line, i, lines.length);
+    for (const cand of cands) {
+      allCandidates.push(cand);
 
-    const cand = `${y}-${String(testMo).padStart(2, '0')}-${String(testD).padStart(2, '0')}`;
-    const candObj = new Date(cand);
-    const diffDays = (now - candObj) / (1000 * 60 * 60 * 24);
+      // Also create dot-matrix 7->1 thermal repaired candidate if applicable
+      const [y, mo, d] = cand.iso.split('-').map(Number);
+      if (y === currentYear) {
+        let repairedMo = mo;
+        let repairedD = d;
+        if (mo === 1 && currentMonth >= 6) repairedMo = currentMonth;
+        if (d === 21) repairedD = 27;
+        else if (d === 11) repairedD = 17;
+        else if (d === 1) repairedD = 7;
 
-    // If corrected candidate date falls within reasonable recent range (last 45 days), accept candidate!
-    if (diffDays >= -1 && diffDays <= 45) {
-      return cand;
+        if (repairedMo !== mo || repairedD !== d) {
+          allCandidates.push({
+            iso: `${y}-${String(repairedMo).padStart(2,'0')}-${String(repairedD).padStart(2,'0')}`,
+            raw: cand.raw + ' (thermal repair)',
+            lineIdx: i,
+            isRepaired: true,
+          });
+        }
+      }
     }
   }
 
-  return isoDateStr;
+  if (!allCandidates.length) return new Date().toISOString().split('T')[0];
+
+  // Score each candidate
+  let bestCand = null;
+  let maxScore = -999;
+
+  for (const cand of allCandidates) {
+    const candDateObj = new Date(cand.iso);
+    const diffDays = (now - candDateObj) / (1000 * 60 * 60 * 24);
+
+    let score = 0;
+
+    // 1. Plausibility score (dates within last 45 days get high points)
+    if (diffDays >= -1 && diffDays <= 45) {
+      score += 50;
+      if (diffDays <= 7) score += 20; // Very recent receipt
+    } else if (diffDays > 45 && diffDays <= 365) {
+      score += 10;
+    } else {
+      score -= 50; // Far past or future date
+    }
+
+    // 2. Position score (transaction dates sit near the bottom footer)
+    const positionRatio = cand.lineIdx / lines.length; // 0.0 (top) to 1.0 (bottom)
+    score += Math.round(positionRatio * 30);
+
+    // 3. Line keyword context score
+    const lineText = lines[cand.lineIdx].toLowerCase();
+    if (/trans|receipt|struk|jam|date|tgl|waktu/i.test(lineText)) score += 25;
+
+    // 4. Repaired candidate bonus if original was > 60 days in past
+    if (cand.isRepaired) score += 15;
+
+    if (score > maxScore) {
+      maxScore = score;
+      bestCand = cand;
+    }
+  }
+
+  return bestCand ? bestCand.iso : new Date().toISOString().split('T')[0];
 }
 
 // ---------------------------------------------------------------------------
@@ -181,36 +217,33 @@ function classifyConfidence(score) {
 }
 
 // ---------------------------------------------------------------------------
-// Main export
+// Main Scanner Export
 // ---------------------------------------------------------------------------
 
 /**
  * Scan a receipt image file.
  *
- * Steps:
- *   1. Lazy-load OpenCV.js
- *   2. Pre-process image through OpenCV pipeline
- *   3. OCR via Tesseract.js (PSM 6, eng+ind)
- *   4. Parse merchant, date, amount, heuristics, confidence
- *
  * @param {File}     imageFile        - Raw File from camera / file input
  * @param {Function} progressCallback - Called with 0-100 during OCR recognition
- * @returns {Promise<object>}
+ * @returns {Promise<object>} Structured receipt analysis result
  */
 export async function scanReceipt(imageFile, progressCallback) {
 
   // ── 1. OpenCV Preprocessing ───────────────────────────────────
   if (progressCallback) progressCallback(5, 'Loading image processing engine...');
-  // Yield to main thread so the UI can render the progress message
   await new Promise(resolve => setTimeout(resolve, 50));
   
   let ocrInput = imageFile;
+  let processedImageDataUrl = '';
+
   try {
     const cv = await loadOpenCV();
     if (progressCallback) progressCallback(10, 'Enhancing image for OCR...');
     await new Promise(resolve => setTimeout(resolve, 50));
-    
-    ocrInput = await preprocessReceiptImage(imageFile, cv);
+
+    const preprocessedCanvas = await preprocessReceiptImage(imageFile, cv);
+    ocrInput = preprocessedCanvas;
+    processedImageDataUrl = preprocessedCanvas.processedImageDataUrl || '';
   } catch (err) {
     console.warn('OpenCV preprocessing failed, falling back to raw image:', err);
   }
@@ -223,16 +256,12 @@ export async function scanReceipt(imageFile, progressCallback) {
     {
       logger: m => {
         if (progressCallback) {
-          // m.status values include: "loading tesseract core", "loading language traineddata", 
-          // "initializing api", "recognizing text"
           const statusText = m.status ? m.status.charAt(0).toUpperCase() + m.status.slice(1) + '...' : 'Scanning...';
           const p = Math.round((m.progress || 0) * 100);
           progressCallback(p, statusText);
         }
       },
-      // PSM 6 = "Assume a single uniform block of text"
-      // Works well for receipts which are narrow single-column documents
-      tessedit_pageseg_mode: '6',
+      tessedit_pageseg_mode: '6', // PSM 6 = single uniform block
     },
   );
 
@@ -251,30 +280,31 @@ export async function scanReceipt(imageFile, progressCallback) {
     throw new Error('No text detected on the receipt image.');
   }
 
-  // ── 3. Merchant Name ─────────────────────────────────────────────────────
+  // ── 3. Merchant Extraction ─────────────────────────────────────────────
   let merchantName     = '';
-  let merchantCategory = '';   // sourced from merchants.json
+  let merchantCategory = '';
+  let brandKey         = '';
 
-  // Hardcoded specific matchers for exact brand keywords
   const rawLower = rawText.toLowerCase();
   if (rawLower.includes('klikindomaret') || rawLower.includes('indomaret')) {
     merchantName = 'INDOMARET';
     merchantCategory = 'groceries';
+    brandKey = 'indomaret';
   } else if (rawLower.includes('@kopikenangan.id') || rawLower.includes('kopi kenangan') || rawLower.includes('kenangan')) {
     merchantName = 'Kopi Kenangan';
     merchantCategory = 'food';
+    brandKey = 'kopikenangan';
   } else {
-    // Match against merchants.json (100+ patterns)
     for (const entry of merchantsDb) {
       const re = new RegExp(entry.pattern, 'i');
       if (re.test(rawText)) {
         merchantName     = entry.name;
         merchantCategory = entry.category;
+        brandKey         = entry.pattern;
         break;
       }
     }
 
-    // Fallback: first clean line heuristic
     if (!merchantName) {
       const blacklist = [
         'alamat','telp','npwp','tanggal','tgl','receipt','strip','kasir','cashier',
@@ -296,20 +326,10 @@ export async function scanReceipt(imageFile, progressCallback) {
 
   if (!merchantName) merchantName = 'Receipt Scan';
 
-  // ── 4. Date ──────────────────────────────────────────────────────────────
-  let parsedDate = null;
-  // Scan bottom to top (transaction dates are printed near the bottom footer)
-  for (let i = lines.length - 1; i >= 0; i--) {
-    if (lines[i].toLowerCase().includes('pengukuhan')) continue;
-    const d = parseDate(lines[i]);
-    if (d) {
-      parsedDate = correctThermalDateTypo(d);
-      break;
-    }
-  }
-  if (!parsedDate) parsedDate = new Date().toISOString().split('T')[0];
+  // ── 4. Date Extraction ──────────────────────────────────────────────────
+  const parsedDate = scoreAndSelectBestDate(lines);
 
-  // ── 5. Total Amount ──────────────────────────────────────────────────────
+  // ── 5. Total & Subtotal & Savings Amount ────────────────────────────────
   const strictKeywords = [
     'grand total','total belanja','total bayar','total due',
     'harus dibayar','jumlah total','total harga',
@@ -328,8 +348,10 @@ export async function scanReceipt(imageFile, progressCallback) {
   const MAX_AMOUNT = 50_000_000;
 
   let totalAmount = 0;
+  let subtotalAmount = 0;
+  let savingsAmount = 0;
 
-  // Heuristic 1 — strict total keywords (scan bottom-to-top)
+  // Strict search for Total
   for (let i = lines.length - 1; i >= 0; i--) {
     const ll      = lines[i].toLowerCase();
     const hasKey  = strictKeywords.some(kw => new RegExp(kw).test(ll));
@@ -340,7 +362,7 @@ export async function scanReceipt(imageFile, progressCallback) {
     }
   }
 
-  // Heuristic 2 — secondary keywords
+  // Secondary search for Total
   if (!totalAmount) {
     for (let i = lines.length - 1; i >= 0; i--) {
       const ll      = lines[i].toLowerCase();
@@ -353,10 +375,10 @@ export async function scanReceipt(imageFile, progressCallback) {
     }
   }
 
-  // Heuristic 3 — largest number from bottom half of receipt
+  // Largest number fallback
   if (!totalAmount) {
     const candidates = [];
-    const startIdx   = Math.floor(lines.length / 2); // skip item list header
+    const startIdx   = Math.floor(lines.length / 2);
     for (let i = startIdx; i < lines.length; i++) {
       const n = extractRightmostAmount(stripDatesAndTimes(lines[i]));
       if (n >= MIN_AMOUNT && n <= MAX_AMOUNT) candidates.push(n);
@@ -364,8 +386,18 @@ export async function scanReceipt(imageFile, progressCallback) {
     if (candidates.length) totalAmount = Math.max(...candidates);
   }
 
-  // ── 6. Category & Account Heuristics ────────────────────────────────────
-  // Category: prefer merchants.json category, else keyword fallback
+  // Extract savings if present (e.g., TOTAL SAVING: 65,250)
+  for (const l of lines) {
+    if (/saving|hemat|diskon|discount/i.test(l)) {
+      const n = extractRightmostAmount(stripDatesAndTimes(l));
+      if (n > 0 && n < totalAmount) {
+        savingsAmount = n;
+        break;
+      }
+    }
+  }
+
+  // ── 6. Category, Payment & Account Heuristics ──────────────────────────
   let recommendedCategoryType = merchantCategory || 'groceries';
   if (!merchantCategory) {
     for (const [cat, re] of Object.entries(categoryKeywords)) {
@@ -373,62 +405,84 @@ export async function scanReceipt(imageFile, progressCallback) {
     }
   }
 
-  // Account
-  let recommendedAccountType = null;
-  let accountHint = null;
-  let memberHint = null;
+  let paymentType = null;
+  let paymentHint = null;
+  let memberHint  = null;
 
   if (/\b(blu)\b/i.test(rawLower)) {
-    recommendedAccountType = 'wallet';
-    accountHint = 'blu';
+    paymentType = 'wallet';
+    paymentHint = 'blu';
   } else if (/\b(livin)\b/i.test(rawLower)) {
-    recommendedAccountType = 'bank';
-    accountHint = 'mandiri';
+    paymentType = 'bank';
+    paymentHint = 'mandiri';
   } else if (/\b(tunai|cash|kembalian|kembali)\b/i.test(rawLower)) {
-    recommendedAccountType = 'cash';
+    paymentType = 'cash';
   } else if (/\b(gopay|ovo|dana|linkaja|shopeepay|qris|e-money|flazz|brizzi)\b/i.test(rawLower)) {
-    recommendedAccountType = 'wallet';
+    paymentType = 'wallet';
   } else if (/\b(debit|kredit|card|bca|mandiri|bni|bri|cimb|kartu)\b/i.test(rawLower)) {
-    recommendedAccountType = 'bank';
+    paymentType = 'bank';
   }
 
-  // Member Hint
   if (/\b(yosua)\b/i.test(rawLower)) {
     memberHint = 'yosua';
   }
 
-  // ── 7. Per-field Confidence ──────────────────────────────────────────────
-  // We use overall Tesseract confidence as a proxy.
-  // Fields extracted via keyword match get a small boost; fallbacks get a penalty.
+  // ── 7. Line Item Extraction ───────────────────────────────────────────
+  const parsedItems = parseReceiptItems(rawText);
+
+  // ── 8. Per-field Confidence ────────────────────────────────────────────
   const merchantConfidenceScore = merchantCategory
-    ? Math.min(100, overallScore + 10)   // matched known merchant → bump
-    : Math.max(0, overallScore - 20);    // fallback heuristic → penalise
+    ? Math.min(100, overallScore + 10)
+    : Math.max(0, overallScore - 20);
 
-  const amountConfidenceScore   = totalAmount > 0
-    ? overallScore
-    : 0;
-
+  const amountConfidenceScore   = totalAmount > 0 ? overallScore : 0;
   const dateConfidenceScore     = parsedDate !== new Date().toISOString().split('T')[0]
-    ? overallScore          // parsed from text
-    : Math.max(0, overallScore - 30); // fell back to today
+    ? overallScore
+    : Math.max(0, overallScore - 30);
 
+  // ── 9. Return Structured Result ────────────────────────────────────────
   return {
+    // Backwards-compatible legacy properties
     merchantName,
     totalAmount,
-    date:       parsedDate,
+    date: parsedDate,
     confidence: overallScore,
+
+    // Structured properties
+    merchant: {
+      name: merchantName,
+      category: merchantCategory,
+      brandKey,
+    },
+    amount: {
+      total: totalAmount,
+      subtotal: subtotalAmount || totalAmount,
+      savings: savingsAmount,
+    },
+    payment: {
+      type: paymentType,
+      hint: paymentHint,
+    },
+    member: {
+      hint: memberHint,
+    },
+    items: parsedItems,
+
     fieldConfidence: {
       merchant: classifyConfidence(merchantConfidenceScore),
       amount:   classifyConfidence(amountConfidenceScore),
       date:     classifyConfidence(dateConfidenceScore),
     },
+
     heuristics: {
       category: recommendedCategoryType,
-      account:  recommendedAccountType,
-      accountHint,
+      account:  paymentType,
+      accountHint: paymentHint,
       memberHint,
     },
+
     rawText,
+    processedImageDataUrl,
     imageFile,
   };
 }
