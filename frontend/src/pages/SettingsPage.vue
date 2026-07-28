@@ -7,7 +7,7 @@
     <div class="row g-4">
       <div class="col-lg-6">
         <!-- Profile info -->
-        <div class="stat-card mb-4">
+        <div id="tour-settings-profile" class="stat-card mb-4">
           <h6 class="fw-bold mb-3"><i class="bi bi-person me-2"></i>{{ $t('settings.profile') }}</h6>
           <div v-if="authStore.user">
             <div class="mb-2"><strong>{{ $t('common.name') }}:</strong> {{ authStore.userName }}</div>
@@ -16,7 +16,7 @@
         </div>
 
         <!-- Language Preference -->
-        <div class="stat-card mb-4">
+        <div id="tour-settings-language" class="stat-card mb-4">
           <h6 class="fw-bold mb-3"><i class="bi bi-translate me-2"></i>{{ $t('settings.languagePref') }}</h6>
           <div class="mb-3">
             <label class="form-label">{{ $t('settings.selectLanguage') }}</label>
@@ -32,7 +32,7 @@
         </div>
 
         <!-- PWA Push Notifications -->
-        <div class="stat-card mb-4">
+        <div id="tour-settings-pwa" class="stat-card mb-4">
           <h6 class="fw-bold mb-3"><i class="bi bi-bell me-2 text-primary"></i>{{ localeStore.currentLocale === 'id' ? 'Notifikasi PWA Push' : 'PWA Push Notifications' }}</h6>
           <div class="d-flex align-items-center justify-content-between">
             <div>
@@ -46,7 +46,7 @@
         </div>
 
         <!-- AI Configuration -->
-        <div class="stat-card">
+        <div id="tour-settings-ai" class="stat-card">
           <h6 class="fw-bold mb-3"><i class="bi bi-stars me-2"></i>{{ $t('settings.aiConfig') || 'AI Configuration' }}</h6>
           <div class="mb-3">
             <label class="form-label">{{ $t('settings.geminiApiKey') || 'Gemini API Key' }}</label>
@@ -71,7 +71,7 @@
 
       <div class="col-lg-6">
         <!-- WhatsApp Integration -->
-        <div class="stat-card mb-4">
+        <div id="tour-settings-whatsapp" class="stat-card mb-4">
           <h6 class="fw-bold mb-3"><i class="bi bi-whatsapp me-2 text-success"></i>WhatsApp Group</h6>
           <div class="mb-3">
             <label class="form-label">Group ID</label>
@@ -94,7 +94,7 @@
         </div>
 
         <!-- Change Password -->
-        <div class="stat-card h-100">
+        <div id="tour-settings-password" class="stat-card h-100">
           <h6 class="fw-bold mb-3"><i class="bi bi-lock me-2"></i>{{ $t('settings.changePassword') }}</h6>
           <div v-if="success" class="alert alert-success small">{{ success }}</div>
           <div v-if="error" class="alert alert-danger small">{{ error }}</div>

@@ -592,16 +592,32 @@
     },
     "settings": {
       "header": {
-        "title": "Preferences",
-        "description": "Customize how the application looks and behaves."
+        "title": "Settings & Preferences",
+        "description": "Customize your profile, app language, notifications, AI features, and security settings."
       },
-      "currency": {
-        "title": "Currency & Region",
-        "description": "Change your default currency display and number formatting."
+      "profile": {
+        "title": "Profile Info",
+        "description": "View your name and email registered in this family workspace."
       },
-      "danger": {
-        "title": "Danger Zone",
-        "description": "Manage your data, export backups, or permanently delete your account."
+      "language": {
+        "title": "Language Preference",
+        "description": "Switch between English and Indonesian instantly across the application."
+      },
+      "pwa": {
+        "title": "PWA Push Notifications",
+        "description": "Enable instant push alerts for budget limits, recurring bills, and family activity."
+      },
+      "ai": {
+        "title": "Gemini API Key (AI Vision)",
+        "description": "Save your Google Gemini API Key here to power the AI Receipt Scanner, AI Advisor, and Shopping Generator across all your devices."
+      },
+      "whatsapp": {
+        "title": "WhatsApp Group Integration",
+        "description": "Connect your family WhatsApp Group ID to receive automated financial updates and bot commands."
+      },
+      "password": {
+        "title": "Account Security",
+        "description": "Update your password anytime to keep your family financial data safe."
       }
     },
     "ai": {
