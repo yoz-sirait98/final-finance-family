@@ -240,90 +240,106 @@ async function loadCharts() {
   await nextTick();
 
   // 4. Create chart instances with smooth entrance animations
-  if (hasPieData.value && pieChart.value) {
-    pieInstance = new Chart(pieChart.value, {
-      type: 'pie',
-      data: {
-        labels: chartData.value.pie.map(d => d.category),
-        datasets: [{ data: chartData.value.pie.map(d => d.total), backgroundColor: chartData.value.pie.map(d => d.color), borderColor: chartData.value.pie.map(d => d.color), borderWidth: 1 }],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        animation: {
-          duration: 1200,
-          easing: 'easeOutQuart',
-          animateRotate: true,
-          animateScale: true
+  requestAnimationFrame(() => {
+    if (hasPieData.value && pieChart.value) {
+      pieInstance = new Chart(pieChart.value, {
+        type: 'pie',
+        data: {
+          labels: chartData.value.pie.map(d => d.category),
+          datasets: [{ data: chartData.value.pie.map(d => d.total), backgroundColor: chartData.value.pie.map(d => d.color), borderColor: chartData.value.pie.map(d => d.color), borderWidth: 1 }],
         },
-        plugins: { legend: { position: 'bottom', labels: { padding: 16 } } },
-      },
-    });
-  }
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: {
+            duration: 1200,
+            easing: 'easeOutQuart',
+            animateRotate: true,
+            animateScale: true
+          },
+          plugins: { legend: { position: 'bottom', labels: { padding: 16 } } },
+        },
+      });
+    }
 
-  if (hasMemberData.value && memberChart.value) {
-    memberInstance = new Chart(memberChart.value, {
-      type: 'doughnut',
-      data: {
-        labels: chartData.value.member.map(d => d.member),
-        datasets: [{ data: chartData.value.member.map(d => d.total), backgroundColor: chartData.value.member.map(d => d.color), borderColor: chartData.value.member.map(d => d.color), borderWidth: 1 }],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        animation: {
-          duration: 1200,
-          easing: 'easeOutQuart',
-          animateRotate: true,
-          animateScale: true
+    if (hasMemberData.value && memberChart.value) {
+      memberInstance = new Chart(memberChart.value, {
+        type: 'doughnut',
+        data: {
+          labels: chartData.value.member.map(d => d.member),
+          datasets: [{ data: chartData.value.member.map(d => d.total), backgroundColor: chartData.value.member.map(d => d.color), borderColor: chartData.value.member.map(d => d.color), borderWidth: 1 }],
         },
-        plugins: { legend: { position: 'bottom', labels: { padding: 16 } } },
-      },
-    });
-  }
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: {
+            duration: 1200,
+            easing: 'easeOutQuart',
+            animateRotate: true,
+            animateScale: true
+          },
+          plugins: { legend: { position: 'bottom', labels: { padding: 16 } } },
+        },
+      });
+    }
 
-  if (hasBarData.value && barChart.value) {
-    barInstance = new Chart(barChart.value, {
-      type: 'bar',
-      data: {
-        labels: chartData.value.bar.map(d => d.month),
-        datasets: [
-          { label: localeStore.t('common.income'),  data: chartData.value.bar.map(d => d.income),  backgroundColor: '#28a745', borderColor: '#28a745', borderWidth: 1, borderRadius: 4 },
-          { label: localeStore.t('common.expense'), data: chartData.value.bar.map(d => d.expense), backgroundColor: '#dc3545', borderColor: '#dc3545', borderWidth: 1, borderRadius: 4 },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        animation: {
-          duration: 1200,
-          easing: 'easeOutQuart'
+    if (hasBarData.value && barChart.value) {
+      barInstance = new Chart(barChart.value, {
+        type: 'bar',
+        data: {
+          labels: chartData.value.bar.map(d => d.month),
+          datasets: [
+            { label: localeStore.t('common.income'),  data: chartData.value.bar.map(d => d.income),  backgroundColor: '#28a745', borderColor: '#28a745', borderWidth: 1, borderRadius: 4 },
+            { label: localeStore.t('common.expense'), data: chartData.value.bar.map(d => d.expense), backgroundColor: '#dc3545', borderColor: '#dc3545', borderWidth: 1, borderRadius: 4 },
+          ],
         },
-        plugins: { legend: { position: 'top' } },
-        scales: { y: { beginAtZero: true } },
-      },
-    });
-  }
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: {
+            duration: 1200,
+            easing: 'easeOutQuart'
+          },
+          animations: {
+            y: {
+              duration: 1200,
+              easing: 'easeOutQuart',
+              from: 0
+            }
+          },
+          plugins: { legend: { position: 'top' } },
+          scales: { y: { beginAtZero: true } },
+        },
+      });
+    }
 
-  if (hasLineData.value && lineChart.value) {
-    lineInstance = new Chart(lineChart.value, {
-      type: 'line',
-      data: {
-        labels: chartData.value.line.map(d => d.month),
-        datasets: [{ label: localeStore.t('common.expense'), data: chartData.value.line.map(d => d.expense), borderColor: '#dc3545', backgroundColor: 'rgba(220,53,69,0.1)', pointBackgroundColor: '#dc3545', pointBorderColor: '#dc3545', pointBorderWidth: 1, fill: true, tension: 0.4 }],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        animation: {
-          duration: 1200,
-          easing: 'easeOutQuart'
+    if (hasLineData.value && lineChart.value) {
+      lineInstance = new Chart(lineChart.value, {
+        type: 'line',
+        data: {
+          labels: chartData.value.line.map(d => d.month),
+          datasets: [{ label: localeStore.t('common.expense'), data: chartData.value.line.map(d => d.expense), borderColor: '#dc3545', backgroundColor: 'rgba(220,53,69,0.1)', pointBackgroundColor: '#dc3545', pointBorderColor: '#dc3545', pointBorderWidth: 1, fill: true, tension: 0.4 }],
         },
-        plugins: { legend: { display: false } },
-        scales: { y: { beginAtZero: true } },
-      },
-    });
-  }
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: {
+            duration: 1200,
+            easing: 'easeOutQuart'
+          },
+          animations: {
+            y: {
+              duration: 1200,
+              easing: 'easeOutQuart',
+              from: 0
+            }
+          },
+          plugins: { legend: { display: false } },
+          scales: { y: { beginAtZero: true } },
+        },
+      });
+    }
+  });
 }
 
 // ─── CSV Export ───────────────────────────────────────────────────────────────
