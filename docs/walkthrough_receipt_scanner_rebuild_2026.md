@@ -12,14 +12,15 @@ To improve accuracy and user experience, we rebuilt the scanner pipeline into a 
 
 ## 1. Core Pipeline Rebuild
 
-### 📷 `opencvPreprocess.js` (Image Preparation)
-We replaced the fixed 10% crop logic with a robust 6-step OpenCV pipeline:
+### 🖼️ `imagePreprocess.js` (Image Preparation)
+We built a robust preprocessing pipeline using **100% pure native HTML5 Canvas**. 
+*(Note: We initially attempted to use OpenCV.js, but its massive 13MB ASM.js payload caused 15-second main-thread freezes on mobile and Vite minification crashes in production. Ripping it out in favor of pure JS saved 13MB of bandwidth and made the process instantaneous).*
+
+The pipeline performs:
 1. **Grayscale Conversion**: Eliminates color noise.
-2. **Edge Detection**: Uses Canny to find the receipt boundaries.
-3. **Deskewing**: Uses HoughLinesP to detect the receipt skew angle and rotates the image to align it vertically.
-4. **Bounding-Box Auto-Crop**: Detects the largest contour (the paper) and crops out any background (e.g., wooden tables).
-5. **CLAHE Contrast**: Applies Contrast Limited Adaptive Histogram Equalization to cleanly separate thermal ink from the paper.
-6. **Preview Export**: The pipeline now exports the processed grayscale image as a Base64 URL so users can see exactly what the OCR engine is reading.
+2. **Bounding-Box Auto-Crop**: Crops out the 10% outer margins to remove background clutter (e.g., wooden tables).
+3. **Contrast Binarization**: Applies a strict luminance threshold in pure JavaScript to cleanly separate black thermal ink from white paper.
+4. **Preview Export**: The pipeline exports the processed grayscale image as a Base64 URL so users can see exactly what the OCR engine is reading in the UI.
 
 ### 🧠 `receiptScanner.js` (Orchestration & Extraction)
 This file now acts as a pure coordinator and data extractor, returning a highly structured object:

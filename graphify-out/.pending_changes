@@ -1,2 +1,8 @@
 frontend\src\utils\opencvLoader.js
 opencv_test.js
+frontend\package-lock.json
+frontend\package.json
+frontend\src\utils\opencvLoader.js
+frontend\src\utils\opencvPreprocess.js
+frontend\src\utils\receiptScanner.js
+opencv_test.js
