@@ -29,32 +29,20 @@ export async function loadOpenCV() {
       script.async = true;
 
       script.onload = () => {
-        // OpenCV.js loads asynchronously. Wait for it to be ready.
-        if (window.cv && window.cv.onRuntimeInitialized) {
-           window.cv.onRuntimeInitialized = () => {
-             cvInstance = window.cv;
-             resolve(cvInstance);
-           };
-           // If it's already initialized:
-           if (window.cv.Mat) {
-             cvInstance = window.cv;
-             resolve(cvInstance);
-           }
-        } else {
-           // Poll until cv.Mat is available
-           let attempts = 0;
-           const interval = setInterval(() => {
-             attempts++;
-             if (window.cv && window.cv.Mat) {
-               clearInterval(interval);
-               cvInstance = window.cv;
-               resolve(cvInstance);
-             } else if (attempts > 100) { // 10 seconds timeout
-               clearInterval(interval);
-               reject(new Error('OpenCV initialized but cv.Mat is missing after 10 seconds.'));
-             }
-           }, 100);
-        }
+        // Polling is the safest method because Emscripten's onRuntimeInitialized 
+        // can suffer from race conditions if overwritten after the script starts executing.
+        let attempts = 0;
+        const interval = setInterval(() => {
+          attempts++;
+          if (window.cv && window.cv.Mat) {
+            clearInterval(interval);
+            cvInstance = window.cv;
+            resolve(cvInstance);
+          } else if (attempts > 100) { // 10 seconds timeout
+            clearInterval(interval);
+            reject(new Error('OpenCV initialized but cv.Mat is missing after 10 seconds.'));
+          }
+        }, 100);
       };
 
       script.onerror = () => {
