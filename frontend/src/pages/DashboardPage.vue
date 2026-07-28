@@ -304,6 +304,12 @@ async function updateCharts(d) {
       options: { 
         responsive: true, 
         maintainAspectRatio: false, 
+        animation: {
+          duration: 1200,
+          easing: 'easeOutQuart',
+          animateRotate: true,
+          animateScale: true
+        },
         plugins: { 
           legend: { 
             position: 'bottom', 
@@ -330,6 +336,10 @@ async function updateCharts(d) {
       options: { 
         responsive: true, 
         maintainAspectRatio: false, 
+        animation: {
+          duration: 1200,
+          easing: 'easeOutQuart'
+        },
         plugins: { 
           legend: { 
             position: 'top',
@@ -377,6 +387,10 @@ async function updateCharts(d) {
       options: { 
         responsive: true, 
         maintainAspectRatio: false, 
+        animation: {
+          duration: 1200,
+          easing: 'easeOutQuart'
+        },
         plugins: { 
           legend: { display: false } 
         }, 
@@ -421,6 +435,10 @@ async function updateCharts(d) {
       options: { 
         responsive: true, 
         maintainAspectRatio: false, 
+        animation: {
+          duration: 1200,
+          easing: 'easeOutQuart'
+        },
         plugins: { 
           legend: { display: false } 
         }, 

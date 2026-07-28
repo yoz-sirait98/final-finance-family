@@ -239,7 +239,7 @@ async function loadCharts() {
   // 3. Wait for v-if to render canvas elements into the DOM
   await nextTick();
 
-  // 4. Create chart instances (no explicit animation block = Chart.js default animations play)
+  // 4. Create chart instances with smooth entrance animations
   if (hasPieData.value && pieChart.value) {
     pieInstance = new Chart(pieChart.value, {
       type: 'pie',
@@ -250,6 +250,12 @@ async function loadCharts() {
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        animation: {
+          duration: 1200,
+          easing: 'easeOutQuart',
+          animateRotate: true,
+          animateScale: true
+        },
         plugins: { legend: { position: 'bottom', labels: { padding: 16 } } },
       },
     });
@@ -265,6 +271,12 @@ async function loadCharts() {
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        animation: {
+          duration: 1200,
+          easing: 'easeOutQuart',
+          animateRotate: true,
+          animateScale: true
+        },
         plugins: { legend: { position: 'bottom', labels: { padding: 16 } } },
       },
     });
@@ -283,6 +295,10 @@ async function loadCharts() {
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        animation: {
+          duration: 1200,
+          easing: 'easeOutQuart'
+        },
         plugins: { legend: { position: 'top' } },
         scales: { y: { beginAtZero: true } },
       },
@@ -299,6 +315,10 @@ async function loadCharts() {
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        animation: {
+          duration: 1200,
+          easing: 'easeOutQuart'
+        },
         plugins: { legend: { display: false } },
         scales: { y: { beginAtZero: true } },
       },
