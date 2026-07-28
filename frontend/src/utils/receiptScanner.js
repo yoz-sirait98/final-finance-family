@@ -23,6 +23,7 @@ Return ONLY a JSON object with the following schema:
   "savingsAmount": 0,
   "paymentType": "cash | wallet | bank",
   "paymentHint": "bca | mandiri | blu | gopay | ovo | dana | qris | etc",
+  "customerName": "Customer or member name printed on receipt if present (e.g. Yosua, Budi, etc.)",
   "items": [
     {
       "name": "Exact item name cleaned of barcode or weird symbols",
@@ -176,7 +177,7 @@ export async function scanReceipt(imageFile, progressCallback) {
       hint: parsedData.paymentHint || null,
     },
     member: {
-      hint: null,
+      hint: parsedData.customerName || parsedData.memberName || null,
     },
     items,
 
@@ -190,6 +191,7 @@ export async function scanReceipt(imageFile, progressCallback) {
       category: merchantCategory,
       account: parsedData.paymentType || null,
       accountHint: parsedData.paymentHint || null,
+      memberHint: parsedData.customerName || parsedData.memberName || null,
     },
 
     rawText: textResponse,
