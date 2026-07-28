@@ -253,9 +253,14 @@ async function loadCharts() {
           maintainAspectRatio: false,
           animation: {
             duration: 1200,
-            easing: 'easeOutQuart',
-            animateRotate: true,
-            animateScale: true
+            easing: 'easeOutQuart'
+          },
+          animations: {
+            numbers: {
+              type: 'number',
+              properties: ['circumference', 'endAngle'],
+              from: 0
+            }
           },
           plugins: { legend: { position: 'bottom', labels: { padding: 16 } } },
         },
@@ -274,9 +279,14 @@ async function loadCharts() {
           maintainAspectRatio: false,
           animation: {
             duration: 1200,
-            easing: 'easeOutQuart',
-            animateRotate: true,
-            animateScale: true
+            easing: 'easeOutQuart'
+          },
+          animations: {
+            numbers: {
+              type: 'number',
+              properties: ['circumference', 'endAngle'],
+              from: 0
+            }
           },
           plugins: { legend: { position: 'bottom', labels: { padding: 16 } } },
         },
