@@ -55,12 +55,17 @@
             </p>
           </div>
           <div class="card-footer bg-white border-light d-flex justify-content-between align-items-center">
-            <span v-if="plan.status === 'done' || plan.status === 'locked'" class="fw-bold text-danger">
-              Rp {{ (plan.transaction ? parseFloat(plan.transaction.amount || 0) : (plan.shopping_items?.reduce((sum, item) => sum + (parseFloat(item.price) || 0), 0) || 0)).toLocaleString('id-ID') }}
-            </span>
-            <span v-else class="text-muted small">
-              <i class="bi bi-people me-1"></i> {{ plan.assigned_members?.length || 0 }} assigned
-            </span>
+            <div class="d-flex align-items-center gap-2">
+              <span v-if="plan.status === 'done' || plan.status === 'locked'" class="fw-bold text-danger">
+                Rp {{ (plan.transaction ? parseFloat(plan.transaction.amount || 0) : (plan.shopping_items?.reduce((sum, item) => sum + (parseFloat(item.price) || 0), 0) || 0)).toLocaleString('id-ID') }}
+              </span>
+              <span v-else class="text-muted small">
+                <i class="bi bi-people me-1"></i> {{ plan.assigned_members?.length || 0 }} assigned
+              </span>
+              <button v-if="plan.receipt_url" class="btn btn-sm btn-outline-info border-0 p-0 px-1" @click.stop="openReceiptModal(plan)" title="View Receipt Photo">
+                <i class="bi bi-receipt me-1"></i><span class="small">Struk</span>
+              </button>
+            </div>
             <button v-if="plan.status !== 'locked'" class="btn btn-sm btn-outline-danger border-0" @click.stop="confirmDeletePlan(plan)">
               <i class="bi bi-trash"></i>
             </button>
@@ -250,6 +255,21 @@
         </div>
       </div>
     </div>
+    <!-- ===== Receipt Image Lightbox Modal ===== -->
+    <div v-if="showReceiptLightbox" class="vue-modal-backdrop" @mousedown.self="showReceiptLightbox = false">
+      <div class="vue-modal text-center" style="max-width: 500px;">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title fw-bold"><i class="bi bi-file-image me-2 text-info"></i>{{ localeStore.currentLocale === 'id' ? 'Foto Struk' : 'Receipt Photo' }}</h5>
+          <button type="button" class="btn-close" @click="showReceiptLightbox = false"></button>
+        </div>
+        <div class="modal-body p-3">
+          <img :src="receiptLightboxUrl" class="img-fluid rounded border shadow-sm" style="max-height: 70vh; object-fit: contain;" />
+        </div>
+        <div class="modal-footer border-0 pt-0">
+          <button class="btn btn-secondary btn-sm" @click="showReceiptLightbox = false">{{ $t('common.cancel') || 'Close' }}</button>
+        </div>
+      </div>
+    </div>
     
   </div>
 </template>
@@ -272,6 +292,7 @@ import { supabase } from '../lib/supabase';
 import { scanReceipt } from '../utils/receiptScanner';
 import { useScannerMapping } from '../composables/useScannerMapping';
 import { pushDispatcherService } from '../services/pushDispatcherService';
+import { uploadReceipt, getReceiptSignedUrl } from '../services/storageService';
 
 const plans = ref([]);
 const members = ref([]);
@@ -303,6 +324,30 @@ const receiptStoreName = ref('');
 const receiptCreatedBy = ref('');
 const savingReceipt = ref(false);
 const scanProcessedImage = ref('');
+const pendingReceiptFile = ref(null);
+
+// Receipt Lightbox state
+const showReceiptLightbox = ref(false);
+const receiptLightboxUrl = ref('');
+const loadingReceiptUrl = ref(false);
+
+async function openReceiptModal(plan) {
+  if (!plan?.receipt_url) return;
+  loadingReceiptUrl.value = true;
+  try {
+    const url = await getReceiptSignedUrl(plan.receipt_url);
+    if (url) {
+      receiptLightboxUrl.value = url;
+      showReceiptLightbox.value = true;
+    } else {
+      toast.error('Receipt image not found');
+    }
+  } catch (err) {
+    toast.error('Failed to load receipt image');
+  } finally {
+    loadingReceiptUrl.value = false;
+  }
+}
 
 const scannedItemsTotal = computed(() => {
   return scannedItems.value.reduce((sum, item) => sum + (parseFloat(item.price) || 0), 0);
@@ -547,6 +592,7 @@ async function onReceiptSelected(event) {
 
     const { memberId } = mapMember(result);
     receiptCreatedBy.value = memberId || authStore.user?.id || (members.value[0]?.id || '');
+    pendingReceiptFile.value = file;
     isScanning.value = false;
     showReceiptReview.value = true;
   } catch (err) {
@@ -570,14 +616,25 @@ async function saveReceiptAsPlan() {
 
   savingReceipt.value = true;
   try {
+    let receiptStoragePath = null;
+    if (pendingReceiptFile.value && authStore.familyId) {
+      try {
+        receiptStoragePath = await uploadReceipt(pendingReceiptFile.value, authStore.familyId);
+      } catch (uploadErr) {
+        console.warn('Failed to upload receipt to Supabase storage:', uploadErr);
+      }
+    }
+
     await shoppingPlanService.createFromReceipt(
       receiptStoreName.value || 'Receipt Scan',
       validItems,
-      receiptCreatedBy.value
+      receiptCreatedBy.value,
+      receiptStoragePath
     );
 
     toast.success(localeStore.currentLocale === 'id' ? 'Rencana belanja dari struk berhasil disimpan!' : 'Shopping plan from receipt saved!');
     showReceiptReview.value = false;
+    pendingReceiptFile.value = null;
     activeTab.value = 'done'; // Switch to Done tab to show the new plan
     fetchData();
   } catch (err) {

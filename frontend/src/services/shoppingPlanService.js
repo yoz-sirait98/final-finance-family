@@ -86,18 +86,21 @@ export const shoppingPlanService = {
    * @param {string} createdBy - Member ID who scanned the receipt
    * @returns plan + items
    */
-  createFromReceipt: async (location, items, createdBy) => {
+  createFromReceipt: async (location, items, createdBy, receiptUrl = null) => {
     const family_id = useAuthStore().familyId;
+
+    const insertPayload = {
+      family_id,
+      location,
+      created_by: createdBy,
+      status: 'locked',
+      assigned_members: []
+    };
+    if (receiptUrl) insertPayload.receipt_url = receiptUrl;
 
     // 1. Create the plan with status = locked
     const { data: plan, error: planErr } = await supabase.from('shopping_plans')
-      .insert([{
-        family_id,
-        location,
-        created_by: createdBy,
-        status: 'locked',
-        assigned_members: []
-      }])
+      .insert([insertPayload])
       .select()
       .single();
     if (planErr) throw planErr;

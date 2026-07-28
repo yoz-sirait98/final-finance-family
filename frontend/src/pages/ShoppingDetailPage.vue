@@ -13,10 +13,15 @@
           </p>
         </div>
       </div>
-      <span v-if="plan" class="badge" :class="plan.status === 'locked' ? 'bg-secondary' : plan.status === 'done' ? 'bg-success' : 'bg-warning text-dark'">
-        <i v-if="plan.status === 'locked'" class="bi bi-lock-fill me-1"></i>
-        {{ plan.status === 'locked' ? (localeStore.currentLocale === 'id' ? 'Terkunci' : 'Locked') : plan.status === 'done' ? ($t('shopping.done') || 'Done') : ($t('shopping.onProgress') || 'On Progress') }}
-      </span>
+      <div class="d-flex align-items-center gap-2" v-if="plan">
+        <button v-if="plan.receipt_url" class="btn btn-outline-info btn-sm" @click="openReceiptModal" title="View Scanned Receipt">
+          <i class="bi bi-receipt me-1"></i><span>{{ localeStore.currentLocale === 'id' ? 'Lihat Struk' : 'View Receipt' }}</span>
+        </button>
+        <span class="badge" :class="plan.status === 'locked' ? 'bg-secondary' : plan.status === 'done' ? 'bg-success' : 'bg-warning text-dark'">
+          <i v-if="plan.status === 'locked'" class="bi bi-lock-fill me-1"></i>
+          {{ plan.status === 'locked' ? (localeStore.currentLocale === 'id' ? 'Terkunci' : 'Locked') : plan.status === 'done' ? ($t('shopping.done') || 'Done') : ($t('shopping.onProgress') || 'On Progress') }}
+        </span>
+      </div>
     </div>
 
     <!-- Items Section -->
@@ -241,6 +246,21 @@
         </div>
       </div>
     </div>
+    <!-- ===== Receipt Image Lightbox Modal ===== -->
+    <div v-if="showReceiptLightbox" class="vue-modal-backdrop" @mousedown.self="showReceiptLightbox = false">
+      <div class="vue-modal text-center" style="max-width: 500px;">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title fw-bold"><i class="bi bi-file-image me-2 text-info"></i>{{ localeStore.currentLocale === 'id' ? 'Foto Struk' : 'Receipt Photo' }}</h5>
+          <button type="button" class="btn-close" @click="showReceiptLightbox = false"></button>
+        </div>
+        <div class="modal-body p-3">
+          <img :src="receiptLightboxUrl" class="img-fluid rounded border shadow-sm" style="max-height: 70vh; object-fit: contain;" />
+        </div>
+        <div class="modal-footer border-0 pt-0">
+          <button class="btn btn-secondary btn-sm" @click="showReceiptLightbox = false">{{ $t('common.cancel') || 'Close' }}</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -264,6 +284,7 @@ import { useAuthStore } from '../stores/auth';
 import { pushDispatcherService } from '../services/pushDispatcherService';
 import { supabase } from '../lib/supabase';
 import { formatCurrency } from '../utils/format';
+import { getReceiptSignedUrl } from '../services/storageService';
 
 const route = useRoute();
 const router = useRouter();
@@ -295,6 +316,29 @@ const showChoiceModal = ref(false);
 const selectedChoice = ref('');
 const isMarkingDone = ref(false);
 const isLocking = ref(false);
+
+// Receipt Lightbox state
+const showReceiptLightbox = ref(false);
+const receiptLightboxUrl = ref('');
+const loadingReceiptUrl = ref(false);
+
+async function openReceiptModal() {
+  if (!plan.value?.receipt_url) return;
+  loadingReceiptUrl.value = true;
+  try {
+    const url = await getReceiptSignedUrl(plan.value.receipt_url);
+    if (url) {
+      receiptLightboxUrl.value = url;
+      showReceiptLightbox.value = true;
+    } else {
+      toast.error('Receipt image not found');
+    }
+  } catch (err) {
+    toast.error('Failed to load receipt image');
+  } finally {
+    loadingReceiptUrl.value = false;
+  }
+}
 
 const totalAmount = computed(() => {
   return items.value.reduce((sum, item) => sum + (parseFloat(item.price) || 0), 0);
