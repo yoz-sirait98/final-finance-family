@@ -1,5 +1,4 @@
 import Tesseract from 'tesseract.js';
-import { loadOpenCV } from './opencvLoader';
 import { preprocessReceiptImage } from './opencvPreprocess';
 import merchantsDb from './merchants.json';
 import { parseReceiptItems } from './receiptItemParser';
@@ -229,34 +228,19 @@ function classifyConfidence(score) {
  */
 export async function scanReceipt(imageFile, progressCallback) {
 
-  // ── 1. OpenCV Preprocessing ───────────────────────────────────
-  if (progressCallback) progressCallback(5, 'Loading image processing engine...');
+  // ── 1. Image Preprocessing ───────────────────────────────────
+  if (progressCallback) progressCallback(5, 'Enhancing image for OCR...');
   await new Promise(resolve => setTimeout(resolve, 50));
   
   let ocrInput = imageFile;
   let processedImageDataUrl = '';
 
   try {
-    const cv = await Promise.race([
-      loadOpenCV(),
-      new Promise((_, reject) => setTimeout(() => reject(new Error('OpenCV load timeout')), 3000))
-    ]).catch(() => null);
-
-    if (progressCallback) progressCallback(10, 'Enhancing image for OCR...');
-    await new Promise(resolve => setTimeout(resolve, 50));
-
-    const preprocessedCanvas = await preprocessReceiptImage(imageFile, cv);
+    const preprocessedCanvas = await preprocessReceiptImage(imageFile);
     ocrInput = preprocessedCanvas;
     processedImageDataUrl = preprocessedCanvas.processedImageDataUrl || '';
   } catch (err) {
-    console.warn('Preprocessing fallback to native canvas:', err);
-    try {
-      const nativeCanvas = await preprocessReceiptImage(imageFile, null);
-      ocrInput = nativeCanvas;
-      processedImageDataUrl = nativeCanvas.processedImageDataUrl || '';
-    } catch (e) {
-      console.warn('Native preprocessing failed:', e);
-    }
+    console.warn('Preprocessing failed:', err);
   }
 
   // ── 2. Tesseract OCR ────────────────────────────────────────────────────
