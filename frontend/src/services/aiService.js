@@ -86,9 +86,9 @@ export const aiService = {
    * Send chat history and context to Gemini API
    */
   async chatWithCoach(messages, locale = 'en') {
-    const apiKey = localStorage.getItem('gemini_api_key');
+    const apiKey = localStorage.getItem('gemini_api_key') || import.meta.env.VITE_GEMINI_API_KEY;
     if (!apiKey) {
-      throw new Error('Gemini API Key is missing. Please configure it in Settings.');
+      throw new Error('Gemini API Key is missing. Please configure it in Settings or .env file.');
     }
 
     // 1. Get financial snapshot context
