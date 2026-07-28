@@ -60,8 +60,17 @@ export async function scanReceipt(imageFile, progressCallback) {
     throw new Error('Failed to encode receipt image for AI processing.');
   }
 
-  // 2. Call Gemini 1.5 Flash Vision API
-  if (progressCallback) progressCallback(35, 'Analyzing receipt with AI...');
+  // 2. Call Gemini Vision API
+  let currentProgress = 35;
+  if (progressCallback) progressCallback(currentProgress, 'Analyzing receipt with AI...');
+
+  // Ticker to smoothly animate progress from 35% to 80% while waiting for network response
+  const ticker = setInterval(() => {
+    if (currentProgress < 80) {
+      currentProgress += 5;
+      if (progressCallback) progressCallback(currentProgress, 'Analyzing receipt with AI...');
+    }
+  }, 200);
 
   const payload = {
     contents: [
@@ -83,26 +92,31 @@ export async function scanReceipt(imageFile, progressCallback) {
     },
   };
 
-  let response = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
-  });
-
-  if (!response.ok && response.status === 404) {
-    console.warn('Primary Gemini model endpoint returned 404, trying fallback endpoint...');
-    response = await fetch(`${GEMINI_FALLBACK_URL}?key=${apiKey}`, {
+  let response;
+  try {
+    response = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(payload),
     });
+
+    if (!response.ok && response.status === 404) {
+      console.warn('Primary Gemini model endpoint returned 404, trying fallback endpoint...');
+      response = await fetch(`${GEMINI_FALLBACK_URL}?key=${apiKey}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+    }
+  } finally {
+    clearInterval(ticker);
   }
 
-  if (progressCallback) progressCallback(85, 'Parsing AI response...');
+  if (progressCallback) progressCallback(90, 'Parsing AI response...');
 
   if (!response.ok) {
     const errorJson = await response.json().catch(() => ({}));
