@@ -16,41 +16,57 @@ const OPENCV_CDN_URL = 'https://docs.opencv.org/4.x/opencv.js';
 
 export async function loadOpenCV() {
   if (cvInstance) return cvInstance;
-  if (window.cv && window.cv.Mat) {
-    cvInstance = window.cv;
-    return cvInstance;
-  }
   if (loadPromise) return loadPromise;
 
-  loadPromise = new Promise((resolve, reject) => {
+  loadPromise = new Promise(async (resolve, reject) => {
     try {
-      const script = document.createElement('script');
-      script.src = OPENCV_CDN_URL;
-      script.async = true;
+      // Dynamically import the npm package so it gets code-split by Vite
+      // and doesn't conflict with other Emscripten globals (like Tesseract's window.Module)
+      const cvModule = await import('@techstark/opencv-js');
+      
+      // Depending on the bundler/environment, the default export might be nested
+      let cv = cvModule.default || cvModule;
 
-      script.onload = () => {
-        // Polling is the safest method because Emscripten's onRuntimeInitialized 
-        // can suffer from race conditions if overwritten after the script starts executing.
-        let attempts = 0;
-        const interval = setInterval(() => {
-          attempts++;
-          if (window.cv && window.cv.Mat) {
-            clearInterval(interval);
-            cvInstance = window.cv;
-            resolve(cvInstance);
-          } else if (attempts > 100) { // 10 seconds timeout
-            clearInterval(interval);
-            reject(new Error('OpenCV initialized but cv.Mat is missing after 10 seconds.'));
-          }
-        }, 100);
-      };
+      // The techstark opencv-js might need to initialize WASM asynchronously
+      if (cv && typeof cv.then === 'function') {
+        // Explicitly bind to avoid "Method Promise.prototype.then called on incompatible receiver"
+        cvInstance = await new Promise((res, rej) => {
+          cv.then(res).catch(rej);
+        });
+      } else if (cv && cv.onRuntimeInitialized) {
+        // If it's a module that requires initialization
+        cv.onRuntimeInitialized = () => {
+          cvInstance = cv;
+          resolve(cvInstance);
+        };
+        // It might already be initialized if Mat exists
+        if (cv.Mat) {
+           cvInstance = cv;
+           resolve(cvInstance);
+        }
+        return; 
+      } else {
+        // Already initialized synchronously
+        cvInstance = cv;
+      }
+      
+      // Wait a tiny bit just to ensure Mat is ready if it's doing some lazy init
+      if (!cvInstance.Mat) {
+         let attempts = 0;
+         const interval = setInterval(() => {
+           attempts++;
+           if (cvInstance.Mat) {
+             clearInterval(interval);
+             resolve(cvInstance);
+           } else if (attempts > 50) { // 5 seconds
+             clearInterval(interval);
+             reject(new Error('OpenCV initialized but cv.Mat is missing after 5 seconds.'));
+           }
+         }, 100);
+         return;
+      }
 
-      script.onerror = () => {
-        loadPromise = null;
-        reject(new Error('Failed to load OpenCV.js from CDN.'));
-      };
-
-      document.head.appendChild(script);
+      resolve(cvInstance);
     } catch (err) {
       loadPromise = null;
       reject(err);
