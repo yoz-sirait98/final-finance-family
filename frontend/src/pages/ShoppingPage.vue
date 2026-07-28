@@ -270,7 +270,6 @@ import { useToastStore } from '../stores/toast';
 import { useLocaleStore } from '../stores/locale';
 import { supabase } from '../lib/supabase';
 import { scanReceipt } from '../utils/receiptScanner';
-import { parseReceiptItems } from '../utils/receiptItemParser';
 import { useScannerMapping } from '../composables/useScannerMapping';
 import { pushDispatcherService } from '../services/pushDispatcherService';
 
@@ -539,10 +538,7 @@ async function onReceiptSelected(event) {
       scanProcessedImage.value = result.processedImageDataUrl;
     }
 
-    // Use items pre-parsed inside scanReceipt(), fallback to parseReceiptItems if needed
-    const parsedItems = result.items?.length > 0
-      ? result.items
-      : parseReceiptItems(result.rawText);
+    const parsedItems = result.items || [];
 
     receiptStoreName.value = result.merchant?.name || result.merchantName || 'Receipt Scan';
     scannedItems.value = parsedItems.length > 0

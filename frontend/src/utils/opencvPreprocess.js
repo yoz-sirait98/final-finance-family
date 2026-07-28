@@ -28,59 +28,39 @@ function fileToImageElement(file) {
 }
 
 /**
- * Native Canvas Preprocessing
- * Applies contrast stretching and scaling without destructive binary clipping or edge cropping.
+ * Image compressor & preprocessor for Gemini Vision API.
+ * Resizes image to optimal max dimension (1280px) and converts to JPEG Base64 payload.
  */
 export async function preprocessReceiptImage(file) {
   const img = await fileToImageElement(file);
   
-  const scale = img.naturalHeight < MIN_HEIGHT_PX ? MIN_HEIGHT_PX / img.naturalHeight : 1;
-  const targetW = Math.round(img.naturalWidth * scale);
-  const targetH = Math.round(img.naturalHeight * scale);
+  const MAX_DIM = 1280;
+  let width = img.naturalWidth;
+  let height = img.naturalHeight;
+
+  if (width > MAX_DIM || height > MAX_DIM) {
+    if (width > height) {
+      height = Math.round((height * MAX_DIM) / width);
+      width = MAX_DIM;
+    } else {
+      width = Math.round((width * MAX_DIM) / height);
+      height = MAX_DIM;
+    }
+  }
 
   const canvas = document.createElement('canvas');
-  canvas.width = targetW;
-  canvas.height = targetH;
+  canvas.width = width;
+  canvas.height = height;
   const ctx = canvas.getContext('2d');
 
-  // Draw full image scaled (0% margin crop so left/right margins are not cut off)
-  ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight, 0, 0, targetW, targetH);
+  ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight, 0, 0, width, height);
 
-  const imgData = ctx.getImageData(0, 0, targetW, targetH);
-  const d = imgData.data;
+  const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+  const base64Data = dataUrl.split(',')[1] || '';
 
-  // 1. Calculate min and max luminance for dynamic contrast stretching
-  let minGray = 255;
-  let maxGray = 0;
-  
-  // Sample loop to find min/max
-  for (let i = 0; i < d.length; i += 16) {
-    const g = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
-    if (g < minGray) minGray = g;
-    if (g > maxGray) maxGray = g;
-  }
+  canvas.processedImageDataUrl = dataUrl;
+  canvas.base64Data = base64Data;
+  canvas.mimeType = 'image/jpeg';
 
-  const range = (maxGray - minGray) || 1;
-
-  // 2. Grayscale + Dynamic Contrast Stretch (preserves text anti-aliasing for Tesseract)
-  for (let i = 0; i < d.length; i += 4) {
-    const gray = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
-    let normalized = ((gray - minGray) / range) * 255;
-    
-    // Mild contrast boost to sharpen dark text against light paper
-    if (normalized < 128) {
-      normalized = Math.max(0, normalized - 25);
-    } else {
-      normalized = Math.min(255, normalized + 25);
-    }
-
-    d[i]     = normalized;
-    d[i + 1] = normalized;
-    d[i + 2] = normalized;
-    d[i + 3] = 255;
-  }
-
-  ctx.putImageData(imgData, 0, 0);
-  canvas.processedImageDataUrl = canvas.toDataURL('image/jpeg', 0.85);
   return canvas;
 }
