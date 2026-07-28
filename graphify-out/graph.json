@@ -3290,7 +3290,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "locales_en_common_type",
-      "community": 131,
+      "community": 154,
       "norm_label": "type"
     },
     {
@@ -3300,7 +3300,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "locales_en_common_income",
-      "community": 20,
+      "community": 131,
       "norm_label": "income"
     },
     {
@@ -3310,7 +3310,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "locales_en_common_expense",
-      "community": 20,
+      "community": 131,
       "norm_label": "expense"
     },
     {
@@ -3320,7 +3320,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "locales_en_common_transfer",
-      "community": 20,
+      "community": 131,
       "norm_label": "transfer"
     },
     {
@@ -3640,7 +3640,7 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "locales_en_auth",
-      "community": 110,
+      "community": 10,
       "norm_label": "auth"
     },
     {
@@ -4950,7 +4950,7 @@
       "source_location": "L210",
       "_origin": "ast",
       "id": "locales_en_accounts_type",
-      "community": 131,
+      "community": 154,
       "norm_label": "type"
     },
     {
@@ -4960,7 +4960,7 @@
       "source_location": "L211",
       "_origin": "ast",
       "id": "locales_en_type_bank",
-      "community": 131,
+      "community": 154,
       "norm_label": "bank"
     },
     {
@@ -4970,7 +4970,7 @@
       "source_location": "L212",
       "_origin": "ast",
       "id": "locales_en_type_cash",
-      "community": 131,
+      "community": 154,
       "norm_label": "cash"
     },
     {
@@ -4980,7 +4980,7 @@
       "source_location": "L213",
       "_origin": "ast",
       "id": "locales_en_type_e_wallet",
-      "community": 131,
+      "community": 154,
       "norm_label": "e_wallet"
     },
     {
@@ -4990,7 +4990,7 @@
       "source_location": "L215",
       "_origin": "ast",
       "id": "locales_en_accounts_balance",
-      "community": 20,
+      "community": 131,
       "norm_label": "balance"
     },
     {
@@ -5450,7 +5450,7 @@
       "source_location": "L273",
       "_origin": "ast",
       "id": "locales_en_recurring",
-      "community": 32,
+      "community": 131,
       "norm_label": "recurring"
     },
     {
@@ -5460,7 +5460,7 @@
       "source_location": "L274",
       "_origin": "ast",
       "id": "locales_en_recurring_title",
-      "community": 32,
+      "community": 131,
       "norm_label": "title"
     },
     {
@@ -5470,7 +5470,7 @@
       "source_location": "L275",
       "_origin": "ast",
       "id": "locales_en_recurring_subtitle",
-      "community": 32,
+      "community": 131,
       "norm_label": "subtitle"
     },
     {
@@ -5480,7 +5480,7 @@
       "source_location": "L276",
       "_origin": "ast",
       "id": "locales_en_recurring_addrecurring",
-      "community": 32,
+      "community": 131,
       "norm_label": "addrecurring"
     },
     {
@@ -5490,7 +5490,7 @@
       "source_location": "L277",
       "_origin": "ast",
       "id": "locales_en_recurring_editrecurring",
-      "community": 32,
+      "community": 131,
       "norm_label": "editrecurring"
     },
     {
@@ -5500,7 +5500,7 @@
       "source_location": "L278",
       "_origin": "ast",
       "id": "locales_en_recurring_interval",
-      "community": 32,
+      "community": 131,
       "norm_label": "interval"
     },
     {
@@ -5510,7 +5510,7 @@
       "source_location": "L279",
       "_origin": "ast",
       "id": "locales_en_recurring_nextdue",
-      "community": 32,
+      "community": 131,
       "norm_label": "nextdue"
     },
     {
@@ -6060,7 +6060,7 @@
       "source_location": "L352",
       "_origin": "ast",
       "id": "locales_en_tours",
-      "community": 128,
+      "community": 34,
       "norm_label": "tours"
     },
     {
@@ -6070,7 +6070,7 @@
       "source_location": "L353",
       "_origin": "ast",
       "id": "locales_en_tours_btn",
-      "community": 8,
+      "community": 34,
       "norm_label": "btn"
     },
     {
@@ -6080,7 +6080,7 @@
       "source_location": "L354",
       "_origin": "ast",
       "id": "locales_en_btn_next",
-      "community": 8,
+      "community": 34,
       "norm_label": "next"
     },
     {
@@ -6090,7 +6090,7 @@
       "source_location": "L355",
       "_origin": "ast",
       "id": "locales_en_btn_prev",
-      "community": 8,
+      "community": 34,
       "norm_label": "prev"
     },
     {
@@ -6100,7 +6100,7 @@
       "source_location": "L356",
       "_origin": "ast",
       "id": "locales_en_btn_done",
-      "community": 8,
+      "community": 34,
       "norm_label": "done"
     },
     {
@@ -6110,7 +6110,7 @@
       "source_location": "L358",
       "_origin": "ast",
       "id": "locales_en_tours_progress",
-      "community": 128,
+      "community": 34,
       "norm_label": "progress"
     },
     {
@@ -6120,7 +6120,7 @@
       "source_location": "L359",
       "_origin": "ast",
       "id": "locales_en_tours_dashboard",
-      "community": 25,
+      "community": 20,
       "norm_label": "dashboard"
     },
     {
@@ -6150,7 +6150,7 @@
       "source_location": "L364",
       "_origin": "ast",
       "id": "locales_en_dashboard_balance",
-      "community": 25,
+      "community": 20,
       "norm_label": "balance"
     },
     {
@@ -6160,7 +6160,7 @@
       "source_location": "L365",
       "_origin": "ast",
       "id": "locales_en_balance_title",
-      "community": 25,
+      "community": 20,
       "norm_label": "title"
     },
     {
@@ -6170,7 +6170,7 @@
       "source_location": "L366",
       "_origin": "ast",
       "id": "locales_en_balance_description",
-      "community": 25,
+      "community": 20,
       "norm_label": "description"
     },
     {
@@ -6180,7 +6180,7 @@
       "source_location": "L368",
       "_origin": "ast",
       "id": "locales_en_dashboard_income",
-      "community": 25,
+      "community": 20,
       "norm_label": "income"
     },
     {
@@ -6190,7 +6190,7 @@
       "source_location": "L369",
       "_origin": "ast",
       "id": "locales_en_income_title",
-      "community": 25,
+      "community": 20,
       "norm_label": "title"
     },
     {
@@ -6200,7 +6200,7 @@
       "source_location": "L370",
       "_origin": "ast",
       "id": "locales_en_income_description",
-      "community": 25,
+      "community": 20,
       "norm_label": "description"
     },
     {
@@ -6210,7 +6210,7 @@
       "source_location": "L372",
       "_origin": "ast",
       "id": "locales_en_dashboard_expense",
-      "community": 25,
+      "community": 20,
       "norm_label": "expense"
     },
     {
@@ -6220,7 +6220,7 @@
       "source_location": "L373",
       "_origin": "ast",
       "id": "locales_en_expense_title",
-      "community": 25,
+      "community": 20,
       "norm_label": "title"
     },
     {
@@ -6230,7 +6230,7 @@
       "source_location": "L374",
       "_origin": "ast",
       "id": "locales_en_expense_description",
-      "community": 25,
+      "community": 20,
       "norm_label": "description"
     },
     {
@@ -6250,7 +6250,7 @@
       "source_location": "L377",
       "_origin": "ast",
       "id": "locales_en_net_title",
-      "community": 20,
+      "community": 131,
       "norm_label": "title"
     },
     {
@@ -6260,7 +6260,7 @@
       "source_location": "L378",
       "_origin": "ast",
       "id": "locales_en_net_description",
-      "community": 20,
+      "community": 131,
       "norm_label": "description"
     },
     {
@@ -6290,7 +6290,7 @@
       "source_location": "L384",
       "_origin": "ast",
       "id": "locales_en_dashboard_charts",
-      "community": 25,
+      "community": 29,
       "norm_label": "charts"
     },
     {
@@ -6300,7 +6300,7 @@
       "source_location": "L385",
       "_origin": "ast",
       "id": "locales_en_charts_title",
-      "community": 25,
+      "community": 29,
       "norm_label": "title"
     },
     {
@@ -6310,7 +6310,7 @@
       "source_location": "L386",
       "_origin": "ast",
       "id": "locales_en_charts_description",
-      "community": 25,
+      "community": 29,
       "norm_label": "description"
     },
     {
@@ -6360,7 +6360,7 @@
       "source_location": "L394",
       "_origin": "ast",
       "id": "locales_en_transactions_add",
-      "community": 34,
+      "community": 128,
       "norm_label": "add"
     },
     {
@@ -6450,7 +6450,7 @@
       "source_location": "L406",
       "_origin": "ast",
       "id": "locales_en_transactions_table",
-      "community": 4,
+      "community": 34,
       "norm_label": "table"
     },
     {
@@ -6460,7 +6460,7 @@
       "source_location": "L407",
       "_origin": "ast",
       "id": "locales_en_table_title",
-      "community": 4,
+      "community": 34,
       "norm_label": "title"
     },
     {
@@ -6470,7 +6470,7 @@
       "source_location": "L408",
       "_origin": "ast",
       "id": "locales_en_table_description",
-      "community": 4,
+      "community": 34,
       "norm_label": "description"
     },
     {
@@ -6640,7 +6640,7 @@
       "source_location": "L446",
       "_origin": "ast",
       "id": "locales_en_budgets_alerts",
-      "community": 24,
+      "community": 131,
       "norm_label": "alerts"
     },
     {
@@ -6650,7 +6650,7 @@
       "source_location": "L447",
       "_origin": "ast",
       "id": "locales_en_alerts_title",
-      "community": 24,
+      "community": 131,
       "norm_label": "title"
     },
     {
@@ -6660,7 +6660,7 @@
       "source_location": "L448",
       "_origin": "ast",
       "id": "locales_en_alerts_description",
-      "community": 24,
+      "community": 131,
       "norm_label": "description"
     },
     {
@@ -6670,7 +6670,7 @@
       "source_location": "L451",
       "_origin": "ast",
       "id": "locales_en_tours_goals",
-      "community": 20,
+      "community": 131,
       "norm_label": "goals"
     },
     {
@@ -6680,7 +6680,7 @@
       "source_location": "L452",
       "_origin": "ast",
       "id": "locales_en_goals_header",
-      "community": 20,
+      "community": 131,
       "norm_label": "header"
     },
     {
@@ -6690,7 +6690,7 @@
       "source_location": "L456",
       "_origin": "ast",
       "id": "locales_en_goals_add",
-      "community": 20,
+      "community": 131,
       "norm_label": "add"
     },
     {
@@ -6700,7 +6700,7 @@
       "source_location": "L460",
       "_origin": "ast",
       "id": "locales_en_goals_list",
-      "community": 20,
+      "community": 131,
       "norm_label": "list"
     },
     {
@@ -6780,7 +6780,7 @@
       "source_location": "L488",
       "_origin": "ast",
       "id": "locales_en_reports_charts",
-      "community": 25,
+      "community": 29,
       "norm_label": "charts"
     },
     {
@@ -6880,7 +6880,7 @@
       "source_location": "L505",
       "_origin": "ast",
       "id": "locales_en_tours_calendar",
-      "community": 78,
+      "community": 128,
       "norm_label": "calendar"
     },
     {
@@ -6900,7 +6900,7 @@
       "source_location": "L510",
       "_origin": "ast",
       "id": "locales_en_calendar_grid",
-      "community": 78,
+      "community": 128,
       "norm_label": "grid"
     },
     {
@@ -6910,7 +6910,7 @@
       "source_location": "L511",
       "_origin": "ast",
       "id": "locales_en_grid_title",
-      "community": 78,
+      "community": 128,
       "norm_label": "title"
     },
     {
@@ -6920,7 +6920,7 @@
       "source_location": "L512",
       "_origin": "ast",
       "id": "locales_en_grid_description",
-      "community": 78,
+      "community": 128,
       "norm_label": "description"
     },
     {
@@ -6930,7 +6930,7 @@
       "source_location": "L514",
       "_origin": "ast",
       "id": "locales_en_calendar_add",
-      "community": 78,
+      "community": 128,
       "norm_label": "add"
     },
     {
@@ -6990,7 +6990,7 @@
       "source_location": "L533",
       "_origin": "ast",
       "id": "locales_en_tours_shoppingdetail",
-      "community": 128,
+      "community": 143,
       "norm_label": "shoppingdetail"
     },
     {
@@ -7010,7 +7010,7 @@
       "source_location": "L538",
       "_origin": "ast",
       "id": "locales_en_shoppingdetail_add",
-      "community": 128,
+      "community": 143,
       "norm_label": "add"
     },
     {
@@ -7020,7 +7020,7 @@
       "source_location": "L542",
       "_origin": "ast",
       "id": "locales_en_shoppingdetail_split",
-      "community": 128,
+      "community": 143,
       "norm_label": "split"
     },
     {
@@ -7030,7 +7030,7 @@
       "source_location": "L543",
       "_origin": "ast",
       "id": "locales_en_split_title",
-      "community": 128,
+      "community": 143,
       "norm_label": "title"
     },
     {
@@ -7040,7 +7040,7 @@
       "source_location": "L544",
       "_origin": "ast",
       "id": "locales_en_split_description",
-      "community": 128,
+      "community": 143,
       "norm_label": "description"
     },
     {
@@ -7240,7 +7240,7 @@
       "source_location": "L593",
       "_origin": "ast",
       "id": "locales_en_tours_settings",
-      "community": 128,
+      "community": 160,
       "norm_label": "settings"
     },
     {
@@ -7260,7 +7260,7 @@
       "source_location": "L598",
       "_origin": "ast",
       "id": "locales_en_settings_currency",
-      "community": 128,
+      "community": 160,
       "norm_label": "currency"
     },
     {
@@ -7270,7 +7270,7 @@
       "source_location": "L599",
       "_origin": "ast",
       "id": "locales_en_currency_title",
-      "community": 128,
+      "community": 160,
       "norm_label": "title"
     },
     {
@@ -7590,7 +7590,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "locales_id_common_type",
-      "community": 68,
+      "community": 155,
       "norm_label": "type"
     },
     {
@@ -8400,7 +8400,7 @@
       "source_location": "L120",
       "_origin": "ast",
       "id": "locales_id_dashboard_period",
-      "community": 26,
+      "community": 15,
       "norm_label": "period"
     },
     {
@@ -9120,7 +9120,7 @@
       "source_location": "L195",
       "_origin": "ast",
       "id": "locales_id_transactions_validation",
-      "community": 12,
+      "community": 27,
       "norm_label": "validation"
     },
     {
@@ -9130,7 +9130,7 @@
       "source_location": "L196",
       "_origin": "ast",
       "id": "locales_id_validation_amount",
-      "community": 12,
+      "community": 27,
       "norm_label": "amount"
     },
     {
@@ -9140,7 +9140,7 @@
       "source_location": "L197",
       "_origin": "ast",
       "id": "locales_id_validation_category",
-      "community": 12,
+      "community": 27,
       "norm_label": "category"
     },
     {
@@ -9150,7 +9150,7 @@
       "source_location": "L198",
       "_origin": "ast",
       "id": "locales_id_validation_account",
-      "community": 12,
+      "community": 27,
       "norm_label": "account"
     },
     {
@@ -9160,7 +9160,7 @@
       "source_location": "L199",
       "_origin": "ast",
       "id": "locales_id_validation_member",
-      "community": 12,
+      "community": 27,
       "norm_label": "member"
     },
     {
@@ -9170,7 +9170,7 @@
       "source_location": "L200",
       "_origin": "ast",
       "id": "locales_id_validation_transfersame",
-      "community": 12,
+      "community": 27,
       "norm_label": "transfersame"
     },
     {
@@ -9250,7 +9250,7 @@
       "source_location": "L210",
       "_origin": "ast",
       "id": "locales_id_accounts_type",
-      "community": 68,
+      "community": 155,
       "norm_label": "type"
     },
     {
@@ -9260,7 +9260,7 @@
       "source_location": "L211",
       "_origin": "ast",
       "id": "locales_id_type_bank",
-      "community": 68,
+      "community": 155,
       "norm_label": "bank"
     },
     {
@@ -9270,7 +9270,7 @@
       "source_location": "L212",
       "_origin": "ast",
       "id": "locales_id_type_cash",
-      "community": 68,
+      "community": 155,
       "norm_label": "cash"
     },
     {
@@ -9280,7 +9280,7 @@
       "source_location": "L213",
       "_origin": "ast",
       "id": "locales_id_type_e_wallet",
-      "community": 68,
+      "community": 155,
       "norm_label": "e_wallet"
     },
     {
@@ -9320,7 +9320,7 @@
       "source_location": "L218",
       "_origin": "ast",
       "id": "locales_id_accounts_validation",
-      "community": 12,
+      "community": 153,
       "norm_label": "validation"
     },
     {
@@ -9330,7 +9330,7 @@
       "source_location": "L219",
       "_origin": "ast",
       "id": "locales_id_validation_name",
-      "community": 12,
+      "community": 153,
       "norm_label": "name"
     },
     {
@@ -9340,7 +9340,7 @@
       "source_location": "L220",
       "_origin": "ast",
       "id": "locales_id_validation_type",
-      "community": 12,
+      "community": 153,
       "norm_label": "type"
     },
     {
@@ -9350,7 +9350,7 @@
       "source_location": "L223",
       "_origin": "ast",
       "id": "locales_id_budgets",
-      "community": 27,
+      "community": 26,
       "norm_label": "budgets"
     },
     {
@@ -9360,7 +9360,7 @@
       "source_location": "L224",
       "_origin": "ast",
       "id": "locales_id_budgets_title",
-      "community": 27,
+      "community": 26,
       "norm_label": "title"
     },
     {
@@ -9370,7 +9370,7 @@
       "source_location": "L225",
       "_origin": "ast",
       "id": "locales_id_budgets_subtitle",
-      "community": 27,
+      "community": 26,
       "norm_label": "subtitle"
     },
     {
@@ -9380,7 +9380,7 @@
       "source_location": "L226",
       "_origin": "ast",
       "id": "locales_id_budgets_addbudget",
-      "community": 27,
+      "community": 26,
       "norm_label": "addbudget"
     },
     {
@@ -9390,7 +9390,7 @@
       "source_location": "L227",
       "_origin": "ast",
       "id": "locales_id_budgets_editbudget",
-      "community": 27,
+      "community": 26,
       "norm_label": "editbudget"
     },
     {
@@ -9400,7 +9400,7 @@
       "source_location": "L228",
       "_origin": "ast",
       "id": "locales_id_budgets_limit",
-      "community": 27,
+      "community": 26,
       "norm_label": "limit"
     },
     {
@@ -9410,7 +9410,7 @@
       "source_location": "L229",
       "_origin": "ast",
       "id": "locales_id_budgets_limitplaceholder",
-      "community": 27,
+      "community": 26,
       "norm_label": "limitplaceholder"
     },
     {
@@ -9420,7 +9420,7 @@
       "source_location": "L230",
       "_origin": "ast",
       "id": "locales_id_budgets_spent",
-      "community": 27,
+      "community": 26,
       "norm_label": "spent"
     },
     {
@@ -9430,7 +9430,7 @@
       "source_location": "L231",
       "_origin": "ast",
       "id": "locales_id_budgets_remaining",
-      "community": 27,
+      "community": 26,
       "norm_label": "remaining"
     },
     {
@@ -9440,7 +9440,7 @@
       "source_location": "L232",
       "_origin": "ast",
       "id": "locales_id_budgets_alertthreshold",
-      "community": 27,
+      "community": 26,
       "norm_label": "alertthreshold"
     },
     {
@@ -9450,7 +9450,7 @@
       "source_location": "L233",
       "_origin": "ast",
       "id": "locales_id_budgets_alertthresholdplaceholder",
-      "community": 27,
+      "community": 26,
       "norm_label": "alertthresholdplaceholder"
     },
     {
@@ -9460,7 +9460,7 @@
       "source_location": "L234",
       "_origin": "ast",
       "id": "locales_id_budgets_used",
-      "community": 27,
+      "community": 26,
       "norm_label": "used"
     },
     {
@@ -9470,7 +9470,7 @@
       "source_location": "L235",
       "_origin": "ast",
       "id": "locales_id_budgets_warninglimit",
-      "community": 27,
+      "community": 26,
       "norm_label": "warninglimit"
     },
     {
@@ -9480,7 +9480,7 @@
       "source_location": "L236",
       "_origin": "ast",
       "id": "locales_id_budgets_validation",
-      "community": 12,
+      "community": 27,
       "norm_label": "validation"
     },
     {
@@ -9490,7 +9490,7 @@
       "source_location": "L238",
       "_origin": "ast",
       "id": "locales_id_validation_limit",
-      "community": 12,
+      "community": 27,
       "norm_label": "limit"
     },
     {
@@ -9500,7 +9500,7 @@
       "source_location": "L239",
       "_origin": "ast",
       "id": "locales_id_validation_threshold",
-      "community": 12,
+      "community": 27,
       "norm_label": "threshold"
     },
     {
@@ -9580,7 +9580,7 @@
       "source_location": "L249",
       "_origin": "ast",
       "id": "locales_id_categories_validation",
-      "community": 12,
+      "community": 153,
       "norm_label": "validation"
     },
     {
@@ -9750,7 +9750,7 @@
       "source_location": "L273",
       "_origin": "ast",
       "id": "locales_id_recurring",
-      "community": 120,
+      "community": 78,
       "norm_label": "recurring"
     },
     {
@@ -9760,7 +9760,7 @@
       "source_location": "L274",
       "_origin": "ast",
       "id": "locales_id_recurring_title",
-      "community": 120,
+      "community": 78,
       "norm_label": "title"
     },
     {
@@ -9770,7 +9770,7 @@
       "source_location": "L275",
       "_origin": "ast",
       "id": "locales_id_recurring_subtitle",
-      "community": 120,
+      "community": 78,
       "norm_label": "subtitle"
     },
     {
@@ -9780,7 +9780,7 @@
       "source_location": "L276",
       "_origin": "ast",
       "id": "locales_id_recurring_addrecurring",
-      "community": 120,
+      "community": 78,
       "norm_label": "addrecurring"
     },
     {
@@ -9790,7 +9790,7 @@
       "source_location": "L277",
       "_origin": "ast",
       "id": "locales_id_recurring_editrecurring",
-      "community": 120,
+      "community": 78,
       "norm_label": "editrecurring"
     },
     {
@@ -9800,7 +9800,7 @@
       "source_location": "L278",
       "_origin": "ast",
       "id": "locales_id_recurring_interval",
-      "community": 120,
+      "community": 78,
       "norm_label": "interval"
     },
     {
@@ -9810,7 +9810,7 @@
       "source_location": "L279",
       "_origin": "ast",
       "id": "locales_id_recurring_nextdue",
-      "community": 120,
+      "community": 78,
       "norm_label": "nextdue"
     },
     {
@@ -9820,7 +9820,7 @@
       "source_location": "L280",
       "_origin": "ast",
       "id": "locales_id_recurring_intervals",
-      "community": 120,
+      "community": 78,
       "norm_label": "intervals"
     },
     {
@@ -9830,7 +9830,7 @@
       "source_location": "L281",
       "_origin": "ast",
       "id": "locales_id_intervals_weekly",
-      "community": 120,
+      "community": 78,
       "norm_label": "weekly"
     },
     {
@@ -9840,7 +9840,7 @@
       "source_location": "L282",
       "_origin": "ast",
       "id": "locales_id_intervals_monthly",
-      "community": 120,
+      "community": 78,
       "norm_label": "monthly"
     },
     {
@@ -9850,7 +9850,7 @@
       "source_location": "L283",
       "_origin": "ast",
       "id": "locales_id_intervals_yearly",
-      "community": 120,
+      "community": 78,
       "norm_label": "yearly"
     },
     {
@@ -9860,7 +9860,7 @@
       "source_location": "L285",
       "_origin": "ast",
       "id": "locales_id_recurring_validation",
-      "community": 12,
+      "community": 27,
       "norm_label": "validation"
     },
     {
@@ -9870,7 +9870,7 @@
       "source_location": "L290",
       "_origin": "ast",
       "id": "locales_id_validation_interval",
-      "community": 12,
+      "community": 27,
       "norm_label": "interval"
     },
     {
@@ -9880,7 +9880,7 @@
       "source_location": "L291",
       "_origin": "ast",
       "id": "locales_id_validation_nextdue",
-      "community": 12,
+      "community": 27,
       "norm_label": "nextdue"
     },
     {
@@ -9980,7 +9980,7 @@
       "source_location": "L305",
       "_origin": "ast",
       "id": "locales_id_members_validation",
-      "community": 12,
+      "community": 153,
       "norm_label": "validation"
     },
     {
@@ -9990,7 +9990,7 @@
       "source_location": "L307",
       "_origin": "ast",
       "id": "locales_id_validation_role",
-      "community": 12,
+      "community": 153,
       "norm_label": "role"
     },
     {
@@ -10310,7 +10310,7 @@
       "source_location": "L343",
       "_origin": "ast",
       "id": "locales_id_shopping_validation",
-      "community": 12,
+      "community": 153,
       "norm_label": "validation"
     },
     {
@@ -10360,7 +10360,7 @@
       "source_location": "L352",
       "_origin": "ast",
       "id": "locales_id_tours",
-      "community": 14,
+      "community": 156,
       "norm_label": "tours"
     },
     {
@@ -10370,7 +10370,7 @@
       "source_location": "L353",
       "_origin": "ast",
       "id": "locales_id_tours_btn",
-      "community": 1,
+      "community": 157,
       "norm_label": "btn"
     },
     {
@@ -10380,7 +10380,7 @@
       "source_location": "L354",
       "_origin": "ast",
       "id": "locales_id_btn_next",
-      "community": 1,
+      "community": 157,
       "norm_label": "next"
     },
     {
@@ -10390,7 +10390,7 @@
       "source_location": "L355",
       "_origin": "ast",
       "id": "locales_id_btn_prev",
-      "community": 1,
+      "community": 157,
       "norm_label": "prev"
     },
     {
@@ -10400,7 +10400,7 @@
       "source_location": "L356",
       "_origin": "ast",
       "id": "locales_id_btn_done",
-      "community": 1,
+      "community": 157,
       "norm_label": "done"
     },
     {
@@ -10410,7 +10410,7 @@
       "source_location": "L358",
       "_origin": "ast",
       "id": "locales_id_tours_progress",
-      "community": 14,
+      "community": 156,
       "norm_label": "progress"
     },
     {
@@ -10430,7 +10430,7 @@
       "source_location": "L361",
       "_origin": "ast",
       "id": "locales_id_period_title",
-      "community": 26,
+      "community": 15,
       "norm_label": "title"
     },
     {
@@ -10440,7 +10440,7 @@
       "source_location": "L362",
       "_origin": "ast",
       "id": "locales_id_period_description",
-      "community": 26,
+      "community": 15,
       "norm_label": "description"
     },
     {
@@ -10590,7 +10590,7 @@
       "source_location": "L384",
       "_origin": "ast",
       "id": "locales_id_dashboard_charts",
-      "community": 132,
+      "community": 134,
       "norm_label": "charts"
     },
     {
@@ -10600,7 +10600,7 @@
       "source_location": "L385",
       "_origin": "ast",
       "id": "locales_id_charts_title",
-      "community": 132,
+      "community": 134,
       "norm_label": "title"
     },
     {
@@ -10610,7 +10610,7 @@
       "source_location": "L386",
       "_origin": "ast",
       "id": "locales_id_charts_description",
-      "community": 132,
+      "community": 134,
       "norm_label": "description"
     },
     {
@@ -10660,7 +10660,7 @@
       "source_location": "L394",
       "_origin": "ast",
       "id": "locales_id_transactions_add",
-      "community": 113,
+      "community": 111,
       "norm_label": "add"
     },
     {
@@ -10840,7 +10840,7 @@
       "source_location": "L419",
       "_origin": "ast",
       "id": "locales_id_tours_accounts",
-      "community": 14,
+      "community": 113,
       "norm_label": "accounts"
     },
     {
@@ -10900,7 +10900,7 @@
       "source_location": "L433",
       "_origin": "ast",
       "id": "locales_id_tours_budgets",
-      "community": 14,
+      "community": 113,
       "norm_label": "budgets"
     },
     {
@@ -10910,7 +10910,7 @@
       "source_location": "L434",
       "_origin": "ast",
       "id": "locales_id_budgets_header",
-      "community": 14,
+      "community": 113,
       "norm_label": "header"
     },
     {
@@ -11010,7 +11010,7 @@
       "source_location": "L465",
       "_origin": "ast",
       "id": "locales_id_tours_recurring",
-      "community": 14,
+      "community": 156,
       "norm_label": "recurring"
     },
     {
@@ -11020,7 +11020,7 @@
       "source_location": "L466",
       "_origin": "ast",
       "id": "locales_id_recurring_header",
-      "community": 14,
+      "community": 156,
       "norm_label": "header"
     },
     {
@@ -11030,7 +11030,7 @@
       "source_location": "L470",
       "_origin": "ast",
       "id": "locales_id_recurring_add",
-      "community": 113,
+      "community": 156,
       "norm_label": "add"
     },
     {
@@ -11050,7 +11050,7 @@
       "source_location": "L479",
       "_origin": "ast",
       "id": "locales_id_tours_reports",
-      "community": 132,
+      "community": 151,
       "norm_label": "reports"
     },
     {
@@ -11060,7 +11060,7 @@
       "source_location": "L480",
       "_origin": "ast",
       "id": "locales_id_reports_header",
-      "community": 132,
+      "community": 151,
       "norm_label": "header"
     },
     {
@@ -11080,7 +11080,7 @@
       "source_location": "L488",
       "_origin": "ast",
       "id": "locales_id_reports_charts",
-      "community": 132,
+      "community": 134,
       "norm_label": "charts"
     },
     {
@@ -11090,7 +11090,7 @@
       "source_location": "L492",
       "_origin": "ast",
       "id": "locales_id_reports_export",
-      "community": 26,
+      "community": 132,
       "norm_label": "export"
     },
     {
@@ -11100,7 +11100,7 @@
       "source_location": "L493",
       "_origin": "ast",
       "id": "locales_id_export_title",
-      "community": 26,
+      "community": 132,
       "norm_label": "title"
     },
     {
@@ -11110,7 +11110,7 @@
       "source_location": "L494",
       "_origin": "ast",
       "id": "locales_id_export_description",
-      "community": 26,
+      "community": 132,
       "norm_label": "description"
     },
     {
@@ -11120,7 +11120,7 @@
       "source_location": "L496",
       "_origin": "ast",
       "id": "locales_id_reports_csv",
-      "community": 132,
+      "community": 151,
       "norm_label": "csv"
     },
     {
@@ -11130,7 +11130,7 @@
       "source_location": "L497",
       "_origin": "ast",
       "id": "locales_id_csv_title",
-      "community": 132,
+      "community": 151,
       "norm_label": "title"
     },
     {
@@ -11140,7 +11140,7 @@
       "source_location": "L498",
       "_origin": "ast",
       "id": "locales_id_csv_description",
-      "community": 132,
+      "community": 151,
       "norm_label": "description"
     },
     {
@@ -11150,7 +11150,7 @@
       "source_location": "L500",
       "_origin": "ast",
       "id": "locales_id_reports_pdf",
-      "community": 132,
+      "community": 151,
       "norm_label": "pdf"
     },
     {
@@ -11160,7 +11160,7 @@
       "source_location": "L501",
       "_origin": "ast",
       "id": "locales_id_pdf_title",
-      "community": 132,
+      "community": 151,
       "norm_label": "title"
     },
     {
@@ -11170,7 +11170,7 @@
       "source_location": "L502",
       "_origin": "ast",
       "id": "locales_id_pdf_description",
-      "community": 132,
+      "community": 151,
       "norm_label": "description"
     },
     {
@@ -11180,7 +11180,7 @@
       "source_location": "L505",
       "_origin": "ast",
       "id": "locales_id_tours_calendar",
-      "community": 154,
+      "community": 113,
       "norm_label": "calendar"
     },
     {
@@ -11190,7 +11190,7 @@
       "source_location": "L506",
       "_origin": "ast",
       "id": "locales_id_calendar_header",
-      "community": 154,
+      "community": 113,
       "norm_label": "header"
     },
     {
@@ -11200,7 +11200,7 @@
       "source_location": "L510",
       "_origin": "ast",
       "id": "locales_id_calendar_grid",
-      "community": 154,
+      "community": 113,
       "norm_label": "grid"
     },
     {
@@ -11210,7 +11210,7 @@
       "source_location": "L511",
       "_origin": "ast",
       "id": "locales_id_grid_title",
-      "community": 154,
+      "community": 113,
       "norm_label": "title"
     },
     {
@@ -11220,7 +11220,7 @@
       "source_location": "L512",
       "_origin": "ast",
       "id": "locales_id_grid_description",
-      "community": 154,
+      "community": 113,
       "norm_label": "description"
     },
     {
@@ -11240,7 +11240,7 @@
       "source_location": "L519",
       "_origin": "ast",
       "id": "locales_id_tours_shopping",
-      "community": 14,
+      "community": 46,
       "norm_label": "shopping"
     },
     {
@@ -11250,7 +11250,7 @@
       "source_location": "L520",
       "_origin": "ast",
       "id": "locales_id_shopping_header",
-      "community": 14,
+      "community": 46,
       "norm_label": "header"
     },
     {
@@ -11260,7 +11260,7 @@
       "source_location": "L524",
       "_origin": "ast",
       "id": "locales_id_shopping_add",
-      "community": 113,
+      "community": 46,
       "norm_label": "add"
     },
     {
@@ -11400,7 +11400,7 @@
       "source_location": "L556",
       "_origin": "ast",
       "id": "locales_id_categories_add",
-      "community": 113,
+      "community": 14,
       "norm_label": "add"
     },
     {
@@ -11440,7 +11440,7 @@
       "source_location": "L570",
       "_origin": "ast",
       "id": "locales_id_projects_add",
-      "community": 113,
+      "community": 107,
       "norm_label": "add"
     },
     {
@@ -11500,7 +11500,7 @@
       "source_location": "L584",
       "_origin": "ast",
       "id": "locales_id_members_add",
-      "community": 113,
+      "community": 125,
       "norm_label": "add"
     },
     {
@@ -13097,17 +13097,27 @@
       "label": "fileToImageElement()",
       "file_type": "code",
       "source_file": "frontend/src/utils/opencvPreprocess.js",
-      "source_location": "L25",
+      "source_location": "L18",
       "_origin": "ast",
       "id": "utils_opencvpreprocess_filetoimageelement",
       "community": 43,
       "norm_label": "filetoimageelement()"
     },
     {
+      "label": "nativePreprocessReceiptImage()",
+      "file_type": "code",
+      "source_file": "frontend/src/utils/opencvPreprocess.js",
+      "source_location": "L40",
+      "_origin": "ast",
+      "id": "utils_opencvpreprocess_nativepreprocessreceiptimage",
+      "community": 43,
+      "norm_label": "nativepreprocessreceiptimage()"
+    },
+    {
       "label": "preprocessReceiptImage()",
       "file_type": "code",
       "source_file": "frontend/src/utils/opencvPreprocess.js",
-      "source_location": "L50",
+      "source_location": "L82",
       "_origin": "ast",
       "id": "utils_opencvpreprocess_preprocessreceiptimage",
       "community": 43,
@@ -14492,6 +14502,226 @@
       "id": "docs_walkthrough_receipt_scanner_ai_improved_indonesian_receipt_parsing_july_2026",
       "community": 41,
       "norm_label": "improved indonesian receipt parsing (july 2026)"
+    },
+    {
+      "label": "walkthrough_receipt_scanner_rebuild.md",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_scanner_rebuild",
+      "community": 150,
+      "norm_label": "walkthrough_receipt_scanner_rebuild.md"
+    },
+    {
+      "label": "Walkthrough \u2014 Receipt Scanner Module Full Rebuild",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_scanner_rebuild_walkthrough_receipt_scanner_module_full_rebuild",
+      "community": 150,
+      "norm_label": "walkthrough \u2014 receipt scanner module full rebuild"
+    },
+    {
+      "label": "Overview & Architecture",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild.md",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_scanner_rebuild_overview_architecture",
+      "community": 150,
+      "norm_label": "overview & architecture"
+    },
+    {
+      "label": "Key Improvements Delivered",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild.md",
+      "source_location": "L24",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_scanner_rebuild_key_improvements_delivered",
+      "community": 150,
+      "norm_label": "key improvements delivered"
+    },
+    {
+      "label": "1. Shared Scanner Mapping Composable ([`useScannerMapping.js`](file:///c:/Projects/final-finance-family/frontend/src/composables/useScannerMapping.js))",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild.md",
+      "source_location": "L26",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_scanner_rebuild_1_shared_scanner_mapping_composable_usescannermapping_js_file_c_projects_final_finance_family_frontend_src_composables_usescannermapping_js",
+      "community": 150,
+      "norm_label": "1. shared scanner mapping composable ([`usescannermapping.js`](file:///c:/projects/final-finance-family/frontend/src/composables/usescannermapping.js))"
+    },
+    {
+      "label": "2. Candidate Scoring Date Engine ([`receiptScanner.js`](file:///c:/Projects/final-finance-family/frontend/src/utils/receiptScanner.js))",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild.md",
+      "source_location": "L30",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_scanner_rebuild_2_candidate_scoring_date_engine_receiptscanner_js_file_c_projects_final_finance_family_frontend_src_utils_receiptscanner_js",
+      "community": 150,
+      "norm_label": "2. candidate scoring date engine ([`receiptscanner.js`](file:///c:/projects/final-finance-family/frontend/src/utils/receiptscanner.js))"
+    },
+    {
+      "label": "3. Enhanced OpenCV Preprocessing & Thumbnail Export ([`opencvPreprocess.js`](file:///c:/Projects/final-finance-family/frontend/src/utils/opencvPreprocess.js))",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild.md",
+      "source_location": "L34",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_scanner_rebuild_3_enhanced_opencv_preprocessing_thumbnail_export_opencvpreprocess_js_file_c_projects_final_finance_family_frontend_src_utils_opencvpreprocess_js",
+      "community": 150,
+      "norm_label": "3. enhanced opencv preprocessing & thumbnail export ([`opencvpreprocess.js`](file:///c:/projects/final-finance-family/frontend/src/utils/opencvpreprocess.js))"
+    },
+    {
+      "label": "4. Rich Shopping Review & Item Parser ([`ShoppingPage.vue`](file:///c:/Projects/final-finance-family/frontend/src/pages/ShoppingPage.vue) & [`receiptItemParser.js`](file:///c:/Projects/final-finance-family/frontend/src/utils/receiptItemParser.js))",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild.md",
+      "source_location": "L38",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_scanner_rebuild_4_rich_shopping_review_item_parser_shoppingpage_vue_file_c_projects_final_finance_family_frontend_src_pages_shoppingpage_vue_receiptitemparser_js_file_c_projects_final_finance_family_frontend_src_utils_receiptitemparser_js",
+      "community": 150,
+      "norm_label": "4. rich shopping review & item parser ([`shoppingpage.vue`](file:///c:/projects/final-finance-family/frontend/src/pages/shoppingpage.vue) & [`receiptitemparser.js`](file:///c:/projects/final-finance-family/frontend/src/utils/receiptitemparser.js))"
+    },
+    {
+      "label": "Verification Results",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild.md",
+      "source_location": "L44",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_scanner_rebuild_verification_results",
+      "community": 150,
+      "norm_label": "verification results"
+    },
+    {
+      "label": "Build Verification",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild.md",
+      "source_location": "L46",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_scanner_rebuild_build_verification",
+      "community": 150,
+      "norm_label": "build verification"
+    },
+    {
+      "label": "walkthrough_receipt_scanner_rebuild_2026.md",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild_2026.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_scanner_rebuild_2026",
+      "community": 25,
+      "norm_label": "walkthrough_receipt_scanner_rebuild_2026.md"
+    },
+    {
+      "label": "Walkthrough: Receipt Scanner Module Rebuild (July 2026)",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild_2026.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_scanner_rebuild_2026_walkthrough_receipt_scanner_module_rebuild_july_2026",
+      "community": 25,
+      "norm_label": "walkthrough: receipt scanner module rebuild (july 2026)"
+    },
+    {
+      "label": "Motivation",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild_2026.md",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_scanner_rebuild_2026_motivation",
+      "community": 25,
+      "norm_label": "motivation"
+    },
+    {
+      "label": "1. Core Pipeline Rebuild",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild_2026.md",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_scanner_rebuild_2026_1_core_pipeline_rebuild",
+      "community": 25,
+      "norm_label": "1. core pipeline rebuild"
+    },
+    {
+      "label": "\ud83d\udcf7 `opencvPreprocess.js` (Image Preparation)",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild_2026.md",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_scanner_rebuild_2026_opencvpreprocess_js_image_preparation",
+      "community": 25,
+      "norm_label": "\ud83d\udcf7 `opencvpreprocess.js` (image preparation)"
+    },
+    {
+      "label": "\ud83e\udde0 `receiptScanner.js` (Orchestration & Extraction)",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild_2026.md",
+      "source_location": "L24",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_scanner_rebuild_2026_receiptscanner_js_orchestration_extraction",
+      "community": 25,
+      "norm_label": "\ud83e\udde0 `receiptscanner.js` (orchestration & extraction)"
+    },
+    {
+      "label": "\ud83d\uded2 `receiptItemParser.js` (Itemization)",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild_2026.md",
+      "source_location": "L38",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_scanner_rebuild_2026_receiptitemparser_js_itemization",
+      "community": 25,
+      "norm_label": "\ud83d\uded2 `receiptitemparser.js` (itemization)"
+    },
+    {
+      "label": "2. Shared Composable: `useScannerMapping.js`",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild_2026.md",
+      "source_location": "L45",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_scanner_rebuild_2026_2_shared_composable_usescannermapping_js",
+      "community": 25,
+      "norm_label": "2. shared composable: `usescannermapping.js`"
+    },
+    {
+      "label": "3. UI/UX Enhancements",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild_2026.md",
+      "source_location": "L56",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_scanner_rebuild_2026_3_ui_ux_enhancements",
+      "community": 25,
+      "norm_label": "3. ui/ux enhancements"
+    },
+    {
+      "label": "`TransactionsPage.vue`",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild_2026.md",
+      "source_location": "L58",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_scanner_rebuild_2026_transactionspage_vue",
+      "community": 25,
+      "norm_label": "`transactionspage.vue`"
+    },
+    {
+      "label": "`ShoppingPage.vue`",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild_2026.md",
+      "source_location": "L62",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_scanner_rebuild_2026_shoppingpage_vue",
+      "community": 25,
+      "norm_label": "`shoppingpage.vue`"
+    },
+    {
+      "label": "Manual Verification Steps",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild_2026.md",
+      "source_location": "L69",
+      "_origin": "ast",
+      "id": "docs_walkthrough_receipt_scanner_rebuild_2026_manual_verification_steps",
+      "community": 25,
+      "norm_label": "manual verification steps"
     },
     {
       "label": "walkthrough_receipt_storage_calendar.md",
@@ -21182,9 +21412,9 @@
       "source_file": "frontend/src/composables/useScannerMapping.js",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "composables_usescannermapping",
-      "target": "composables_usescannermapping_usescannermapping",
-      "confidence_score": 1.0
+      "target": "composables_usescannermapping_usescannermapping"
     },
     {
       "relation": "contains",
@@ -36911,6 +37141,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/utils/opencvPreprocess.js",
+      "source_location": "L40",
+      "weight": 1.0,
+      "source": "utils_opencvpreprocess",
+      "target": "utils_opencvpreprocess_nativepreprocessreceiptimage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/utils/opencvPreprocess.js",
       "source_location": "L55",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -36938,6 +37178,17 @@
       "confidence_score": 1.0,
       "source": "utils_opencvpreprocess_preprocessreceiptimage",
       "target": "utils_opencvpreprocess_filetoimageelement"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/utils/opencvPreprocess.js",
+      "source_location": "L86",
+      "weight": 1.0,
+      "source": "utils_opencvpreprocess_preprocessreceiptimage",
+      "target": "utils_opencvpreprocess_nativepreprocessreceiptimage",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -37017,9 +37268,9 @@
       "source_file": "frontend/src/utils/receiptItemParser.js",
       "source_location": "L66",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "utils_receiptitemparser",
-      "target": "utils_receiptitemparser_extractquantityandunitprice",
-      "confidence_score": 1.0
+      "target": "utils_receiptitemparser_extractquantityandunitprice"
     },
     {
       "relation": "contains",
@@ -37058,9 +37309,9 @@
       "source_file": "frontend/src/utils/receiptScanner.js",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "utils_receiptscanner",
-      "target": "utils_receiptitemparser",
-      "confidence_score": 1.0
+      "target": "utils_receiptitemparser"
     },
     {
       "relation": "calls",
@@ -37080,9 +37331,9 @@
       "source_file": "frontend/src/utils/receiptItemParser.js",
       "source_location": "L202",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "utils_receiptitemparser_parsereceiptitems",
-      "target": "utils_receiptitemparser_extractquantityandunitprice",
-      "confidence_score": 1.0
+      "target": "utils_receiptitemparser_extractquantityandunitprice"
     },
     {
       "relation": "calls",
@@ -37113,9 +37364,9 @@
       "source_file": "frontend/src/utils/receiptItemParser.js",
       "source_location": "L231",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "utils_receiptitemparser_parsereceiptitems",
-      "target": "utils_receiptitemparser_deduplicateitems",
-      "confidence_score": 1.0
+      "target": "utils_receiptitemparser_deduplicateitems"
     },
     {
       "relation": "imports",
@@ -37124,9 +37375,9 @@
       "source_file": "frontend/src/utils/receiptScanner.js",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "utils_receiptscanner",
-      "target": "utils_receiptitemparser_parsereceiptitems",
-      "confidence_score": 1.0
+      "target": "utils_receiptitemparser_parsereceiptitems"
     },
     {
       "relation": "calls",
@@ -37185,9 +37436,9 @@
       "source_file": "frontend/src/utils/receiptScanner.js",
       "source_location": "L73",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "utils_receiptscanner",
-      "target": "utils_receiptscanner_parsedatecandidatesfromline",
-      "confidence_score": 1.0
+      "target": "utils_receiptscanner_parsedatecandidatesfromline"
     },
     {
       "relation": "contains",
@@ -37205,9 +37456,9 @@
       "source_file": "frontend/src/utils/receiptScanner.js",
       "source_location": "L131",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "utils_receiptscanner",
-      "target": "utils_receiptscanner_scoreandselectbestdate",
-      "confidence_score": 1.0
+      "target": "utils_receiptscanner_scoreandselectbestdate"
     },
     {
       "relation": "contains",
@@ -37248,9 +37499,9 @@
       "source_file": "frontend/src/utils/receiptScanner.js",
       "source_location": "L142",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "utils_receiptscanner_scoreandselectbestdate",
-      "target": "utils_receiptscanner_parsedatecandidatesfromline",
-      "confidence_score": 1.0
+      "target": "utils_receiptscanner_parsedatecandidatesfromline"
     },
     {
       "relation": "calls",
@@ -37259,9 +37510,9 @@
       "source_file": "frontend/src/utils/receiptScanner.js",
       "source_location": "L330",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "utils_receiptscanner_scanreceipt",
-      "target": "utils_receiptscanner_scoreandselectbestdate",
-      "confidence_score": 1.0
+      "target": "utils_receiptscanner_scoreandselectbestdate"
     },
     {
       "relation": "calls",
@@ -37421,9 +37672,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_implementation_plan",
-      "target": "docs_implementation_plan_implementation_plan",
-      "confidence_score": 1.0
+      "target": "docs_implementation_plan_implementation_plan"
     },
     {
       "relation": "contains",
@@ -37441,9 +37692,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L50",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_implementation_plan_implementation_plan",
-      "target": "docs_implementation_plan_past_features_history",
-      "confidence_score": 1.0
+      "target": "docs_implementation_plan_past_features_history"
     },
     {
       "relation": "contains",
@@ -37451,9 +37702,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_implementation_plan_implementation_plan",
-      "target": "docs_implementation_plan_receipt_scanner_module_full_rebuild_july_2026",
-      "confidence_score": 1.0
+      "target": "docs_implementation_plan_receipt_scanner_module_full_rebuild_july_2026"
     },
     {
       "relation": "contains",
@@ -37461,9 +37712,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_implementation_plan_receipt_scanner_module_full_rebuild_july_2026",
-      "target": "docs_implementation_plan_problem_area_target_architecture",
-      "confidence_score": 1.0
+      "target": "docs_implementation_plan_problem_area_target_architecture"
     },
     {
       "relation": "contains",
@@ -37471,9 +37722,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_implementation_plan_receipt_scanner_module_full_rebuild_july_2026",
-      "target": "docs_implementation_plan_proposed_changes",
-      "confidence_score": 1.0
+      "target": "docs_implementation_plan_proposed_changes"
     },
     {
       "relation": "contains",
@@ -37481,9 +37732,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_implementation_plan_proposed_changes",
-      "target": "docs_implementation_plan_layer_1_core_pipeline_utils",
-      "confidence_score": 1.0
+      "target": "docs_implementation_plan_layer_1_core_pipeline_utils"
     },
     {
       "relation": "contains",
@@ -37491,9 +37742,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L35",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_implementation_plan_proposed_changes",
-      "target": "docs_implementation_plan_layer_2_shared_composable",
-      "confidence_score": 1.0
+      "target": "docs_implementation_plan_layer_2_shared_composable"
     },
     {
       "relation": "contains",
@@ -37501,9 +37752,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L39",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_implementation_plan_proposed_changes",
-      "target": "docs_implementation_plan_layer_3_page_integration",
-      "confidence_score": 1.0
+      "target": "docs_implementation_plan_layer_3_page_integration"
     },
     {
       "relation": "contains",
@@ -37521,9 +37772,9 @@
       "source_file": "docs/implementation_plan.md",
       "source_location": "L52",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_implementation_plan_past_features_history",
-      "target": "docs_implementation_plan_whatsapp_checkout_notifications",
-      "confidence_score": 1.0
+      "target": "docs_implementation_plan_whatsapp_checkout_notifications"
     },
     {
       "relation": "contains",
@@ -38308,6 +38559,206 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_scanner_rebuild",
+      "target": "docs_walkthrough_receipt_scanner_rebuild_walkthrough_receipt_scanner_module_full_rebuild",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild.md",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_scanner_rebuild_walkthrough_receipt_scanner_module_full_rebuild",
+      "target": "docs_walkthrough_receipt_scanner_rebuild_key_improvements_delivered",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild.md",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_scanner_rebuild_walkthrough_receipt_scanner_module_full_rebuild",
+      "target": "docs_walkthrough_receipt_scanner_rebuild_overview_architecture",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild.md",
+      "source_location": "L44",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_scanner_rebuild_walkthrough_receipt_scanner_module_full_rebuild",
+      "target": "docs_walkthrough_receipt_scanner_rebuild_verification_results",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild.md",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_scanner_rebuild_key_improvements_delivered",
+      "target": "docs_walkthrough_receipt_scanner_rebuild_1_shared_scanner_mapping_composable_usescannermapping_js_file_c_projects_final_finance_family_frontend_src_composables_usescannermapping_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild.md",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_scanner_rebuild_key_improvements_delivered",
+      "target": "docs_walkthrough_receipt_scanner_rebuild_2_candidate_scoring_date_engine_receiptscanner_js_file_c_projects_final_finance_family_frontend_src_utils_receiptscanner_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild.md",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_scanner_rebuild_key_improvements_delivered",
+      "target": "docs_walkthrough_receipt_scanner_rebuild_3_enhanced_opencv_preprocessing_thumbnail_export_opencvpreprocess_js_file_c_projects_final_finance_family_frontend_src_utils_opencvpreprocess_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild.md",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_scanner_rebuild_key_improvements_delivered",
+      "target": "docs_walkthrough_receipt_scanner_rebuild_4_rich_shopping_review_item_parser_shoppingpage_vue_file_c_projects_final_finance_family_frontend_src_pages_shoppingpage_vue_receiptitemparser_js_file_c_projects_final_finance_family_frontend_src_utils_receiptitemparser_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild.md",
+      "source_location": "L46",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_scanner_rebuild_verification_results",
+      "target": "docs_walkthrough_receipt_scanner_rebuild_build_verification",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild_2026.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_scanner_rebuild_2026",
+      "target": "docs_walkthrough_receipt_scanner_rebuild_2026_walkthrough_receipt_scanner_module_rebuild_july_2026",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild_2026.md",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_scanner_rebuild_2026_walkthrough_receipt_scanner_module_rebuild_july_2026",
+      "target": "docs_walkthrough_receipt_scanner_rebuild_2026_1_core_pipeline_rebuild",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild_2026.md",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_scanner_rebuild_2026_walkthrough_receipt_scanner_module_rebuild_july_2026",
+      "target": "docs_walkthrough_receipt_scanner_rebuild_2026_2_shared_composable_usescannermapping_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild_2026.md",
+      "source_location": "L56",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_scanner_rebuild_2026_walkthrough_receipt_scanner_module_rebuild_july_2026",
+      "target": "docs_walkthrough_receipt_scanner_rebuild_2026_3_ui_ux_enhancements",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild_2026.md",
+      "source_location": "L69",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_scanner_rebuild_2026_walkthrough_receipt_scanner_module_rebuild_july_2026",
+      "target": "docs_walkthrough_receipt_scanner_rebuild_2026_manual_verification_steps",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild_2026.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_scanner_rebuild_2026_walkthrough_receipt_scanner_module_rebuild_july_2026",
+      "target": "docs_walkthrough_receipt_scanner_rebuild_2026_motivation",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild_2026.md",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_scanner_rebuild_2026_1_core_pipeline_rebuild",
+      "target": "docs_walkthrough_receipt_scanner_rebuild_2026_opencvpreprocess_js_image_preparation",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild_2026.md",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_scanner_rebuild_2026_1_core_pipeline_rebuild",
+      "target": "docs_walkthrough_receipt_scanner_rebuild_2026_receiptitemparser_js_itemization",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild_2026.md",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_scanner_rebuild_2026_1_core_pipeline_rebuild",
+      "target": "docs_walkthrough_receipt_scanner_rebuild_2026_receiptscanner_js_orchestration_extraction",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild_2026.md",
+      "source_location": "L62",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_scanner_rebuild_2026_3_ui_ux_enhancements",
+      "target": "docs_walkthrough_receipt_scanner_rebuild_2026_shoppingpage_vue",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_receipt_scanner_rebuild_2026.md",
+      "source_location": "L58",
+      "weight": 1.0,
+      "source": "docs_walkthrough_receipt_scanner_rebuild_2026_3_ui_ux_enhancements",
+      "target": "docs_walkthrough_receipt_scanner_rebuild_2026_transactionspage_vue",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "docs/walkthrough_receipt_storage_calendar.md",
       "source_location": "L1",
       "weight": 1.0,
@@ -38957,5 +39408,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "7e06e31362d47efe68bd427b8500286ce7dc1c10"
+  "built_at_commit": "c25c3f5846661766f9cd6012f214cfdf016b0216"
 }

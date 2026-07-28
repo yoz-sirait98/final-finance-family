@@ -184,6 +184,11 @@
             <input v-model="receiptStoreName" class="form-control" />
           </div>
 
+          <!-- Processed image thumbnail -->
+          <div v-if="scanProcessedImage" class="mb-3 text-center">
+            <img :src="scanProcessedImage" alt="Processed Receipt" class="img-fluid rounded border shadow-sm" style="max-height: 150px; object-fit: contain;" />
+          </div>
+
           <!-- Scanned items -->
           <div class="mb-3">
             <label class="form-label fw-bold d-flex justify-content-between">
@@ -298,6 +303,7 @@ const scannedItems = ref([]);
 const receiptStoreName = ref('');
 const receiptCreatedBy = ref('');
 const savingReceipt = ref(false);
+const scanProcessedImage = ref('');
 
 const scannedItemsTotal = computed(() => {
   return scannedItems.value.reduce((sum, item) => sum + (parseFloat(item.price) || 0), 0);
@@ -521,12 +527,17 @@ async function onReceiptSelected(event) {
   isScanning.value = true;
   scanProgress.value = 0;
   scanStatusText.value = localeStore.currentLocale === 'id' ? 'Memulai OCR...' : 'Starting OCR...';
+  scanProcessedImage.value = '';
 
   try {
     const result = await scanReceipt(file, (progress, status) => {
       scanProgress.value = progress;
       scanStatusText.value = status;
     });
+    
+    if (result.processedImageDataUrl) {
+      scanProcessedImage.value = result.processedImageDataUrl;
+    }
 
     // Use items pre-parsed inside scanReceipt(), fallback to parseReceiptItems if needed
     const parsedItems = result.items?.length > 0

@@ -395,8 +395,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ShoppingPage.vue": {
-    "mtime": 1785214770.142532,
-    "ast_hash": "3b2617a5dbc57e6f94c2e801f31d5e9e",
+    "mtime": 1785217084.7510812,
+    "ast_hash": "4a616013678f5695d7e92b1e756eb70c",
     "semantic_hash": ""
   },
   "frontend/src/services/shoppingService.js": {
@@ -535,8 +535,8 @@
     "semantic_hash": ""
   },
   "frontend/src/utils/receiptScanner.js": {
-    "mtime": 1785214718.6518712,
-    "ast_hash": "79f020e13cd02df49ee02e3fc28715e6",
+    "mtime": 1785215669.0219457,
+    "ast_hash": "a77e2c8469542b555cf3f7b4fa10da01",
     "semantic_hash": ""
   },
   "graphify-out/memory/query_20260609_044005_recurring.md": {
@@ -800,8 +800,8 @@
     "semantic_hash": ""
   },
   "frontend/src/utils/opencvPreprocess.js": {
-    "mtime": 1785214702.0131476,
-    "ast_hash": "4ef96d6c423585e8436693ea265be673",
+    "mtime": 1785215646.0587022,
+    "ast_hash": "1cf47d7b2d9502bc67408251132656e0",
     "semantic_hash": ""
   },
   "supabase/.temp/linked-project.json": {
@@ -892,6 +892,16 @@
   "frontend/src/composables/useScannerMapping.js": {
     "mtime": 1785214693.8829474,
     "ast_hash": "3ba956c9b41f8f9729358f7aee8b2af3",
+    "semantic_hash": ""
+  },
+  "docs/walkthrough_receipt_scanner_rebuild.md": {
+    "mtime": 1785214848.1328206,
+    "ast_hash": "d4bcd5b04f7e17cec6ad579a01c31f34",
+    "semantic_hash": ""
+  },
+  "docs/walkthrough_receipt_scanner_rebuild_2026.md": {
+    "mtime": 1785217122.1382096,
+    "ast_hash": "d9f027ea2684297e61c8d82df4803a3a",
     "semantic_hash": ""
   }
 }
