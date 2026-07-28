@@ -237,7 +237,11 @@ export async function scanReceipt(imageFile, progressCallback) {
   let processedImageDataUrl = '';
 
   try {
-    const cv = await loadOpenCV();
+    const cv = await Promise.race([
+      loadOpenCV(),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('OpenCV load timeout')), 3000))
+    ]).catch(() => null);
+
     if (progressCallback) progressCallback(10, 'Enhancing image for OCR...');
     await new Promise(resolve => setTimeout(resolve, 50));
 
@@ -245,7 +249,14 @@ export async function scanReceipt(imageFile, progressCallback) {
     ocrInput = preprocessedCanvas;
     processedImageDataUrl = preprocessedCanvas.processedImageDataUrl || '';
   } catch (err) {
-    console.warn('OpenCV preprocessing failed, falling back to raw image:', err);
+    console.warn('Preprocessing fallback to native canvas:', err);
+    try {
+      const nativeCanvas = await preprocessReceiptImage(imageFile, null);
+      ocrInput = nativeCanvas;
+      processedImageDataUrl = nativeCanvas.processedImageDataUrl || '';
+    } catch (e) {
+      console.warn('Native preprocessing failed:', e);
+    }
   }
 
   // ── 2. Tesseract OCR ────────────────────────────────────────────────────
