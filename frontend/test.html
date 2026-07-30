@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test OpenCV</title>
+</head>
+<body>
+    <h1>OpenCV Test</h1>
+    <div id="status">Loading...</div>
+    <script>
+        window.cv = {
+            onRuntimeInitialized() {
+                document.getElementById('status').innerText += '\n[cv] onRuntimeInitialized fired! Mat exists: ' + !!window.cv.Mat;
+            }
+        };
+        const script = document.createElement('script');
+        script.src = 'https://docs.opencv.org/4.8.0/opencv.js';
+        script.onload = () => {
+            document.getElementById('status').innerText += '\n[onload] Script loaded. Type of cv: ' + typeof cv;
+            document.getElementById('status').innerText += '\n[onload] Mat exists: ' + !!cv.Mat;
+        };
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>

@@ -63,7 +63,9 @@
     "projectpockets": "Kantong Proyek",
     "aiadvisor": "Asisten AI",
     "calendar": "Kalender",
-    "iconsgem": "Ikon Gem"
+    "iconsgem": "Ikon Gem",
+    "shopping": "Belanja",
+    "shoppingdetail": "Daftar Belanja"
   },
   "auth": {
     "login": {
@@ -590,16 +592,32 @@
     },
     "settings": {
       "header": {
-        "title": "Pengaturan",
-        "description": "Sesuaikan tampilan dan cara kerja aplikasi."
+        "title": "Pengaturan & Preferensi",
+        "description": "Kustomisasi profil, bahasa aplikasi, notifikasi, fitur AI, dan keamanan akun Anda."
       },
-      "currency": {
-        "title": "Mata Uang & Regional",
-        "description": "Ubah tampilan mata uang utama dan format angka Anda."
+      "profile": {
+        "title": "Informasi Profil",
+        "description": "Lihat nama dan email Anda yang terdaftar di ruang kerja keluarga ini."
       },
-      "danger": {
-        "title": "Zona Bahaya",
-        "description": "Kelola data Anda, ekspor cadangan, atau hapus akun secara permanen."
+      "language": {
+        "title": "Preferensi Bahasa",
+        "description": "Ubah bahasa aplikasi antara Bahasa Indonesia dan Bahasa Inggris secara instan."
+      },
+      "pwa": {
+        "title": "Notifikasi PWA Push",
+        "description": "Aktifkan notifikasi push browser untuk peringatan anggaran, tagihan rutin, dan aktivitas keluarga."
+      },
+      "ai": {
+        "title": "Gemini API Key (AI Vision)",
+        "description": "Simpan Gemini API Key Anda di sini untuk mengaktifkan Pemindai Struk AI, Asisten Keuangan AI, dan Pembuat Rencana Belanja di semua perangkat Anda."
+      },
+      "whatsapp": {
+        "title": "Integrasi WhatsApp Group",
+        "description": "Hubungkan ID WhatsApp Group keluarga Anda untuk menerima laporan otomatis dan perintah bot."
+      },
+      "password": {
+        "title": "Keamanan Akun",
+        "description": "Perbarui kata sandi Anda kapan saja agar data keuangan keluarga tetap aman."
       }
     },
     "ai": {

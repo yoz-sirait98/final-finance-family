@@ -1,5 +1,6 @@
 [
   { "pattern": "indomaret",                       "name": "Indomaret",         "category": "groceries" },
+  { "pattern": "\\baeon\\b|aeon",                 "name": "AEON",              "category": "groceries" },
   { "pattern": "alfamart",                         "name": "Alfamart",          "category": "groceries" },
   { "pattern": "alfamidi",                         "name": "Alfamidi",          "category": "groceries" },
   { "pattern": "lawson",                           "name": "Lawson",            "category": "groceries" },

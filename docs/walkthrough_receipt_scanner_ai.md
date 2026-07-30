@@ -70,3 +70,12 @@ Rebuilt the project index:
    * Click **AI Advisor** in the sidebar.
    * Send a question (e.g., *"How is our food budget?"* or *"Bagaimana kondisi keuangan kami?"*).
    * Verify the advisor responds with advice utilizing the actual numbers from your accounts, budgets, and transactions database.
+
+---
+
+## Bug Fixes
+
+### Improved Indonesian Receipt Parsing (July 2026)
+* **Date Parsing Fix**: Added a bottom-to-top line scanner for dates (to prioritize transaction date footers like `TRANS NO: 0180173 27/07/2026 19:41` over top store headers), excluded `pengukuhan` lines, and implemented a smart `correctThermalDateTypo` helper. This helper corrects common thermal dot-matrix printer `7` → `1` OCR misreads (such as `21/01/2026` → `2026-07-27`) when a parsed date is months in the past compared to the current scan date.
+* **Amount Parsing Fix**: Added `saving`, `hemat`, `diskon`, `discount`, `item`, and `qty` to the `excludeKeywords` list. Receipts often print `TOTAL SAVING` or `TOTAL ITEM` at the bottom, which was tricking the bottom-up scanner into grabbing the discount amount (or item count) instead of the actual `TOTAL` amount.
+* **Image Preprocessing & OCR Cleanliness Fix**: Added automatic 10% horizontal margin cropping in `opencvPreprocess.js` to strip away surrounding table wood-grain backgrounds and tuned adaptive thresholding (`blockSize = 31, C = 10`), eliminating side-margin noise artifacts and producing clean, readable text. Added alphanumeric noise filtering in `receiptScanner.js` to discard lines with fewer than 2 alphanumeric characters.

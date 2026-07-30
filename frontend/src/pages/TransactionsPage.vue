@@ -479,6 +479,7 @@ import { useTour } from '../composables/useTour';
 import SkeletonLoader from '../components/SkeletonLoader.vue';
 import { transactionsTourSteps } from '../tours/transactionsTour';
 import { scanReceipt } from '../utils/receiptScanner';
+import { useScannerMapping } from '../composables/useScannerMapping';
 import { formatCurrency } from '../utils/format';
 import { transactionService } from '../services/transactionService';
 import { memberService } from '../services/memberService';
@@ -491,6 +492,7 @@ import { useToastStore } from '../stores/toast';
 import { useBudgetStore } from '../stores/budgets';
 import { useLocaleStore } from '../stores/locale';
 import { useAuthStore } from '../stores/auth';
+import { pushDispatcherService } from '../services/pushDispatcherService';
 
 const transactions = ref([]);
 const meta = ref({});
@@ -506,6 +508,9 @@ const editingId = ref(null);
 const localeStore = useLocaleStore();
 const budgetStore = useBudgetStore();
 
+// Scanner Mapping Composable
+const { mapCategory, mapAccount, mapMember } = useScannerMapping(accounts, categories, members);
+
 // Modal visibility
 const showTxModal = ref(false);
 const showTransferModal = ref(false);
@@ -520,10 +525,11 @@ const scanProgress = ref(0);
 const scanStatus = ref('');
 
 // OpenCV + Tesseract scan result state
-const scanConfidence  = ref(null);   // { merchant, amount, date } → 'high'|'medium'|'low'
-const scanRawText     = ref('');     // raw OCR output for review panel
-const showRawOcrPanel = ref(false);  // toggle for collapsible raw OCR panel
-const possibleDuplicate = ref(null); // { description, amount, date } if duplicate detected
+const scanConfidence     = ref(null);   // { merchant, amount, date } → 'high'|'medium'|'low'
+const scanRawText        = ref('');     // raw OCR output for review panel
+const scanProcessedImage = ref('');     // base64 thumbnail of OpenCV preprocessed image
+const showRawOcrPanel    = ref(false);  // toggle for collapsible raw OCR panel
+const possibleDuplicate  = ref(null); // { description, amount, date } if duplicate detected
 
 // Receipt image (pending upload after scan, or saved URL for existing record)
 const pendingReceiptFile = ref(null);   // raw File object from scanner
@@ -653,12 +659,16 @@ function resetFilters() {
 }
 
 function clearReceiptImage() {
-  if (pendingReceiptPreview.value) URL.revokeObjectURL(pendingReceiptPreview.value);
+  if (form.value.receipt_url) {
+    receiptUrlToDelete.value = form.value.receipt_url;
+    form.value.receipt_url = '';
+    savedReceiptSignedUrl.value = '';
+  }
+  if (pendingReceiptPreview.value) {
+    URL.revokeObjectURL(pendingReceiptPreview.value);
+    pendingReceiptPreview.value = '';
+  }
   pendingReceiptFile.value = null;
-  pendingReceiptPreview.value = '';
-  form.value.receipt_url = '';
-  savedReceiptSignedUrl.value = '';
-  receiptUrlToDelete.value = form.value.receipt_url || receiptUrlToDelete.value;
 }
 
 async function openReceiptLightbox(tx) {
@@ -736,79 +746,26 @@ async function onReceiptSelected(event) {
     // Reset the input so the same file can be selected again
     event.target.value = '';
 
-    // ── Category mapping ──────────────────────────────────────────────────
-    let matchedCategoryId = '';
-    let categoryConf = 'low';
-    const catRec      = data.heuristics.category;
-    const expenseCats = categories.value.filter(c => c.type === 'expense');
-    const catPatterns = {
-      food:          /(makan|minum|food|drink|dining|cafe|kopi|restoran)/,
-      groceries:     /(grocer|belanja|sembako|bulanan|pasar|dapur|market)/,
-      health:        /(sehat|obat|medis|health|medical|apotek|klinik)/,
-      utilities:     /(listrik|air|utilit|bill|telepon|internet|pulsa)/,
-      transport:     /(transport|bensin|kendaraan|ojek|gojek|grab|fuel|parkir)/,
-      entertainment: /(hiburan|entertain|cinema|bioskop|games|sport)/,
-      household:     /(rumah|perabot|elektronik|furniture|hardware)/,
-      shopping:      /(belanja|shop|fashion|baju|pakaian|sepatu)/,
-    };
-    for (const [cat, re] of Object.entries(catPatterns)) {
-      if (cat === catRec) {
-        const match = expenseCats.find(c => re.test(c.name.toLowerCase()));
-        if (match) { 
-          matchedCategoryId = match.id; 
-          categoryConf = 'high'; 
-          break; 
-        }
-      }
-    }
-    if (!matchedCategoryId && expenseCats.length > 0) {
-      matchedCategoryId = expenseCats[0].id; // Fallback
-    }
-
-    // ── Account mapping ───────────────────────────────────────────────────
-    let matchedAccountId = '';
-    let accountConf = 'low';
-    const accRec = data.heuristics.account;
-    
-    if (accRec === 'cash') {
-      const match = accounts.value.find(a => /(cash|tunai|dompet|fisik)/i.test(a.name));
-      if (match) { matchedAccountId = match.id; accountConf = 'high'; }
-    } else if (accRec === 'wallet') {
-      const match = accounts.value.find(a => /(wallet|gopay|ovo|dana|shopee|link|digital|qris|blu)/i.test(a.name));
-      if (match) { matchedAccountId = match.id; accountConf = 'high'; }
-    } else if (accRec === 'bank') {
-      const match = accounts.value.find(a => /(bank|mandiri|bca|bni|bri|cimb|debit|tabungan)/i.test(a.name));
-      if (match) { matchedAccountId = match.id; accountConf = 'high'; }
-    }
-    
-    if (!matchedAccountId && accounts.value.length > 0) {
-      matchedAccountId = accounts.value[0].id; // Fallback
-    }
-
-    // ── Member mapping ────────────────────────────────────────────────────
-    let matchedMemberId = '';
-    let memberConf = 'low';
-    const rawLower = (data.rawText ?? '').toLowerCase();
-    if (rawLower) {
-      const match = members.value.find(m => rawLower.includes(m.name.toLowerCase()));
-      if (match) { matchedMemberId = match.id; memberConf = 'high'; }
-    }
-    if (!matchedMemberId && members.value.length > 0) {
-      matchedMemberId = members.value[0].id; // Fallback
-    }
+    // ── Map DB entities using shared composable ────────────────────────────
+    const { categoryId: matchedCategoryId, confidence: categoryConf } = mapCategory(data);
+    const { accountId: matchedAccountId, confidence: accountConf }   = mapAccount(data);
+    const { memberId: matchedMemberId, confidence: memberConf }     = mapMember(data);
 
     // ── Duplicate detection ───────────────────────────────────────────────
-    if (data.totalAmount && data.date) {
-      const fingerprint = `${data.totalAmount}|${data.date}|${(data.merchantName ?? '').toLowerCase()}`;
+    const scanTotalAmount = data.amount?.total || data.totalAmount || 0;
+    const scanMerchantName = data.merchant?.name || data.merchantName || '';
+
+    if (scanTotalAmount && data.date) {
+      const fingerprint = `${scanTotalAmount}|${data.date}|${scanMerchantName.toLowerCase()}`;
       const scanDateObj  = new Date(data.date);
       const dupMatch = transactions.value.find(tx => {
         const txDate = new Date(tx.transaction_date);
         const dateDiff = Math.abs(scanDateObj - txDate) / (1000 * 60 * 60 * 24);
         const txFp = `${Math.abs(tx.amount)}|${tx.transaction_date}|${(tx.description ?? '').toLowerCase()}`;
         return txFp === fingerprint || (
-          Math.abs(tx.amount) === data.totalAmount &&
+          Math.abs(tx.amount) === scanTotalAmount &&
           dateDiff <= 1 &&
-          (tx.description ?? '').toLowerCase().includes((data.merchantName ?? '').toLowerCase().substring(0, 5))
+          (tx.description ?? '').toLowerCase().includes(scanMerchantName.toLowerCase().substring(0, 5))
         );
       });
       if (dupMatch) {
@@ -830,22 +787,25 @@ async function onReceiptSelected(event) {
     newConf.member = memberConf;
     newConf.account = accountConf;
     newConf.category = categoryConf;
-    scanConfidence.value = newConf;
-    scanRawText.value    = data.rawText ?? '';
+    scanConfidence.value     = newConf;
+    scanRawText.value        = data.rawText ?? '';
+    scanProcessedImage.value = data.processedImageDataUrl ?? '';
 
     // ── Auto-fill form & open modal ───────────────────────────────────────
-    formError.value         = '';
-    editingId.value         = null;
+    formError.value             = '';
+    editingId.value             = null;
     savedReceiptSignedUrl.value = '';
     receiptUrlToDelete.value    = '';
+    pendingReceiptFile.value    = file;
+    pendingReceiptPreview.value = URL.createObjectURL(file);
     form.value = {
       type:             'expense',
       member_id:        matchedMemberId,
       account_id:       matchedAccountId,
       category_id:      matchedCategoryId,
-      amount:           data.totalAmount || '',
+      amount:           scanTotalAmount || '',
       transaction_date: data.date || todayISO(),
-      description:      data.merchantName || '',
+      description:      scanMerchantName || '',
       receipt_url:      '',
     };
     showTxModal.value = true;
@@ -951,12 +911,8 @@ async function doSaveTransaction() {
   try {
     const payload = { ...form.value };
 
-    // ── Phase 3: Upload-first atomic save ─────────────────────────────────
-    // Upload the receipt image BEFORE creating the transaction row so that
-    // receipt_url is included in the single CREATE call. This eliminates the
-    // old 2-step race condition where a network failure could leave an orphan
-    // transaction with no receipt_url.
-    if (pendingReceiptFile.value && !editingId.value && authStore.familyId) {
+    // ── Upload pending receipt image if present ────────────────────────────
+    if (pendingReceiptFile.value && authStore.familyId) {
       try {
         const storagePath = await uploadReceipt(pendingReceiptFile.value, authStore.familyId);
         payload.receipt_url = storagePath; // attach atomically
@@ -978,6 +934,14 @@ async function doSaveTransaction() {
       await transactionService.create(payload);
     }
 
+    // Clean up old receipt image from Supabase Storage if user removed/replaced it
+    if (receiptUrlToDelete.value) {
+      deleteReceipt(receiptUrlToDelete.value).catch(err => {
+        console.error('[Storage] Error deleting old receipt image:', err);
+      });
+      receiptUrlToDelete.value = '';
+    }
+
     toast.success(localeStore.t('common.success'));
     showTxModal.value = false;
     // Reset scan state after successful save
@@ -988,8 +952,17 @@ async function doSaveTransaction() {
     fetchData();
     budgetStore.fetchAlerts();
 
-    // Trigger WhatsApp Budget Alert if exceeded
+    // Trigger WhatsApp & PWA Web Push Budget Alert if exceeded
     if (wasBudgetExceeded.value) {
+      pushDispatcherService.dispatchPushNotification({
+        templateKey: 'BUDGET_EXCEEDED',
+        params: {
+          category: budgetConfirmData.value.category || 'Category',
+          description: form.value.description || 'Expense',
+          pct: budgetConfirmData.value.pct || '100'
+        },
+        url: '/transactions'
+      }).catch(() => {}); // fire-and-forget — never interrupt WhatsApp alert
       await sendBudgetAlertWhatsApp(budgetConfirmData.value);
       wasBudgetExceeded.value = false;
     }

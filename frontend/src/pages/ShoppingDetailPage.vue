@@ -13,16 +13,22 @@
           </p>
         </div>
       </div>
-      <span v-if="plan" class="badge" :class="plan.status === 'done' ? 'bg-success' : 'bg-warning text-dark'">
-        {{ plan.status === 'done' ? ($t('shopping.done') || 'Done') : ($t('shopping.onProgress') || 'On Progress') }}
-      </span>
+      <div class="d-flex align-items-center gap-2" v-if="plan">
+        <button v-if="plan.receipt_url" class="btn btn-outline-info btn-sm" @click="openReceiptModal" title="View Scanned Receipt">
+          <i class="bi bi-receipt me-1"></i><span>{{ localeStore.currentLocale === 'id' ? 'Lihat Struk' : 'View Receipt' }}</span>
+        </button>
+        <span class="badge" :class="plan.status === 'locked' ? 'bg-secondary' : plan.status === 'done' ? 'bg-success' : 'bg-warning text-dark'">
+          <i v-if="plan.status === 'locked'" class="bi bi-lock-fill me-1"></i>
+          {{ plan.status === 'locked' ? (localeStore.currentLocale === 'id' ? 'Terkunci' : 'Locked') : plan.status === 'done' ? ($t('shopping.done') || 'Done') : ($t('shopping.onProgress') || 'On Progress') }}
+        </span>
+      </div>
     </div>
 
     <!-- Items Section -->
     <div class="card border-0 shadow-sm mb-4">
       <div class="card-header bg-white border-light d-flex justify-content-between align-items-center py-3">
         <h6 class="mb-0 fw-bold">Shopping Items</h6>
-        <button v-if="plan?.status === 'progress'" class="btn btn-sm btn-primary-gradient" @click="openAddItem">
+        <button v-if="plan?.status !== 'locked' && plan?.status !== 'done'" class="btn btn-sm btn-primary-gradient" @click="openAddItem">
           <i class="bi bi-plus-lg"></i><span class="d-none d-sm-inline">Add Item</span>
         </button>
       </div>
@@ -34,20 +40,33 @@
         <div v-else class="list-group list-group-flush">
           <div v-for="item in items" :key="item.id" class="list-group-item d-flex justify-content-between align-items-center py-3" :class="{'bg-light': item.is_checked}">
             <div class="d-flex align-items-center gap-3">
-              <input type="checkbox" class="form-check-input mt-0 cursor-pointer" style="width: 1.5em; height: 1.5em;" v-model="item.is_checked" @change="toggleCheck(item)" :disabled="plan?.status === 'done'">
+              <input type="checkbox" class="form-check-input mt-0 cursor-pointer" style="width: 1.5em; height: 1.5em;" v-model="item.is_checked" @change="toggleCheck(item)" :disabled="plan?.status === 'locked' || plan?.status === 'done'">
               <div>
-                <h6 class="mb-0 fw-bold" :class="{'text-decoration-line-through text-muted': plan?.status === 'done' || item.is_checked}">{{ item.name }}</h6>
+                <h6 class="mb-0 fw-bold" :class="{'text-decoration-line-through text-muted': plan?.status === 'locked' || item.is_checked}">{{ item.name }}</h6>
                 <small class="text-muted">Added by {{ item.added_by_member?.name || 'Unknown' }}</small>
               </div>
             </div>
             <div class="d-flex align-items-center gap-3">
-              <div class="input-group input-group-sm" style="width: 140px;">
-                <span class="input-group-text border-light bg-light text-muted">Rp</span>
-                <input type="number" class="form-control border-light" v-model="item.price" @change="updateItemPrice(item)" placeholder="Est. Price" />
-              </div>
-              <button class="btn btn-sm btn-outline-danger border-0" @click="confirmDeleteItem(item)">
-                <i class="bi bi-trash"></i>
-              </button>
+              <!-- Price Display: input for 'progress', read-only for 'done' & 'locked' -->
+              <template v-if="plan?.status === 'progress' || !plan?.status">
+                <div class="input-group input-group-sm" style="width: 140px;">
+                  <span class="input-group-text border-light bg-light text-muted">Rp</span>
+                  <input type="number" class="form-control border-light" v-model="item.price" @change="updateItemPrice(item)" placeholder="Est. Price" />
+                </div>
+              </template>
+              <template v-else>
+                <span class="fw-semibold text-muted">Rp {{ Number(item.price || 0).toLocaleString('id-ID') }}</span>
+              </template>
+
+              <!-- Action Buttons: visible for 'progress' & 'done', hidden for 'locked' -->
+              <template v-if="plan?.status !== 'locked'">
+                <button class="btn btn-sm btn-outline-primary border-0 ms-2" @click="openEditItem(item)">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-danger border-0" @click="confirmDeleteItem(item)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </template>
             </div>
           </div>
         </div>
@@ -58,19 +77,71 @@
       </div>
     </div>
 
-    <!-- Checkout Action -->
+    <!-- Actions -->
     <div v-if="plan?.status === 'progress' && items.length > 0" class="d-flex justify-content-end">
-      <button class="btn btn-success px-5 rounded-pill shadow-sm" @click="openCheckoutModal">
-        <i class="bi bi-cart-check me-2"></i>Checkout Plan
+      <button class="btn btn-success px-5 rounded-pill shadow-sm" @click="openChoiceModal">
+        <i class="bi bi-cart-check me-2"></i>{{ localeStore.currentLocale === 'id' ? 'Selesaikan' : 'Complete Plan' }}
+      </button>
+    </div>
+    <div v-else-if="plan?.status === 'done'" class="d-flex justify-content-end gap-2">
+      <button class="btn btn-dark px-4 rounded-pill shadow-sm" :disabled="isLocking" @click="lockPlan">
+        <span v-if="isLocking" class="spinner-border spinner-border-sm me-2"></span>
+        <i v-else class="bi bi-lock me-2"></i>{{ localeStore.currentLocale === 'id' ? 'Kunci Rencana' : 'Lock Plan' }}
       </button>
     </div>
 
-    <!-- Add Item Modal -->
-    <div v-if="showAddModal" class="vue-modal-backdrop" @mousedown.self="showAddModal = false">
+    <!-- ===== Choice Modal (Mark as Done vs. Checkout) ===== -->
+    <div v-if="showChoiceModal" class="vue-modal-backdrop" @mousedown.self="showChoiceModal = false">
+      <div class="vue-modal" style="max-width: 480px;">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title fw-bold"><i class="bi bi-check2-square me-2 text-success"></i>{{ localeStore.currentLocale === 'id' ? 'Selesaikan Belanja' : 'Complete Shopping Plan' }}</h5>
+          <button type="button" class="btn-close" @click="showChoiceModal = false"></button>
+        </div>
+        <div class="modal-body">
+          <p class="text-muted mb-4">{{ localeStore.currentLocale === 'id' ? 'Bagaimana Anda ingin menyelesaikan rencana belanja ini?' : 'How would you like to finalize this plan?' }}</p>
+
+          <!-- Option A: Mark as Done only -->
+          <div class="choice-card p-3 mb-3 rounded-3 border" :class="{ 'border-primary bg-primary bg-opacity-10': selectedChoice === 'done' }" role="button" @click="selectedChoice = 'done'">
+            <div class="d-flex align-items-start gap-3">
+              <div class="choice-icon rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 44px; height: 44px; background: linear-gradient(135deg, #10b981, #059669);">
+                <i class="bi bi-check-lg text-white fs-5"></i>
+              </div>
+              <div>
+                <h6 class="fw-bold mb-1">{{ localeStore.currentLocale === 'id' ? 'Tandai Selesai Saja' : 'Mark as Done' }}</h6>
+                <small class="text-muted">{{ localeStore.currentLocale === 'id' ? 'Selesaikan rencana tanpa mencatat ke transaksi. Daftar belanja disimpan sebagai referensi.' : 'Complete the plan without recording a transaction. Items are kept as reference.' }}</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Option B: Checkout & Record Transaction -->
+          <div class="choice-card p-3 mb-1 rounded-3 border" :class="{ 'border-primary bg-primary bg-opacity-10': selectedChoice === 'checkout' }" role="button" @click="selectedChoice = 'checkout'">
+            <div class="d-flex align-items-start gap-3">
+              <div class="choice-icon rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 44px; height: 44px; background: linear-gradient(135deg, #667eea, #764ba2);">
+                <i class="bi bi-credit-card text-white fs-5"></i>
+              </div>
+              <div>
+                <h6 class="fw-bold mb-1">{{ localeStore.currentLocale === 'id' ? 'Checkout & Catat Transaksi' : 'Checkout & Record Transaction' }}</h6>
+                <small class="text-muted">{{ localeStore.currentLocale === 'id' ? 'Selesaikan dan otomatis buat transaksi pengeluaran sebesar total belanja.' : 'Complete the plan AND create an expense transaction for the total amount.' }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer border-0 pt-0">
+          <button class="btn btn-secondary" @click="showChoiceModal = false">{{ $t('common.cancel') }}</button>
+          <button class="btn btn-primary-gradient" :disabled="!selectedChoice || isMarkingDone" @click="proceedWithChoice">
+            <span v-if="isMarkingDone" class="spinner-border spinner-border-sm me-2"></span>
+            {{ localeStore.currentLocale === 'id' ? 'Lanjutkan' : 'Continue' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Item Modal (Add/Edit) -->
+    <div v-if="showItemModal" class="vue-modal-backdrop" @mousedown.self="showItemModal = false">
       <div class="vue-modal">
         <div class="modal-header border-0 pb-0">
-          <h5 class="modal-title fw-bold">Add Item</h5>
-          <button type="button" class="btn-close" @click="showAddModal = false"></button>
+          <h5 class="modal-title fw-bold">{{ isEditingItem ? 'Edit Item' : 'Add Item' }}</h5>
+          <button type="button" class="btn-close" @click="showItemModal = false"></button>
         </div>
         <form @submit.prevent="saveItem">
           <div class="modal-body">
@@ -94,10 +165,10 @@
             </div>
           </div>
           <div class="modal-footer border-0 pt-0">
-            <button type="button" class="btn btn-secondary" @click="showAddModal = false">{{ $t('common.done') || 'Done' }}</button>
+            <button type="button" class="btn btn-secondary" @click="showItemModal = false">{{ $t('common.cancel') || 'Cancel' }}</button>
             <button type="submit" id="tour-shoppingDetail-add-btn" class="btn btn-primary-gradient" :disabled="saving">
               <span v-if="saving" class="spinner-border spinner-border-sm me-2"></span>
-              {{ $t('common.add') || 'Add Item' }}
+              {{ isEditingItem ? ($t('common.save') || 'Save') : ($t('common.add') || 'Add Item') }}
             </button>
           </div>
         </form>
@@ -175,6 +246,21 @@
         </div>
       </div>
     </div>
+    <!-- ===== Receipt Image Lightbox Modal ===== -->
+    <div v-if="showReceiptLightbox" class="vue-modal-backdrop" @mousedown.self="showReceiptLightbox = false">
+      <div class="vue-modal text-center" style="max-width: 500px;">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title fw-bold"><i class="bi bi-file-image me-2 text-info"></i>{{ localeStore.currentLocale === 'id' ? 'Foto Struk' : 'Receipt Photo' }}</h5>
+          <button type="button" class="btn-close" @click="showReceiptLightbox = false"></button>
+        </div>
+        <div class="modal-body p-3">
+          <img :src="receiptLightboxUrl" class="img-fluid rounded border shadow-sm" style="max-height: 70vh; object-fit: contain;" />
+        </div>
+        <div class="modal-footer border-0 pt-0">
+          <button class="btn btn-secondary btn-sm" @click="showReceiptLightbox = false">{{ $t('common.cancel') || 'Close' }}</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -188,15 +274,17 @@ const handleTour = () => startTour(shoppingDetailTourSteps);
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { shoppingPlanService } from '../services/shoppingPlanService';
-import { shoppingService } from '../services/shoppingService';
 import { memberService } from '../services/memberService';
 import { accountService } from '../services/accountService';
 import { categoryService } from '../services/categoryService';
-import { useAuthStore } from '../stores/auth';
-import { useToastStore } from '../stores/toast';
+import { shoppingService } from '../services/shoppingService';
 import { useLocaleStore } from '../stores/locale';
+import { useToastStore } from '../stores/toast';
+import { useAuthStore } from '../stores/auth';
+import { pushDispatcherService } from '../services/pushDispatcherService';
 import { supabase } from '../lib/supabase';
 import { formatCurrency } from '../utils/format';
+import { getReceiptSignedUrl } from '../services/storageService';
 
 const route = useRoute();
 const router = useRouter();
@@ -211,16 +299,46 @@ const members = ref([]);
 const accounts = ref([]);
 const categories = ref([]);
 
-const showAddModal = ref(false);
+const showItemModal = ref(false);
+const isEditingItem = ref(false);
 const showDeleteModal = ref(false);
 const itemToDelete = ref(null);
 const deleting = ref(false);
-const itemForm = ref({ name: '', price: '', added_by: '' });
+const itemForm = ref({ id: null, name: '', price: '', added_by: '' });
 const saving = ref(false);
 
 const showCheckoutModal = ref(false);
 const checkoutForm = ref({ transaction_date: new Date().toISOString().split('T')[0], account_id: '', category_id: '', member_id: '' });
 const isCheckingOut = ref(false);
+
+// Choice modal & lock state
+const showChoiceModal = ref(false);
+const selectedChoice = ref('');
+const isMarkingDone = ref(false);
+const isLocking = ref(false);
+
+// Receipt Lightbox state
+const showReceiptLightbox = ref(false);
+const receiptLightboxUrl = ref('');
+const loadingReceiptUrl = ref(false);
+
+async function openReceiptModal() {
+  if (!plan.value?.receipt_url) return;
+  loadingReceiptUrl.value = true;
+  try {
+    const url = await getReceiptSignedUrl(plan.value.receipt_url);
+    if (url) {
+      receiptLightboxUrl.value = url;
+      showReceiptLightbox.value = true;
+    } else {
+      toast.error('Receipt image not found');
+    }
+  } catch (err) {
+    toast.error('Failed to load receipt image');
+  } finally {
+    loadingReceiptUrl.value = false;
+  }
+}
 
 const totalAmount = computed(() => {
   return items.value.reduce((sum, item) => sum + (parseFloat(item.price) || 0), 0);
@@ -257,26 +375,42 @@ async function fetchDropdowns() {
 }
 
 function openAddItem() {
-  itemForm.value = { name: '', price: '', added_by: authStore.user?.id || '' };
-  showAddModal.value = true;
+  isEditingItem.value = false;
+  itemForm.value = { id: null, name: '', price: '', added_by: authStore.user?.id || '' };
+  showItemModal.value = true;
+}
+
+function openEditItem(item) {
+  isEditingItem.value = true;
+  itemForm.value = { id: item.id, name: item.name, price: item.price || '', added_by: item.added_by || '' };
+  showItemModal.value = true;
 }
 
 async function saveItem() {
   saving.value = true;
   try {
-    await shoppingService.create({
+    const payload = {
       shopping_plan_id: planId,
       name: itemForm.value.name,
       price: itemForm.value.price || 0,
       added_by: itemForm.value.added_by
-    });
-    // showAddModal.value = false;
-    itemForm.value.name = '';
-    itemForm.value.price = '';
-    toast.success('Item added');
+    };
+
+    if (isEditingItem.value) {
+      await shoppingService.update(itemForm.value.id, payload);
+      toast.success('Item updated');
+      showItemModal.value = false;
+    } else {
+      await shoppingService.create(payload);
+      toast.success('Item added');
+      // Keep modal open to add more items, just reset fields
+      itemForm.value.name = '';
+      itemForm.value.price = '';
+    }
+    
     fetchItems();
   } catch (e) {
-    toast.error('Failed to add item');
+    toast.error('Failed to save item');
   } finally {
     saving.value = false;
   }
@@ -320,14 +454,68 @@ async function doDeleteItem() {
   }
 }
 
-function openCheckoutModal() {
+// ===== Choice Modal Logic =====
+
+function openChoiceModal() {
   // Validate prices
   const missingPrices = items.value.some(i => !i.price || parseFloat(i.price) <= 0);
   if (missingPrices) {
     toast.warning(localeStore.t('shopping.zeroPriceWarning') || 'All items must have a price. Please fill the price or delete the item.');
     return;
   }
-  
+  selectedChoice.value = '';
+  showChoiceModal.value = true;
+}
+
+async function proceedWithChoice() {
+  if (selectedChoice.value === 'done') {
+    await markAsDoneOnly();
+  } else if (selectedChoice.value === 'checkout') {
+    showChoiceModal.value = false;
+    openCheckoutModal();
+  }
+}
+
+async function markAsDoneOnly() {
+  isMarkingDone.value = true;
+  try {
+    await shoppingPlanService.markAsDone(planId);
+    await sendCheckoutNotification();
+    pushDispatcherService.dispatchPushNotification({
+      templateKey: 'SHOPPING_PLAN_DONE',
+      params: { location: plan.value?.location || 'Store' },
+      url: `/shopping/${planId}`
+    }).catch(() => {});
+    toast.success(localeStore.currentLocale === 'id' ? 'Rencana belanja ditandai selesai!' : 'Shopping plan marked as done!');
+    showChoiceModal.value = false;
+    fetchPlan();
+  } catch (e) {
+    toast.error(localeStore.currentLocale === 'id' ? 'Gagal menandai selesai' : 'Failed to mark as done');
+  } finally {
+    isMarkingDone.value = false;
+  }
+}
+
+async function lockPlan() {
+  isLocking.value = true;
+  try {
+    await shoppingPlanService.lock(planId);
+    pushDispatcherService.dispatchPushNotification({
+      templateKey: 'SHOPPING_PLAN_LOCKED',
+      params: { location: plan.value?.location || 'Store', amount: totalAmount.value.toLocaleString('id-ID') },
+      url: `/shopping/${planId}`
+    }).catch(() => {});
+    toast.success(localeStore.currentLocale === 'id' ? 'Rencana belanja dikunci!' : 'Shopping plan locked!');
+    fetchPlan();
+  } catch (e) {
+    console.error('Lock error:', e);
+    toast.error(localeStore.currentLocale === 'id' ? 'Gagal mengunci rencana: ' + (e.message || '') : 'Failed to lock plan: ' + (e.message || ''));
+  } finally {
+    isLocking.value = false;
+  }
+}
+
+function openCheckoutModal() {
   if (plan.value?.created_by) {
     checkoutForm.value.member_id = plan.value.created_by;
   }
@@ -350,7 +538,8 @@ async function processCheckout() {
     showCheckoutModal.value = false;
     fetchPlan();
   } catch (e) {
-    toast.error('Checkout failed');
+    console.error('Checkout error:', e);
+    toast.error('Checkout failed: ' + (e.message || 'Unknown error'));
   } finally {
     isCheckingOut.value = false;
   }
@@ -361,7 +550,7 @@ async function sendCheckoutNotification() {
     const { data: family } = await supabase.from('families').select('whatsapp_group_id').eq('id', authStore.familyId).single();
     if (!family || !family.whatsapp_group_id) return;
     
-    const buyer = members.value.find(m => m.id === checkoutForm.value.member_id);
+    const buyer = members.value.find(m => m.id === checkoutForm.value.member_id) || members.value.find(m => m.id === plan.value?.created_by);
     const buyerName = buyer ? buyer.name : 'Unknown';
     const loc = plan.value?.location || 'Unknown';
     const isId = localeStore.currentLocale === 'id';
@@ -429,3 +618,14 @@ onUnmounted(() => {
   if (subscriptionItems) supabase.removeChannel(subscriptionItems);
 });
 </script>
+
+<style scoped>
+.choice-card {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.choice-card:hover {
+  border-color: var(--primary-color) !important;
+  background-color: rgba(102, 126, 234, 0.05);
+}
+</style>

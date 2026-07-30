@@ -80,12 +80,29 @@ export async function getReceiptSignedUrl(path, expiresIn = 3600) {
 /**
  * Delete a receipt image from Supabase Storage.
  *
- * @param {string} path - The storage path returned by uploadReceipt()
+ * @param {string} pathOrUrl - The storage path or full/signed URL
  */
-export async function deleteReceipt(path) {
-  if (!path) return;
+export async function deleteReceipt(pathOrUrl) {
+  if (!pathOrUrl) return;
+
+  let cleanPath = pathOrUrl;
+  if (typeof cleanPath === 'string' && (cleanPath.startsWith('http://') || cleanPath.startsWith('https://'))) {
+    try {
+      const urlObj = new URL(cleanPath);
+      const pathname = urlObj.pathname;
+      const match = pathname.match(/\/receipts\/(.+)$/);
+      if (match) cleanPath = decodeURIComponent(match[1]);
+    } catch (e) {
+      console.error('[StorageService] Error parsing URL for deletion:', e);
+    }
+  }
+
   const { error } = await supabase.storage
     .from('receipts')
-    .remove([path]);
-  if (error) throw error;
+    .remove([cleanPath]);
+
+  if (error) {
+    console.error('[StorageService] Supabase storage remove error:', error);
+    throw error;
+  }
 }

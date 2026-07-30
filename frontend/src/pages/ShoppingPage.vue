@@ -5,9 +5,15 @@
         <h4>{{ $t('shopping.title') }}</h4>
         <p class="text-muted mb-0">{{ $t('shopping.subtitle') }}</p>
       </div>
-      <button id="tour-shopping-add-btn" class="btn btn-primary-gradient" @click="openAddPlan">
-        <i class="bi bi-plus-lg"></i><span class="d-none d-sm-inline">{{ $t('shopping.createPlan') || 'Create Plan' }}</span>
-      </button>
+      <div class="d-flex gap-2">
+        <button class="btn btn-outline-info" @click="triggerReceiptScan" :disabled="isScanning">
+          <i class="bi bi-camera"></i><span class="d-none d-sm-inline">{{ localeStore.currentLocale === 'id' ? 'Scan Struk' : 'Scan Receipt' }}</span>
+        </button>
+        <input type="file" ref="receiptInput" accept="image/*" capture="environment" class="d-none" @change="onReceiptSelected" />
+        <button id="tour-shopping-add-btn" class="btn btn-primary-gradient" @click="openAddPlan">
+          <i class="bi bi-plus-lg"></i><span class="d-none d-sm-inline">{{ $t('shopping.createPlan') || 'Create Plan' }}</span>
+        </button>
+      </div>
     </div>
 
     <!-- Tabs for Plans -->
@@ -36,8 +42,9 @@
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-start mb-2">
               <h5 class="card-title fw-bold mb-0 text-primary">{{ plan.location }}</h5>
-              <span class="badge" :class="plan.status === 'done' ? 'bg-success' : 'bg-warning text-dark'">
-                {{ plan.status === 'done' ? ($t('shopping.done') || 'Done') : ($t('shopping.onProgress') || 'On Progress') }}
+              <span class="badge" :class="plan.status === 'locked' ? 'bg-secondary' : plan.status === 'done' ? 'bg-success' : 'bg-warning text-dark'">
+                <i v-if="plan.status === 'locked'" class="bi bi-lock-fill me-1"></i>
+                {{ plan.status === 'locked' ? (localeStore.currentLocale === 'id' ? 'Terkunci' : 'Locked') : plan.status === 'done' ? ($t('shopping.done') || 'Done') : ($t('shopping.onProgress') || 'On Progress') }}
               </span>
             </div>
             <p class="text-muted small mb-2">
@@ -48,15 +55,21 @@
             </p>
           </div>
           <div class="card-footer bg-white border-light d-flex justify-content-between align-items-center">
-            <span v-if="plan.status === 'done' && plan.transaction" class="fw-bold text-danger">
-              Rp {{ parseFloat(plan.transaction.amount || 0).toLocaleString('id-ID') }}
-            </span>
-            <span v-else class="text-muted small">
-              <i class="bi bi-people me-1"></i> {{ plan.assigned_members?.length || 0 }} assigned
-            </span>
-            <button class="btn btn-sm btn-outline-danger border-0" @click.stop="confirmDeletePlan(plan)">
+            <div class="d-flex align-items-center gap-2">
+              <span v-if="plan.status === 'done' || plan.status === 'locked'" class="fw-bold text-danger">
+                Rp {{ (plan.transaction ? parseFloat(plan.transaction.amount || 0) : (plan.shopping_items?.reduce((sum, item) => sum + (parseFloat(item.price) || 0), 0) || 0)).toLocaleString('id-ID') }}
+              </span>
+              <span v-else class="text-muted small">
+                <i class="bi bi-people me-1"></i> {{ plan.assigned_members?.length || 0 }} assigned
+              </span>
+              <button v-if="plan.receipt_url" class="btn btn-sm btn-outline-info border-0 p-0 px-1" @click.stop="openReceiptModal(plan)" title="View Receipt Photo">
+                <i class="bi bi-receipt me-1"></i><span class="small">Struk</span>
+              </button>
+            </div>
+            <button v-if="plan.status !== 'locked'" class="btn btn-sm btn-outline-danger border-0" @click.stop="confirmDeletePlan(plan)">
               <i class="bi bi-trash"></i>
             </button>
+            <span v-else class="badge bg-light text-muted border"><i class="bi bi-lock me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Terkunci' : 'Locked' }}</span>
           </div>
         </div>
       </div>
@@ -145,6 +158,118 @@
         </div>
       </div>
     </div>
+
+    <!-- ===== Receipt Scanning Overlay ===== -->
+    <div v-if="isScanning" class="vue-modal-backdrop" style="z-index: 1060; background: rgba(11, 11, 20, 0.9);">
+      <div class="d-flex flex-column justify-content-center align-items-center h-100 text-white">
+        <div class="spinner-border text-primary mb-3" style="width: 3rem; height: 3rem;"></div>
+        <h5 class="mb-2">{{ scanStatusText }}</h5>
+        <div class="progress" style="width: 250px; height: 6px;">
+          <div class="progress-bar bg-primary" :style="{ width: scanProgress + '%' }"></div>
+        </div>
+        <small class="text-muted mt-2">{{ scanProgress }}%</small>
+      </div>
+    </div>
+
+    <!-- ===== Receipt Review Modal ===== -->
+    <div v-if="showReceiptReview" class="vue-modal-backdrop" @mousedown.self="showReceiptReview = false">
+      <div class="vue-modal" style="max-width: 560px;">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title fw-bold"><i class="bi bi-receipt me-2 text-primary"></i>{{ localeStore.currentLocale === 'id' ? 'Review Hasil Scan' : 'Review Scanned Items' }}</h5>
+          <button type="button" class="btn-close" @click="showReceiptReview = false"></button>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-info border-0 py-2 mb-3">
+            <i class="bi bi-info-circle me-2"></i>{{ localeStore.currentLocale === 'id' ? 'Periksa dan perbaiki nama/harga item sebelum menyimpan.' : 'Review and fix item names/prices before saving.' }}
+          </div>
+
+          <!-- Store name -->
+          <div class="mb-3">
+            <label class="form-label fw-bold">{{ localeStore.currentLocale === 'id' ? 'Nama Toko' : 'Store Name' }}</label>
+            <input v-model="receiptStoreName" class="form-control" />
+          </div>
+
+          <!-- Processed image thumbnail -->
+          <div v-if="scanProcessedImage" class="mb-3 text-center">
+            <img :src="scanProcessedImage" alt="Processed Receipt" class="img-fluid rounded border shadow-sm" style="max-height: 150px; object-fit: contain;" />
+          </div>
+
+          <!-- Scanned items -->
+          <div class="mb-3">
+            <label class="form-label fw-bold d-flex justify-content-between">
+              <span>{{ localeStore.currentLocale === 'id' ? 'Daftar Belanjaan' : 'Items' }} ({{ scannedItems.length }})</span>
+              <span v-if="scannedItemsTotal > 0" class="text-muted small">Subtotal: Rp {{ scannedItemsTotal.toLocaleString('id-ID') }}</span>
+            </label>
+            <div class="border rounded p-1 bg-light" style="max-height: 320px; overflow-y: auto;">
+              <div v-for="(item, idx) in scannedItems" :key="idx" class="p-2 border-bottom bg-white rounded mb-1 shadow-sm">
+                <div class="d-flex align-items-center gap-2 mb-1">
+                  <span class="badge bg-secondary">{{ idx + 1 }}</span>
+                  <input v-model="item.name" class="form-control form-control-sm fw-semibold" :placeholder="localeStore.currentLocale === 'id' ? 'Nama Item' : 'Item Name'" />
+                  <button class="btn btn-sm btn-outline-danger border-0" @click="scannedItems.splice(idx, 1)">
+                    <i class="bi bi-x-lg"></i>
+                  </button>
+                </div>
+                <div class="d-flex align-items-center gap-2 ps-4">
+                  <div class="input-group input-group-sm" style="max-width: 95px;">
+                    <span class="input-group-text px-1">Qty</span>
+                    <input type="number" min="1" v-model.number="item.qty" class="form-control px-1 text-center" />
+                  </div>
+                  <div class="input-group input-group-sm" style="flex: 1;">
+                    <span class="input-group-text">Rp</span>
+                    <input type="number" v-model.number="item.price" class="form-control text-end fw-bold text-primary" placeholder="Total Price" />
+                  </div>
+                </div>
+                <div v-if="item.qty > 1 && item.price > 0" class="ps-4 mt-1 text-muted" style="font-size: 0.72rem;">
+                  <i class="bi bi-calculator me-1"></i>{{ item.qty }}x @ Rp {{ Math.round(item.price / item.qty).toLocaleString('id-ID') }} / unit
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Add item manually -->
+          <button class="btn btn-sm btn-outline-primary mb-3" @click="scannedItems.push({ name: '', price: 0, qty: 1 })">
+            <i class="bi bi-plus me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Tambah Item' : 'Add Item' }}
+          </button>
+
+          <!-- Total -->
+          <div class="d-flex justify-content-between align-items-center p-2 bg-light rounded">
+            <span class="fw-bold">Total</span>
+            <span class="fw-bold text-primary">Rp {{ scannedItemsTotal.toLocaleString('id-ID') }}</span>
+          </div>
+
+          <!-- Member selector -->
+          <div class="mt-3">
+            <label class="form-label">{{ localeStore.currentLocale === 'id' ? 'Dibuat oleh' : 'Created by' }}</label>
+            <select v-model="receiptCreatedBy" class="form-select" required>
+              <option value="" disabled>- Select Member -</option>
+              <option v-for="m in members" :key="m.id" :value="m.id">{{ m.name }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer border-0 pt-0">
+          <button class="btn btn-secondary" @click="showReceiptReview = false">{{ $t('common.cancel') }}</button>
+          <button class="btn btn-primary-gradient" :disabled="savingReceipt || scannedItems.length === 0 || !receiptCreatedBy" @click="saveReceiptAsPlan">
+            <span v-if="savingReceipt" class="spinner-border spinner-border-sm me-2"></span>
+            {{ localeStore.currentLocale === 'id' ? 'Simpan Rencana' : 'Save as Plan' }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- ===== Receipt Image Lightbox Modal ===== -->
+    <div v-if="showReceiptLightbox" class="vue-modal-backdrop" @mousedown.self="showReceiptLightbox = false">
+      <div class="vue-modal text-center" style="max-width: 500px;">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title fw-bold"><i class="bi bi-file-image me-2 text-info"></i>{{ localeStore.currentLocale === 'id' ? 'Foto Struk' : 'Receipt Photo' }}</h5>
+          <button type="button" class="btn-close" @click="showReceiptLightbox = false"></button>
+        </div>
+        <div class="modal-body p-3">
+          <img :src="receiptLightboxUrl" class="img-fluid rounded border shadow-sm" style="max-height: 70vh; object-fit: contain;" />
+        </div>
+        <div class="modal-footer border-0 pt-0">
+          <button class="btn btn-secondary btn-sm" @click="showReceiptLightbox = false">{{ $t('common.cancel') || 'Close' }}</button>
+        </div>
+      </div>
+    </div>
     
   </div>
 </template>
@@ -164,11 +289,17 @@ import { useAuthStore } from '../stores/auth';
 import { useToastStore } from '../stores/toast';
 import { useLocaleStore } from '../stores/locale';
 import { supabase } from '../lib/supabase';
+import { scanReceipt } from '../utils/receiptScanner';
+import { useScannerMapping } from '../composables/useScannerMapping';
+import { pushDispatcherService } from '../services/pushDispatcherService';
+import { uploadReceipt, getReceiptSignedUrl } from '../services/storageService';
 
 const plans = ref([]);
 const members = ref([]);
 const activeTab = ref('progress');
 const saving = ref(false);
+
+const { mapMember } = useScannerMapping(ref([]), ref([]), members);
 
 const showAddModal = ref(false);
 const showDeleteModal = ref(false);
@@ -182,8 +313,48 @@ const toast = useToastStore();
 const localeStore = useLocaleStore();
 const router = useRouter();
 
+// Receipt scanning state
+const receiptInput = ref(null);
+const isScanning = ref(false);
+const scanProgress = ref(0);
+const scanStatusText = ref('');
+const showReceiptReview = ref(false);
+const scannedItems = ref([]);
+const receiptStoreName = ref('');
+const receiptCreatedBy = ref('');
+const savingReceipt = ref(false);
+const scanProcessedImage = ref('');
+const pendingReceiptFile = ref(null);
+
+// Receipt Lightbox state
+const showReceiptLightbox = ref(false);
+const receiptLightboxUrl = ref('');
+const loadingReceiptUrl = ref(false);
+
+async function openReceiptModal(plan) {
+  if (!plan?.receipt_url) return;
+  loadingReceiptUrl.value = true;
+  try {
+    const url = await getReceiptSignedUrl(plan.receipt_url);
+    if (url) {
+      receiptLightboxUrl.value = url;
+      showReceiptLightbox.value = true;
+    } else {
+      toast.error('Receipt image not found');
+    }
+  } catch (err) {
+    toast.error('Failed to load receipt image');
+  } finally {
+    loadingReceiptUrl.value = false;
+  }
+}
+
+const scannedItemsTotal = computed(() => {
+  return scannedItems.value.reduce((sum, item) => sum + (parseFloat(item.price) || 0), 0);
+});
+
 const progressPlans = computed(() => plans.value.filter(p => p.status === 'progress'));
-const donePlans = computed(() => plans.value.filter(p => p.status === 'done'));
+const donePlans = computed(() => plans.value.filter(p => p.status === 'done' || p.status === 'locked'));
 const filteredPlans = computed(() => activeTab.value === 'progress' ? progressPlans.value : donePlans.value);
 
 let subscription;
@@ -243,6 +414,14 @@ async function savePlan() {
     showAddModal.value = false;
     toast.success(localeStore.t('common.success') + ' - Plan Saved!');
     fetchData(); 
+
+    // Dispatch PWA Web Push Notification (fire-and-forget, never blocks WhatsApp flow)
+    const creatorName = members.value.find(m => m.id === payload.created_by)?.name || 'Someone';
+    pushDispatcherService.dispatchPushNotification({
+      templateKey: 'SHOPPING_PLAN_CREATED',
+      params: { creator: creatorName, location: payload.location },
+      url: '/shopping'
+    }).catch(() => {}); // swallow — never interrupt WhatsApp
 
     // Fire off the WhatsApp Notification directly from the frontend
     await sendWhatsAppNotification(payload);
@@ -379,6 +558,93 @@ onUnmounted(() => {
     supabase.removeChannel(subscription);
   }
 });
+// ===== Receipt Scan Functions =====
+
+function triggerReceiptScan() {
+  receiptInput.value?.click();
+}
+
+async function onReceiptSelected(event) {
+  const file = event.target.files?.[0];
+  if (!file) return;
+
+  isScanning.value = true;
+  scanProgress.value = 0;
+  scanStatusText.value = localeStore.currentLocale === 'id' ? 'Memulai OCR...' : 'Starting OCR...';
+  scanProcessedImage.value = '';
+
+  try {
+    const result = await scanReceipt(file, (progress, status) => {
+      scanProgress.value = progress;
+      scanStatusText.value = status;
+    });
+    
+    if (result.processedImageDataUrl) {
+      scanProcessedImage.value = result.processedImageDataUrl;
+    }
+
+    const parsedItems = result.items || [];
+
+    receiptStoreName.value = result.merchant?.name || result.merchantName || 'Receipt Scan';
+    scannedItems.value = parsedItems.length > 0
+      ? parsedItems.map(i => ({ name: i.name, price: i.price, qty: i.qty || 1 }))
+      : [{ name: '', price: result.amount?.total || result.totalAmount || 0, qty: 1 }];
+
+    const { memberId } = mapMember(result);
+    receiptCreatedBy.value = memberId || authStore.user?.id || (members.value[0]?.id || '');
+    pendingReceiptFile.value = file;
+    isScanning.value = false;
+    showReceiptReview.value = true;
+  } catch (err) {
+    console.error('Receipt scan error:', err);
+    isScanning.value = false;
+    toast.error(localeStore.currentLocale === 'id' ? 'Gagal memindai struk: ' + err.message : 'Failed to scan receipt: ' + err.message);
+  } finally {
+    if (receiptInput.value) receiptInput.value.value = '';
+  }
+}
+
+async function saveReceiptAsPlan() {
+  if (scannedItems.value.length === 0 || !receiptCreatedBy.value) return;
+
+  // Filter out items with no name
+  const validItems = scannedItems.value.filter(i => i.name && i.name.trim());
+  if (validItems.length === 0) {
+    toast.warning(localeStore.currentLocale === 'id' ? 'Minimal satu item harus diisi.' : 'At least one item must have a name.');
+    return;
+  }
+
+  savingReceipt.value = true;
+  try {
+    let receiptStoragePath = null;
+    if (pendingReceiptFile.value && authStore.familyId) {
+      try {
+        receiptStoragePath = await uploadReceipt(pendingReceiptFile.value, authStore.familyId);
+      } catch (uploadErr) {
+        console.warn('Failed to upload receipt to Supabase storage:', uploadErr);
+      }
+    }
+
+    await shoppingPlanService.createFromReceipt(
+      receiptStoreName.value || 'Receipt Scan',
+      validItems,
+      receiptCreatedBy.value,
+      receiptStoragePath
+    );
+
+    toast.success(localeStore.currentLocale === 'id' ? 'Rencana belanja dari struk berhasil disimpan!' : 'Shopping plan from receipt saved!');
+    showReceiptReview.value = false;
+    pendingReceiptFile.value = null;
+    activeTab.value = 'done'; // Switch to Done tab to show the new plan
+    fetchData();
+  } catch (err) {
+    console.error('Save receipt plan error:', err);
+    toast.error(localeStore.currentLocale === 'id' ? 'Gagal menyimpan: ' + err.message : 'Failed to save: ' + err.message);
+  } finally {
+    savingReceipt.value = false;
+  }
+}
+
 </script>
 
 <style scoped>

@@ -289,155 +289,201 @@ async function updateCharts(d) {
   
   const colors = getChartColors();
 
-  if (hasPieData.value && pieChart.value) {
-    pieInstance = new Chart(pieChart.value, {
-      type: 'pie',
-      data: {
-        labels: pieData.map(d => d.category),
-        datasets: [{ 
-          data: pieData.map(d => d.total), 
-          backgroundColor: pieData.map(d => d.color), 
-          borderColor: pieData.map(d => d.color), 
-          borderWidth: 1 
-        }],
-      },
-      options: { 
-        responsive: true, 
-        maintainAspectRatio: false, 
-        plugins: { 
-          legend: { 
-            position: 'bottom', 
-            labels: { 
-              padding: 16,
-              color: colors.textColor
+  requestAnimationFrame(() => {
+    if (hasPieData.value && pieChart.value) {
+      pieInstance = new Chart(pieChart.value, {
+        type: 'pie',
+        data: {
+          labels: pieData.map(d => d.category),
+          datasets: [{ 
+            data: pieData.map(d => d.total), 
+            backgroundColor: pieData.map(d => d.color), 
+            borderColor: pieData.map(d => d.color), 
+            borderWidth: 1 
+          }],
+        },
+        options: { 
+          responsive: true, 
+          maintainAspectRatio: false, 
+          animation: {
+            duration: 1200,
+            easing: 'easeOutQuart'
+          },
+          animations: {
+            numbers: {
+              type: 'number',
+              properties: ['circumference', 'endAngle'],
+              from: 0
+            }
+          },
+          plugins: { 
+            legend: { 
+              position: 'bottom', 
+              labels: { 
+                padding: 16,
+                color: colors.textColor
+              } 
             } 
           } 
-        } 
-      },
-    });
-  }
+        },
+      });
+    }
 
-  if (hasBarData.value && barChart.value) {
-    barInstance = new Chart(barChart.value, {
-      type: 'bar',
-      data: {
-        labels: barData.map(d => d.month),
-        datasets: [
-          { label: localeStore.t('common.income'),  data: barData.map(d => d.income),  backgroundColor: colors.incomeColor, borderColor: colors.incomeColor, borderWidth: 1, borderRadius: 4 },
-          { label: localeStore.t('common.expense'), data: barData.map(d => d.expense), backgroundColor: colors.expenseColor, borderColor: colors.expenseColor, borderWidth: 1, borderRadius: 4 },
-        ],
-      },
-      options: { 
-        responsive: true, 
-        maintainAspectRatio: false, 
-        plugins: { 
-          legend: { 
-            position: 'top',
-            labels: { color: colors.textColor }
-          } 
-        }, 
-        scales: { 
-          x: {
-            ticks: { color: colors.textColor },
-            grid: { color: colors.gridColor }
+    if (hasBarData.value && barChart.value) {
+      barInstance = new Chart(barChart.value, {
+        type: 'bar',
+        data: {
+          labels: barData.map(d => d.month),
+          datasets: [
+            { label: localeStore.t('common.income'),  data: barData.map(d => d.income),  backgroundColor: colors.incomeColor, borderColor: colors.incomeColor, borderWidth: 1, borderRadius: 4 },
+            { label: localeStore.t('common.expense'), data: barData.map(d => d.expense), backgroundColor: colors.expenseColor, borderColor: colors.expenseColor, borderWidth: 1, borderRadius: 4 },
+          ],
+        },
+        options: { 
+          responsive: true, 
+          maintainAspectRatio: false, 
+          animation: {
+            duration: 1200,
+            easing: 'easeOutQuart'
           },
-          y: { 
-            beginAtZero: true,
-            ticks: { color: colors.textColor },
-            grid: { color: colors.gridColor }
-          } 
-        } 
-      },
-    });
-  }
-
-  if (hasLineData.value && lineChart.value) {
-    const ctx = lineChart.value.getContext('2d');
-    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-    gradient.addColorStop(0, colors.expenseColor === '#f43f5e' ? 'rgba(244, 63, 94, 0.35)' : 'rgba(220, 53, 69, 0.35)');
-    gradient.addColorStop(1, 'rgba(244, 63, 94, 0.0)');
-
-    lineInstance = new Chart(lineChart.value, {
-      type: 'line',
-      data: {
-        labels: lineData.map(d => d.month),
-        datasets: [{ 
-          label: localeStore.t('common.expense'), 
-          data: lineData.map(d => d.expense), 
-          borderColor: colors.expenseColor, 
-          backgroundColor: gradient, 
-          fill: true, 
-          tension: 0.4,
-          pointRadius: 4,
-          pointBackgroundColor: colors.expenseColor,
-          pointBorderColor: colors.expenseColor,
-          pointBorderWidth: 1
-        }],
-      },
-      options: { 
-        responsive: true, 
-        maintainAspectRatio: false, 
-        plugins: { 
-          legend: { display: false } 
-        }, 
-        scales: { 
-          x: {
-            ticks: { color: colors.textColor },
-            grid: { color: colors.gridColor }
+          animations: {
+            y: {
+              duration: 1200,
+              easing: 'easeOutQuart',
+              from: 0
+            }
           },
-          y: { 
-            beginAtZero: true,
-            ticks: { color: colors.textColor },
-            grid: { color: colors.gridColor }
+          plugins: { 
+            legend: { 
+              position: 'top',
+              labels: { color: colors.textColor }
+            } 
+          }, 
+          scales: { 
+            x: {
+              ticks: { color: colors.textColor },
+              grid: { color: colors.gridColor }
+            },
+            y: { 
+              beginAtZero: true,
+              ticks: { color: colors.textColor },
+              grid: { color: colors.gridColor }
+            } 
           } 
-        } 
-      },
-    });
-  }
+        },
+      });
+    }
 
-  if (hasNetWorthData.value && netWorthChart.value) {
-    const ctx = netWorthChart.value.getContext('2d');
-    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-    gradient.addColorStop(0, colors.accentColor === '#8a2be2' ? 'rgba(138, 43, 226, 0.35)' : 'rgba(102, 126, 234, 0.35)');
-    gradient.addColorStop(1, 'rgba(102, 126, 234, 0.0)');
+    if (hasLineData.value && lineChart.value) {
+      const ctx = lineChart.value.getContext('2d');
+      const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+      gradient.addColorStop(0, colors.expenseColor === '#f43f5e' ? 'rgba(244, 63, 94, 0.35)' : 'rgba(220, 53, 69, 0.35)');
+      gradient.addColorStop(1, 'rgba(244, 63, 94, 0.0)');
 
-    netWorthInstance = new Chart(netWorthChart.value, {
-      type: 'line',
-      data: {
-        labels: netWorthData.map(d => d.month),
-        datasets: [{ 
-          label: localeStore.t('dashboard.netWorthGrowth'), 
-          data: netWorthData.map(d => d.balance), 
-          borderColor: colors.accentColor, 
-          backgroundColor: gradient, 
-          fill: true, 
-          tension: 0.4, 
-          pointRadius: 4, 
-          pointBackgroundColor: colors.accentColor,
-          pointBorderColor: colors.accentColor,
-          pointBorderWidth: 1
-        }],
-      },
-      options: { 
-        responsive: true, 
-        maintainAspectRatio: false, 
-        plugins: { 
-          legend: { display: false } 
-        }, 
-        scales: { 
-          x: {
-            ticks: { color: colors.textColor },
-            grid: { color: colors.gridColor }
+      lineInstance = new Chart(lineChart.value, {
+        type: 'line',
+        data: {
+          labels: lineData.map(d => d.month),
+          datasets: [{ 
+            label: localeStore.t('common.expense'), 
+            data: lineData.map(d => d.expense), 
+            borderColor: colors.expenseColor, 
+            backgroundColor: gradient, 
+            fill: true, 
+            tension: 0.4,
+            pointRadius: 4,
+            pointBackgroundColor: colors.expenseColor,
+            pointBorderColor: colors.expenseColor,
+            pointBorderWidth: 1
+          }],
+        },
+        options: { 
+          responsive: true, 
+          maintainAspectRatio: false, 
+          animation: {
+            duration: 1200,
+            easing: 'easeOutQuart'
           },
-          y: { 
-            beginAtZero: false,
-            ticks: { color: colors.textColor },
-            grid: { color: colors.gridColor }
+          animations: {
+            y: {
+              duration: 1200,
+              easing: 'easeOutQuart',
+              from: 0
+            }
+          },
+          plugins: { 
+            legend: { display: false } 
+          }, 
+          scales: { 
+            x: {
+              ticks: { color: colors.textColor },
+              grid: { color: colors.gridColor }
+            },
+            y: { 
+              beginAtZero: true,
+              ticks: { color: colors.textColor },
+              grid: { color: colors.gridColor }
+            } 
           } 
-        } 
-      },
-    });
-  }
+        },
+      });
+    }
+
+    if (hasNetWorthData.value && netWorthChart.value) {
+      const ctx = netWorthChart.value.getContext('2d');
+      const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+      gradient.addColorStop(0, colors.accentColor === '#8a2be2' ? 'rgba(138, 43, 226, 0.35)' : 'rgba(102, 126, 234, 0.35)');
+      gradient.addColorStop(1, 'rgba(102, 126, 234, 0.0)');
+
+      netWorthInstance = new Chart(netWorthChart.value, {
+        type: 'line',
+        data: {
+          labels: netWorthData.map(d => d.month),
+          datasets: [{ 
+            label: localeStore.t('dashboard.netWorthGrowth'), 
+            data: netWorthData.map(d => d.balance), 
+            borderColor: colors.accentColor, 
+            backgroundColor: gradient, 
+            fill: true, 
+            tension: 0.4, 
+            pointRadius: 4, 
+            pointBackgroundColor: colors.accentColor,
+            pointBorderColor: colors.accentColor,
+            pointBorderWidth: 1
+          }],
+        },
+        options: { 
+          responsive: true, 
+          maintainAspectRatio: false, 
+          animation: {
+            duration: 1200,
+            easing: 'easeOutQuart'
+          },
+          animations: {
+            y: {
+              duration: 1200,
+              easing: 'easeOutQuart',
+              from: 0
+            }
+          },
+          plugins: { 
+            legend: { display: false } 
+          }, 
+          scales: { 
+            x: {
+              ticks: { color: colors.textColor },
+              grid: { color: colors.gridColor }
+            },
+            y: { 
+              beginAtZero: false,
+              ticks: { color: colors.textColor },
+              grid: { color: colors.gridColor }
+            } 
+          } 
+        },
+      });
+    }
+  });
 }
 
 const { startTour, startAutoTour } = useTour('dashboard');
