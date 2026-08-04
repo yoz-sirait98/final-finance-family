@@ -328,46 +328,56 @@
             <!-- Scanned Receipt Items (Auto Shopping Plan) -->
             <div v-if="scannedItems && scannedItems.length > 0" class="mb-3 border rounded p-2 bg-light">
               <div class="d-flex justify-content-between align-items-center mb-2">
-                <label class="form-label fw-bold mb-0 text-primary small">
-                  <i class="bi bi-cart-check me-1"></i>
-                  {{ localeStore.currentLocale === 'id' ? 'Daftar Item Struk (Auto Shopping Plan)' : 'Receipt Line Items (Auto Shopping Plan)' }}
-                </label>
-                <span class="badge bg-info text-dark">{{ scannedItems.length }} {{ localeStore.currentLocale === 'id' ? 'Item' : 'Items' }}</span>
+                <div class="form-check form-switch mb-0">
+                  <input class="form-check-input cursor-pointer" type="checkbox" id="autoCreatePlanToggle" v-model="autoCreatePlan" role="switch">
+                  <label class="form-check-label fw-bold text-primary small cursor-pointer" for="autoCreatePlanToggle">
+                    <i class="bi bi-cart-check me-1"></i>
+                    {{ localeStore.currentLocale === 'id' ? 'Buat Shopping Plan Otomatis' : 'Auto-create Shopping Plan' }}
+                  </label>
+                </div>
+                <span class="badge bg-info text-dark" v-if="autoCreatePlan">{{ scannedItems.length }} {{ localeStore.currentLocale === 'id' ? 'Item' : 'Items' }}</span>
               </div>
-              <div class="alert alert-info py-1 px-2 mb-2" style="font-size:0.75rem;">
-                <i class="bi bi-info-circle me-1"></i>
-                {{ localeStore.currentLocale === 'id' ? 'Shopping Plan akan otomatis dibuat dari item-item ini setelah transaksi disimpan.' : 'A Shopping Plan will automatically be created with these items when saved.' }}
-              </div>
-              <div style="max-height: 220px; overflow-y: auto;">
-                <div v-for="(item, idx) in scannedItems" :key="idx" class="p-1 mb-1 bg-white rounded border shadow-sm">
-                  <div class="d-flex align-items-center gap-1">
-                    <span class="badge bg-secondary px-1" style="font-size:0.68rem;">{{ idx + 1 }}</span>
-                    <input v-model="item.name" class="form-control form-control-sm border-0 fw-semibold" style="flex: 1; min-width: 0;" :placeholder="localeStore.currentLocale === 'id' ? 'Nama Item' : 'Item Name'" />
-                    <div class="input-group input-group-sm flex-shrink-0" style="width: 60px;">
-                      <input type="number" min="1" v-model.number="item.qty" class="form-control px-1 text-center" style="font-size:0.8rem;" title="Qty" />
+
+              <div v-if="autoCreatePlan">
+                <div class="alert alert-info py-1 px-2 mb-2" style="font-size:0.75rem;">
+                  <i class="bi bi-info-circle me-1"></i>
+                  {{ localeStore.currentLocale === 'id' ? 'Shopping Plan akan otomatis dibuat dari item-item ini setelah transaksi disimpan.' : 'A Shopping Plan will automatically be created with these items when saved.' }}
+                </div>
+                <div style="max-height: 220px; overflow-y: auto;">
+                  <div v-for="(item, idx) in scannedItems" :key="idx" class="p-1 mb-1 bg-white rounded border shadow-sm">
+                    <div class="d-flex align-items-center gap-1">
+                      <span class="badge bg-secondary px-1" style="font-size:0.68rem;">{{ idx + 1 }}</span>
+                      <input v-model="item.name" class="form-control form-control-sm border-0 fw-semibold" style="flex: 1; min-width: 0;" :placeholder="localeStore.currentLocale === 'id' ? 'Nama Item' : 'Item Name'" />
+                      <div class="input-group input-group-sm flex-shrink-0" style="width: 60px;">
+                        <input type="number" min="1" v-model.number="item.qty" class="form-control px-1 text-center" style="font-size:0.8rem;" title="Qty" />
+                      </div>
+                      <div class="input-group input-group-sm flex-shrink-0" style="width: 95px;">
+                        <span class="input-group-text px-1 text-muted" style="font-size:0.68rem;">Rp</span>
+                        <input type="number" v-model.number="item.price" class="form-control px-1 text-end fw-bold text-primary" style="font-size:0.8rem;" placeholder="Harga" />
+                      </div>
+                      <button type="button" class="btn btn-sm btn-outline-danger border-0 p-1 flex-shrink-0" @click="scannedItems.splice(idx, 1)">
+                        <i class="bi bi-x-lg"></i>
+                      </button>
                     </div>
-                    <div class="input-group input-group-sm flex-shrink-0" style="width: 95px;">
-                      <span class="input-group-text px-1 text-muted" style="font-size:0.68rem;">Rp</span>
-                      <input type="number" v-model.number="item.price" class="form-control px-1 text-end fw-bold text-primary" style="font-size:0.8rem;" placeholder="Harga" />
+                    <div class="d-flex justify-content-between align-items-center px-1 mt-1 text-muted" style="font-size:0.7rem;">
+                      <span v-if="item.qty > 1 && item.price > 0">
+                        <i class="bi bi-calculator me-1"></i>{{ item.qty }}x @ {{ formatCompactItemPrice(Math.round(item.price / item.qty)) }}
+                      </span>
+                      <span v-else></span>
+                      <span v-if="item.price > 0" class="badge bg-light text-dark border py-0 px-1" style="font-size:0.68rem;">
+                        {{ formatCompactItemPrice(item.price) }}
+                      </span>
                     </div>
-                    <button type="button" class="btn btn-sm btn-outline-danger border-0 p-1 flex-shrink-0" @click="scannedItems.splice(idx, 1)">
-                      <i class="bi bi-x-lg"></i>
-                    </button>
-                  </div>
-                  <div class="d-flex justify-content-between align-items-center px-1 mt-1 text-muted" style="font-size:0.7rem;">
-                    <span v-if="item.qty > 1 && item.price > 0">
-                      <i class="bi bi-calculator me-1"></i>{{ item.qty }}x @ {{ formatCompactItemPrice(Math.round(item.price / item.qty)) }}
-                    </span>
-                    <span v-else></span>
-                    <span v-if="item.price > 0" class="badge bg-light text-dark border py-0 px-1" style="font-size:0.68rem;">
-                      {{ formatCompactItemPrice(item.price) }}
-                    </span>
                   </div>
                 </div>
+                <button type="button" class="btn btn-sm btn-outline-primary mt-2" @click="scannedItems.push({ name: '', price: 0, qty: 1 })">
+                  <i class="bi bi-plus me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Tambah Item' : 'Add Item' }}
+                </button>
               </div>
-              <button type="button" class="btn btn-sm btn-outline-primary mt-2" @click="scannedItems.push({ name: '', price: 0, qty: 1 })">
-                <i class="bi bi-plus me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Tambah Item' : 'Add Item' }}
-              </button>
+              <div v-else class="text-muted small fst-italic px-1 py-1">
+                <i class="bi bi-info-circle me-1"></i>
+                {{ localeStore.currentLocale === 'id' ? 'Item struk hanya disimpan di transaksi saja (tidak membuat Shopping Plan).' : 'Line items will be saved to the transaction without creating a Shopping Plan.' }}
+              </div>
             </div>
           </div>
           <div class="modal-footer">
@@ -577,6 +587,7 @@ const scanProcessedImage = ref('');     // base64 thumbnail of OpenCV preprocess
 const showRawOcrPanel    = ref(false);  // toggle for collapsible raw OCR panel
 const possibleDuplicate  = ref(null); // { description, amount, date } if duplicate detected
 const scannedItems       = ref([]);     // receipt line items extracted from scan
+const autoCreatePlan     = ref(true);   // toggle switch to auto-create Shopping Plan from items
 
 // Receipt image (pending upload after scan, or saved URL for existing record)
 const pendingReceiptFile = ref(null);   // raw File object from scanner
@@ -883,6 +894,16 @@ async function onReceiptSelected(event) {
     }
 
     scannedItems.value = parsedItems;
+
+    // ── Smart Default for Auto-Creating Shopping Plan ──────────────────────
+    // Pre-check for Groceries/Supermarket/Shopping, pre-uncheck for Dining/Restaurant/Cafe/F&B
+    const matchedCatObj = categories.value.find(c => c.id === matchedCategoryId);
+    const catName = (matchedCatObj?.name || '').toLowerCase();
+    const rawMerchantCat = (data.merchant?.category || data.merchantCategory || '').toLowerCase();
+    const isDining = /(dining|restaurant|resto|cafe|coffee|makanan|kuliner|food|beverage|f&b)/i.test(catName) ||
+                     /(dining|restaurant|resto|cafe|coffee|f&b)/i.test(rawMerchantCat);
+    autoCreatePlan.value = !isDining;
+
     form.value = {
       type:             'expense',
       member_id:        matchedMemberId,
@@ -1023,8 +1044,8 @@ async function doSaveTransaction() {
       savedTx = res?.data?.data;
     }
 
-    // ── Auto-create Shopping Plan if scanned receipt items exist ───────────
-    if (scannedItems.value.length > 0 && savedTx?.id) {
+    // ── Auto-create Shopping Plan if enabled and scanned receipt items exist ──
+    if (autoCreatePlan.value && scannedItems.value.length > 0 && savedTx?.id) {
       try {
         const locationName = payload.description || scanMerchantName || 'Supermarket';
         await shoppingPlanService.createFromReceipt(

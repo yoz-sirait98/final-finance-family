@@ -1,16 +1,16 @@
 # Graph Report - final-finance-family  (2026-08-04)
 
 ## Corpus Check
-- 160 files · ~114,488 words
+- 160 files · ~114,607 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1563 nodes · 2307 edges · 169 communities (128 shown, 41 thin omitted)
+- 1563 nodes · 2307 edges · 166 communities (125 shown, 41 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `3b1fe82f`
+- Built from commit: `68d4a34c`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -80,7 +80,6 @@
 - [[_COMMUNITY_Community 75|Community 75]]
 - [[_COMMUNITY_Community 76|Community 76]]
 - [[_COMMUNITY_Community 77|Community 77]]
-- [[_COMMUNITY_Community 78|Community 78]]
 - [[_COMMUNITY_Community 90|Community 90]]
 - [[_COMMUNITY_Community 91|Community 91]]
 - [[_COMMUNITY_Community 92|Community 92]]
@@ -119,9 +118,7 @@
 - [[_COMMUNITY_Community 128|Community 128]]
 - [[_COMMUNITY_Community 129|Community 129]]
 - [[_COMMUNITY_Community 130|Community 130]]
-- [[_COMMUNITY_Community 131|Community 131]]
 - [[_COMMUNITY_Community 132|Community 132]]
-- [[_COMMUNITY_Community 134|Community 134]]
 - [[_COMMUNITY_Community 135|Community 135]]
 - [[_COMMUNITY_Community 136|Community 136]]
 - [[_COMMUNITY_Community 137|Community 137]]
@@ -180,7 +177,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (169 total, 41 thin omitted)
+## Communities (166 total, 41 thin omitted)
 
 ### Community 0 - "Common UI Actions"
 Cohesion: 0.07
@@ -199,8 +196,8 @@ Cohesion: 0.06
 Nodes (30): dependencies, bootstrap, bootstrap-icons, chart.js, driver.js, idb-keyval, jspdf, jspdf-autotable (+22 more)
 
 ### Community 4 - "Authentication Forms"
-Cohesion: 0.11
-Nodes (31): transactions, addTransaction, allAccounts, allCategories, allMembers, alreadySpent, amountPlaceholder, budgetExceeded (+23 more)
+Cohesion: 0.10
+Nodes (34): description, title, transactions, addTransaction, allAccounts, allCategories, allMembers, alreadySpent (+26 more)
 
 ### Community 5 - "Authentication Forms"
 Cohesion: 0.25
@@ -239,8 +236,8 @@ Cohesion: 0.28
 Nodes (13): header, header, header, header, description, title, header, header (+5 more)
 
 ### Community 15 - "Financial Data Export"
-Cohesion: 0.12
-Nodes (16): description, title, balance, expense, income, insights, period, description (+8 more)
+Cohesion: 0.07
+Nodes (30): description, title, dashboard, balance, expense, expenseByCategory, expenseTrend, income (+22 more)
 
 ### Community 16 - "Month Labels"
 Cohesion: 0.20
@@ -259,8 +256,8 @@ Cohesion: 0.18
 Nodes (12): description, title, reports, endDate, exportCsv, exportPdf, filters, generating (+4 more)
 
 ### Community 20 - "Virtual Scroll Component"
-Cohesion: 0.12
-Nodes (16): description, title, balance, expense, income, insights, period, description (+8 more)
+Cohesion: 0.06
+Nodes (34): description, title, description, title, dashboard, balance, charts, expense (+26 more)
 
 ### Community 21 - "Budget Limits and Alerts"
 Cohesion: 0.50
@@ -295,8 +292,8 @@ Cohesion: 0.17
 Nodes (11): Aplikasi Web Frontend Family Finance, Asisten Keuangan AI & Sinkronisasi API Key (Gemini & Supabase), Catatan Arsitektur & Desain, Eksport Laporan Client-Side, Global State (Pinia), Integritas Sistem & Visual Guardrail, Notifikasi Toast Real-Time, Penanganan Event Native Vue (+3 more)
 
 ### Community 29 - "Report Generation and Export"
-Cohesion: 0.10
-Nodes (29): balance, description, title, expense, income, transfer, description, title (+21 more)
+Cohesion: 0.09
+Nodes (31): accounts, accountName, accountNamePlaceholder, addAccount, balance, balancePlaceholder, editAccount, subtitle (+23 more)
 
 ### Community 30 - "Social Media Icons"
 Cohesion: 0.15
@@ -373,10 +370,6 @@ Nodes (29): checkSubscriptionState(), isId, isSubscribed, isSupported, loading, 
 ### Community 68 - "Registration Page View"
 Cohesion: 0.60
 Nodes (5): type, type, bank, cash, e_wallet
-
-### Community 78 - "Community 78"
-Cohesion: 0.14
-Nodes (14): dashboard, expenseByCategory, expenseTrend, incomeVsExpense, insightsNew, monthlyExpense, monthlyIncome, monthlyNet (+6 more)
 
 ### Community 105 - "Community 105"
 Cohesion: 0.18
@@ -458,17 +451,9 @@ Nodes (15): Auditing & Theming Compatibility (2026-06-11), Build, Feature 1: �
 Cohesion: 0.15
 Nodes (13): goals, addGoal, completedManuallyError, currentAmount, deadline, editGoal, linkedAccount, linkedAccountInfo (+5 more)
 
-### Community 131 - "Community 131"
-Cohesion: 0.22
-Nodes (9): accounts, accountName, accountNamePlaceholder, addAccount, balancePlaceholder, editAccount, subtitle, title (+1 more)
-
 ### Community 132 - "Community 132"
 Cohesion: 0.09
 Nodes (27): description, title, description, title, charts, description, title, description (+19 more)
-
-### Community 134 - "Community 134"
-Cohesion: 0.14
-Nodes (14): dashboard, expenseByCategory, expenseTrend, incomeVsExpense, insightsNew, monthlyExpense, monthlyIncome, monthlyNet (+6 more)
 
 ### Community 135 - "Community 135"
 Cohesion: 0.25
@@ -574,9 +559,9 @@ Nodes (3): title, profile, settings
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `tours` connect `Community 113` to `Community 132`, `Community 164`, `Community 134`, `Community 167`, `Transaction and Budget Logic`, `Budgets Page View`, `Community 107`, `Reports Page View`, `Budget Tour Steps`, `Financial Data Export`, `Community 111`, `Community 153`, `Community 26`, `Community 125`, `Social Media Icons`?**
+- **Why does `tours` connect `Community 113` to `Community 132`, `Community 164`, `Transaction and Budget Logic`, `Community 167`, `Budgets Page View`, `Community 107`, `Reports Page View`, `Financial Data Export`, `Budget Tour Steps`, `Community 111`, `Community 153`, `Community 26`, `Community 125`, `Social Media Icons`?**
   _High betweenness centrality (0.058) - this node is a cross-community bridge._
-- **Why does `tours` connect `Savings Goals Management` to `Community 128`, `Community 160`, `Community 130`, `Community 131`, `Community 162`, `Family Member Roles`, `Authentication Forms`, `Database Backup Script`, `Community 78`, `Community 110`, `Community 143`, `Community 114`, `State and Tour Management`, `Virtual Scroll Component`, `Community 152`, `Report Generation and Export`, `Community 158`?**
+- **Why does `tours` connect `Savings Goals Management` to `Community 128`, `Community 160`, `Community 130`, `Community 162`, `Family Member Roles`, `Authentication Forms`, `Database Backup Script`, `Community 110`, `Community 143`, `Community 114`, `State and Tour Management`, `Virtual Scroll Component`, `Community 152`, `Report Generation and Export`, `Community 158`?**
   _High betweenness centrality (0.049) - this node is a cross-community bridge._
 - **Why does `common` connect `Common UI Actions` to `Community 164`, `Registration Page View`, `Community 106`, `Budget Tour Steps`, `Community 120`, `Community 26`?**
   _High betweenness centrality (0.045) - this node is a cross-community bridge._

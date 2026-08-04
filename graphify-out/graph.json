@@ -4070,7 +4070,7 @@
       "source_location": "L119",
       "_origin": "ast",
       "id": "locales_en_dashboard",
-      "community": 78,
+      "community": 20,
       "norm_label": "dashboard"
     },
     {
@@ -4090,7 +4090,7 @@
       "source_location": "L121",
       "_origin": "ast",
       "id": "locales_en_dashboard_periodsub",
-      "community": 78,
+      "community": 20,
       "norm_label": "periodsub"
     },
     {
@@ -4110,7 +4110,7 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "locales_en_dashboard_insightsnew",
-      "community": 78,
+      "community": 20,
       "norm_label": "insightsnew"
     },
     {
@@ -4120,7 +4120,7 @@
       "source_location": "L124",
       "_origin": "ast",
       "id": "locales_en_dashboard_totalbalance",
-      "community": 78,
+      "community": 20,
       "norm_label": "totalbalance"
     },
     {
@@ -4130,7 +4130,7 @@
       "source_location": "L125",
       "_origin": "ast",
       "id": "locales_en_dashboard_monthlyincome",
-      "community": 78,
+      "community": 20,
       "norm_label": "monthlyincome"
     },
     {
@@ -4140,7 +4140,7 @@
       "source_location": "L126",
       "_origin": "ast",
       "id": "locales_en_dashboard_monthlyexpense",
-      "community": 78,
+      "community": 20,
       "norm_label": "monthlyexpense"
     },
     {
@@ -4150,7 +4150,7 @@
       "source_location": "L127",
       "_origin": "ast",
       "id": "locales_en_dashboard_monthlynet",
-      "community": 78,
+      "community": 20,
       "norm_label": "monthlynet"
     },
     {
@@ -4160,7 +4160,7 @@
       "source_location": "L128",
       "_origin": "ast",
       "id": "locales_en_dashboard_netincome",
-      "community": 78,
+      "community": 20,
       "norm_label": "netincome"
     },
     {
@@ -4170,7 +4170,7 @@
       "source_location": "L129",
       "_origin": "ast",
       "id": "locales_en_dashboard_expensebycategory",
-      "community": 78,
+      "community": 20,
       "norm_label": "expensebycategory"
     },
     {
@@ -4180,7 +4180,7 @@
       "source_location": "L130",
       "_origin": "ast",
       "id": "locales_en_dashboard_incomevsexpense",
-      "community": 78,
+      "community": 20,
       "norm_label": "incomevsexpense"
     },
     {
@@ -4190,7 +4190,7 @@
       "source_location": "L131",
       "_origin": "ast",
       "id": "locales_en_dashboard_expensetrend",
-      "community": 78,
+      "community": 20,
       "norm_label": "expensetrend"
     },
     {
@@ -4200,7 +4200,7 @@
       "source_location": "L132",
       "_origin": "ast",
       "id": "locales_en_dashboard_networthgrowth",
-      "community": 78,
+      "community": 20,
       "norm_label": "networthgrowth"
     },
     {
@@ -4210,7 +4210,7 @@
       "source_location": "L133",
       "_origin": "ast",
       "id": "locales_en_dashboard_notransactions",
-      "community": 78,
+      "community": 20,
       "norm_label": "notransactions"
     },
     {
@@ -4220,7 +4220,7 @@
       "source_location": "L134",
       "_origin": "ast",
       "id": "locales_en_dashboard_nonetworth",
-      "community": 78,
+      "community": 20,
       "norm_label": "nonetworth"
     },
     {
@@ -4860,7 +4860,7 @@
       "source_location": "L203",
       "_origin": "ast",
       "id": "locales_en_accounts",
-      "community": 131,
+      "community": 29,
       "norm_label": "accounts"
     },
     {
@@ -4870,7 +4870,7 @@
       "source_location": "L204",
       "_origin": "ast",
       "id": "locales_en_accounts_title",
-      "community": 131,
+      "community": 29,
       "norm_label": "title"
     },
     {
@@ -4880,7 +4880,7 @@
       "source_location": "L205",
       "_origin": "ast",
       "id": "locales_en_accounts_subtitle",
-      "community": 131,
+      "community": 29,
       "norm_label": "subtitle"
     },
     {
@@ -4890,7 +4890,7 @@
       "source_location": "L206",
       "_origin": "ast",
       "id": "locales_en_accounts_addaccount",
-      "community": 131,
+      "community": 29,
       "norm_label": "addaccount"
     },
     {
@@ -4900,7 +4900,7 @@
       "source_location": "L207",
       "_origin": "ast",
       "id": "locales_en_accounts_editaccount",
-      "community": 131,
+      "community": 29,
       "norm_label": "editaccount"
     },
     {
@@ -4910,7 +4910,7 @@
       "source_location": "L208",
       "_origin": "ast",
       "id": "locales_en_accounts_accountname",
-      "community": 131,
+      "community": 29,
       "norm_label": "accountname"
     },
     {
@@ -4920,7 +4920,7 @@
       "source_location": "L209",
       "_origin": "ast",
       "id": "locales_en_accounts_accountnameplaceholder",
-      "community": 131,
+      "community": 29,
       "norm_label": "accountnameplaceholder"
     },
     {
@@ -4980,7 +4980,7 @@
       "source_location": "L216",
       "_origin": "ast",
       "id": "locales_en_accounts_balanceplaceholder",
-      "community": 131,
+      "community": 29,
       "norm_label": "balanceplaceholder"
     },
     {
@@ -4990,7 +4990,7 @@
       "source_location": "L217",
       "_origin": "ast",
       "id": "locales_en_accounts_walletdetails",
-      "community": 131,
+      "community": 29,
       "norm_label": "walletdetails"
     },
     {
@@ -6270,7 +6270,7 @@
       "source_location": "L384",
       "_origin": "ast",
       "id": "locales_en_dashboard_charts",
-      "community": 29,
+      "community": 20,
       "norm_label": "charts"
     },
     {
@@ -6280,7 +6280,7 @@
       "source_location": "L385",
       "_origin": "ast",
       "id": "locales_en_charts_title",
-      "community": 29,
+      "community": 20,
       "norm_label": "title"
     },
     {
@@ -6290,7 +6290,7 @@
       "source_location": "L386",
       "_origin": "ast",
       "id": "locales_en_charts_description",
-      "community": 29,
+      "community": 20,
       "norm_label": "description"
     },
     {
@@ -6430,7 +6430,7 @@
       "source_location": "L406",
       "_origin": "ast",
       "id": "locales_en_transactions_table",
-      "community": 29,
+      "community": 4,
       "norm_label": "table"
     },
     {
@@ -6440,7 +6440,7 @@
       "source_location": "L407",
       "_origin": "ast",
       "id": "locales_en_table_title",
-      "community": 29,
+      "community": 4,
       "norm_label": "title"
     },
     {
@@ -6450,7 +6450,7 @@
       "source_location": "L408",
       "_origin": "ast",
       "id": "locales_en_table_description",
-      "community": 29,
+      "community": 4,
       "norm_label": "description"
     },
     {
@@ -6760,7 +6760,7 @@
       "source_location": "L488",
       "_origin": "ast",
       "id": "locales_en_reports_charts",
-      "community": 29,
+      "community": 20,
       "norm_label": "charts"
     },
     {
@@ -8360,7 +8360,7 @@
       "source_location": "L119",
       "_origin": "ast",
       "id": "locales_id_dashboard",
-      "community": 134,
+      "community": 15,
       "norm_label": "dashboard"
     },
     {
@@ -8380,7 +8380,7 @@
       "source_location": "L121",
       "_origin": "ast",
       "id": "locales_id_dashboard_periodsub",
-      "community": 134,
+      "community": 15,
       "norm_label": "periodsub"
     },
     {
@@ -8400,7 +8400,7 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "locales_id_dashboard_insightsnew",
-      "community": 134,
+      "community": 15,
       "norm_label": "insightsnew"
     },
     {
@@ -8410,7 +8410,7 @@
       "source_location": "L124",
       "_origin": "ast",
       "id": "locales_id_dashboard_totalbalance",
-      "community": 134,
+      "community": 15,
       "norm_label": "totalbalance"
     },
     {
@@ -8420,7 +8420,7 @@
       "source_location": "L125",
       "_origin": "ast",
       "id": "locales_id_dashboard_monthlyincome",
-      "community": 134,
+      "community": 15,
       "norm_label": "monthlyincome"
     },
     {
@@ -8430,7 +8430,7 @@
       "source_location": "L126",
       "_origin": "ast",
       "id": "locales_id_dashboard_monthlyexpense",
-      "community": 134,
+      "community": 15,
       "norm_label": "monthlyexpense"
     },
     {
@@ -8440,7 +8440,7 @@
       "source_location": "L127",
       "_origin": "ast",
       "id": "locales_id_dashboard_monthlynet",
-      "community": 134,
+      "community": 15,
       "norm_label": "monthlynet"
     },
     {
@@ -8450,7 +8450,7 @@
       "source_location": "L128",
       "_origin": "ast",
       "id": "locales_id_dashboard_netincome",
-      "community": 134,
+      "community": 15,
       "norm_label": "netincome"
     },
     {
@@ -8460,7 +8460,7 @@
       "source_location": "L129",
       "_origin": "ast",
       "id": "locales_id_dashboard_expensebycategory",
-      "community": 134,
+      "community": 15,
       "norm_label": "expensebycategory"
     },
     {
@@ -8470,7 +8470,7 @@
       "source_location": "L130",
       "_origin": "ast",
       "id": "locales_id_dashboard_incomevsexpense",
-      "community": 134,
+      "community": 15,
       "norm_label": "incomevsexpense"
     },
     {
@@ -8480,7 +8480,7 @@
       "source_location": "L131",
       "_origin": "ast",
       "id": "locales_id_dashboard_expensetrend",
-      "community": 134,
+      "community": 15,
       "norm_label": "expensetrend"
     },
     {
@@ -8490,7 +8490,7 @@
       "source_location": "L132",
       "_origin": "ast",
       "id": "locales_id_dashboard_networthgrowth",
-      "community": 134,
+      "community": 15,
       "norm_label": "networthgrowth"
     },
     {
@@ -8500,7 +8500,7 @@
       "source_location": "L133",
       "_origin": "ast",
       "id": "locales_id_dashboard_notransactions",
-      "community": 134,
+      "community": 15,
       "norm_label": "notransactions"
     },
     {
@@ -8510,7 +8510,7 @@
       "source_location": "L134",
       "_origin": "ast",
       "id": "locales_id_dashboard_nonetworth",
-      "community": 134,
+      "community": 15,
       "norm_label": "nonetworth"
     },
     {
@@ -11907,7 +11907,7 @@
       "label": "if()",
       "file_type": "code",
       "source_file": "frontend/src/pages/TransactionsPage.vue",
-      "source_location": "L1105",
+      "source_location": "L1126",
       "_origin": "ast",
       "id": "pages_transactionspage_if",
       "community": 89,
@@ -35631,9 +35631,9 @@
       "source_file": "frontend/src/pages/TransactionsPage.vue",
       "source_location": "L1105",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "pages_transactionspage",
-      "target": "pages_transactionspage_if",
-      "confidence_score": 1.0
+      "target": "pages_transactionspage_if"
     },
     {
       "relation": "contains",
@@ -39171,5 +39171,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "3b1fe82f261503de2dba021c1faf4d5a7252803d"
+  "built_at_commit": "68d4a34cc904a08ca65cd51e748bf336784af37c"
 }
