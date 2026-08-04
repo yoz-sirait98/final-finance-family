@@ -55,7 +55,9 @@
                 </div>
               </template>
               <template v-else>
-                <span class="fw-semibold text-muted">Rp {{ Number(item.price || 0).toLocaleString('id-ID') }}</span>
+                <span class="fw-semibold" :class="Number(item.price) < 0 ? 'text-danger' : 'text-muted'">
+                  {{ Number(item.price) < 0 ? `-Rp ${Math.abs(Number(item.price)).toLocaleString('id-ID')}` : `Rp ${Number(item.price || 0).toLocaleString('id-ID')}` }}
+                </span>
               </template>
 
               <!-- Action Buttons: visible for 'progress' & 'done', hidden for 'locked' -->
@@ -457,12 +459,6 @@ async function doDeleteItem() {
 // ===== Choice Modal Logic =====
 
 function openChoiceModal() {
-  // Validate prices
-  const missingPrices = items.value.some(i => !i.price || parseFloat(i.price) <= 0);
-  if (missingPrices) {
-    toast.warning(localeStore.t('shopping.zeroPriceWarning') || 'All items must have a price. Please fill the price or delete the item.');
-    return;
-  }
   selectedChoice.value = '';
   showChoiceModal.value = true;
 }
@@ -471,6 +467,12 @@ async function proceedWithChoice() {
   if (selectedChoice.value === 'done') {
     await markAsDoneOnly();
   } else if (selectedChoice.value === 'checkout') {
+    // Validate prices for checkout transaction
+    const missingPrices = items.value.some(i => !i.price || parseFloat(i.price) <= 0);
+    if (missingPrices) {
+      toast.warning(localeStore.t('shopping.zeroPriceWarning') || 'All items must have a price before recording a transaction. Please fill prices or delete unpriced items.');
+      return;
+    }
     showChoiceModal.value = false;
     openCheckoutModal();
   }
@@ -480,7 +482,7 @@ async function markAsDoneOnly() {
   isMarkingDone.value = true;
   try {
     await shoppingPlanService.markAsDone(planId);
-    await sendCheckoutNotification();
+    sendCheckoutNotification().catch(err => console.warn('WA checkout notice failed:', err));
     pushDispatcherService.dispatchPushNotification({
       templateKey: 'SHOPPING_PLAN_DONE',
       params: { location: plan.value?.location || 'Store' },
@@ -532,7 +534,7 @@ async function processCheckout() {
       transaction_date: checkoutForm.value.transaction_date
     });
     
-    await sendCheckoutNotification();
+    sendCheckoutNotification().catch(err => console.warn('WA checkout notice failed:', err));
 
     toast.success('Checkout successful!');
     showCheckoutModal.value = false;

@@ -144,9 +144,9 @@
               <td>
                 <div class="btn-group btn-group-sm">
                   <button v-if="tx.shopping_plans && tx.shopping_plans.length" class="btn btn-outline-info" @click="goToShoppingDetail(tx.shopping_plans[0].id)" title="View Shopping Plan"><i class="bi bi-cart"></i></button>
-                  <button class="btn btn-outline-success" @click="openDuplicate(tx)" title="Duplicate" :disabled="getTransactionModule(tx) !== 'Manual'"><i class="bi bi-copy"></i></button>
-                  <button class="btn btn-outline-primary" @click="openEdit(tx)" :title="$t('common.edit')" :disabled="getTransactionModule(tx) !== 'Manual' && getTransactionModule(tx) !== 'Transfer'"><i class="bi bi-pencil"></i></button>
-                  <button class="btn btn-outline-danger" @click="confirmDelete(tx)" :title="$t('common.delete')" :disabled="getTransactionModule(tx) !== 'Manual' && getTransactionModule(tx) !== 'Transfer'"><i class="bi bi-trash"></i></button>
+                  <button class="btn btn-outline-success" @click="openDuplicate(tx)" title="Duplicate" :disabled="getTransactionModule(tx) === 'Transfer' || getTransactionModule(tx) === 'Shopping List'"><i class="bi bi-copy"></i></button>
+                  <button class="btn btn-outline-primary" @click="openEdit(tx)" :title="$t('common.edit')" :disabled="getTransactionModule(tx) === 'Transfer'"><i class="bi bi-pencil"></i></button>
+                  <button class="btn btn-outline-danger" @click="confirmDelete(tx)" :title="$t('common.delete')"><i class="bi bi-trash"></i></button>
                 </div>
               </td>
             </tr>
@@ -324,6 +324,51 @@
                 <pre class="mb-0 small text-muted" style="white-space:pre-wrap;font-size:0.72rem;">{{ scanRawText }}</pre>
               </div>
             </div>
+
+            <!-- Scanned Receipt Items (Auto Shopping Plan) -->
+            <div v-if="scannedItems && scannedItems.length > 0" class="mb-3 border rounded p-2 bg-light">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <label class="form-label fw-bold mb-0 text-primary small">
+                  <i class="bi bi-cart-check me-1"></i>
+                  {{ localeStore.currentLocale === 'id' ? 'Daftar Item Struk (Auto Shopping Plan)' : 'Receipt Line Items (Auto Shopping Plan)' }}
+                </label>
+                <span class="badge bg-info text-dark">{{ scannedItems.length }} {{ localeStore.currentLocale === 'id' ? 'Item' : 'Items' }}</span>
+              </div>
+              <div class="alert alert-info py-1 px-2 mb-2" style="font-size:0.75rem;">
+                <i class="bi bi-info-circle me-1"></i>
+                {{ localeStore.currentLocale === 'id' ? 'Shopping Plan akan otomatis dibuat dari item-item ini setelah transaksi disimpan.' : 'A Shopping Plan will automatically be created with these items when saved.' }}
+              </div>
+              <div style="max-height: 220px; overflow-y: auto;">
+                <div v-for="(item, idx) in scannedItems" :key="idx" class="p-1 mb-1 bg-white rounded border shadow-sm">
+                  <div class="d-flex align-items-center gap-1">
+                    <span class="badge bg-secondary px-1" style="font-size:0.68rem;">{{ idx + 1 }}</span>
+                    <input v-model="item.name" class="form-control form-control-sm border-0 fw-semibold" style="flex: 1; min-width: 0;" :placeholder="localeStore.currentLocale === 'id' ? 'Nama Item' : 'Item Name'" />
+                    <div class="input-group input-group-sm flex-shrink-0" style="width: 60px;">
+                      <input type="number" min="1" v-model.number="item.qty" class="form-control px-1 text-center" style="font-size:0.8rem;" title="Qty" />
+                    </div>
+                    <div class="input-group input-group-sm flex-shrink-0" style="width: 95px;">
+                      <span class="input-group-text px-1 text-muted" style="font-size:0.68rem;">Rp</span>
+                      <input type="number" v-model.number="item.price" class="form-control px-1 text-end fw-bold text-primary" style="font-size:0.8rem;" placeholder="Harga" />
+                    </div>
+                    <button type="button" class="btn btn-sm btn-outline-danger border-0 p-1 flex-shrink-0" @click="scannedItems.splice(idx, 1)">
+                      <i class="bi bi-x-lg"></i>
+                    </button>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center px-1 mt-1 text-muted" style="font-size:0.7rem;">
+                    <span v-if="item.qty > 1 && item.price > 0">
+                      <i class="bi bi-calculator me-1"></i>{{ item.qty }}x @ {{ formatCompactItemPrice(Math.round(item.price / item.qty)) }}
+                    </span>
+                    <span v-else></span>
+                    <span v-if="item.price > 0" class="badge bg-light text-dark border py-0 px-1" style="font-size:0.68rem;">
+                      {{ formatCompactItemPrice(item.price) }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <button type="button" class="btn btn-sm btn-outline-primary mt-2" @click="scannedItems.push({ name: '', price: 0, qty: 1 })">
+                <i class="bi bi-plus me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Tambah Item' : 'Add Item' }}
+              </button>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" @click="showTxModal = false">{{ $t('common.cancel') }}</button>
@@ -482,6 +527,7 @@ import { scanReceipt } from '../utils/receiptScanner';
 import { useScannerMapping } from '../composables/useScannerMapping';
 import { formatCurrency } from '../utils/format';
 import { transactionService } from '../services/transactionService';
+import { shoppingPlanService } from '../services/shoppingPlanService';
 import { memberService } from '../services/memberService';
 import { accountService } from '../services/accountService';
 import { categoryService } from '../services/categoryService';
@@ -530,6 +576,7 @@ const scanRawText        = ref('');     // raw OCR output for review panel
 const scanProcessedImage = ref('');     // base64 thumbnail of OpenCV preprocessed image
 const showRawOcrPanel    = ref(false);  // toggle for collapsible raw OCR panel
 const possibleDuplicate  = ref(null); // { description, amount, date } if duplicate detected
+const scannedItems       = ref([]);     // receipt line items extracted from scan
 
 // Receipt image (pending upload after scan, or saved URL for existing record)
 const pendingReceiptFile = ref(null);   // raw File object from scanner
@@ -557,6 +604,20 @@ function goToShoppingDetail(planId) {
 function fmt(n) {
   const sign = n < 0 ? '-' : '';
   return sign + 'Rp ' + Math.abs(Number(n)).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
+
+function formatCompactItemPrice(price) {
+  const p = Number(price) || 0;
+  if (p === 0) return 'Rp 0';
+  if (p >= 1000000) {
+    const m = p / 1000000;
+    return m % 1 === 0 ? `Rp ${m}jt` : `Rp ${m.toFixed(1)}jt`;
+  }
+  if (p >= 1000) {
+    const k = p / 1000;
+    return k % 1 === 0 ? `Rp ${k}rb` : `Rp ${k.toFixed(1)}rb`;
+  }
+  return `Rp ${p}`;
 }
 
 function getAmountClass(tx) {
@@ -707,6 +768,7 @@ function openCreate() {
   scanRawText.value     = '';
   showRawOcrPanel.value = false;
   possibleDuplicate.value = null;
+  scannedItems.value = [];
   form.value = {
     type: 'expense',
     member_id: '',
@@ -798,6 +860,29 @@ async function onReceiptSelected(event) {
     receiptUrlToDelete.value    = '';
     pendingReceiptFile.value    = file;
     pendingReceiptPreview.value = URL.createObjectURL(file);
+    let parsedItems = (data.items && Array.isArray(data.items))
+      ? data.items.map(i => ({ name: i.name || '', price: Number(i.price || 0), qty: Number(i.qty || 1) }))
+      : [];
+
+    // ── Automatic Receipt Discount / Savings Handling ──────────────────────
+    // If gross item prices exceed net scanTotalAmount (e.g. items sum 58,600 vs net paid 50,700),
+    // append a discount line item so the Shopping Plan total matches the net payment.
+    if (parsedItems.length > 0 && scanTotalAmount > 0) {
+      const itemsSum = parsedItems.reduce((sum, i) => sum + Number(i.price || 0), 0);
+      const diff = itemsSum - scanTotalAmount;
+      if (diff > 0) {
+        const hasDiscount = parsedItems.some(i => Number(i.price) < 0 || /(diskon|discount|potongan|promo|voucher|hemat|saving)/i.test(i.name));
+        if (!hasDiscount) {
+          parsedItems.push({
+            name: localeStore.currentLocale === 'id' ? 'Diskon / Potongan' : 'Discount / Promo',
+            price: -diff,
+            qty: 1
+          });
+        }
+      }
+    }
+
+    scannedItems.value = parsedItems;
     form.value = {
       type:             'expense',
       member_id:        matchedMemberId,
@@ -826,6 +911,7 @@ async function openEdit(tx) {
   savedReceiptSignedUrl.value = '';
   receiptUrlToDelete.value = '';
   wasBudgetExceeded.value = false;
+  scannedItems.value = [];
   form.value = {
     type: tx.type,
     member_id: tx.member?.id,
@@ -928,10 +1014,37 @@ async function doSaveTransaction() {
       }
     }
 
+    let savedTx = null;
     if (editingId.value) {
-      await transactionService.update(editingId.value, payload);
+      const res = await transactionService.update(editingId.value, payload);
+      savedTx = res?.data?.data;
     } else {
-      await transactionService.create(payload);
+      const res = await transactionService.create(payload);
+      savedTx = res?.data?.data;
+    }
+
+    // ── Auto-create Shopping Plan if scanned receipt items exist ───────────
+    if (scannedItems.value.length > 0 && savedTx?.id) {
+      try {
+        const locationName = payload.description || scanMerchantName || 'Supermarket';
+        await shoppingPlanService.createFromReceipt(
+          locationName,
+          scannedItems.value,
+          payload.member_id,
+          payload.receipt_url || null,
+          savedTx.id
+        );
+
+        // Re-enforce transaction amount to net grand total (payload.amount),
+        // overriding any gross sum calculations from database triggers.
+        await supabase.from('transactions').update({ amount: payload.amount }).eq('id', savedTx.id);
+
+        toast.info(localeStore.currentLocale === 'id'
+          ? 'Shopping Plan otomatis dibuat dari item struk!'
+          : 'Shopping Plan auto-created from receipt items!');
+      } catch (spErr) {
+        console.error('[Scanner] Failed to auto-create shopping plan:', spErr);
+      }
     }
 
     // Clean up old receipt image from Supabase Storage if user removed/replaced it
@@ -949,6 +1062,7 @@ async function doSaveTransaction() {
     scanRawText.value       = '';
     showRawOcrPanel.value   = false;
     possibleDuplicate.value = null;
+    scannedItems.value      = [];
     fetchData();
     budgetStore.fetchAlerts();
 
@@ -987,6 +1101,13 @@ async function doDelete() {
   deleting.value = true;
   const receiptPathToClean = deletingTx.value.receipt_url || '';
   try {
+    // If transaction has linked shopping plans, delete linked shopping plans first
+    if (deletingTx.value.shopping_plans && deletingTx.value.shopping_plans.length > 0) {
+      for (const sp of deletingTx.value.shopping_plans) {
+        await supabase.from('shopping_plans').delete().eq('id', sp.id);
+      }
+    }
+
     await transactionService.delete(deletingTx.value.id);
     // Clean up receipt image from storage after transaction row is deleted
     if (receiptPathToClean) {

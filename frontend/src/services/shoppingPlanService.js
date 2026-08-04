@@ -86,7 +86,7 @@ export const shoppingPlanService = {
    * @param {string} createdBy - Member ID who scanned the receipt
    * @returns plan + items
    */
-  createFromReceipt: async (location, items, createdBy, receiptUrl = null) => {
+  createFromReceipt: async (location, items, createdBy, receiptUrl = null, transactionId = null) => {
     const family_id = useAuthStore().familyId;
 
     const insertPayload = {
@@ -97,6 +97,7 @@ export const shoppingPlanService = {
       assigned_members: []
     };
     if (receiptUrl) insertPayload.receipt_url = receiptUrl;
+    if (transactionId) insertPayload.transaction_id = transactionId;
 
     // 1. Create the plan with status = locked
     const { data: plan, error: planErr } = await supabase.from('shopping_plans')
@@ -122,16 +123,12 @@ export const shoppingPlanService = {
   },
 
   /**
-   * Delete a shopping plan. Plans with status 'locked' CANNOT be deleted.
+   * Delete a shopping plan (and any linked transaction).
    */
   delete: async (id) => {
-    // 0. Guard: check status
+    // 0. Fetch plan to check for linked transaction
     const { data: plan, error: fetchErr } = await supabase.from('shopping_plans').select('status, transaction_id').eq('id', id).single();
     if (fetchErr && fetchErr.code !== 'PGRST116') throw fetchErr;
-
-    if (plan && plan.status === 'locked') {
-      throw new Error('Locked shopping plans cannot be deleted.');
-    }
 
     // 1. If it has a transaction, delete the transaction
     if (plan && plan.transaction_id) {

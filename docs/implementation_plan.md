@@ -1,53 +1,43 @@
 # Implementation Plan
 
-## Receipt Scanner Module — Full Rebuild (July 2026)
+## Auto-Create Shopping Plan from Transaction Receipt Scanning (August 2026)
 
 ### Problem Area & Target Architecture
 
 | Problem Area | Current State | Target State |
 |---|---|---|
-| **Architecture** | Logic scattered across 3 files (`receiptScanner.js`, `opencvPreprocess.js`, `receiptItemParser.js`) | Single composable `useReceiptScanner` + clean pipeline utility files |
-| **Image preprocessing** | Fixed 10% crop + `blockSize=31` threshold | Adaptive deskew → auto-crop to receipt bounding box → CLAHE-equivalent contrast |
-| **Date parsing** | Fragile regex + hardcoded `currentMonth` correction | Candidate-scoring pipeline — pick most plausible date from all candidates |
-| **Amount parsing** | 3 heuristic passes; large amounts misidentified if OCR splits a line | Multi-pass with per-line scoring: keyword density + position weight + range filter |
-| **Merchant matching** | Hardcoded `if/else` + merchant JSON regex scan | DB-matched merchant object + fuzzy fallback → return structured `{ name, category, brandKey }` |
-| **Item parsing** | Works, but has no column-detection (left-side noise items added) | Filter out margin noise, extract unit prices, quantities, and line totals cleanly |
-| **Shared logic** | `TransactionsPage.vue` duplicates 100+ lines of account/category/member mapping | Extract into `useScannerMapping.js` composable — reused by both pages |
-| **UX** | Progress bar only; no preview of preprocessed image | Show preprocessed image thumbnail next to raw OCR panel in review modal |
+| **Receipt Scan Entry Point** | Receipt scanning is available on both Transactions Page and Shopping Plan Page | Scanning is consolidated into Transactions Page; removed from Shopping Plan Page |
+| **Shopping Plan Creation from Receipt** | User had to manually scan from Shopping Plan Page to generate a plan from receipt | When scanning & saving a transaction with item list on Transactions Page, a Shopping Plan is automatically created with items |
+| **Transaction & Plan Linkage** | Manual scan on Shopping Page had no initial expense transaction link | Shopping Plan is automatically created with status `locked` and linked directly to the saved `transaction_id` |
+| **Item Review UX** | Item review was only available in Shopping Page scan modal | Item list review/editing section integrated into Transactions Page Transaction Modal when items are scanned |
 
 ---
 
 ### Proposed Changes
 
-#### Layer 1: Core Pipeline Utils
-* **`frontend/src/utils/opencvPreprocess.js`**:
-  * Add auto-contour crop (detecting receipt paper rectangle).
-  * Enhance contrast using adaptive binarization + Gaussian blur.
-  * Export both canvas AND base64 data URL for review modal preview.
-* **`frontend/src/utils/receiptItemParser.js`**:
-  * Improve quantity/unit-price extraction (e.g., `3x @ Rp 46,500`).
-  * Filter discount lines (`disc:`, `saving`).
-  * Robust deduplication merging both prices and quantities.
-* **`frontend/src/utils/receiptScanner.js`**:
-  * Replace date typo fixer with Candidate Scoring Engine.
-  * Return structured object: `{ merchant, amount, date, items, payment, member, rawText, processedImageDataUrl, fieldConfidence, imageFile }`.
+#### Frontend Services & Composable
+* **`frontend/src/services/shoppingPlanService.js`**:
+  * Extend `createFromReceipt(location, items, createdBy, receiptUrl, transactionId)` to support passing optional `transactionId`.
+  * Store `transaction_id` on the inserted `shopping_plans` record.
 
-#### Layer 2: Shared Composable
-* **[NEW] `frontend/src/composables/useScannerMapping.js`**:
-  * Extract account, category, and member mapping logic out of Vue components into a reusable composable.
-
-#### Layer 3: Page Integration
+#### Transactions Page
 * **`frontend/src/pages/TransactionsPage.vue`**:
-  * Consume new `scanReceipt()` structure and `useScannerMapping`.
-  * Display preprocessed image thumbnail in raw OCR modal.
-  * Support savings amount badge.
+  * Add reactive state `scannedItems = ref([])` to hold OCR-detected items from `scanReceipt()`.
+  * Render an editable item list review component in Transaction Modal when `scannedItems.length > 0`.
+  * In `doSaveTransaction()`, after transaction creation, automatically invoke `shoppingPlanService.createFromReceipt()` if `scannedItems.length > 0`.
+
+#### Shopping Plan Page
 * **`frontend/src/pages/ShoppingPage.vue`**:
-  * Consume pre-parsed `result.items` directly.
-  * Show quantity and per-unit price calculations in receipt review modal.
+  * Remove "Scan Struk / Scan Receipt" button, file input, and receipt review modal.
+  * Clean up unused receipt scanning methods, reactive states, and imports.
 
 ---
 
 ## Past Features History
+
+### Receipt Scanner Module — Full Rebuild (July 2026)
+- Consolidated scanner logic into `useReceiptScanner` and `useScannerMapping` composables.
+- Added adaptive binarization preprocessing and candidate-scoring date engine.
 
 ### WhatsApp Checkout Notifications
 - Added automatic WhatsApp notification dispatch when completing checkout in `ShoppingDetailPage.vue`.
