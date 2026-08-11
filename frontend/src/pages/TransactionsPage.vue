@@ -36,8 +36,281 @@
       </div>
     </div>
 
-    <!-- Filters -->
-    <div id="tour-tx-filters" class="table-card mb-3">
+    <!-- ===== MOBILE VIEW CONTAINER (d-md-none) ===== -->
+    <div class="mobile-tx-container d-md-none mb-3">
+      <!-- Mobile KPI Banner -->
+      <div class="mobile-kpi-banner mb-3">
+        <div class="row g-1 text-center">
+          <div class="col-4 border-end border-secondary border-opacity-25">
+            <div class="kpi-label text-success"><i class="bi bi-arrow-down-left-circle me-1"></i>{{ $t('common.income') }}</div>
+            <div class="kpi-val text-success">{{ formatCurrency(mobileStats.income) }}</div>
+          </div>
+          <div class="col-4 border-end border-secondary border-opacity-25">
+            <div class="kpi-label text-danger"><i class="bi bi-arrow-up-right-circle me-1"></i>{{ $t('common.expense') }}</div>
+            <div class="kpi-val text-danger">{{ formatCurrency(mobileStats.expense) }}</div>
+          </div>
+          <div class="col-4">
+            <div class="kpi-label text-muted"><i class="bi bi-wallet2 me-1"></i>Net</div>
+            <div class="kpi-val" :class="mobileStats.net >= 0 ? 'text-success' : 'text-danger'">{{ formatCurrency(mobileStats.net) }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Search & View Mode Controls -->
+      <div class="mobile-toolbar mb-2">
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <div class="input-group input-group-sm flex-grow-1">
+            <span class="input-group-text bg-transparent border-end-0"><i class="bi bi-search text-muted"></i></span>
+            <input v-model="filters.search" class="form-control border-start-0" :placeholder="$t('transactions.searchPlaceholder')" @input="debouncedFetch" />
+            <button v-if="filters.search" class="btn btn-outline-secondary border-start-0" @click="filters.search = ''; fetchData()"><i class="bi bi-x"></i></button>
+          </div>
+          <button class="btn btn-sm" :class="showMobileFilterDrawer ? 'btn-primary' : 'btn-outline-secondary'" @click="showMobileFilterDrawer = !showMobileFilterDrawer">
+            <i class="bi bi-funnel"></i>
+            <span v-if="activeFilterCount > 0" class="badge bg-danger rounded-pill ms-1">{{ activeFilterCount }}</span>
+          </button>
+          <div class="btn-group btn-group-sm" role="group">
+            <button class="btn" :class="mobileViewMode === 'grouped' ? 'btn-primary' : 'btn-outline-secondary'" @click="mobileViewMode = 'grouped'" title="Grouped by Date">
+              <i class="bi bi-calendar-event"></i>
+            </button>
+            <button class="btn" :class="mobileViewMode === 'cards' ? 'btn-primary' : 'btn-outline-secondary'" @click="mobileViewMode = 'cards'" title="All Cards">
+              <i class="bi bi-grid"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Type Quick Filter Chips -->
+        <div class="d-flex align-items-center gap-1 overflow-auto py-1">
+          <button class="btn btn-xs filter-chip-btn" :class="filters.type === '' ? 'btn-primary' : 'btn-outline-secondary'" @click="filters.type = ''; fetchData()">
+            {{ $t('common.all') }}
+          </button>
+          <button class="btn btn-xs filter-chip-btn" :class="filters.type === 'income' ? 'btn-success' : 'btn-outline-success'" @click="filters.type = 'income'; fetchData()">
+            🟢 {{ $t('common.income') }}
+          </button>
+          <button class="btn btn-xs filter-chip-btn" :class="filters.type === 'expense' ? 'btn-danger' : 'btn-outline-danger'" @click="filters.type = 'expense'; fetchData()">
+            🔴 {{ $t('common.expense') }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Expandable Mobile Filter Drawer -->
+      <div v-if="showMobileFilterDrawer" class="mobile-filter-drawer mb-3">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h6 class="fw-bold mb-0 text-primary"><i class="bi bi-sliders me-1"></i>Filter Transaksi</h6>
+          <button class="btn btn-sm btn-link text-muted p-0 text-decoration-none" @click="showMobileFilterDrawer = false"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div class="row g-2">
+          <div class="col-6">
+            <label class="form-label small text-muted mb-1">{{ $t('common.category') }}</label>
+            <select v-model="filters.category_id" class="form-select form-select-sm" @change="fetchData">
+              <option value="">{{ $t('transactions.allCategories') }}</option>
+              <optgroup :label="$t('common.income')" v-if="incomeCategories.length">
+                <option v-for="c in incomeCategories" :key="c.id" :value="c.id">{{ c.name }}</option>
+              </optgroup>
+              <optgroup :label="$t('common.expense')" v-if="expenseCategories.length">
+                <option v-for="c in expenseCategories" :key="c.id" :value="c.id">{{ c.name }}</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="col-6">
+            <label class="form-label small text-muted mb-1">{{ $t('common.member') }}</label>
+            <select v-model="filters.member_id" class="form-select form-select-sm" @change="fetchData">
+              <option value="">{{ $t('transactions.allMembers') }}</option>
+              <template v-for="m in members" :key="m.id">
+                <option v-if="m.is_active || m.id === filters.member_id" :value="m.id">{{ m.name }}</option>
+              </template>
+            </select>
+          </div>
+          <div class="col-6">
+            <label class="form-label small text-muted mb-1">{{ $t('common.account') }}</label>
+            <select v-model="filters.account_id" class="form-select form-select-sm" @change="fetchData">
+              <option value="">{{ $t('transactions.allAccounts') }}</option>
+              <optgroup v-for="(group, type) in groupedAccounts" :key="type" :label="translateAccountType(type)">
+                <option v-for="a in group" :key="a.id" :value="a.id">{{ a.name }}</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="col-6">
+            <label class="form-label small text-muted mb-1">Per Halaman</label>
+            <select v-model="filters.per_page" class="form-select form-select-sm" @change="fetchData">
+              <option value="15">15 rows</option>
+              <option value="25">25 rows</option>
+              <option value="50">50 rows</option>
+            </select>
+          </div>
+          <div class="col-6">
+            <label class="form-label small text-muted mb-1">Dari Tanggal</label>
+            <input v-model="filters.date_from" type="date" class="form-control form-control-sm" @change="fetchData" />
+          </div>
+          <div class="col-6">
+            <label class="form-label small text-muted mb-1">Sampai Tanggal</label>
+            <input v-model="filters.date_to" type="date" class="form-control form-control-sm" @change="fetchData" />
+          </div>
+          <div class="col-12 d-flex justify-content-end gap-2 mt-2">
+            <button class="btn btn-sm btn-outline-secondary" @click="resetFilters"><i class="bi bi-x-lg me-1"></i>Reset</button>
+            <button class="btn btn-sm btn-primary" @click="showMobileFilterDrawer = false">Selesai</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      <div v-if="loading" class="py-3">
+        <SkeletonLoader type="table-row" v-for="i in 4" :key="i" class="mb-2" />
+      </div>
+
+      <!-- Empty State -->
+      <div v-else-if="!transactions.length" class="text-center py-5 text-muted table-card">
+        <i class="bi bi-receipt fs-1 d-block mb-2 text-muted opacity-50"></i>
+        <p class="mb-0">{{ $t('dashboard.noTransactions') }}</p>
+      </div>
+
+      <!-- Mobile Grouped Date View -->
+      <div v-else-if="mobileViewMode === 'grouped'">
+        <div v-for="group in groupedTransactionsByDate" :key="group.date" class="mb-3">
+          <div class="mobile-date-group-header d-flex justify-content-between align-items-center mb-1 px-1">
+            <span><i class="bi bi-calendar-blank me-1"></i>{{ formatGroupDateHeader(group.date) }}</span>
+            <div class="d-flex gap-2 font-monospace small">
+              <span v-if="group.income > 0" class="text-success">+{{ formatCompact(group.income) }}</span>
+              <span v-if="group.expense > 0" class="text-danger">-{{ formatCompact(group.expense) }}</span>
+            </div>
+          </div>
+
+          <div 
+            v-for="tx in group.items" 
+            :key="tx.id" 
+            class="mobile-tx-card" 
+            @click="toggleExpandTx(tx.id)"
+          >
+            <div class="d-flex align-items-center gap-2">
+              <div class="category-icon-avatar">
+                <i :class="getCategoryIconClass(tx)"></i>
+              </div>
+              <div class="flex-grow-1 min-w-0">
+                <div class="d-flex justify-content-between align-items-baseline">
+                  <h6 class="tx-title mb-0 text-truncate">
+                    {{ tx.category?.name || tx.description || 'Umum' }}
+                    <span v-if="tx.receipt_url" class="ms-1 text-info" style="cursor:pointer" title="Lihat Struk" @click.stop="openReceiptLightbox(tx)">📎</span>
+                  </h6>
+                  <div class="tx-amount ms-2" :class="getAmountClass(tx)">
+                    {{ formatAmountWithSign(tx) }}
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-1">
+                  <div class="tx-desc text-truncate me-2">
+                    {{ tx.description || tx.account?.name || '-' }}
+                  </div>
+                  <div class="d-flex align-items-center gap-1 flex-shrink-0">
+                    <span class="badge bg-secondary bg-opacity-25 text-dark border px-1" style="font-size:0.65rem">{{ getTransactionModule(tx) }}</span>
+                    <i class="bi text-muted ms-1" :class="expandedTxId === tx.id ? 'bi-chevron-up' : 'bi-chevron-down'" style="font-size:0.75rem"></i>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center gap-2 mt-1 text-muted" style="font-size:0.72rem">
+                  <span v-if="tx.member?.name"><i class="bi bi-person me-1"></i>{{ tx.member.name }}</span>
+                  <span v-if="tx.account?.name"><i class="bi bi-credit-card me-1"></i>{{ tx.account.name }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Action drawer on card tap -->
+            <div v-if="expandedTxId === tx.id" class="tx-action-drawer" @click.stop>
+              <div class="d-flex justify-content-end gap-1 flex-wrap">
+                <button v-if="tx.shopping_plans && tx.shopping_plans.length" class="btn btn-xs btn-outline-info" @click="goToShoppingDetail(tx.shopping_plans[0].id)">
+                  <i class="bi bi-cart me-1"></i>Plan
+                </button>
+                <button v-if="tx.receipt_url" class="btn btn-xs btn-outline-secondary" @click="openReceiptLightbox(tx)">
+                  <i class="bi bi-image me-1"></i>Struk
+                </button>
+                <button class="btn btn-xs btn-outline-success" @click="openDuplicate(tx)" :disabled="getTransactionModule(tx) === 'Transfer' || getTransactionModule(tx) === 'Shopping List'">
+                  <i class="bi bi-copy me-1"></i>Duplikat
+                </button>
+                <button class="btn btn-xs btn-outline-primary" @click="openEdit(tx)" :disabled="getTransactionModule(tx) === 'Transfer'">
+                  <i class="bi bi-pencil me-1"></i>Edit
+                </button>
+                <button class="btn btn-xs btn-outline-danger" @click="confirmDelete(tx)">
+                  <i class="bi bi-trash me-1"></i>Hapus
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile All Cards View -->
+      <div v-else-if="mobileViewMode === 'cards'">
+        <div 
+          v-for="tx in transactions" 
+          :key="tx.id" 
+          class="mobile-tx-card" 
+          @click="toggleExpandTx(tx.id)"
+        >
+          <div class="d-flex align-items-center gap-2">
+            <div class="category-icon-avatar">
+              <i :class="getCategoryIconClass(tx)"></i>
+            </div>
+            <div class="flex-grow-1 min-w-0">
+              <div class="d-flex justify-content-between align-items-baseline">
+                <h6 class="tx-title mb-0 text-truncate">
+                  {{ tx.category?.name || tx.description || 'Umum' }}
+                  <span v-if="tx.receipt_url" class="ms-1 text-info" style="cursor:pointer" title="Lihat Struk" @click.stop="openReceiptLightbox(tx)">📎</span>
+                </h6>
+                <div class="tx-amount ms-2" :class="getAmountClass(tx)">
+                  {{ formatAmountWithSign(tx) }}
+                </div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center mt-1">
+                <div class="tx-desc text-truncate me-2">
+                  {{ tx.description || tx.account?.name || '-' }}
+                </div>
+                <div class="d-flex align-items-center gap-1 flex-shrink-0">
+                  <span class="badge bg-secondary bg-opacity-25 text-dark border px-1" style="font-size:0.65rem">{{ getTransactionModule(tx) }}</span>
+                  <i class="bi text-muted ms-1" :class="expandedTxId === tx.id ? 'bi-chevron-up' : 'bi-chevron-down'" style="font-size:0.75rem"></i>
+                </div>
+              </div>
+              <div class="d-flex align-items-center justify-content-between mt-1 text-muted" style="font-size:0.72rem">
+                <div>
+                  <span v-if="tx.member?.name" class="me-2"><i class="bi bi-person me-1"></i>{{ tx.member.name }}</span>
+                  <span v-if="tx.account?.name"><i class="bi bi-credit-card me-1"></i>{{ tx.account.name }}</span>
+                </div>
+                <span><i class="bi bi-calendar me-1"></i>{{ tx.transaction_date }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action drawer on card tap -->
+          <div v-if="expandedTxId === tx.id" class="tx-action-drawer" @click.stop>
+            <div class="d-flex justify-content-end gap-1 flex-wrap">
+              <button v-if="tx.shopping_plans && tx.shopping_plans.length" class="btn btn-xs btn-outline-info" @click="goToShoppingDetail(tx.shopping_plans[0].id)">
+                <i class="bi bi-cart me-1"></i>Plan
+              </button>
+              <button v-if="tx.receipt_url" class="btn btn-xs btn-outline-secondary" @click="openReceiptLightbox(tx)">
+                <i class="bi bi-image me-1"></i>Struk
+              </button>
+              <button class="btn btn-xs btn-outline-success" @click="openDuplicate(tx)" :disabled="getTransactionModule(tx) === 'Transfer' || getTransactionModule(tx) === 'Shopping List'">
+                <i class="bi bi-copy me-1"></i>Duplikat
+              </button>
+              <button class="btn btn-xs btn-outline-primary" @click="openEdit(tx)" :disabled="getTransactionModule(tx) === 'Transfer'">
+                <i class="bi bi-pencil me-1"></i>Edit
+              </button>
+              <button class="btn btn-xs btn-outline-danger" @click="confirmDelete(tx)">
+                <i class="bi bi-trash me-1"></i>Hapus
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Pagination -->
+      <div v-if="meta.last_page > 1" class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top">
+        <small class="text-muted">{{ meta.from }}-{{ meta.to }} / {{ meta.total }}</small>
+        <div class="btn-group btn-group-sm">
+          <button class="btn btn-outline-secondary" :disabled="meta.current_page <= 1" @click="goToPage(meta.current_page - 1)">‹ Prev</button>
+          <button class="btn btn-outline-secondary disabled">{{ meta.current_page }} / {{ meta.last_page }}</button>
+          <button class="btn btn-outline-secondary" :disabled="meta.current_page >= meta.last_page" @click="goToPage(meta.current_page + 1)">Next ›</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== DESKTOP TABLE & FILTERS (d-none d-md-block) ===== -->
+    <div id="tour-tx-filters" class="table-card mb-3 d-none d-md-block">
       <div class="card-header">
         <div class="row g-2 align-items-end">
           <div class="col-md-3">
@@ -121,9 +394,7 @@
             <tr v-else-if="!transactions.length">
               <td colspan="9" class="text-center py-4 text-muted">{{ $t('dashboard.noTransactions') }}</td>
             </tr>
-            <tr v-for="tx in transactions" :key="tx.id" 
-                @touchstart="onTouchStart" 
-                @touchend="onTouchEnd($event, tx)">
+            <tr v-for="tx in transactions" :key="tx.id">
               <td>{{ tx.transaction_date }}</td>
               <td>{{ tx.member?.name || '-' }}</td>
               <td>{{ tx.account?.name || '-' }}</td>
@@ -648,6 +919,135 @@ function getTransactionModule(tx) {
   if (tx.type === 'transfer') return 'Transfer';
   return 'Manual';
 }
+
+// Mobile View State & Helpers
+const mobileViewMode = ref('grouped'); // 'grouped' | 'cards'
+const showMobileFilterDrawer = ref(false);
+const expandedTxId = ref(null);
+
+function toggleExpandTx(id) {
+  expandedTxId.value = expandedTxId.value === id ? null : id;
+}
+
+function formatCompact(amount) {
+  if (!amount && amount !== 0) return '0';
+  const num = Math.abs(Number(amount));
+  if (num >= 1000000000) return (num / 1000000000).toFixed(1) + 'B';
+  if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+  if (num >= 1000) return (num / 1000).toFixed(0) + 'k';
+  return num.toLocaleString();
+}
+
+function formatGroupDateHeader(dateStr) {
+  if (!dateStr || dateStr === 'No Date') return dateStr;
+  const todayStr = todayISO();
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const yesterdayStr = yesterday.toISOString().split('T')[0];
+
+  if (dateStr === todayStr) {
+    return localeStore.currentLocale === 'id' ? 'Hari Ini' : 'Today';
+  }
+  if (dateStr === yesterdayStr) {
+    return localeStore.currentLocale === 'id' ? 'Kemarin' : 'Yesterday';
+  }
+
+  try {
+    const parts = dateStr.split('-');
+    if (parts.length === 3) {
+      const d = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
+      return d.toLocaleDateString(localeStore.currentLocale === 'id' ? 'id-ID' : 'en-US', {
+        weekday: 'short',
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric'
+      });
+    }
+  } catch (e) {
+    // fallback
+  }
+  return dateStr;
+}
+
+function getCategoryIconClass(tx) {
+  if (getTransactionModule(tx) === 'Transfer' || tx.type === 'transfer') {
+    return 'bi bi-arrow-left-right text-info';
+  }
+  if (tx.type === 'income') {
+    return 'bi bi-arrow-down-left-circle-fill text-success';
+  }
+  const name = ((tx.category?.name || '') + ' ' + (tx.description || '')).toLowerCase();
+  if (name.includes('makan') || name.includes('food') || name.includes('resto') || name.includes('kopi') || name.includes('cafe') || name.includes('kuliner')) {
+    return 'bi bi-cup-hot-fill text-warning';
+  }
+  if (name.includes('belanja') || name.includes('supermarket') || name.includes('mart') || name.includes('grocery') || name.includes('pasar')) {
+    return 'bi bi-cart-fill text-primary';
+  }
+  if (name.includes('bensin') || name.includes('fuel') || name.includes('transport') || name.includes('gojek') || name.includes('grab') || name.includes('parkir')) {
+    return 'bi bi-fuel-pump-fill text-danger';
+  }
+  if (name.includes('tagihan') || name.includes('bill') || name.includes('listrik') || name.includes('air') || name.includes('wifi') || name.includes('pulsa')) {
+    return 'bi bi-lightning-charge-fill text-warning';
+  }
+  if (name.includes('gaji') || name.includes('salary') || name.includes('bonus')) {
+    return 'bi bi-cash-stack text-success';
+  }
+  return 'bi bi-tag-fill text-danger';
+}
+
+const activeFilterCount = computed(() => {
+  let count = 0;
+  if (filters.value.search) count++;
+  if (filters.value.type) count++;
+  if (filters.value.category_id) count++;
+  if (filters.value.member_id) count++;
+  if (filters.value.account_id) count++;
+  if (filters.value.date_from) count++;
+  if (filters.value.date_to) count++;
+  return count;
+});
+
+const mobileStats = computed(() => {
+  let income = 0;
+  let expense = 0;
+  for (const tx of transactions.value) {
+    const amt = Number(tx.amount) || 0;
+    if (tx.type === 'income' || (tx.type === 'transfer' && amt > 0)) {
+      income += amt;
+    } else {
+      expense += Math.abs(amt);
+    }
+  }
+  return {
+    income,
+    expense,
+    net: income - expense
+  };
+});
+
+const groupedTransactionsByDate = computed(() => {
+  const groups = {};
+  for (const tx of transactions.value) {
+    const dateKey = tx.transaction_date || 'No Date';
+    if (!groups[dateKey]) {
+      groups[dateKey] = {
+        date: dateKey,
+        items: [],
+        income: 0,
+        expense: 0
+      };
+    }
+    groups[dateKey].items.push(tx);
+    const amt = Number(tx.amount) || 0;
+    if (tx.type === 'income' || (tx.type === 'transfer' && amt > 0)) {
+      groups[dateKey].income += amt;
+    } else {
+      groups[dateKey].expense += Math.abs(amt);
+    }
+  }
+  
+  return Object.values(groups).sort((a, b) => (b.date > a.date ? 1 : -1));
+});
 
 const filters = ref({
   search: '', type: '', category_id: '', member_id: '',
@@ -1204,40 +1604,6 @@ async function sendBudgetAlertWhatsApp(alertData) {
   }
 }
 
-const touchStartX = ref(0);
-const touchStartY = ref(0);
-
-function onTouchStart(e) {
-  touchStartX.value = e.changedTouches[0].screenX;
-  touchStartY.value = e.changedTouches[0].screenY;
-}
-
-function onTouchEnd(e, tx) {
-  const touchEndX = e.changedTouches[0].screenX;
-  const touchEndY = e.changedTouches[0].screenY;
-  
-  const deltaX = touchEndX - touchStartX.value;
-  const deltaY = touchEndY - touchStartY.value;
-  
-  // Only trigger if it's a mostly horizontal swipe (> 80px horizontal, < 50px vertical drift)
-  if (Math.abs(deltaX) > 80 && Math.abs(deltaY) < 50) {
-    if (deltaX < 0) {
-      // Swiped Left -> Delete
-      if (getTransactionModule(tx) === 'Manual' || getTransactionModule(tx) === 'Transfer') {
-         confirmDelete(tx);
-      } else {
-         toast.error(localeStore.currentLocale === 'id' ? 'Transaksi otomatis tidak dapat dihapus.' : 'Automated transactions cannot be deleted.');
-      }
-    } else {
-      // Swiped Right -> Edit
-      if (getTransactionModule(tx) === 'Manual' || getTransactionModule(tx) === 'Transfer') {
-         openEdit(tx);
-      } else {
-         toast.error(localeStore.currentLocale === 'id' ? 'Transaksi otomatis tidak dapat diedit.' : 'Automated transactions cannot be edited.');
-      }
-    }
-  }
-}
 
 const { startTour, startAutoTour } = useTour('transactions');
 

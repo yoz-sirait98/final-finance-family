@@ -1,39 +1,44 @@
 # Implementation Plan
 
-## Auto-Create Shopping Plan from Transaction Receipt Scanning (August 2026)
+## Mobile View Style for Transactions Page (August 2026)
 
 ### Problem Area & Target Architecture
 
 | Problem Area | Current State | Target State |
 |---|---|---|
-| **Receipt Scan Entry Point** | Receipt scanning is available on both Transactions Page and Shopping Plan Page | Scanning is consolidated into Transactions Page; removed from Shopping Plan Page |
-| **Shopping Plan Creation from Receipt** | User had to manually scan from Shopping Plan Page to generate a plan from receipt | When scanning & saving a transaction with item list on Transactions Page, a Shopping Plan is automatically created with items |
-| **Transaction & Plan Linkage** | Manual scan on Shopping Page had no initial expense transaction link | Shopping Plan is automatically created with status `locked` and linked directly to the saved `transaction_id` |
-| **Item Review UX** | Item review was only available in Shopping Page scan modal | Item list review/editing section integrated into Transactions Page Transaction Modal when items are scanned |
+| **Mobile Layout** | Mobile displays desktop table squeezed into `.table-responsive` with horizontal scroll | Mobile displays dedicated, touch-optimized mobile view (`d-md-none`) |
+| **Mobile Filters** | 8 separate filter input boxes take up extensive vertical space on mobile | Compact search bar + quick type chips + expandable filter drawer |
+| **Mobile Insights** | No quick financial summary on mobile | Mobile KPI summary header with Income, Expense, Net total |
+| **Transaction List Visuals** | Table rows with text-only data | Modern cards with category icon avatars, date headers, touch gestures, and quick actions |
 
 ---
 
 ### Proposed Changes
 
-#### Frontend Services & Composable
-* **`frontend/src/services/shoppingPlanService.js`**:
-  * Extend `createFromReceipt(location, items, createdBy, receiptUrl, transactionId)` to support passing optional `transactionId`.
-  * Store `transaction_id` on the inserted `shopping_plans` record.
+#### Frontend — Transactions Page & CSS
 
-#### Transactions Page
-* **`frontend/src/pages/TransactionsPage.vue`**:
-  * Add reactive state `scannedItems = ref([])` to hold OCR-detected items from `scanReceipt()`.
-  * Render an editable item list review component in Transaction Modal when `scannedItems.length > 0`.
-  * In `doSaveTransaction()`, after transaction creation, automatically invoke `shoppingPlanService.createFromReceipt()` if `scannedItems.length > 0`.
+##### `frontend/src/pages/TransactionsPage.vue`
+- Wrap existing table in `<div class="d-none d-md-block">` for desktop view.
+- Add `<div class="mobile-tx-container d-md-none">` for mobile view containing:
+  - Mobile KPI Summary Header (Income, Expense, Net totals).
+  - Quick filter chips (All, Income, Expense) + search input + expandable filter drawer button.
+  - View mode toggle buttons (Grouped Date Feed vs Compact Cards).
+  - Grouped Date List view option & Compact Card view option.
+  - Interactive transaction cards with category icons, member/account tags, receipt attachments, module badges, and quick action bar.
+- Add reactive mobile state (`mobileViewMode`, `showMobileFilterDrawer`, `expandedTxId`).
+- Add computed helpers for date-grouped transactions and category icon mapping.
 
-#### Shopping Plan Page
-* **`frontend/src/pages/ShoppingPage.vue`**:
-  * Remove "Scan Struk / Scan Receipt" button, file input, and receipt review modal.
-  * Clean up unused receipt scanning methods, reactive states, and imports.
+##### `frontend/src/style.css`
+- Add mobile-specific CSS classes under `@media (max-width: 767.98px)`:
+  - `.mobile-tx-container`, `.mobile-kpi-banner`, `.mobile-filter-drawer`, `.mobile-tx-card`, `.category-icon-avatar`, `.tx-action-drawer`.
 
 ---
 
 ## Past Features History
+
+### Auto-Create Shopping Plan from Transaction Receipt Scanning (August 2026)
+- Consolidated scan entry point into Transactions Page.
+- Linked transaction ID directly to auto-created shopping plan.
 
 ### Receipt Scanner Module — Full Rebuild (July 2026)
 - Consolidated scanner logic into `useReceiptScanner` and `useScannerMapping` composables.

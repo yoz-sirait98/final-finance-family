@@ -1,17 +1,23 @@
-# Tasks Checklist
+# Tasks Checklist: Mobile View Style for Transactions Page
 
-- [x] **1. Service Updates (`shoppingPlanService.js`)**
-  - [x] Add `transactionId` parameter to `createFromReceipt` method in `shoppingPlanService.js` to link `transaction_id`.
+- [x] **1. CSS & Layout Foundation (`style.css`)**
+  - [x] Add mobile container styles (`.mobile-tx-container`, `.mobile-kpi-banner`, `.mobile-filter-drawer`).
+  - [x] Add card item styles (`.mobile-tx-card`, `.category-icon-avatar`, `.tx-action-drawer`).
 
-- [x] **2. Transactions Page Integration (`TransactionsPage.vue`)**
-  - [x] Store `scannedItems` when receipt is scanned in `onReceiptSelected`.
-  - [x] Add scanned items review/edit component to Transaction Modal.
-  - [x] Auto-create locked Shopping Plan with items in `doSaveTransaction` when `scannedItems` exist.
+- [x] **2. Responsive View Splitting (`TransactionsPage.vue`)**
+  - [x] Wrap desktop table in `<div class="d-none d-md-block">`.
+  - [x] Build `<div class="mobile-tx-container d-md-none">` template structure.
 
-- [x] **3. Shopping Page Cleanup (`ShoppingPage.vue`)**
-  - [x] Remove "Scan Struk" button, file input, and review modal.
-  - [x] Clean up unused scanner methods, state, and imports.
+- [x] **3. Mobile Summary & Filter Components**
+  - [x] Implement Mobile KPI Summary banner (Income, Expense, Net calculation).
+  - [x] Implement mobile search bar + type filter chips + expandable filter drawer toggle.
 
-- [x] **4. Build & Verification**
-  - [x] Verify build with `npm run build`.
-  - [x] Perform manual end-to-end testing of scanning, saving, and plan creation.
+- [x] **4. Mobile Cards & Grouped Date View**
+  - [x] Implement view mode toggle ('grouped' vs 'cards').
+  - [x] Implement Grouped Date Feed view with daily header summaries.
+  - [x] Implement Compact Card view with category icons, badges, and tap-to-expand quick actions.
+  - [x] Removed raw swipe gesture handlers that previously triggered accidental edit/delete modal popups.
+
+- [x] **5. Verification & Testing**
+  - [x] Run `npm run build` to verify Vue template compilation.
+  - [x] Test mobile responsiveness (<768px vs >=768px) and all modal triggers.

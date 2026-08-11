@@ -1239,3 +1239,123 @@ body {
   0%, 100% { opacity: 1; filter: drop-shadow(0 0 8px rgba(225, 29, 72, 0.6)); }
   50% { opacity: 0.75; filter: drop-shadow(0 0 2px rgba(225, 29, 72, 0.2)); }
 }
+
+/* ===== Mobile Transactions Page Styles ===== */
+@media (max-width: 767.98px) {
+  .mobile-tx-container {
+    padding-bottom: 20px;
+  }
+
+  .mobile-kpi-banner {
+    background: var(--card-bg, rgba(255, 255, 255, 0.04));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.12));
+    border-radius: 16px;
+    padding: 12px 14px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  }
+
+  .mobile-kpi-item {
+    text-align: center;
+  }
+
+  .mobile-kpi-item .kpi-label {
+    font-size: 0.7rem;
+    color: var(--text-muted, #888);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+  }
+
+  .mobile-kpi-item .kpi-val {
+    font-size: 0.92rem;
+    font-weight: 700;
+  }
+
+  .mobile-filter-drawer {
+    background: var(--card-bg, #1e1e2d);
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.12));
+    border-radius: 14px;
+    padding: 14px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.2s ease-in-out;
+  }
+
+  .filter-chip-btn {
+    border-radius: 20px !important;
+    font-size: 0.75rem !important;
+    padding: 3px 12px !important;
+    font-weight: 600 !important;
+    white-space: nowrap;
+  }
+
+  .mobile-date-group-header {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-muted, #888);
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+  }
+
+  .mobile-tx-card {
+    background: var(--card-bg, rgba(255, 255, 255, 0.03));
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+    border-radius: 14px;
+    padding: 12px;
+    margin-bottom: 8px;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+  }
+
+  .mobile-tx-card:hover, .mobile-tx-card:active {
+    background: var(--card-bg-hover, rgba(255, 255, 255, 0.07));
+    border-color: rgba(138, 43, 226, 0.3);
+  }
+
+  .category-icon-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    background: rgba(138, 43, 226, 0.12);
+    border: 1px solid rgba(138, 43, 226, 0.2);
+    flex-shrink: 0;
+  }
+
+  .mobile-tx-card .tx-title {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-color);
+  }
+
+  .mobile-tx-card .tx-desc {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  .mobile-tx-card .tx-amount {
+    font-size: 0.92rem;
+    font-weight: 700;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .tx-action-drawer {
+    border-top: 1px dashed var(--border-color, rgba(255, 255, 255, 0.1));
+    margin-top: 8px;
+    padding-top: 8px;
+    animation: fadeIn 0.15s ease;
+  }
+
+  .btn-xs {
+    padding: 0.18rem 0.45rem !important;
+    font-size: 0.72rem !important;
+    border-radius: 6px !important;
+  }
+}
+
