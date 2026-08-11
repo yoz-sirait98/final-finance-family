@@ -122,9 +122,6 @@
         <!-- Install PWA Button -->
         <InstallPwa />
 
-        <!-- Push Notification Toggle Button -->
-        <PushNotificationToggle />
-
         <!-- Theme Toggle Button -->
         <button
           class="toggle-btn"
@@ -173,31 +170,90 @@
           </div>
         </div>
 
-        <!-- Budget Alerts Bell -->
+        <!-- Alerts Hub Bell -->
         <div class="vue-dropdown" ref="bellDropdownRef">
-          <button id="tour-bell-icon" class="toggle-btn position-relative" @click.stop="toggleBell">
+          <button id="tour-bell-icon" class="toggle-btn position-relative" @click.stop="toggleBell" :title="$t('nav.alertsHub')">
             <i class="bi bi-bell"></i>
             <span
-              v-if="budgetAlerts.length"
+              v-if="totalAlertsCount > 0"
               class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
               style="font-size:0.6rem"
-            >{{ budgetAlerts.length }}</span>
+            >{{ totalAlertsCount }}</span>
           </button>
-          <div v-show="bellOpen" class="vue-dropdown-menu" style="min-width:300px; right:0">
-            <div class="vue-dropdown-header">
-              <i class="bi bi-bell me-2"></i>{{ $t('nav.budgetAlerts') }}
+          <div v-show="bellOpen" class="vue-dropdown-menu" style="min-width:320px; max-width: 360px; right:0; padding: 0.5rem 0;">
+            <div class="vue-dropdown-header d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
+              <span class="fw-bold text-dark dark:text-light">
+                <i class="bi bi-bell-fill text-primary me-2"></i>{{ $t('nav.alertsHub') }}
+              </span>
+              <span v-if="totalAlertsCount > 0" class="badge bg-danger rounded-pill">{{ totalAlertsCount }}</span>
             </div>
-            <div v-if="!budgetAlerts.length" class="vue-dropdown-item text-muted small">
-              {{ $t('nav.noAlerts') }}
+
+            <!-- Category Filter Tabs -->
+            <div class="px-2 py-1.5 border-bottom bg-light d-flex gap-1 overflow-x-auto">
+              <button 
+                type="button"
+                class="btn btn-xs rounded-pill flex-fill text-nowrap"
+                :class="alertTab === 'all' ? 'btn-primary' : 'btn-outline-secondary'"
+                style="font-size: 0.7rem; padding: 2px 6px;"
+                @click.stop="alertTab = 'all'"
+              >
+                {{ $t('nav.allAlerts') }} ({{ totalAlertsCount }})
+              </button>
+              <button 
+                type="button"
+                class="btn btn-xs rounded-pill flex-fill text-nowrap"
+                :class="alertTab === 'budget' ? 'btn-danger' : 'btn-outline-secondary'"
+                style="font-size: 0.7rem; padding: 2px 6px;"
+                @click.stop="alertTab = 'budget'"
+              >
+                {{ $t('nav.budgetAlerts') }} ({{ budgetAlertsList.length }})
+              </button>
+              <button 
+                type="button"
+                class="btn btn-xs rounded-pill flex-fill text-nowrap"
+                :class="alertTab === 'goal' ? 'btn-warning text-dark' : 'btn-outline-secondary'"
+                style="font-size: 0.7rem; padding: 2px 6px;"
+                @click.stop="alertTab = 'goal'"
+              >
+                {{ $t('nav.goalAlerts') }} ({{ goalAlertsList.length }})
+              </button>
+              <button 
+                type="button"
+                class="btn btn-xs rounded-pill flex-fill text-nowrap"
+                :class="alertTab === 'shopping' ? 'btn-info text-white' : 'btn-outline-secondary'"
+                style="font-size: 0.7rem; padding: 2px 6px;"
+                @click.stop="alertTab = 'shopping'"
+              >
+                {{ $t('nav.shoppingAlerts') }} ({{ shoppingAlertsList.length }})
+              </button>
             </div>
-            <a
-              v-for="alert in budgetAlerts"
-              :key="alert.id"
-              class="vue-dropdown-item small text-danger"
-            >
-              <i class="bi bi-exclamation-triangle me-2"></i>
-              {{ alert.category?.name }} — {{ alert.percentage?.toFixed(1) }}% used
-            </a>
+
+            <!-- Alerts Feed -->
+            <div style="max-height: 300px; overflow-y: auto;">
+              <div v-if="!filteredAlerts.length" class="p-4 text-center text-muted small">
+                <i class="bi bi-bell-slash d-block fs-4 mb-1 opacity-50"></i>
+                {{ $t('nav.noAlertsFound') }}
+              </div>
+              <div
+                v-for="(item, idx) in filteredAlerts"
+                :key="idx"
+                class="vue-dropdown-item py-2 px-3 border-bottom d-flex align-items-start gap-2"
+                style="cursor: pointer;"
+                @click="handleAlertClick(item)"
+              >
+                <i class="bi mt-1" :class="item.iconClass" style="font-size: 1.1rem;"></i>
+                <div class="flex-grow-1 min-w-0">
+                  <div class="d-flex align-items-center justify-content-between gap-1">
+                    <span class="fw-semibold text-truncate small" :class="item.titleClass">{{ item.title }}</span>
+                    <span class="badge" :class="item.badgeClass" style="font-size: 0.6rem;">{{ item.categoryLabel }}</span>
+                  </div>
+                  <div class="text-muted extra-small line-clamp-2" style="font-size: 0.75rem;">
+                    {{ item.message }}
+                  </div>
+                </div>
+                <i class="bi bi-chevron-right text-muted extra-small align-self-center"></i>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -243,7 +299,7 @@ import { useTourStore } from '../stores/tour';
 import { useLocaleStore } from '../stores/locale';
 import GoalNotificationModal from '../components/GoalNotificationModal.vue';
 import InstallPwa from '../components/InstallPwa.vue';
-import PushNotificationToggle from '../components/PushNotificationToggle.vue';
+import { goalService } from '../services/goalService';
 import { supabase } from '../lib/supabase';
 
 const route = useRoute();
@@ -309,24 +365,137 @@ let pollTimer = null;
 const pendingShoppingCount = ref(0);
 let shoppingSub = null;
 
-const budgetAlerts = computed(() => budgetStore.alerts || []);
+// Alerts Hub state
+const alertTab = ref('all');
+const goalAlertsList = ref([]);
+const shoppingAlertsList = ref([]);
+
+const budgetAlertsList = computed(() => {
+  const isId = localeStore.currentLocale === 'id';
+  return (budgetStore.alerts || []).map(a => ({
+    category: 'budget',
+    categoryLabel: isId ? 'Anggaran' : 'Budget',
+    title: a.category?.name || (isId ? 'Peringatan Anggaran' : 'Budget Warning'),
+    message: isId 
+      ? `Terpakai ${a.percentage?.toFixed(1)}% (Rp ${Number(a.spent || 0).toLocaleString('id-ID')} dari Rp ${Number(a.amount || 0).toLocaleString('id-ID')})`
+      : `Used ${a.percentage?.toFixed(1)}% (Rp ${Number(a.spent || 0).toLocaleString()} of Rp ${Number(a.amount || 0).toLocaleString()})`,
+    iconClass: 'bi-exclamation-triangle-fill text-danger',
+    titleClass: 'text-danger',
+    badgeClass: 'bg-danger-subtle text-danger border border-danger-subtle',
+    route: '/budgets'
+  }));
+});
+
+const totalAlertsCount = computed(() => {
+  return budgetAlertsList.value.length + goalAlertsList.value.length + shoppingAlertsList.value.length;
+});
+
+const filteredAlerts = computed(() => {
+  const all = [
+    ...budgetAlertsList.value,
+    ...goalAlertsList.value,
+    ...shoppingAlertsList.value
+  ];
+  if (alertTab.value === 'all') return all;
+  return all.filter(item => item.category === alertTab.value);
+});
+
 const currentPageTitle = computed(() => {
   if (!route.name) return localeStore.t('nav.dashboard');
   const key = `nav.${route.name.toLowerCase()}`;
   return localeStore.t(key);
 });
 
-async function refreshAlerts() {
+async function fetchGoalAlerts() {
   try {
-    await budgetStore.fetchAlerts();
-  } catch {}
+    const { data } = await goalService.list();
+    if (!data) return;
+    const isId = localeStore.currentLocale === 'id';
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const list = [];
+    (data || []).forEach(g => {
+      if (g.status !== 'active') return;
+      const isMet = Number(g.current_amount || 0) >= Number(g.target_amount || 0);
+      if (isMet) {
+        list.push({
+          category: 'goal',
+          categoryLabel: isId ? 'Target' : 'Goal',
+          title: g.name,
+          message: isId 
+            ? `Target Rp ${Number(g.target_amount || 0).toLocaleString('id-ID')} telah tercapai!` 
+            : `Target Rp ${Number(g.target_amount || 0).toLocaleString()} reached!`,
+          iconClass: 'bi-trophy-fill text-warning',
+          titleClass: 'text-dark dark:text-light',
+          badgeClass: 'bg-warning-subtle text-warning-emphasis border border-warning-subtle',
+          route: '/goals'
+        });
+      } else if (g.deadline_raw) {
+        const dl = new Date(g.deadline_raw);
+        dl.setHours(0, 0, 0, 0);
+        const diffDays = Math.ceil((dl - today) / (1000 * 60 * 60 * 24));
+        if (diffDays >= -3 && diffDays <= 7) {
+          const timeStr = diffDays > 0 
+            ? (isId ? `Jatuh tempo dalam ${diffDays} hari` : `Due in ${diffDays} days`)
+            : (diffDays === 0 ? (isId ? 'Jatuh tempo hari ini' : 'Due today') : (isId ? `Lewat jatuh tempo ${Math.abs(diffDays)} hari` : `Overdue ${Math.abs(diffDays)} days`));
+          list.push({
+            category: 'goal',
+            categoryLabel: isId ? 'Target' : 'Goal',
+            title: g.name,
+            message: `${timeStr} — ${isId ? 'Terkumpul' : 'Saved'}: Rp ${Number(g.current_amount || 0).toLocaleString('id-ID')} / Rp ${Number(g.target_amount || 0).toLocaleString('id-ID')}`,
+            iconClass: diffDays < 0 ? 'bi-exclamation-circle-fill text-danger' : 'bi-flag-fill text-primary',
+            titleClass: diffDays < 0 ? 'text-danger' : 'text-primary',
+            badgeClass: diffDays < 0 ? 'bg-danger-subtle text-danger' : 'bg-primary-subtle text-primary',
+            route: '/goals'
+          });
+        }
+      }
+    });
+    goalAlertsList.value = list;
+  } catch (err) {
+    console.warn('Failed to fetch goal alerts:', err);
+  }
 }
 
 async function fetchPendingShopping() {
   if (!authStore.familyId) return;
-  const { count } = await supabase.from('shopping_plans').select('*', { count: 'exact', head: true })
-    .eq('status', 'progress').eq('family_id', authStore.familyId);
+  const { data, count } = await supabase.from('shopping_plans')
+    .select('id, location, title, created_at', { count: 'exact' })
+    .eq('status', 'progress')
+    .eq('family_id', authStore.familyId)
+    .order('created_at', { ascending: false });
+
   pendingShoppingCount.value = count || 0;
+  const isId = localeStore.currentLocale === 'id';
+
+  shoppingAlertsList.value = (data || []).map(p => ({
+    category: 'shopping',
+    categoryLabel: isId ? 'Belanja' : 'Shopping',
+    title: p.location || p.title || (isId ? 'Rencana Belanja' : 'Shopping Plan'),
+    message: isId ? 'Daftar belanja aktif masih dalam proses' : 'Active shopping list in progress',
+    iconClass: 'bi-cart-fill text-info',
+    titleClass: 'text-info-emphasis',
+    badgeClass: 'bg-info-subtle text-info border border-info-subtle',
+    route: '/shopping'
+  }));
+}
+
+async function refreshAlerts() {
+  try {
+    await Promise.all([
+      budgetStore.fetchAlerts(),
+      fetchGoalAlerts(),
+      fetchPendingShopping()
+    ]);
+  } catch {}
+}
+
+function handleAlertClick(item) {
+  bellOpen.value = false;
+  if (item.route) {
+    router.push(item.route);
+  }
 }
 
 function setupShoppingRealtime() {

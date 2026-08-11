@@ -65,8 +65,8 @@
     "semantic_hash": ""
   },
   "frontend/src/layouts/DashboardLayout.vue": {
-    "mtime": 1785393461.3823655,
-    "ast_hash": "0b3a86aa99ddb868a0e058fa9f0f31e6",
+    "mtime": 1786422710.36698,
+    "ast_hash": "f1a1482799436e6e7bf4edf6321c2538",
     "semantic_hash": ""
   },
   "frontend/src/lib/realtime.js": {
@@ -80,13 +80,13 @@
     "semantic_hash": ""
   },
   "frontend/src/locales/en.json": {
-    "mtime": 1785393461.3833673,
-    "ast_hash": "e43ca00eebacfa2a3da9423609d73fd1",
+    "mtime": 1786422683.3778665,
+    "ast_hash": "4b3bb3a1f42cfde53e14a75370d32f03",
     "semantic_hash": ""
   },
   "frontend/src/locales/id.json": {
-    "mtime": 1785393461.384359,
-    "ast_hash": "528af4e1dc2132ae2e92f332204acf6f",
+    "mtime": 1786422684.66955,
+    "ast_hash": "86cc8eb744a21348eede4660972fc0f1",
     "semantic_hash": ""
   },
   "frontend/src/main.js": {
@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "docs/implementation_plan.md": {
-    "mtime": 1786419701.6029923,
-    "ast_hash": "aa663fd66af24f79b4a6a067ebf4af71",
+    "mtime": 1786422626.632568,
+    "ast_hash": "da0d56f3e3257bd6b99d6fca1d01bc57",
     "semantic_hash": ""
   },
   "docs/supabase-setup-guide.md": {
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "docs/task.md": {
-    "mtime": 1786420109.2692778,
-    "ast_hash": "d155db0b37ef3e7e86261400d41369f6",
+    "mtime": 1786422628.2225266,
+    "ast_hash": "e963306c2b1a43d69598f5f10cc8d835",
     "semantic_hash": ""
   },
   "docs/walkthrough_graphify.md": {
@@ -560,8 +560,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectPocketsPage.vue": {
-    "mtime": 1784608237.8101711,
-    "ast_hash": "212de361353d992c236ffba0069b52a0",
+    "mtime": 1786421248.5971642,
+    "ast_hash": "d6a9de6ef13fc991ed62c40a066f6f2f",
     "semantic_hash": ""
   },
   "supabase/migrations/000016_project_pockets_schema.sql": {
@@ -922,6 +922,11 @@
   "docs/walkthrough_recurring_mobile_view.md": {
     "mtime": 1786420113.3008926,
     "ast_hash": "eb34fe23e5087cb66deb3220deb1e4fc",
+    "semantic_hash": ""
+  },
+  "docs/walkthrough_project_pockets_mobile.md": {
+    "mtime": 1786421260.5314362,
+    "ast_hash": "259d32ec1ad41a9dc9568768d44779f0",
     "semantic_hash": ""
   }
 }

@@ -1,21 +1,19 @@
-# Tasks Checklist: Mobile View Redesign for Project Pockets Page
+# Tasks Checklist: Repurpose Header Bell Icon into In-App Alerts Hub
 
-- [x] **1. CSS & Styling System (`frontend/src/style.css`)**
-  - [x] Add `@media (max-width: 767.98px)` styles for mobile Project Pockets.
-  - [x] Implement `.mobile-pocket-container` layout with proper bottom padding.
-  - [x] Implement glassmorphism mobile KPI summary banner (`.mobile-pocket-kpi`).
-  - [x] Implement touch-first pocket cards (`.mobile-pocket-card`, `.pocket-icon-avatar`).
-  - [x] Implement progress bar variations, pocket status pills, and linked account badges.
-  - [x] Implement mobile search bar and filter chips styling (`.mobile-filter-chips`).
+- [x] **1. Localization (`frontend/src/locales/en.json` & `id.json`)**
+  - [x] Add i18n translation keys for Alerts Hub (`alertsHub`, `allAlerts`, `budgetAlerts`, `goalAlerts`, `shoppingAlerts`, `noAlertsFound`).
 
-- [x] **2. Project Pockets Page (`frontend/src/pages/ProjectPocketsPage.vue`)**
-  - [x] Wrap existing desktop view in `<div class="d-none d-md-block">`.
-  - [x] Build touch-optimized mobile view container `<div class="mobile-pocket-container d-md-none">`.
-  - [x] Add mobile KPI banner showing: Total Available Balance, Active Pockets Count, Funding Phase Count, and Total Pocket Expenses.
-  - [x] Add mobile search input and status filter chips (`Semua`, `Aktif`, `Pendanaan`, `Selesai`).
-  - [x] Implement touch cards with status badges, progress bars, available/target balance displays, and quick action drawers ("Catat Pengeluaran", "Daftar Pengeluaran", "Selesai").
-  - [x] Ensure onboarding tour targets (`#tour-projects-header`, `#tour-projects-add-btn`) remain functional across desktop and mobile.
+- [x] **2. Header Bar & Alerts Hub (`frontend/src/layouts/DashboardLayout.vue`)**
+  - [x] Remove redundant `<PushNotificationToggle />` from header bar.
+  - [x] Fetch/compute combined active alerts (Budget overruns, Goal milestones, Pending shopping lists).
+  - [x] Update Bell icon badge counter to display total active alert count.
+  - [x] Build interactive tabbed dropdown menu (`Semua`, `Anggaran`, `Target`, `Belanja`).
+  - [x] Add clickable routing handlers to navigate to `/budgets`, `/goals`, and `/shopping`.
 
-- [x] **3. Build & Verification**
+- [x] **3. Settings Page (`frontend/src/pages/SettingsPage.vue`)**
+  - [x] Verify PWA Push Notifications toggle remains clear and prominent in Settings.
+
+- [x] **4. Build & Verification**
   - [x] Run `npm run build` to verify clean compilation.
-  - [x] Test mobile viewport responsiveness (< 768px) vs desktop view (>= 768px).
+  - [x] Update graphify knowledge graph (`graphify update .`).
+  - [x] Verify Bell icon dropdown popover, tab switching, and navigation in browser.
