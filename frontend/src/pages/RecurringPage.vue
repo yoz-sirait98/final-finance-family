@@ -9,7 +9,9 @@
         <i class="bi bi-plus-lg"></i><span class="d-none d-sm-inline">{{ $t('recurring.addRecurring') }}</span>
       </button>
     </div>
-    <div id="tour-recurring-list" class="table-card">
+
+    <!-- ===== DESKTOP VIEW TABLE (d-none d-md-block) ===== -->
+    <div id="tour-recurring-list" class="table-card d-none d-md-block">
       <div class="table-responsive">
         <table class="table table-hover mb-0">
           <thead>
@@ -56,6 +58,208 @@
           </tbody>
         </table>
       </div>
+    </div>
+
+    <!-- ===== MOBILE VIEW CONTAINER (d-md-none) ===== -->
+    <div class="mobile-recurring-container d-md-none mb-3">
+      <!-- Mobile Glassmorphism KPI Summary Banner -->
+      <div class="mobile-recurring-kpi mb-3">
+        <div class="row g-2 text-center">
+          <div class="col-4 border-end border-secondary border-opacity-25">
+            <div class="kpi-label text-muted small text-uppercase font-monospace fw-bold" style="font-size:0.68rem">
+              <i class="bi bi-calendar-check me-1 text-primary"></i>Komitmen/bln
+            </div>
+            <div class="kpi-val fw-bold text-primary" style="font-size:0.92rem">
+              {{ formatCurrency(mobileKpi.totalMonthly) }}
+            </div>
+          </div>
+          <div class="col-4 border-end border-secondary border-opacity-25">
+            <div class="kpi-label text-muted small text-uppercase font-monospace fw-bold" style="font-size:0.68rem">
+              <i class="bi bi-toggle-on me-1 text-success"></i>Aktif
+            </div>
+            <div class="kpi-val fw-bold text-success" style="font-size:0.92rem">
+              {{ mobileKpi.activeCount }} Tagihan
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="kpi-label text-muted small text-uppercase font-monospace fw-bold" style="font-size:0.68rem">
+              <i class="bi bi-exclamation-circle me-1 text-warning"></i>Jatuh Tempo
+            </div>
+            <div class="kpi-val fw-bold" :class="mobileKpi.dueSoonCount > 0 ? 'text-warning' : 'text-muted'" style="font-size:0.92rem">
+              {{ mobileKpi.dueSoonCount }} Items
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Toolbar: Search & Filter Chips -->
+      <div class="mobile-toolbar mb-3">
+        <!-- Search bar -->
+        <div class="input-group input-group-sm mb-2">
+          <span class="input-group-text bg-transparent border-end-0"><i class="bi bi-search text-muted"></i></span>
+          <input 
+            v-model="mobileSearch" 
+            type="text" 
+            class="form-control border-start-0" 
+            :placeholder="localeStore.currentLocale === 'id' ? 'Cari tagihan, kategori, member...' : 'Search bills, categories...'" 
+          />
+          <button v-if="mobileSearch" class="btn btn-outline-secondary border-start-0" @click="mobileSearch = ''"><i class="bi bi-x"></i></button>
+        </div>
+
+        <!-- Frequency Filter Chips -->
+        <div class="d-flex align-items-center gap-1 overflow-auto py-1 mb-1">
+          <span class="small text-muted me-1 fw-semibold ms-1" style="font-size:0.72rem">Interval:</span>
+          <button 
+            class="btn btn-xs filter-chip-btn" 
+            :class="mobileFreqFilter === 'all' ? 'btn-primary' : 'btn-outline-secondary'"
+            @click="mobileFreqFilter = 'all'"
+          >
+            Semua
+          </button>
+          <button 
+            class="btn btn-xs filter-chip-btn" 
+            :class="mobileFreqFilter === 'monthly' ? 'btn-primary' : 'btn-outline-secondary'"
+            @click="mobileFreqFilter = 'monthly'"
+          >
+            Bulanan
+          </button>
+          <button 
+            class="btn btn-xs filter-chip-btn" 
+            :class="mobileFreqFilter === 'weekly' ? 'btn-primary' : 'btn-outline-secondary'"
+            @click="mobileFreqFilter = 'weekly'"
+          >
+            Mingguan
+          </button>
+          <button 
+            class="btn btn-xs filter-chip-btn" 
+            :class="mobileFreqFilter === 'yearly' ? 'btn-primary' : 'btn-outline-secondary'"
+            @click="mobileFreqFilter = 'yearly'"
+          >
+            Tahunan
+          </button>
+        </div>
+
+        <!-- Status Filter Chips -->
+        <div class="d-flex align-items-center gap-1 overflow-auto py-1">
+          <span class="small text-muted me-1 fw-semibold ms-1" style="font-size:0.72rem">Status:</span>
+          <button 
+            class="btn btn-xs filter-chip-btn" 
+            :class="mobileStatusFilter === 'all' ? 'btn-secondary' : 'btn-outline-secondary'"
+            @click="mobileStatusFilter = 'all'"
+          >
+            Semua
+          </button>
+          <button 
+            class="btn btn-xs filter-chip-btn" 
+            :class="mobileStatusFilter === 'active' ? 'btn-success' : 'btn-outline-success'"
+            @click="mobileStatusFilter = 'active'"
+          >
+            🟢 Aktif
+          </button>
+          <button 
+            class="btn btn-xs filter-chip-btn" 
+            :class="mobileStatusFilter === 'due' ? 'btn-warning' : 'btn-outline-warning'"
+            @click="mobileStatusFilter = 'due'"
+          >
+            ⚠️ Near Due
+          </button>
+          <button 
+            class="btn btn-xs filter-chip-btn" 
+            :class="mobileStatusFilter === 'inactive' ? 'btn-danger' : 'btn-outline-danger'"
+            @click="mobileStatusFilter = 'inactive'"
+          >
+            ⚪ Nonaktif
+          </button>
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      <div v-if="loading" class="text-center py-4">
+        <div class="spinner-border spinner-border-sm text-primary me-2"></div> {{ $t('common.loading') }}
+      </div>
+
+      <!-- Empty State -->
+      <div v-else-if="!filteredMobileItems.length" class="text-center py-5 text-muted table-card">
+        <i class="bi bi-arrow-repeat fs-1 d-block mb-2 text-muted opacity-50"></i>
+        <p class="mb-0">{{ localeStore.currentLocale === 'id' ? 'Tidak ada transaksi berulang' : 'No recurring transactions' }}</p>
+      </div>
+
+      <!-- Mobile Recurring Cards List -->
+      <div v-else class="mobile-card-feed">
+        <div 
+          v-for="r in filteredMobileItems" 
+          :key="r.id" 
+          class="mobile-recurring-card" 
+          :class="{ 'inactive-item': !r.is_active }"
+          @click="toggleCardDrawer(r.id)"
+        >
+          <div class="d-flex align-items-start gap-3">
+            <!-- Icon Avatar -->
+            <div class="recurring-icon-avatar" :class="'freq-' + r.frequency">
+              <i class="bi bi-arrow-repeat"></i>
+            </div>
+
+            <!-- Card Central Info -->
+            <div class="flex-grow-1 min-w-0">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <h6 class="fw-bold mb-0 text-truncate text-color" style="font-size:0.92rem">
+                  {{ r.description || r.category?.name || '-' }}
+                </h6>
+                <!-- Inline Active Switch -->
+                <div class="form-check form-switch m-0" @click.stop>
+                  <input 
+                    class="form-check-input ms-0" 
+                    type="checkbox" 
+                    role="switch"
+                    :checked="r.is_active" 
+                    @change="toggleActive(r)"
+                    :title="r.is_active ? 'Nonaktifkan' : 'Aktifkan'"
+                  />
+                </div>
+              </div>
+
+              <!-- Amount & Urgency Badge -->
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="fw-bold text-primary" style="font-size:1rem">
+                  {{ formatCurrency(r.amount) }}
+                </span>
+                <span class="due-badge" :class="getDueUrgency(r).class">
+                  <i :class="'bi ' + getDueUrgency(r).icon"></i>
+                  {{ getDueUrgency(r).text }}
+                </span>
+              </div>
+
+              <!-- Badges Row (Interval, Account, Member) -->
+              <div class="d-flex flex-wrap gap-1 align-items-center">
+                <span class="badge bg-info-subtle text-info rounded-pill" style="font-size:0.7rem">
+                  {{ $t('recurring.intervals.' + r.frequency) }}
+                </span>
+                <span v-if="r.account_id" class="badge bg-secondary-subtle text-secondary rounded-pill" style="font-size:0.7rem">
+                  <i class="bi bi-wallet2 me-1"></i>{{ getAccountName(r.account_id) }}
+                </span>
+                <span v-if="r.member_id" class="badge bg-secondary-subtle text-secondary rounded-pill" style="font-size:0.7rem">
+                  <i class="bi bi-person me-1"></i>{{ getMemberName(r.member_id) }}
+                </span>
+              </div>
+
+              <!-- Expandable Touch Action Drawer -->
+              <div v-if="expandedCardId === r.id" class="card-action-drawer d-flex justify-content-end gap-2 mt-2 pt-2 border-top border-secondary border-opacity-25" @click.stop>
+                <button class="btn btn-xs btn-outline-primary" @click="openEdit(r)">
+                  <i class="bi bi-pencil me-1"></i>Edit
+                </button>
+                <button class="btn btn-xs btn-outline-danger" @click="confirmDelete(r)">
+                  <i class="bi bi-trash me-1"></i>Hapus
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Floating Action Button (FAB) -->
+      <button class="mobile-fab-btn d-md-none" @click="openCreate" :title="$t('recurring.addRecurring')">
+        <i class="bi bi-plus-lg"></i>
+      </button>
     </div>
 
     <!-- Create/Edit Modal -->
@@ -163,6 +367,113 @@ const members = ref([]);
 const accounts = ref([]);
 const categories = ref([]);
 const localeStore = useLocaleStore();
+
+// Mobile controls
+const mobileSearch = ref('');
+const mobileFreqFilter = ref('all');
+const mobileStatusFilter = ref('all');
+const expandedCardId = ref(null);
+
+function toggleCardDrawer(id) {
+  expandedCardId.value = expandedCardId.value === id ? null : id;
+}
+
+function getAccountName(accountId) {
+  if (!accountId) return '-';
+  const acc = accounts.value.find(a => a.id === accountId);
+  return acc ? acc.name : '-';
+}
+
+function getMemberName(memberId) {
+  if (!memberId) return '-';
+  const mem = members.value.find(m => m.id === memberId);
+  return mem ? mem.name : '-';
+}
+
+function getDueUrgency(r) {
+  const dateStr = r.next_due_date_raw || r.next_due_date;
+  if (!dateStr) {
+    return { text: r.next_due_date || '-', class: 'due-badge-normal', icon: 'bi-calendar3' };
+  }
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const due = new Date(dateStr);
+  due.setHours(0, 0, 0, 0);
+
+  const diffTime = due.getTime() - today.getTime();
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  if (diffDays < 0) {
+    return { text: 'Lewat Jatuh Tempo', class: 'due-badge-overdue', icon: 'bi-exclamation-triangle-fill' };
+  } else if (diffDays === 0) {
+    return { text: 'Jatuh Tempo Hari Ini', class: 'due-badge-today', icon: 'bi-exclamation-circle' };
+  } else if (diffDays <= 7) {
+    return { text: `H-${diffDays}`, class: 'due-badge-soon', icon: 'bi-clock-history' };
+  } else {
+    return { text: r.next_due_date || `${diffDays} hr lagi`, class: 'due-badge-normal', icon: 'bi-calendar3' };
+  }
+}
+
+const mobileKpi = computed(() => {
+  let totalMonthly = 0;
+  let activeCount = 0;
+  let dueSoonCount = 0;
+
+  items.value.forEach(r => {
+    if (r.is_active) {
+      activeCount++;
+      
+      const amt = Number(r.amount) || 0;
+      if (r.frequency === 'weekly') {
+        totalMonthly += amt * 4.33;
+      } else if (r.frequency === 'yearly') {
+        totalMonthly += amt / 12;
+      } else {
+        totalMonthly += amt;
+      }
+
+      const urgency = getDueUrgency(r);
+      if (urgency.class === 'due-badge-overdue' || urgency.class === 'due-badge-today' || urgency.class === 'due-badge-soon') {
+        dueSoonCount++;
+      }
+    }
+  });
+
+  return { totalMonthly: Math.round(totalMonthly), activeCount, dueSoonCount };
+});
+
+const filteredMobileItems = computed(() => {
+  return items.value.filter(r => {
+    // Frequency filter
+    if (mobileFreqFilter.value !== 'all' && r.frequency !== mobileFreqFilter.value) {
+      return false;
+    }
+
+    // Status filter
+    if (mobileStatusFilter.value === 'active' && !r.is_active) return false;
+    if (mobileStatusFilter.value === 'inactive' && r.is_active) return false;
+    if (mobileStatusFilter.value === 'due') {
+      if (!r.is_active) return false;
+      const urgency = getDueUrgency(r);
+      if (urgency.class === 'due-badge-normal') return false;
+    }
+
+    // Search query filter
+    if (mobileSearch.value.trim()) {
+      const q = mobileSearch.value.toLowerCase().trim();
+      const desc = (r.description || '').toLowerCase();
+      const catName = (r.category?.name || '').toLowerCase();
+      const accName = getAccountName(r.account_id).toLowerCase();
+      const memName = getMemberName(r.member_id).toLowerCase();
+
+      return desc.includes(q) || catName.includes(q) || accName.includes(q) || memName.includes(q);
+    }
+
+    return true;
+  });
+});
 
 const groupedCategories = computed(() => {
   const groups = { income: [], expense: [] };

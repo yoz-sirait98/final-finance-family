@@ -395,8 +395,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ShoppingPage.vue": {
-    "mtime": 1785837891.054783,
-    "ast_hash": "f07751252afea799685fab2209faa054",
+    "mtime": 1786419234.9121249,
+    "ast_hash": "5094d380fb04596117b632c88913501f",
     "semantic_hash": ""
   },
   "frontend/src/services/shoppingService.js": {
@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "docs/implementation_plan.md": {
-    "mtime": 1786414825.054814,
-    "ast_hash": "cbf6237f9405e91ee4ab47c1add6b3c0",
+    "mtime": 1786419169.801943,
+    "ast_hash": "b28f1d69ea4181459e8e835cda2c70fc",
     "semantic_hash": ""
   },
   "docs/supabase-setup-guide.md": {
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "docs/task.md": {
-    "mtime": 1786415911.3842669,
-    "ast_hash": "489c92d53e678fc31d6f58a5e558bf2f",
+    "mtime": 1786419261.177924,
+    "ast_hash": "e50b65d80060d15eecb6d58543215312",
     "semantic_hash": ""
   },
   "docs/walkthrough_graphify.md": {
@@ -520,8 +520,8 @@
     "semantic_hash": "081c348d068770af78fcd90980521318"
   },
   "frontend/src/pages/ShoppingDetailPage.vue": {
-    "mtime": 1785837750.550469,
-    "ast_hash": "9a88a702efec76d7b0d03986702f1773",
+    "mtime": 1786419247.8539515,
+    "ast_hash": "a6c9b507e33274bccf1f0948abc0e8c4",
     "semantic_hash": ""
   },
   "frontend/src/services/shoppingPlanService.js": {
@@ -912,6 +912,11 @@
   "docs/walkthrough_mobile_transactions_view.md": {
     "mtime": 1786415916.3092732,
     "ast_hash": "f0bba50c1d922fb8efe00feb42ea9ed6",
+    "semantic_hash": ""
+  },
+  "docs/walkthrough_mobile_shopping_plan.md": {
+    "mtime": 1786419266.0267549,
+    "ast_hash": "78db287fe1667507b6c887e504309680",
     "semantic_hash": ""
   }
 }

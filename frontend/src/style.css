@@ -1488,6 +1488,115 @@ body {
     z-index: 1020;
     box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.25);
   }
+
+  /* ===== Mobile Recurring Page Styles ===== */
+  .mobile-recurring-container {
+    padding-bottom: 85px;
+  }
+
+  .mobile-recurring-kpi {
+    background: var(--card-bg, rgba(255, 255, 255, 0.04));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.12));
+    border-radius: 16px;
+    padding: 14px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  }
+
+  .mobile-recurring-card {
+    background: var(--card-bg, rgba(255, 255, 255, 0.03));
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+    border-radius: 16px;
+    padding: 14px;
+    margin-bottom: 10px;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    position: relative;
+  }
+
+  .mobile-recurring-card:active {
+    transform: scale(0.985);
+    background: var(--card-bg-hover, rgba(255, 255, 255, 0.07));
+    border-color: rgba(138, 43, 226, 0.3);
+  }
+
+  .mobile-recurring-card.inactive-item {
+    opacity: 0.65;
+    background: rgba(0, 0, 0, 0.06);
+  }
+
+  .recurring-icon-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: #fff;
+    background: linear-gradient(135deg, #8b5cf6, #6366f1);
+    box-shadow: 0 4px 10px rgba(139, 92, 246, 0.3);
+    flex-shrink: 0;
+  }
+
+  .recurring-icon-avatar.freq-weekly {
+    background: linear-gradient(135deg, #06b6d4, #0891b2);
+    box-shadow: 0 4px 10px rgba(6, 182, 212, 0.3);
+  }
+
+  .recurring-icon-avatar.freq-monthly {
+    background: linear-gradient(135deg, #8b5cf6, #4f46e5);
+    box-shadow: 0 4px 10px rgba(139, 92, 246, 0.3);
+  }
+
+  .recurring-icon-avatar.freq-yearly {
+    background: linear-gradient(135deg, #ec4899, #be185d);
+    box-shadow: 0 4px 10px rgba(236, 72, 153, 0.3);
+  }
+
+  .due-badge {
+    font-size: 0.72rem;
+    padding: 3px 8px;
+    border-radius: 20px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .due-badge-overdue {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    animation: pulse 2s infinite;
+  }
+
+  .due-badge-today {
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+  }
+
+  .due-badge-soon {
+    background: rgba(59, 130, 246, 0.15);
+    color: #3b82f6;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+  }
+
+  .due-badge-normal {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-muted, #94a3b8);
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+  }
+
+  .card-action-drawer {
+    border-top: 1px dashed var(--border-color, rgba(255, 255, 255, 0.1));
+    margin-top: 10px;
+    padding-top: 10px;
+    animation: fadeIn 0.15s ease;
+  }
 }
+
 
 
