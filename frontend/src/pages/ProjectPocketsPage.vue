@@ -1,79 +1,296 @@
 <template>
   <div class="project-pockets-page fade-in">
-    <div id="tour-projects-header" class="page-header d-flex justify-content-between align-items-center mb-4">
-      <div>
-        <h4>{{ localeStore.currentLocale === 'id' ? 'Kantong Proyek' : 'Project Pockets' }}</h4>
-        <p class="text-muted">{{ localeStore.currentLocale === 'id' ? 'Kelola pengeluaran khusus acara besar tanpa mengganggu anggaran bulanan' : 'Manage spending for large events without ruining your monthly budget' }}</p>
+    <!-- Desktop View (d-none d-md-block) -->
+    <div class="d-none d-md-block">
+      <div id="tour-projects-header" class="page-header d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <h4>{{ localeStore.currentLocale === 'id' ? 'Kantong Proyek' : 'Project Pockets' }}</h4>
+          <p class="text-muted">{{ localeStore.currentLocale === 'id' ? 'Kelola pengeluaran khusus acara besar tanpa mengganggu anggaran bulanan' : 'Manage spending for large events without ruining your monthly budget' }}</p>
+        </div>
+      </div>
+
+      <!-- Pockets Grid -->
+      <div class="row g-4 mb-5">
+        <div v-for="pocket in pockets" :key="pocket.id" class="col-md-6 col-lg-4">
+          <div class="stat-card h-100 position-relative" :class="{ 'active-pocket-card': pocket.isActive }">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+              <div>
+                <h5 class="fw-bold mb-1">
+                  <i v-if="pocket.isActive" class="bi bi-briefcase-fill text-primary me-2"></i>
+                  <i v-else class="bi bi-briefcase text-muted me-2"></i>
+                  {{ pocket.name }}
+                </h5>
+                <div v-if="pocket.account_name" class="badge bg-info bg-opacity-10 text-info mt-1 mb-1">
+                  <i class="bi bi-link-45deg"></i> {{ pocket.account_name }}
+                </div>
+              </div>
+              <span class="badge" :class="pocket.isActive ? 'bg-success' : 'bg-warning text-dark'">
+                {{ pocket.isActive ? (localeStore.currentLocale === 'id' ? 'Aktif' : 'Active') : (localeStore.currentLocale === 'id' ? 'Pendanaan' : 'Funding Phase') }}
+              </span>
+            </div>
+
+            <div class="mb-3">
+              <div class="d-flex justify-content-between small text-muted mb-1">
+                <span>{{ localeStore.currentLocale === 'id' ? 'Tersedia' : 'Available' }}: <strong>{{ formatCurrency(pocket.remaining) }}</strong></span>
+                <span>{{ localeStore.currentLocale === 'id' ? 'Target' : 'Target' }}: {{ formatCurrency(pocket.target_amount) }}</span>
+              </div>
+              <div class="progress" style="height:8px">
+                <div class="progress-bar" 
+                     :class="pocket.isActive ? 'bg-success' : 'bg-primary'" 
+                     :style="{ width: pocket.progress_percentage + '%' }">
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-auto d-flex flex-column gap-2">
+              <div class="d-flex gap-2" v-if="pocket.status === 'completed'">
+                <button 
+                  class="btn w-50" 
+                  :class="pocket.isActive ? 'btn-primary-gradient' : 'btn-outline-secondary'"
+                  :disabled="!pocket.isActive"
+                  @click="openLogExpense(pocket)"
+                >
+                  <i class="bi bi-receipt me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Catat' : 'Log' }}
+                </button>
+                <button 
+                  class="btn btn-outline-success w-50" 
+                  @click="markPocketAsDone(pocket)"
+                  :disabled="saving"
+                >
+                  <i class="bi bi-check-circle me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Selesai' : 'Done' }}
+                </button>
+              </div>
+              <button 
+                class="btn btn-outline-info w-100" 
+                @click="openViewExpenses(pocket)"
+              >
+                <i class="bi bi-list-ul me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Pengeluaran' : 'Expenses' }}
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div v-if="pockets.length === 0" class="col-12 text-center py-5 text-muted">
+          <i class="bi bi-inboxes fs-1 mb-3 d-block text-secondary"></i>
+          <h5>{{ localeStore.currentLocale === 'id' ? 'Tidak ada Kantong Proyek' : 'No Project Pockets yet' }}</h5>
+          <p>{{ localeStore.currentLocale === 'id' ? 'Kantong Proyek diambil dari Target Menabung. Buat target menabung terlebih dahulu.' : 'Project Pockets are powered by Saving Goals. Create a goal first.' }}</p>
+          <button class="btn btn-outline-primary mt-2" @click="router.push('/goals')">
+            {{ localeStore.currentLocale === 'id' ? 'Ke Halaman Target' : 'Go to Goals Page' }}
+          </button>
+        </div>
       </div>
     </div>
 
-    <!-- Pockets Grid -->
-    <div class="row g-4 mb-5">
-      <div v-for="pocket in pockets" :key="pocket.id" class="col-md-6 col-lg-4">
-        <div class="stat-card h-100 position-relative" :class="{ 'active-pocket-card': pocket.isActive }">
-          <div class="d-flex justify-content-between align-items-start mb-3">
-            <div>
-              <h5 class="fw-bold mb-1">
-                <i v-if="pocket.isActive" class="bi bi-briefcase-fill text-primary me-2"></i>
-                <i v-else class="bi bi-briefcase text-muted me-2"></i>
-                {{ pocket.name }}
-              </h5>
-              <div v-if="pocket.account_name" class="badge bg-info bg-opacity-10 text-info mt-1 mb-1">
-                <i class="bi bi-link-45deg"></i> {{ pocket.account_name }}
+    <!-- Mobile View (d-md-none) -->
+    <div class="mobile-pocket-container d-md-none">
+      <!-- Mobile Header -->
+      <div id="tour-projects-header" class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+          <h5 class="fw-bold mb-0 text-primary d-flex align-items-center gap-2">
+            <i class="bi bi-briefcase-fill"></i>
+            {{ localeStore.currentLocale === 'id' ? 'Kantong Proyek' : 'Project Pockets' }}
+          </h5>
+          <small class="text-muted">
+            {{ localeStore.currentLocale === 'id' ? 'Pengeluaran acara & proyek khusus' : 'Special project & event expenses' }}
+          </small>
+        </div>
+        <button class="btn btn-sm btn-outline-primary rounded-pill px-3" @click="router.push('/goals')">
+          <i class="bi bi-plus-lg me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Target' : 'Goals' }}
+        </button>
+      </div>
+
+      <!-- Mobile KPI Banner -->
+      <div class="mobile-pocket-kpi mb-3">
+        <div class="row g-2 text-center">
+          <div class="col-6 border-end border-light border-opacity-10">
+            <div class="text-uppercase small text-muted fw-bold" style="font-size: 0.68rem; letter-spacing: 0.5px;">
+              {{ localeStore.currentLocale === 'id' ? 'Saldo Tersedia' : 'Available Balance' }}
+            </div>
+            <div class="fs-6 fw-bold text-success mt-1">
+              {{ formatCurrency(mobileKpi.availableTotal) }}
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="text-uppercase small text-muted fw-bold" style="font-size: 0.68rem; letter-spacing: 0.5px;">
+              {{ localeStore.currentLocale === 'id' ? 'Total Terpakai' : 'Total Spent' }}
+            </div>
+            <div class="fs-6 fw-bold text-danger mt-1">
+              {{ formatCurrency(mobileKpi.totalSpent) }}
+            </div>
+          </div>
+        </div>
+        <hr class="my-2 border-secondary opacity-10" />
+        <div class="d-flex justify-content-around text-center pt-1" style="font-size: 0.75rem;">
+          <div>
+            <span class="text-muted me-1">{{ localeStore.currentLocale === 'id' ? 'Siap Pakai:' : 'Ready:' }}</span>
+            <span class="badge bg-success-subtle text-success rounded-pill px-2 fw-bold">{{ mobileKpi.activeCount }}</span>
+          </div>
+          <div>
+            <span class="text-muted me-1">{{ localeStore.currentLocale === 'id' ? 'Pendanaan:' : 'Funding:' }}</span>
+            <span class="badge bg-warning-subtle text-warning rounded-pill px-2 fw-bold">{{ mobileKpi.fundingCount }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Search & Filter Chips -->
+      <div class="mb-3">
+        <div class="input-group input-group-sm mb-2">
+          <span class="input-group-text bg-transparent border-end-0 text-muted">
+            <i class="bi bi-search"></i>
+          </span>
+          <input 
+            v-model="mobileSearchQuery" 
+            type="text" 
+            class="form-control border-start-0 ps-0" 
+            :placeholder="localeStore.currentLocale === 'id' ? 'Cari proyek atau rekening...' : 'Search project or account...'" 
+          />
+          <button v-if="mobileSearchQuery" class="btn btn-sm btn-link text-muted" @click="mobileSearchQuery = ''">
+            <i class="bi bi-x-circle-fill"></i>
+          </button>
+        </div>
+
+        <div class="d-flex gap-1 overflow-x-auto pb-1 no-scrollbar">
+          <button 
+            class="btn filter-chip-btn" 
+            :class="mobileStatusFilter === 'all' ? 'btn-primary' : 'btn-outline-secondary'"
+            @click="mobileStatusFilter = 'all'"
+          >
+            {{ localeStore.currentLocale === 'id' ? 'Semua' : 'All' }}
+          </button>
+          <button 
+            class="btn filter-chip-btn" 
+            :class="mobileStatusFilter === 'active' ? 'btn-success' : 'btn-outline-secondary'"
+            @click="mobileStatusFilter = 'active'"
+          >
+            <i class="bi bi-check-circle-fill me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Siap Pakai' : 'Ready' }}
+          </button>
+          <button 
+            class="btn filter-chip-btn" 
+            :class="mobileStatusFilter === 'funding' ? 'btn-warning' : 'btn-outline-secondary'"
+            @click="mobileStatusFilter = 'funding'"
+          >
+            <i class="bi bi-piggy-bank-fill me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Pendanaan' : 'Funding' }}
+          </button>
+          <button 
+            class="btn filter-chip-btn" 
+            :class="mobileStatusFilter === 'done' ? 'btn-secondary' : 'btn-outline-secondary'"
+            @click="mobileStatusFilter = 'done'"
+          >
+            <i class="bi bi-check-all me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Selesai' : 'Done' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Pocket Cards List -->
+      <div v-if="filteredPockets.length > 0">
+        <div 
+          v-for="pocket in filteredPockets" 
+          :key="pocket.id" 
+          class="mobile-pocket-card"
+          :class="{
+            'active-pocket': pocket.status === 'completed',
+            'funding-pocket': pocket.status === 'active',
+            'done-pocket': pocket.status === 'done'
+          }"
+        >
+          <div class="d-flex align-items-center gap-3 mb-2">
+            <div 
+              class="pocket-icon-avatar"
+              :class="{
+                'status-funding': pocket.status === 'active',
+                'status-done': pocket.status === 'done'
+              }"
+            >
+              <i v-if="pocket.status === 'completed'" class="bi bi-briefcase-fill"></i>
+              <i v-else-if="pocket.status === 'active'" class="bi bi-piggy-bank-fill"></i>
+              <i v-else class="bi bi-check2-circle"></i>
+            </div>
+            <div class="flex-grow-1 overflow-hidden">
+              <div class="d-flex align-items-center justify-content-between">
+                <h6 class="fw-bold mb-0 text-truncate me-2">{{ pocket.name }}</h6>
+                <span 
+                  class="pocket-status-badge"
+                  :class="{
+                    'badge-active': pocket.status === 'completed',
+                    'badge-funding': pocket.status === 'active',
+                    'badge-done': pocket.status === 'done'
+                  }"
+                >
+                  <i v-if="pocket.status === 'completed'" class="bi bi-lightning-charge-fill"></i>
+                  <i v-else-if="pocket.status === 'active'" class="bi bi-hourglass-split"></i>
+                  <i v-else class="bi bi-check-circle"></i>
+                  {{ pocket.status === 'completed' 
+                      ? (localeStore.currentLocale === 'id' ? 'Siap Pakai' : 'Ready') 
+                      : (pocket.status === 'active' 
+                          ? (localeStore.currentLocale === 'id' ? 'Pendanaan' : 'Funding') 
+                          : (localeStore.currentLocale === 'id' ? 'Selesai' : 'Done')) }}
+                </span>
+              </div>
+              <div v-if="pocket.account_name" class="small text-muted text-truncate mt-1">
+                <i class="bi bi-link-45deg me-1"></i>{{ pocket.account_name }}
               </div>
             </div>
-            <span class="badge" :class="pocket.isActive ? 'bg-success' : 'bg-warning text-dark'">
-              {{ pocket.isActive ? (localeStore.currentLocale === 'id' ? 'Aktif' : 'Active') : (localeStore.currentLocale === 'id' ? 'Pendanaan' : 'Funding Phase') }}
-            </span>
           </div>
 
-          <div class="mb-3">
-            <div class="d-flex justify-content-between small text-muted mb-1">
-              <span>{{ localeStore.currentLocale === 'id' ? 'Tersedia' : 'Available' }}: <strong>{{ formatCurrency(pocket.remaining) }}</strong></span>
+          <!-- Progress Bar & Amounts -->
+          <div class="bg-black bg-opacity-10 rounded-3 p-2 mb-2">
+            <div class="d-flex justify-content-between align-items-center mb-1" style="font-size: 0.78rem;">
+              <span class="text-muted">{{ localeStore.currentLocale === 'id' ? 'Tersedia' : 'Available' }}:</span>
+              <span class="fw-bold text-success fs-6">{{ formatCurrency(pocket.remaining) }}</span>
+            </div>
+            <div class="progress mb-1" style="height: 6px;">
+              <div 
+                class="progress-bar" 
+                :class="pocket.status === 'completed' ? 'bg-success' : 'bg-warning'" 
+                :style="{ width: pocket.progress_percentage + '%' }"
+              ></div>
+            </div>
+            <div class="d-flex justify-content-between text-muted" style="font-size: 0.7rem;">
               <span>{{ localeStore.currentLocale === 'id' ? 'Target' : 'Target' }}: {{ formatCurrency(pocket.target_amount) }}</span>
-            </div>
-            <div class="progress" style="height:8px">
-              <div class="progress-bar" 
-                   :class="pocket.isActive ? 'bg-success' : 'bg-primary'" 
-                   :style="{ width: pocket.progress_percentage + '%' }">
-              </div>
+              <span>{{ localeStore.currentLocale === 'id' ? 'Terpakai' : 'Spent' }}: {{ formatCurrency(pocket.spent) }}</span>
             </div>
           </div>
 
-          <div class="mt-auto d-flex flex-column gap-2">
-            <div class="d-flex gap-2" v-if="pocket.status === 'completed'">
-              <button 
-                class="btn w-50" 
-                :class="pocket.isActive ? 'btn-primary-gradient' : 'btn-outline-secondary'"
-                :disabled="!pocket.isActive"
-                @click="openLogExpense(pocket)"
-              >
-                <i class="bi bi-receipt me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Catat' : 'Log' }}
-              </button>
-              <button 
-                class="btn btn-outline-success w-50" 
-                @click="markPocketAsDone(pocket)"
-                :disabled="saving"
-              >
-                <i class="bi bi-check-circle me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Selesai' : 'Done' }}
-              </button>
-            </div>
+          <!-- Touch Action Buttons -->
+          <div class="d-flex gap-2 pt-1 border-top border-light border-opacity-10">
             <button 
-              class="btn btn-outline-info w-100" 
+              v-if="pocket.status === 'completed'"
+              class="btn btn-sm btn-primary-gradient flex-grow-1 rounded-pill"
+              @click="openLogExpense(pocket)"
+            >
+              <i class="bi bi-receipt me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Catat' : 'Log' }}
+            </button>
+            <button 
+              class="btn btn-sm btn-outline-info flex-grow-1 rounded-pill"
               @click="openViewExpenses(pocket)"
             >
               <i class="bi bi-list-ul me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Pengeluaran' : 'Expenses' }}
             </button>
+            <button 
+              v-if="pocket.status === 'completed'"
+              class="btn btn-sm btn-outline-success rounded-circle"
+              style="width: 32px; height: 32px; padding: 0;"
+              :title="localeStore.currentLocale === 'id' ? 'Tandai Selesai' : 'Mark as Done'"
+              @click="markPocketAsDone(pocket)"
+              :disabled="saving"
+            >
+              <i class="bi bi-check-lg"></i>
+            </button>
           </div>
         </div>
       </div>
-      
-      <div v-if="pockets.length === 0" class="col-12 text-center py-5 text-muted">
-        <i class="bi bi-inboxes fs-1 mb-3 d-block text-secondary"></i>
-        <h5>{{ localeStore.currentLocale === 'id' ? 'Tidak ada Kantong Proyek' : 'No Project Pockets yet' }}</h5>
-        <p>{{ localeStore.currentLocale === 'id' ? 'Kantong Proyek diambil dari Target Menabung. Buat target menabung terlebih dahulu.' : 'Project Pockets are powered by Saving Goals. Create a goal first.' }}</p>
-        <button class="btn btn-outline-primary mt-2" @click="router.push('/goals')">
-          {{ localeStore.currentLocale === 'id' ? 'Ke Halaman Target' : 'Go to Goals Page' }}
+
+      <!-- Empty State -->
+      <div v-else class="text-center py-5 text-muted bg-black bg-opacity-10 rounded-4 px-3">
+        <i class="bi bi-inboxes fs-1 mb-2 d-block text-secondary"></i>
+        <h6 class="fw-bold">{{ localeStore.currentLocale === 'id' ? 'Tidak ada kantong proyek ditemukan' : 'No project pockets found' }}</h6>
+        <p class="small mb-3">
+          {{ localeStore.currentLocale === 'id' 
+              ? 'Cobalah ubah kata kunci pencarian atau filter status.' 
+              : 'Try changing your search keyword or status filter.' }}
+        </p>
+        <button class="btn btn-sm btn-outline-primary rounded-pill px-3" @click="router.push('/goals')">
+          <i class="bi bi-plus-circle me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Ke Halaman Target' : 'Go to Goals Page' }}
         </button>
       </div>
     </div>
@@ -224,6 +441,9 @@ const accounts = ref([]);
 const members = ref([]);
 const categories = ref([]);
 
+const mobileSearchQuery = ref('');
+const mobileStatusFilter = ref('all');
+
 const showModal = ref(false);
 const showExpensesModal = ref(false);
 const saving = ref(false);
@@ -240,6 +460,49 @@ const form = ref({
   member_id: '',
   transaction_date: '',
   description: ''
+});
+
+const mobileKpi = computed(() => {
+  let availableTotal = 0;
+  let activeCount = 0;
+  let fundingCount = 0;
+  let totalSpent = 0;
+
+  pockets.value.forEach(p => {
+    if (p.status === 'completed') {
+      activeCount++;
+      availableTotal += (p.remaining || 0);
+      totalSpent += (p.spent || 0);
+    } else if (p.status === 'active') {
+      fundingCount++;
+    }
+  });
+
+  return { availableTotal, activeCount, fundingCount, totalSpent };
+});
+
+const filteredPockets = computed(() => {
+  let result = pockets.value;
+
+  if (mobileSearchQuery.value.trim()) {
+    const q = mobileSearchQuery.value.toLowerCase().trim();
+    result = result.filter(p => 
+      (p.name && p.name.toLowerCase().includes(q)) ||
+      (p.account_name && p.account_name.toLowerCase().includes(q))
+    );
+  }
+
+  if (mobileStatusFilter.value !== 'all') {
+    if (mobileStatusFilter.value === 'active') {
+      result = result.filter(p => p.status === 'completed');
+    } else if (mobileStatusFilter.value === 'funding') {
+      result = result.filter(p => p.status === 'active');
+    } else if (mobileStatusFilter.value === 'done') {
+      result = result.filter(p => p.status === 'done');
+    }
+  }
+
+  return result;
 });
 
 const groupedAccounts = computed(() => {
@@ -421,3 +684,4 @@ onUnmounted(() => {
   border-top-right-radius: 16px;
 }
 </style>
+

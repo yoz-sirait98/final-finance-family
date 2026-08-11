@@ -1596,7 +1596,105 @@ body {
     padding-top: 10px;
     animation: fadeIn 0.15s ease;
   }
+
+  /* ===== Mobile Project Pockets Page Styles ===== */
+  .mobile-pocket-container {
+    padding-bottom: 85px;
+  }
+
+  .mobile-pocket-kpi {
+    background: var(--card-bg, rgba(255, 255, 255, 0.04));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.12));
+    border-radius: 16px;
+    padding: 14px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  }
+
+  .mobile-pocket-card {
+    background: var(--card-bg, rgba(255, 255, 255, 0.03));
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+    border-radius: 16px;
+    padding: 14px;
+    margin-bottom: 12px;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    position: relative;
+  }
+
+  .mobile-pocket-card:active {
+    transform: scale(0.985);
+    background: var(--card-bg-hover, rgba(255, 255, 255, 0.07));
+    border-color: rgba(138, 43, 226, 0.3);
+  }
+
+  .mobile-pocket-card.active-pocket {
+    border-left: 4px solid #10b981;
+  }
+
+  .mobile-pocket-card.funding-pocket {
+    border-left: 4px solid #f59e0b;
+  }
+
+  .mobile-pocket-card.done-pocket {
+    border-left: 4px solid #6b7280;
+    opacity: 0.75;
+  }
+
+  .pocket-icon-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: #fff;
+    background: linear-gradient(135deg, #10b981, #059669);
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+    flex-shrink: 0;
+  }
+
+  .pocket-icon-avatar.status-funding {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
+  }
+
+  .pocket-icon-avatar.status-done {
+    background: linear-gradient(135deg, #6b7280, #4b5563);
+    box-shadow: 0 4px 10px rgba(107, 114, 128, 0.3);
+  }
+
+  .pocket-status-badge {
+    font-size: 0.72rem;
+    padding: 3px 8px;
+    border-radius: 20px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .pocket-status-badge.badge-active {
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+  }
+
+  .pocket-status-badge.badge-funding {
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+  }
+
+  .pocket-status-badge.badge-done {
+    background: rgba(107, 114, 128, 0.15);
+    color: #9ca3af;
+    border: 1px solid rgba(107, 114, 128, 0.3);
+  }
 }
+
 
 
 
