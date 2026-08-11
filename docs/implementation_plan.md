@@ -1,40 +1,45 @@
 # Implementation Plan
 
-## Mobile View Style for Transactions Page (August 2026)
+## Mobile View Redesign for Recurring Page (August 2026)
 
 ### Problem Area & Target Architecture
 
-| Problem Area | Current State | Target State |
+| Feature Component | Current State (Desktop-Centric) | Target Mobile Architecture |
 |---|---|---|
-| **Mobile Layout** | Mobile displays desktop table squeezed into `.table-responsive` with horizontal scroll | Mobile displays dedicated, touch-optimized mobile view (`d-md-none`) |
-| **Mobile Filters** | 8 separate filter input boxes take up extensive vertical space on mobile | Compact search bar + quick type chips + expandable filter drawer |
-| **Mobile Insights** | No quick financial summary on mobile | Mobile KPI summary header with Income, Expense, Net total |
-| **Transaction List Visuals** | Table rows with text-only data | Modern cards with category icon avatars, date headers, touch gestures, and quick actions |
+| **Layout Structure** | 6-column Bootstrap table requiring horizontal scrolling on small screens | Dual view: Desktop table (`d-none d-md-block`) + Mobile card feed (`d-md-none`) |
+| **KPI & Metrics** | No header summary or commitment breakdown | Mobile KPI banner displaying Total Active Monthly Commitment, Active Count, and Due Soon Count |
+| **Filtering & Search** | No inline search or interval filtering | Mobile search bar + Frequency filter chips (`All`, `Monthly`, `Weekly`, `Yearly`) + Status chips |
+| **Card Design & Actions** | Tiny action buttons in table cell | Glassmorphism mobile cards with category avatar, member badge, urgency-colored due badge ("Hari Ini", "H-2"), inline active toggle switch, and expandable touch action drawer |
+| **Quick Add Action** | Header button requires scrolling to top on long lists | Sticky Mobile Floating Action Button (FAB) at bottom right |
 
 ---
 
 ### Proposed Changes
 
-#### Frontend — Transactions Page & CSS
-
-##### `frontend/src/pages/TransactionsPage.vue`
-- Wrap existing table in `<div class="d-none d-md-block">` for desktop view.
-- Add `<div class="mobile-tx-container d-md-none">` for mobile view containing:
-  - Mobile KPI Summary Header (Income, Expense, Net totals).
-  - Quick filter chips (All, Income, Expense) + search input + expandable filter drawer button.
-  - View mode toggle buttons (Grouped Date Feed vs Compact Cards).
-  - Grouped Date List view option & Compact Card view option.
-  - Interactive transaction cards with category icons, member/account tags, receipt attachments, module badges, and quick action bar.
-- Add reactive mobile state (`mobileViewMode`, `showMobileFilterDrawer`, `expandedTxId`).
-- Add computed helpers for date-grouped transactions and category icon mapping.
+#### Frontend — Recurring Page & CSS
 
 ##### `frontend/src/style.css`
-- Add mobile-specific CSS classes under `@media (max-width: 767.98px)`:
-  - `.mobile-tx-container`, `.mobile-kpi-banner`, `.mobile-filter-drawer`, `.mobile-tx-card`, `.category-icon-avatar`, `.tx-action-drawer`.
+- Add mobile Recurring component styles under `@media (max-width: 767.98px)`:
+  - `.mobile-recurring-container`, `.mobile-recurring-kpi`, `.mobile-recurring-card`, `.recurring-icon-avatar`, `.due-badge`, `.mobile-fab-btn`.
+
+##### `frontend/src/pages/RecurringPage.vue`
+- Wrap existing desktop view in `<div class="d-none d-md-block">`.
+- Add `<div class="mobile-recurring-container d-md-none">` containing:
+  - Mobile header with title & create button.
+  - Mobile KPI Summary banner (Total Active Monthly Commitment, Active Count, Due Soon Count).
+  - Search bar + interval/status filter chips.
+  - Mobile cards with category avatar, urgency due badges, member tag, inline active toggle, and action drawer.
+  - Sticky Floating Action Button (FAB) for quick creation.
 
 ---
 
 ## Past Features History
+
+### Mobile View Redesign for Shopping Plan Pages (August 2026)
+- Touch-first mobile card list with store icons, assignee badges, progress bar, sticky bottom bar, and mobile KPI banner.
+
+### Mobile View Style for Transactions Page (August 2026)
+- Dedicated touch-optimized mobile view (`d-md-none`) with mobile KPI banner, compact search chips, grouped date feed, and card touch drawers.
 
 ### Auto-Create Shopping Plan from Transaction Receipt Scanning (August 2026)
 - Consolidated scan entry point into Transactions Page.

@@ -1,23 +1,22 @@
-# Tasks Checklist: Mobile View Style for Transactions Page
+# Tasks Checklist: Mobile View Redesign for Recurring Page
 
-- [x] **1. CSS & Layout Foundation (`style.css`)**
-  - [x] Add mobile container styles (`.mobile-tx-container`, `.mobile-kpi-banner`, `.mobile-filter-drawer`).
-  - [x] Add card item styles (`.mobile-tx-card`, `.category-icon-avatar`, `.tx-action-drawer`).
+- [ ] **1. CSS & Styling System (`style.css`)**
+  - [ ] Add mobile recurring container layout (`.mobile-recurring-container`).
+  - [ ] Add glassmorphism mobile KPI summary banner styling (`.mobile-recurring-kpi`).
+  - [ ] Add touch mobile recurring cards layout (`.mobile-recurring-card`, `.recurring-icon-avatar`).
+  - [ ] Add due date urgency badge styling (`.due-badge-overdue`, `.due-badge-today`, `.due-badge-soon`).
+  - [ ] Add mobile quick search bar & filter chips styling.
+  - [ ] Add mobile Floating Action Button (`.mobile-fab-btn`).
 
-- [x] **2. Responsive View Splitting (`TransactionsPage.vue`)**
-  - [x] Wrap desktop table in `<div class="d-none d-md-block">`.
-  - [x] Build `<div class="mobile-tx-container d-md-none">` template structure.
+- [ ] **2. Recurring Transactions Page (`RecurringPage.vue`)**
+  - [ ] Wrap existing desktop view in `<div class="d-none d-md-block">`.
+  - [ ] Build mobile view container `<div class="mobile-recurring-container d-md-none">`.
+  - [ ] Implement Mobile KPI Summary Banner (Active monthly total, active items count, due soon count).
+  - [ ] Implement Search bar and quick filter chips (Frequency: All/Weekly/Monthly/Yearly, Status: All/Active/Inactive).
+  - [ ] Implement Touch-Optimized Cards feed with urgency due badges, category avatar, member/account tags, inline active toggle switch, and expandable touch action drawer.
+  - [ ] Add Mobile Floating Action Button (FAB) for quick item creation.
+  - [ ] Ensure driver.js tour step IDs (`#tour-recurring-header`, `#tour-recurring-add-btn`, `#tour-recurring-list`) remain fully functional on all screen sizes.
 
-- [x] **3. Mobile Summary & Filter Components**
-  - [x] Implement Mobile KPI Summary banner (Income, Expense, Net calculation).
-  - [x] Implement mobile search bar + type filter chips + expandable filter drawer toggle.
-
-- [x] **4. Mobile Cards & Grouped Date View**
-  - [x] Implement view mode toggle ('grouped' vs 'cards').
-  - [x] Implement Grouped Date Feed view with daily header summaries.
-  - [x] Implement Compact Card view with category icons, badges, and tap-to-expand quick actions.
-  - [x] Removed raw swipe gesture handlers that previously triggered accidental edit/delete modal popups.
-
-- [x] **5. Verification & Testing**
-  - [x] Run `npm run build` to verify Vue template compilation.
-  - [x] Test mobile responsiveness (<768px vs >=768px) and all modal triggers.
+- [ ] **3. Build & Verification**
+  - [ ] Run `npm run build` to verify clean compilation.
+  - [ ] Verify responsiveness and interactive behaviors on mobile (<768px) and desktop (>=768px).

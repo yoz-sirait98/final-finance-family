@@ -1,71 +1,195 @@
 <template>
   <div class="shopping-detail-page fade-in">
-    <!-- Header with Back Button -->
-    <div id="tour-sd-header" class="page-header d-flex justify-content-between align-items-center mb-4">
-      <div class="d-flex align-items-center gap-3">
-        <button class="btn btn-outline-secondary btn-sm" @click="router.push('/shopping')">
-          <i class="bi bi-arrow-left"></i>
-        </button>
-        <div>
-          <h4 class="mb-0">{{ plan?.location || 'Loading...' }}</h4>
-          <p class="text-muted small mb-0" v-if="plan">
-            Created by {{ plan.created_by_member?.name }} on {{ new Date(plan.created_at).toLocaleDateString() }}
-          </p>
+    <!-- ===== Desktop View ===== -->
+    <div class="d-none d-md-block">
+      <!-- Header with Back Button -->
+      <div id="tour-sd-header" class="page-header d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex align-items-center gap-3">
+          <button class="btn btn-outline-secondary btn-sm" @click="router.push('/shopping')">
+            <i class="bi bi-arrow-left"></i>
+          </button>
+          <div>
+            <h4 class="mb-0">{{ plan?.location || 'Loading...' }}</h4>
+            <p class="text-muted small mb-0" v-if="plan">
+              Created by {{ plan.created_by_member?.name }} on {{ new Date(plan.created_at).toLocaleDateString() }}
+            </p>
+          </div>
+        </div>
+        <div class="d-flex align-items-center gap-2" v-if="plan">
+          <button v-if="plan.receipt_url" class="btn btn-outline-info btn-sm" @click="openReceiptModal" title="View Scanned Receipt">
+            <i class="bi bi-receipt me-1"></i><span>{{ localeStore.currentLocale === 'id' ? 'Lihat Struk' : 'View Receipt' }}</span>
+          </button>
+          <span class="badge" :class="plan.status === 'locked' ? 'bg-secondary' : plan.status === 'done' ? 'bg-success' : 'bg-warning text-dark'">
+            <i v-if="plan.status === 'locked'" class="bi bi-lock-fill me-1"></i>
+            {{ plan.status === 'locked' ? (localeStore.currentLocale === 'id' ? 'Terkunci' : 'Locked') : plan.status === 'done' ? ($t('shopping.done') || 'Done') : ($t('shopping.onProgress') || 'On Progress') }}
+          </span>
         </div>
       </div>
-      <div class="d-flex align-items-center gap-2" v-if="plan">
-        <button v-if="plan.receipt_url" class="btn btn-outline-info btn-sm" @click="openReceiptModal" title="View Scanned Receipt">
-          <i class="bi bi-receipt me-1"></i><span>{{ localeStore.currentLocale === 'id' ? 'Lihat Struk' : 'View Receipt' }}</span>
+
+      <!-- Items Section -->
+      <div class="card border-0 shadow-sm mb-4">
+        <div class="card-header bg-white border-light d-flex justify-content-between align-items-center py-3">
+          <h6 class="mb-0 fw-bold">Shopping Items</h6>
+          <button v-if="plan?.status !== 'locked' && plan?.status !== 'done'" class="btn btn-sm btn-primary-gradient" @click="openAddItem">
+            <i class="bi bi-plus-lg"></i><span class="d-none d-sm-inline">Add Item</span>
+          </button>
+        </div>
+        <div class="card-body p-0">
+          <div v-if="items.length === 0" class="text-center text-muted py-5">
+            <i class="bi bi-basket text-light" style="font-size: 3rem;"></i>
+            <p class="mt-3">No items added to this plan yet.</p>
+          </div>
+          <div v-else class="list-group list-group-flush">
+            <div v-for="item in items" :key="item.id" class="list-group-item d-flex justify-content-between align-items-center py-3" :class="{'bg-light': item.is_checked}">
+              <div class="d-flex align-items-center gap-3">
+                <input type="checkbox" class="form-check-input mt-0 cursor-pointer" style="width: 1.5em; height: 1.5em;" v-model="item.is_checked" @change="toggleCheck(item)" :disabled="plan?.status === 'locked' || plan?.status === 'done'">
+                <div>
+                  <h6 class="mb-0 fw-bold" :class="{'text-decoration-line-through text-muted': plan?.status === 'locked' || item.is_checked}">{{ item.name }}</h6>
+                  <small class="text-muted">Added by {{ item.added_by_member?.name || 'Unknown' }}</small>
+                </div>
+              </div>
+              <div class="d-flex align-items-center gap-3">
+                <!-- Price Display: input for 'progress', read-only for 'done' & 'locked' -->
+                <template v-if="plan?.status === 'progress' || !plan?.status">
+                  <div class="input-group input-group-sm" style="width: 140px;">
+                    <span class="input-group-text border-light bg-light text-muted">Rp</span>
+                    <input type="number" class="form-control border-light" v-model="item.price" @change="updateItemPrice(item)" placeholder="Est. Price" />
+                  </div>
+                </template>
+                <template v-else>
+                  <span class="fw-semibold" :class="Number(item.price) < 0 ? 'text-danger' : 'text-muted'">
+                    {{ Number(item.price) < 0 ? `-Rp ${Math.abs(Number(item.price)).toLocaleString('id-ID')}` : `Rp ${Number(item.price || 0).toLocaleString('id-ID')}` }}
+                  </span>
+                </template>
+
+                <!-- Action Buttons: visible for 'progress' & 'done', hidden for 'locked' -->
+                <template v-if="plan?.status !== 'locked'">
+                  <button class="btn btn-sm btn-outline-primary border-0 ms-2" @click="openEditItem(item)">
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                  <button class="btn btn-sm btn-outline-danger border-0" @click="confirmDeleteItem(item)">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </template>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer bg-light border-light d-flex justify-content-between align-items-center py-3" v-if="items.length > 0">
+          <span class="text-muted">Total ({{ items.length }} items)</span>
+          <h5 class="mb-0 fw-bold text-primary">Rp {{ totalAmount.toLocaleString('id-ID') }}</h5>
+        </div>
+      </div>
+
+      <!-- Desktop Actions -->
+      <div v-if="plan?.status === 'progress' && items.length > 0" class="d-flex justify-content-end">
+        <button class="btn btn-success px-5 rounded-pill shadow-sm" @click="openChoiceModal">
+          <i class="bi bi-cart-check me-2"></i>{{ localeStore.currentLocale === 'id' ? 'Selesaikan' : 'Complete Plan' }}
         </button>
-        <span class="badge" :class="plan.status === 'locked' ? 'bg-secondary' : plan.status === 'done' ? 'bg-success' : 'bg-warning text-dark'">
-          <i v-if="plan.status === 'locked'" class="bi bi-lock-fill me-1"></i>
-          {{ plan.status === 'locked' ? (localeStore.currentLocale === 'id' ? 'Terkunci' : 'Locked') : plan.status === 'done' ? ($t('shopping.done') || 'Done') : ($t('shopping.onProgress') || 'On Progress') }}
-        </span>
+      </div>
+      <div v-else-if="plan?.status === 'done'" class="d-flex justify-content-end gap-2">
+        <button class="btn btn-dark px-4 rounded-pill shadow-sm" :disabled="isLocking" @click="lockPlan">
+          <span v-if="isLocking" class="spinner-border spinner-border-sm me-2"></span>
+          <i v-else class="bi bi-lock me-2"></i>{{ localeStore.currentLocale === 'id' ? 'Kunci Rencana' : 'Lock Plan' }}
+        </button>
       </div>
     </div>
 
-    <!-- Items Section -->
-    <div class="card border-0 shadow-sm mb-4">
-      <div class="card-header bg-white border-light d-flex justify-content-between align-items-center py-3">
-        <h6 class="mb-0 fw-bold">Shopping Items</h6>
-        <button v-if="plan?.status !== 'locked' && plan?.status !== 'done'" class="btn btn-sm btn-primary-gradient" @click="openAddItem">
-          <i class="bi bi-plus-lg"></i><span class="d-none d-sm-inline">Add Item</span>
-        </button>
-      </div>
-      <div class="card-body p-0">
-        <div v-if="items.length === 0" class="text-center text-muted py-5">
-          <i class="bi bi-basket text-light" style="font-size: 3rem;"></i>
-          <p class="mt-3">No items added to this plan yet.</p>
+    <!-- ===== Mobile View ===== -->
+    <div class="mobile-shopping-detail-container d-md-none">
+      <!-- Mobile Detail Header -->
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="d-flex align-items-center gap-2">
+          <button class="btn btn-outline-secondary btn-sm rounded-circle p-2" @click="router.push('/shopping')">
+            <i class="bi bi-arrow-left"></i>
+          </button>
+          <div>
+            <h5 class="fw-bold mb-0 text-truncate" style="max-width: 180px;">{{ plan?.location || 'Loading...' }}</h5>
+            <small class="text-muted d-block" style="font-size: 0.72rem;">
+              {{ plan?.created_by_member?.name || 'Unknown' }} • {{ plan ? new Date(plan.created_at).toLocaleDateString() : '' }}
+            </small>
+          </div>
         </div>
-        <div v-else class="list-group list-group-flush">
-          <div v-for="item in items" :key="item.id" class="list-group-item d-flex justify-content-between align-items-center py-3" :class="{'bg-light': item.is_checked}">
-            <div class="d-flex align-items-center gap-3">
-              <input type="checkbox" class="form-check-input mt-0 cursor-pointer" style="width: 1.5em; height: 1.5em;" v-model="item.is_checked" @change="toggleCheck(item)" :disabled="plan?.status === 'locked' || plan?.status === 'done'">
-              <div>
-                <h6 class="mb-0 fw-bold" :class="{'text-decoration-line-through text-muted': plan?.status === 'locked' || item.is_checked}">{{ item.name }}</h6>
-                <small class="text-muted">Added by {{ item.added_by_member?.name || 'Unknown' }}</small>
+        <div class="d-flex align-items-center gap-2" v-if="plan">
+          <button v-if="plan.receipt_url" class="btn btn-xs btn-outline-info" @click="openReceiptModal">
+            <i class="bi bi-receipt me-1"></i>Struk
+          </button>
+          <span class="badge" :class="plan.status === 'locked' ? 'bg-secondary' : plan.status === 'done' ? 'bg-success' : 'bg-warning text-dark'">
+            <i v-if="plan.status === 'locked'" class="bi bi-lock-fill me-1"></i>
+            {{ plan.status === 'locked' ? (localeStore.currentLocale === 'id' ? 'Terkunci' : 'Locked') : plan.status === 'done' ? ($t('shopping.done') || 'Done') : ($t('shopping.onProgress') || 'On Progress') }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Progress & Summary Card -->
+      <div class="mobile-detail-progress-card">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <span class="small fw-bold text-muted">
+            <i class="bi bi-check2-square text-success me-1"></i>
+            {{ checkedCount }} / {{ items.length }} {{ localeStore.currentLocale === 'id' ? 'Barang Selesai' : 'Items Checked' }}
+          </span>
+          <span class="badge bg-success bg-opacity-25 text-success fw-bold">{{ checkedPercent }}%</span>
+        </div>
+        
+        <div class="progress mb-3" style="height: 6px;">
+          <div class="progress-bar bg-success" :style="{ width: checkedPercent + '%' }"></div>
+        </div>
+
+        <!-- Mobile Item Filter Chips -->
+        <div class="d-flex gap-1">
+          <button class="btn filter-chip-btn flex-fill" :class="mobileItemFilter === 'all' ? 'btn-primary' : 'btn-outline-secondary'" @click="mobileItemFilter = 'all'">
+            {{ localeStore.currentLocale === 'id' ? 'Semua' : 'All' }} ({{ items.length }})
+          </button>
+          <button class="btn filter-chip-btn flex-fill" :class="mobileItemFilter === 'pending' ? 'btn-primary' : 'btn-outline-secondary'" @click="mobileItemFilter = 'pending'">
+            {{ localeStore.currentLocale === 'id' ? 'Belum' : 'Pending' }} ({{ pendingCount }})
+          </button>
+          <button class="btn filter-chip-btn flex-fill" :class="mobileItemFilter === 'checked' ? 'btn-primary' : 'btn-outline-secondary'" @click="mobileItemFilter = 'checked'">
+            {{ localeStore.currentLocale === 'id' ? 'Selesai' : 'Done' }} ({{ checkedCount }})
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Checklist Items Feed -->
+      <div v-if="filteredMobileItems.length === 0" class="text-center text-muted py-5">
+        <i class="bi bi-basket text-light" style="font-size: 2.5rem;"></i>
+        <p class="mt-2 mb-0 small">{{ localeStore.currentLocale === 'id' ? 'Belum ada barang di daftar ini.' : 'No items match your filter.' }}</p>
+      </div>
+
+      <div v-else>
+        <div v-for="item in filteredMobileItems" :key="'mob-item-'+item.id" class="mobile-item-card" :class="{'item-checked': item.is_checked}">
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center gap-3 flex-grow-1 min-w-0 me-2">
+              <input type="checkbox" class="mobile-item-checkbox" v-model="item.is_checked" @change="toggleCheck(item)" :disabled="plan?.status === 'locked' || plan?.status === 'done'">
+              <div class="text-truncate">
+                <h6 class="mb-0 fw-semibold text-truncate" :class="{'text-decoration-line-through text-muted': plan?.status === 'locked' || item.is_checked}">
+                  {{ item.name }}
+                </h6>
+                <small class="text-muted d-block" style="font-size: 0.72rem;">
+                  {{ item.added_by_member?.name || 'Unknown' }}
+                </small>
               </div>
             </div>
-            <div class="d-flex align-items-center gap-3">
-              <!-- Price Display: input for 'progress', read-only for 'done' & 'locked' -->
+
+            <div class="d-flex align-items-center gap-2 flex-shrink-0">
+              <!-- Inline Price Editor on Mobile -->
               <template v-if="plan?.status === 'progress' || !plan?.status">
-                <div class="input-group input-group-sm" style="width: 140px;">
-                  <span class="input-group-text border-light bg-light text-muted">Rp</span>
-                  <input type="number" class="form-control border-light" v-model="item.price" @change="updateItemPrice(item)" placeholder="Est. Price" />
+                <div class="input-group input-group-sm" style="width: 110px;">
+                  <span class="input-group-text p-1 border-0 bg-transparent text-muted" style="font-size:0.75rem">Rp</span>
+                  <input type="number" class="form-control form-control-sm px-1 text-end rounded" v-model="item.price" @change="updateItemPrice(item)" placeholder="0" />
                 </div>
               </template>
               <template v-else>
-                <span class="fw-semibold" :class="Number(item.price) < 0 ? 'text-danger' : 'text-muted'">
-                  {{ Number(item.price) < 0 ? `-Rp ${Math.abs(Number(item.price)).toLocaleString('id-ID')}` : `Rp ${Number(item.price || 0).toLocaleString('id-ID')}` }}
+                <span class="fw-bold small" :class="Number(item.price) < 0 ? 'text-danger' : 'text-success'">
+                  Rp {{ Number(item.price || 0).toLocaleString('id-ID') }}
                 </span>
               </template>
 
-              <!-- Action Buttons: visible for 'progress' & 'done', hidden for 'locked' -->
+              <!-- Edit & Delete Item Buttons -->
               <template v-if="plan?.status !== 'locked'">
-                <button class="btn btn-sm btn-outline-primary border-0 ms-2" @click="openEditItem(item)">
+                <button class="btn btn-xs btn-outline-primary border-0" @click="openEditItem(item)">
                   <i class="bi bi-pencil"></i>
                 </button>
-                <button class="btn btn-sm btn-outline-danger border-0" @click="confirmDeleteItem(item)">
+                <button class="btn btn-xs btn-outline-danger border-0" @click="confirmDeleteItem(item)">
                   <i class="bi bi-trash"></i>
                 </button>
               </template>
@@ -73,24 +197,31 @@
           </div>
         </div>
       </div>
-      <div class="card-footer bg-light border-light d-flex justify-content-between align-items-center py-3" v-if="items.length > 0">
-        <span class="text-muted">Total ({{ items.length }} items)</span>
-        <h5 class="mb-0 fw-bold text-primary">Rp {{ totalAmount.toLocaleString('id-ID') }}</h5>
+
+      <!-- Mobile Sticky Bottom Bar -->
+      <div class="mobile-sticky-bottom-bar d-flex justify-content-between align-items-center">
+        <div>
+          <small class="text-muted d-block" style="font-size: 0.7rem;">Total ({{ items.length }} {{ localeStore.currentLocale === 'id' ? 'barang' : 'items' }})</small>
+          <span class="fw-bold text-primary fs-6">Rp {{ totalAmount.toLocaleString('id-ID') }}</span>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+          <button v-if="plan?.status !== 'locked' && plan?.status !== 'done'" class="btn btn-sm btn-outline-primary rounded-pill px-3" @click="openAddItem">
+            <i class="bi bi-plus-lg me-1"></i>Add Item
+          </button>
+          
+          <button v-if="plan?.status === 'progress' && items.length > 0" class="btn btn-sm btn-success rounded-pill px-3 shadow-sm" @click="openChoiceModal">
+            <i class="bi bi-cart-check me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Selesaikan' : 'Complete' }}
+          </button>
+
+          <button v-else-if="plan?.status === 'done'" class="btn btn-sm btn-dark rounded-pill px-3 shadow-sm" :disabled="isLocking" @click="lockPlan">
+            <span v-if="isLocking" class="spinner-border spinner-border-sm me-1"></span>
+            <i v-else class="bi bi-lock me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Kunci' : 'Lock' }}
+          </button>
+        </div>
       </div>
     </div>
 
-    <!-- Actions -->
-    <div v-if="plan?.status === 'progress' && items.length > 0" class="d-flex justify-content-end">
-      <button class="btn btn-success px-5 rounded-pill shadow-sm" @click="openChoiceModal">
-        <i class="bi bi-cart-check me-2"></i>{{ localeStore.currentLocale === 'id' ? 'Selesaikan' : 'Complete Plan' }}
-      </button>
-    </div>
-    <div v-else-if="plan?.status === 'done'" class="d-flex justify-content-end gap-2">
-      <button class="btn btn-dark px-4 rounded-pill shadow-sm" :disabled="isLocking" @click="lockPlan">
-        <span v-if="isLocking" class="spinner-border spinner-border-sm me-2"></span>
-        <i v-else class="bi bi-lock me-2"></i>{{ localeStore.currentLocale === 'id' ? 'Kunci Rencana' : 'Lock Plan' }}
-      </button>
-    </div>
 
     <!-- ===== Choice Modal (Mark as Done vs. Checkout) ===== -->
     <div v-if="showChoiceModal" class="vue-modal-backdrop" @mousedown.self="showChoiceModal = false">
@@ -345,6 +476,27 @@ async function openReceiptModal() {
 const totalAmount = computed(() => {
   return items.value.reduce((sum, item) => sum + (parseFloat(item.price) || 0), 0);
 });
+
+// Mobile Detail Item Filter & Progress Stats
+const mobileItemFilter = ref('all'); // 'all' | 'pending' | 'checked'
+
+const pendingCount = computed(() => items.value.filter(i => !i.is_checked).length);
+const checkedCount = computed(() => items.value.filter(i => i.is_checked).length);
+const checkedPercent = computed(() => {
+  if (!items.value.length) return 0;
+  return Math.round((checkedCount.value / items.value.length) * 100);
+});
+
+const filteredMobileItems = computed(() => {
+  if (mobileItemFilter.value === 'pending') {
+    return items.value.filter(i => !i.is_checked);
+  }
+  if (mobileItemFilter.value === 'checked') {
+    return items.value.filter(i => i.is_checked);
+  }
+  return items.value;
+});
+
 
 let subscriptionPlans;
 let subscriptionItems;

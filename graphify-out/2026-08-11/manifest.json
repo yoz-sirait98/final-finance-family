@@ -155,8 +155,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/TransactionsPage.vue": {
-    "mtime": 1785844495.2308583,
-    "ast_hash": "012c87c388a27384bf66b645534cfaa7",
+    "mtime": 1786415572.6169543,
+    "ast_hash": "2012419a40655de2bf0d05e83133d740",
     "semantic_hash": ""
   },
   "frontend/src/router/index.js": {
@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "docs/implementation_plan.md": {
-    "mtime": 1785835533.59637,
-    "ast_hash": "f68d540cafa2fc8beda33267c2e5a09e",
+    "mtime": 1786414825.054814,
+    "ast_hash": "cbf6237f9405e91ee4ab47c1add6b3c0",
     "semantic_hash": ""
   },
   "docs/supabase-setup-guide.md": {
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "docs/task.md": {
-    "mtime": 1785835805.8404527,
-    "ast_hash": "7930d83814b315eb62623ab08030e165",
+    "mtime": 1786415911.3842669,
+    "ast_hash": "489c92d53e678fc31d6f58a5e558bf2f",
     "semantic_hash": ""
   },
   "docs/walkthrough_graphify.md": {
@@ -907,6 +907,11 @@
   "docs/walkthrough_gemini_vision_scanner_2026.md": {
     "mtime": 1785393461.2629843,
     "ast_hash": "57c3e9633a9f18c362ef1bba9dfab12c",
+    "semantic_hash": ""
+  },
+  "docs/walkthrough_mobile_transactions_view.md": {
+    "mtime": 1786415916.3092732,
+    "ast_hash": "f0bba50c1d922fb8efe00feb42ea9ed6",
     "semantic_hash": ""
   }
 }

@@ -1,74 +1,211 @@
 <template>
   <div class="shopping-page fade-in">
-    <div id="tour-shopping-header" class="page-header d-flex justify-content-between align-items-center mb-4">
-      <div>
-        <h4>{{ $t('shopping.title') }}</h4>
-        <p class="text-muted mb-0">{{ $t('shopping.subtitle') }}</p>
+    <!-- ===== Desktop View ===== -->
+    <div class="d-none d-md-block">
+      <div id="tour-shopping-header" class="page-header d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <h4>{{ $t('shopping.title') }}</h4>
+          <p class="text-muted mb-0">{{ $t('shopping.subtitle') }}</p>
+        </div>
+        <div class="d-flex gap-2">
+          <button id="tour-shopping-add-btn" class="btn btn-primary-gradient" @click="openAddPlan">
+            <i class="bi bi-plus-lg"></i><span class="d-none d-sm-inline">{{ $t('shopping.createPlan') || 'Create Plan' }}</span>
+          </button>
+        </div>
       </div>
-      <div class="d-flex gap-2">
-        <button id="tour-shopping-add-btn" class="btn btn-primary-gradient" @click="openAddPlan">
-          <i class="bi bi-plus-lg"></i><span class="d-none d-sm-inline">{{ $t('shopping.createPlan') || 'Create Plan' }}</span>
-        </button>
-      </div>
-    </div>
 
-    <!-- Tabs for Plans -->
-    <ul class="nav nav-pills mb-4">
-      <li class="nav-item">
-        <a class="nav-link" :class="{active: activeTab === 'progress'}" href="#" @click.prevent="activeTab = 'progress'">
-          <i class="bi bi-list-task me-1"></i>{{ $t('shopping.onProgress') || 'On Progress' }}
-          <span v-if="progressPlans.length" class="badge bg-danger ms-1">{{ progressPlans.length }}</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" :class="{active: activeTab === 'done'}" href="#" @click.prevent="activeTab = 'done'">
-          <i class="bi bi-check2-circle me-1"></i>{{ $t('shopping.done') || 'Done' }}
-        </a>
-      </li>
-    </ul>
+      <!-- Tabs for Plans -->
+      <ul class="nav nav-pills mb-4">
+        <li class="nav-item">
+          <a class="nav-link" :class="{active: activeTab === 'progress'}" href="#" @click.prevent="activeTab = 'progress'">
+            <i class="bi bi-list-task me-1"></i>{{ $t('shopping.onProgress') || 'On Progress' }}
+            <span v-if="progressPlans.length" class="badge bg-danger ms-1">{{ progressPlans.length }}</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" :class="{active: activeTab === 'done'}" href="#" @click.prevent="activeTab = 'done'">
+            <i class="bi bi-check2-circle me-1"></i>{{ $t('shopping.done') || 'Done' }}
+          </a>
+        </li>
+      </ul>
 
-    <!-- Plans List -->
-    <div class="row g-3">
-      <div v-if="filteredPlans.length === 0" class="col-12 text-center text-muted py-5">
-        <i class="bi bi-card-checklist text-light" style="font-size: 3rem;"></i>
-        <p class="mt-3">{{ $t('shopping.noPlans') || 'No shopping plans found.' }}</p>
-      </div>
-      <div v-for="plan in filteredPlans" :key="plan.id" class="col-md-6 col-lg-4">
-        <div class="card h-100 shadow-sm border-0 plan-card" @click="goToDetail(plan.id)">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-start mb-2">
-              <h5 class="card-title fw-bold mb-0 text-primary">{{ plan.location }}</h5>
-              <span class="badge" :class="plan.status === 'locked' ? 'bg-secondary' : plan.status === 'done' ? 'bg-success' : 'bg-warning text-dark'">
-                <i v-if="plan.status === 'locked'" class="bi bi-lock-fill me-1"></i>
-                {{ plan.status === 'locked' ? (localeStore.currentLocale === 'id' ? 'Terkunci' : 'Locked') : plan.status === 'done' ? ($t('shopping.done') || 'Done') : ($t('shopping.onProgress') || 'On Progress') }}
-              </span>
+      <!-- Plans List -->
+      <div class="row g-3">
+        <div v-if="filteredPlans.length === 0" class="col-12 text-center text-muted py-5">
+          <i class="bi bi-card-checklist text-light" style="font-size: 3rem;"></i>
+          <p class="mt-3">{{ $t('shopping.noPlans') || 'No shopping plans found.' }}</p>
+        </div>
+        <div v-for="plan in filteredPlans" :key="plan.id" class="col-md-6 col-lg-4">
+          <div class="card h-100 shadow-sm border-0 plan-card" @click="goToDetail(plan.id)">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <h5 class="card-title fw-bold mb-0 text-primary">{{ plan.location }}</h5>
+                <span class="badge" :class="plan.status === 'locked' ? 'bg-secondary' : plan.status === 'done' ? 'bg-success' : 'bg-warning text-dark'">
+                  <i v-if="plan.status === 'locked'" class="bi bi-lock-fill me-1"></i>
+                  {{ plan.status === 'locked' ? (localeStore.currentLocale === 'id' ? 'Terkunci' : 'Locked') : plan.status === 'done' ? ($t('shopping.done') || 'Done') : ($t('shopping.onProgress') || 'On Progress') }}
+                </span>
+              </div>
+              <p class="text-muted small mb-2">
+                <i class="bi bi-calendar3 me-1"></i> {{ new Date(plan.created_at).toLocaleDateString() }}
+              </p>
+              <p class="text-muted small mb-0">
+                <i class="bi bi-person me-1"></i> {{ plan.created_by_member?.name || 'Unknown' }}
+              </p>
             </div>
-            <p class="text-muted small mb-2">
-              <i class="bi bi-calendar3 me-1"></i> {{ new Date(plan.created_at).toLocaleDateString() }}
-            </p>
-            <p class="text-muted small mb-0">
-              <i class="bi bi-person me-1"></i> {{ plan.created_by_member?.name || 'Unknown' }}
-            </p>
-          </div>
-          <div class="card-footer bg-white border-light d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center gap-2">
-              <span v-if="plan.status === 'done' || plan.status === 'locked'" class="fw-bold text-danger">
-                Rp {{ (plan.transaction ? parseFloat(plan.transaction.amount || 0) : (plan.shopping_items?.reduce((sum, item) => sum + (parseFloat(item.price) || 0), 0) || 0)).toLocaleString('id-ID') }}
-              </span>
-              <span v-else class="text-muted small">
-                <i class="bi bi-people me-1"></i> {{ plan.assigned_members?.length || 0 }} assigned
-              </span>
-              <button v-if="plan.receipt_url" class="btn btn-sm btn-outline-info border-0 p-0 px-1" @click.stop="openReceiptModal(plan)" title="View Receipt Photo">
-                <i class="bi bi-receipt me-1"></i><span class="small">Struk</span>
+            <div class="card-footer bg-white border-light d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center gap-2">
+                <span v-if="plan.status === 'done' || plan.status === 'locked'" class="fw-bold text-danger">
+                  Rp {{ (plan.transaction ? parseFloat(plan.transaction.amount || 0) : (plan.shopping_items?.reduce((sum, item) => sum + (parseFloat(item.price) || 0), 0) || 0)).toLocaleString('id-ID') }}
+                </span>
+                <span v-else class="text-muted small">
+                  <i class="bi bi-people me-1"></i> {{ plan.assigned_members?.length || 0 }} assigned
+                </span>
+                <button v-if="plan.receipt_url" class="btn btn-sm btn-outline-info border-0 p-0 px-1" @click.stop="openReceiptModal(plan)" title="View Receipt Photo">
+                  <i class="bi bi-receipt me-1"></i><span class="small">Struk</span>
+                </button>
+              </div>
+              <button class="btn btn-sm btn-outline-danger border-0" @click.stop="confirmDeletePlan(plan)" title="Delete Plan">
+                <i class="bi bi-trash"></i>
               </button>
             </div>
-            <button class="btn btn-sm btn-outline-danger border-0" @click.stop="confirmDeletePlan(plan)" title="Delete Plan">
-              <i class="bi bi-trash"></i>
-            </button>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- ===== Mobile View ===== -->
+    <div class="mobile-shopping-container d-md-none">
+      <!-- Mobile Header -->
+      <div class="page-header d-flex justify-content-between align-items-center mb-3">
+        <div>
+          <h4 class="mb-0 fw-bold">{{ $t('shopping.title') }}</h4>
+          <p class="text-muted small mb-0">{{ $t('shopping.subtitle') }}</p>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <button class="btn btn-sm btn-outline-secondary tour-help-btn rounded-circle p-2" @click="handleTour" title="Start Tour">
+            <i class="bi bi-question-circle"></i>
+          </button>
+          <button class="btn btn-primary-gradient btn-sm rounded-pill px-3" @click="openAddPlan">
+            <i class="bi bi-plus-lg me-1"></i>{{ $t('common.add') || 'Buat' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile KPI Banner -->
+      <div class="mobile-shopping-kpi mb-3">
+        <div class="row g-2 text-center">
+          <div class="col-6">
+            <div class="mobile-kpi-item p-2">
+              <span class="kpi-label d-block text-muted mb-1">{{ localeStore.currentLocale === 'id' ? 'Aktif' : 'Active Plans' }}</span>
+              <span class="kpi-val text-warning fs-6 d-block">{{ activePlansCount }} <small class="fw-normal text-muted fs-7">({{ localeStore.currentLocale === 'id' ? 'Rencana' : 'plans' }})</small></span>
+              <small class="text-muted d-block" style="font-size: 0.7rem;">Est: Rp {{ activePlansEstTotal.toLocaleString('id-ID') }}</small>
+            </div>
+          </div>
+          <div class="col-6 border-start border-secondary border-opacity-25">
+            <div class="mobile-kpi-item p-2">
+              <span class="kpi-label d-block text-muted mb-1">{{ localeStore.currentLocale === 'id' ? 'Selesai / Kunci' : 'Done / Locked' }}</span>
+              <span class="kpi-val text-success fs-6 d-block">{{ donePlansCount }} <small class="fw-normal text-muted fs-7">({{ localeStore.currentLocale === 'id' ? 'Selesai' : 'done' }})</small></span>
+              <small class="text-muted d-block" style="font-size: 0.7rem;">Spent: Rp {{ donePlansSpentTotal.toLocaleString('id-ID') }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search Bar & Tab Pills -->
+      <div class="mb-3">
+        <div class="input-group input-group-sm mb-2 shadow-sm">
+          <span class="input-group-text bg-transparent border-end-0"><i class="bi bi-search text-muted"></i></span>
+          <input type="text" class="form-control border-start-0 ps-0" :placeholder="localeStore.currentLocale === 'id' ? 'Cari toko atau pembuat...' : 'Search store or creator...'" v-model="mobileSearchQuery" />
+          <button v-if="mobileSearchQuery" class="btn btn-outline-secondary border-start-0" @click="mobileSearchQuery = ''"><i class="bi bi-x"></i></button>
+        </div>
+
+        <div class="d-flex gap-2">
+          <button class="btn filter-chip-btn flex-fill" :class="activeTab === 'progress' ? 'btn-primary' : 'btn-outline-secondary'" @click="activeTab = 'progress'">
+            <i class="bi bi-list-task me-1"></i>{{ $t('shopping.onProgress') || 'On Progress' }}
+            <span v-if="progressPlans.length" class="badge bg-danger ms-1">{{ progressPlans.length }}</span>
+          </button>
+          <button class="btn filter-chip-btn flex-fill" :class="activeTab === 'done' ? 'btn-primary' : 'btn-outline-secondary'" @click="activeTab = 'done'">
+            <i class="bi bi-check2-circle me-1"></i>{{ $t('shopping.done') || 'Done' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Plan Cards Feed -->
+      <div v-if="filteredMobilePlans.length === 0" class="text-center text-muted py-5">
+        <i class="bi bi-basket text-light" style="font-size: 3rem;"></i>
+        <p class="mt-2 mb-0">{{ $t('shopping.noPlans') || 'No shopping plans found.' }}</p>
+      </div>
+
+      <div v-else>
+        <div v-for="plan in filteredMobilePlans" :key="'mob-'+plan.id" class="mobile-plan-card" @click="goToDetail(plan.id)">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <div class="d-flex align-items-center gap-2">
+              <div class="plan-icon-avatar" :class="{'status-done': plan.status === 'done', 'status-locked': plan.status === 'locked'}">
+                <i :class="'bi ' + getStoreIcon(plan.location)"></i>
+              </div>
+              <div>
+                <h6 class="fw-bold mb-0 text-capitalize">{{ plan.location }}</h6>
+                <small class="text-muted" style="font-size: 0.75rem;">
+                  <i class="bi bi-person me-1"></i>{{ plan.created_by_member?.name || 'Unknown' }} • {{ new Date(plan.created_at).toLocaleDateString() }}
+                </small>
+              </div>
+            </div>
+            <span class="badge" :class="plan.status === 'locked' ? 'bg-secondary' : plan.status === 'done' ? 'bg-success' : 'bg-warning text-dark'">
+              <i v-if="plan.status === 'locked'" class="bi bi-lock-fill me-1"></i>
+              {{ plan.status === 'locked' ? (localeStore.currentLocale === 'id' ? 'Terkunci' : 'Locked') : plan.status === 'done' ? ($t('shopping.done') || 'Done') : ($t('shopping.onProgress') || 'On Progress') }}
+            </span>
+          </div>
+
+          <!-- Items Progress Info -->
+          <div class="mt-2 pt-2 border-top border-secondary border-opacity-10">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <small class="text-muted" style="font-size: 0.75rem;">
+                <i class="bi bi-check2-square me-1 text-primary"></i>
+                <template v-if="plan.shopping_items && plan.shopping_items.length">
+                  {{ getPlanProgressInfo(plan).checked }} / {{ getPlanProgressInfo(plan).total }} {{ localeStore.currentLocale === 'id' ? 'barang selesai' : 'items checked' }}
+                </template>
+                <template v-else>
+                  0 {{ localeStore.currentLocale === 'id' ? 'barang' : 'items' }}
+                </template>
+              </small>
+              
+              <!-- Total Amount Tag -->
+              <span class="fw-bold" :class="plan.status === 'done' || plan.status === 'locked' ? 'text-success' : 'text-primary'" style="font-size: 0.85rem;">
+                Rp {{ (plan.transaction ? parseFloat(plan.transaction.amount || 0) : (plan.shopping_items?.reduce((sum, item) => sum + (parseFloat(item.price) || 0), 0) || 0)).toLocaleString('id-ID') }}
+              </span>
+            </div>
+
+            <div v-if="plan.shopping_items && plan.shopping_items.length" class="progress mb-2" style="height: 4px;">
+              <div class="progress-bar bg-success" :style="{ width: getPlanProgressInfo(plan).percent + '%' }"></div>
+            </div>
+
+            <!-- Card Bottom Quick Actions -->
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <div class="d-flex align-items-center gap-2">
+                <button v-if="plan.receipt_url" class="btn btn-xs btn-outline-info" @click.stop="openReceiptModal(plan)">
+                  <i class="bi bi-receipt me-1"></i>Struk
+                </button>
+                <span v-if="plan.assigned_members?.length" class="badge bg-secondary bg-opacity-25 text-body px-2" style="font-size: 0.68rem;">
+                  <i class="bi bi-people me-1"></i>{{ plan.assigned_members.length }}
+                </span>
+              </div>
+              <div class="d-flex align-items-center gap-1">
+                <button class="btn btn-xs btn-outline-danger border-0" @click.stop="confirmDeletePlan(plan)" title="Delete Plan">
+                  <i class="bi bi-trash"></i>
+                </button>
+                <span class="text-muted ms-1"><i class="bi bi-chevron-right fs-6"></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Floating Action Button (FAB) -->
+      <button class="mobile-fab-btn" @click="openAddPlan" title="Create Plan">
+        <i class="bi bi-plus-lg"></i>
+      </button>
+    </div>
+
 
     <!-- Create Plan Modal -->
     <div v-if="showAddModal" class="vue-modal-backdrop" @mousedown.self="showAddModal = false">
@@ -234,6 +371,59 @@ async function openReceiptModal(plan) {
 const progressPlans = computed(() => plans.value.filter(p => p.status === 'progress'));
 const donePlans = computed(() => plans.value.filter(p => p.status === 'done' || p.status === 'locked'));
 const filteredPlans = computed(() => activeTab.value === 'progress' ? progressPlans.value : donePlans.value);
+
+// Mobile View State & Computed Helpers
+const mobileSearchQuery = ref('');
+
+function getStoreIcon(location) {
+  if (!location) return 'bi-cart-fill';
+  const loc = location.toLowerCase();
+  if (loc.includes('supermarket') || loc.includes('pasar') || loc.includes('grocer') || loc.includes('market')) return 'bi-cart-fill';
+  if (loc.includes('mall') || loc.includes('plaza') || loc.includes('outlet')) return 'bi-bag-fill';
+  if (loc.includes('apotek') || loc.includes('pharmacy') || loc.includes('kimia') || loc.includes('k-24')) return 'bi-capsule';
+  if (loc.includes('minimarket') || loc.includes('indo') || loc.includes('alfa')) return 'bi-shop';
+  if (loc.includes('elektronik') || loc.includes('hardware') || loc.includes('ace')) return 'bi-cpu';
+  return 'bi-basket-fill';
+}
+
+const activePlansCount = computed(() => progressPlans.value.length);
+const donePlansCount = computed(() => donePlans.value.length);
+
+const activePlansEstTotal = computed(() => {
+  return progressPlans.value.reduce((sum, p) => {
+    const itemsSum = p.shopping_items?.reduce((s, i) => s + (parseFloat(i.price) || 0), 0) || 0;
+    return sum + itemsSum;
+  }, 0);
+});
+
+const donePlansSpentTotal = computed(() => {
+  return donePlans.value.reduce((sum, p) => {
+    if (p.transaction) return sum + parseFloat(p.transaction.amount || 0);
+    const itemsSum = p.shopping_items?.reduce((s, i) => s + (parseFloat(i.price) || 0), 0) || 0;
+    return sum + itemsSum;
+  }, 0);
+});
+
+function getPlanProgressInfo(plan) {
+  const items = plan.shopping_items || [];
+  const total = items.length;
+  if (total === 0) return { checked: 0, total: 0, percent: 0 };
+  const checked = items.filter(i => i.is_checked).length;
+  const percent = Math.round((checked / total) * 100);
+  return { checked, total, percent };
+}
+
+const filteredMobilePlans = computed(() => {
+  let base = filteredPlans.value;
+  if (!mobileSearchQuery.value.trim()) return base;
+  const q = mobileSearchQuery.value.toLowerCase().trim();
+  return base.filter(p => {
+    const locMatch = p.location?.toLowerCase().includes(q);
+    const creatorMatch = p.created_by_member?.name?.toLowerCase().includes(q);
+    return locMatch || creatorMatch;
+  });
+});
+
 
 let subscription;
 
