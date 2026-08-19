@@ -80,13 +80,13 @@
     "semantic_hash": ""
   },
   "frontend/src/locales/en.json": {
-    "mtime": 1787131786.9955084,
-    "ast_hash": "d6ab4bd96c8b6574971b270adc754d0c",
+    "mtime": 1786422683.3778665,
+    "ast_hash": "4b3bb3a1f42cfde53e14a75370d32f03",
     "semantic_hash": ""
   },
   "frontend/src/locales/id.json": {
-    "mtime": 1787131808.8933673,
-    "ast_hash": "35227b377c75b0cc8b8a92c7dea46e78",
+    "mtime": 1786422684.66955,
+    "ast_hash": "86cc8eb744a21348eede4660972fc0f1",
     "semantic_hash": ""
   },
   "frontend/src/main.js": {
@@ -150,8 +150,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/SettingsPage.vue": {
-    "mtime": 1787131840.664806,
-    "ast_hash": "cc43e5a65c8a3366012c5bc73568e7d9",
+    "mtime": 1785393461.3873587,
+    "ast_hash": "c80d63fe79b89a23488baa6427052217",
     "semantic_hash": ""
   },
   "frontend/src/pages/TransactionsPage.vue": {
@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "docs/implementation_plan.md": {
-    "mtime": 1787131036.7418199,
-    "ast_hash": "704cbd2f6df7c5e6143badf6ea2c49e8",
+    "mtime": 1786422626.632568,
+    "ast_hash": "da0d56f3e3257bd6b99d6fca1d01bc57",
     "semantic_hash": ""
   },
   "docs/supabase-setup-guide.md": {
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "docs/task.md": {
-    "mtime": 1787131044.9841201,
-    "ast_hash": "bc187aff2c39deacd56743d39704d35d",
+    "mtime": 1786422628.2225266,
+    "ast_hash": "e963306c2b1a43d69598f5f10cc8d835",
     "semantic_hash": ""
   },
   "docs/walkthrough_graphify.md": {
@@ -600,13 +600,13 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/AiPage.vue": {
-    "mtime": 1787131870.9963107,
-    "ast_hash": "42df8c8ebb004cf32d3d7c9269a3faf2",
+    "mtime": 1784608237.8082888,
+    "ast_hash": "1952b95fc1221bac84bd044c1ccf5f4f",
     "semantic_hash": ""
   },
   "frontend/src/services/aiService.js": {
-    "mtime": 1787131761.3027158,
-    "ast_hash": "2183517069602b028228b65b333dd8b4",
+    "mtime": 1785393461.3923607,
+    "ast_hash": "dff8aeb209dc55400ae904e93c5e702e",
     "semantic_hash": ""
   },
   "docs/walkthrough_receipt_scanner_ai.md": {
@@ -927,11 +927,6 @@
   "docs/walkthrough_project_pockets_mobile.md": {
     "mtime": 1786421260.5314362,
     "ast_hash": "259d32ec1ad41a9dc9568768d44779f0",
-    "semantic_hash": ""
-  },
-  "docs/walkthrough_alerts_hub.md": {
-    "mtime": 1786422733.091852,
-    "ast_hash": "41ac664c905eec2d80da97fce507d06f",
     "semantic_hash": ""
   }
 }

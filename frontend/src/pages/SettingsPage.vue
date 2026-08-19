@@ -47,23 +47,128 @@
 
         <!-- AI Configuration -->
         <div id="tour-settings-ai" class="stat-card">
-          <h6 class="fw-bold mb-3"><i class="bi bi-stars me-2"></i>{{ $t('settings.aiConfig') || 'AI Configuration' }}</h6>
-          <div class="mb-3">
-            <label class="form-label">{{ $t('settings.geminiApiKey') || 'Gemini API Key' }}</label>
-            <div class="input-group">
-              <input
-                v-model="geminiApiKey"
-                type="password"
-                class="form-control"
-                placeholder="AIzaSy..."
-              />
-              <button id="tour-settings-add-btn" class="btn btn-primary-gradient" @click="saveGeminiKey" :disabled="isSavingKey">
-                <span v-if="isSavingKey" class="spinner-border spinner-border-sm me-1"></span>
-                {{ isSavingKey ? ($t('common.loading') || 'Checking...') : ($t('common.save') || 'Save') }}
-              </button>
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <h6 class="fw-bold mb-0"><i class="bi bi-stars me-2 text-primary"></i>{{ $t('settings.aiConfig') || 'AI & Model Configuration' }}</h6>
+            <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-2.5 py-1">
+              {{ activeProviderBadge }}
+            </span>
+          </div>
+
+          <!-- Active AI Coach Selector -->
+          <div class="mb-4 p-3 rounded-3 bg-light bg-opacity-50 border">
+            <label class="form-label fw-semibold small mb-2 d-flex align-items-center justify-content-between">
+              <span><i class="bi bi-cpu me-1 text-primary"></i>{{ $t('settings.activeAiModel') || 'Active AI Coach Engine' }}</span>
+            </label>
+            <select v-model="activeModelConfig" class="form-select form-select-sm" @change="saveActiveModel">
+              <optgroup label="Google Gemini">
+                <option value="gemini:gemini-flash-lite-latest">Gemini 2.5 Flash Lite (Fast & Multimodal)</option>
+              </optgroup>
+              <optgroup label="DeepSeek (Official)">
+                <option value="deepseek:deepseek-chat">DeepSeek V3 (Chat & Financial Advice)</option>
+                <option value="deepseek:deepseek-reasoner">DeepSeek R1 (Deep Mathematical Reasoner)</option>
+              </optgroup>
+              <optgroup label="Groq (Free & Ultra Fast)">
+                <option value="groq:openai/gpt-oss-20b">Groq GPT-OSS 20B (Fast & Reasoning)</option>
+                <option value="groq:qwen/qwen3.6-27b">Groq Qwen 3.6 27B (Thinking Engine)</option>
+              </optgroup>
+              <optgroup label="OpenRouter">
+                <option value="openrouter:google/gemma-4-31b-it:free">OpenRouter (Multi-Model Hub)</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <!-- Provider Tabs / Key Inputs -->
+          <div class="d-flex flex-column gap-3">
+            <!-- 1. DeepSeek -->
+            <div class="p-3 rounded-3 border" :class="{ 'border-primary border-opacity-50 bg-primary bg-opacity-10': activeProvider === 'deepseek' }">
+              <div class="d-flex align-items-center justify-content-between mb-1">
+                <label class="form-label fw-semibold mb-0 small"><i class="bi bi-robot me-1 text-info"></i>{{ $t('settings.deepseekApiKey') || 'DeepSeek API Key' }}</label>
+                <span v-if="deepseekApiKey" class="badge bg-success bg-opacity-10 text-success small">Configured</span>
+              </div>
+              <div class="input-group input-group-sm mt-1">
+                <input
+                  v-model="deepseekApiKey"
+                  type="password"
+                  class="form-control"
+                  placeholder="sk-..."
+                />
+                <button class="btn btn-primary-gradient" @click="saveDeepSeekKey" :disabled="isSavingDeepSeek">
+                  <span v-if="isSavingDeepSeek" class="spinner-border spinner-border-sm me-1"></span>
+                  {{ isSavingDeepSeek ? ($t('common.loading') || 'Checking...') : ($t('common.save') || 'Save') }}
+                </button>
+              </div>
+              <div class="form-text x-small text-muted mt-1">
+                Get your key at <a href="https://platform.deepseek.com" target="_blank" class="text-primary text-decoration-underline">platform.deepseek.com</a>. Powers V3 Chat and R1 Reasoner.
+              </div>
             </div>
-            <div class="form-text small text-muted mt-2">
-              Get a free API key from <a href="https://aistudio.google.com/" target="_blank" class="text-primary text-decoration-underline">Google AI Studio</a>. Stored locally in your browser.
+
+            <!-- 2. Groq (Free) -->
+            <div class="p-3 rounded-3 border" :class="{ 'border-primary border-opacity-50 bg-primary bg-opacity-10': activeProvider === 'groq' }">
+              <div class="d-flex align-items-center justify-content-between mb-1">
+                <label class="form-label fw-semibold mb-0 small"><i class="bi bi-lightning-charge-fill me-1 text-warning"></i>{{ $t('settings.groqApiKey') || 'Groq API Key (Free)' }}</label>
+                <span v-if="groqApiKey" class="badge bg-success bg-opacity-10 text-success small">Configured</span>
+              </div>
+              <div class="input-group input-group-sm mt-1">
+                <input
+                  v-model="groqApiKey"
+                  type="password"
+                  class="form-control"
+                  placeholder="gsk_..."
+                />
+                <button class="btn btn-primary-gradient" @click="saveGroqKey" :disabled="isSavingGroq">
+                  <span v-if="isSavingGroq" class="spinner-border spinner-border-sm me-1"></span>
+                  {{ isSavingGroq ? ($t('common.loading') || 'Checking...') : ($t('common.save') || 'Save') }}
+                </button>
+              </div>
+              <div class="form-text x-small text-muted mt-1">
+                Free key at <a href="https://console.groq.com" target="_blank" class="text-primary text-decoration-underline">console.groq.com</a>. Ultra-fast inference with chain-of-thought.
+              </div>
+            </div>
+
+            <!-- 3. Google Gemini -->
+            <div class="p-3 rounded-3 border" :class="{ 'border-primary border-opacity-50 bg-primary bg-opacity-10': activeProvider === 'gemini' }">
+              <div class="d-flex align-items-center justify-content-between mb-1">
+                <label class="form-label fw-semibold mb-0 small"><i class="bi bi-google me-1 text-danger"></i>{{ $t('settings.geminiApiKey') || 'Gemini API Key' }}</label>
+                <span v-if="geminiApiKey" class="badge bg-success bg-opacity-10 text-success small">Configured</span>
+              </div>
+              <div class="input-group input-group-sm mt-1">
+                <input
+                  v-model="geminiApiKey"
+                  type="password"
+                  class="form-control"
+                  placeholder="AIzaSy..."
+                />
+                <button id="tour-settings-add-btn" class="btn btn-primary-gradient" @click="saveGeminiKey" :disabled="isSavingKey">
+                  <span v-if="isSavingKey" class="spinner-border spinner-border-sm me-1"></span>
+                  {{ isSavingKey ? ($t('common.loading') || 'Checking...') : ($t('common.save') || 'Save') }}
+                </button>
+              </div>
+              <div class="form-text x-small text-muted mt-1">
+                Free key from <a href="https://aistudio.google.com/" target="_blank" class="text-primary text-decoration-underline">Google AI Studio</a>. Powers Receipt OCR & Gemini Coach.
+              </div>
+            </div>
+
+            <!-- 4. OpenRouter -->
+            <div class="p-3 rounded-3 border" :class="{ 'border-primary border-opacity-50 bg-primary bg-opacity-10': activeProvider === 'openrouter' }">
+              <div class="d-flex align-items-center justify-content-between mb-1">
+                <label class="form-label fw-semibold mb-0 small"><i class="bi bi-hdd-network me-1 text-primary"></i>{{ $t('settings.openrouterApiKey') || 'OpenRouter API Key' }}</label>
+                <span v-if="openrouterApiKey" class="badge bg-success bg-opacity-10 text-success small">Configured</span>
+              </div>
+              <div class="input-group input-group-sm mt-1">
+                <input
+                  v-model="openrouterApiKey"
+                  type="password"
+                  class="form-control"
+                  placeholder="sk-or-v1-..."
+                />
+                <button class="btn btn-primary-gradient" @click="saveOpenRouterKey" :disabled="isSavingOpenRouter">
+                  <span v-if="isSavingOpenRouter" class="spinner-border spinner-border-sm me-1"></span>
+                  {{ isSavingOpenRouter ? ($t('common.loading') || 'Checking...') : ($t('common.save') || 'Save') }}
+                </button>
+              </div>
+              <div class="form-text x-small text-muted mt-1">
+                Multi-model router from <a href="https://openrouter.ai" target="_blank" class="text-primary text-decoration-underline">openrouter.ai</a>.
+              </div>
             </div>
           </div>
         </div>
@@ -129,7 +234,7 @@ import { settingsTourSteps } from '../tours/settingsTour';
 const { startAutoTour, startTour } = useTour('settings');
 const handleTour = () => startTour(settingsTourSteps);
 
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useAuthStore } from '../stores/auth';
 import { useLocaleStore } from '../stores/locale';
 import { useToastStore } from '../stores/toast';
@@ -146,17 +251,48 @@ const loading = ref(false);
 const success = ref('');
 const error = ref('');
 
+// AI Provider & Keys State
+const currentProvider = ref(localStorage.getItem('ai_provider') || 'gemini');
+const currentModel = ref(localStorage.getItem('ai_model') || 'gemini-flash-lite-latest');
+const activeModelConfig = ref(`${currentProvider.value}:${currentModel.value}`);
+
+const activeProvider = computed(() => {
+  return activeModelConfig.value.split(':')[0] || 'gemini';
+});
+
+const activeProviderBadge = computed(() => {
+  const [provider, model] = activeModelConfig.value.split(':');
+  if (provider === 'deepseek') return model.includes('reasoner') ? 'DeepSeek-R1 (Reasoner)' : 'DeepSeek-V3';
+  if (provider === 'groq') return model.includes('qwen') ? 'Groq (Qwen 3.6)' : 'Groq (GPT-OSS)';
+  if (provider === 'openrouter') return 'OpenRouter';
+  return 'Gemini Flash';
+});
+
+function saveActiveModel() {
+  const [provider, model] = activeModelConfig.value.split(':');
+  localStorage.setItem('ai_provider', provider);
+  localStorage.setItem('ai_model', model);
+  toast.success(`Active AI Coach switched to ${activeProviderBadge.value}`);
+}
+
 const geminiApiKey = ref(localStorage.getItem('gemini_api_key') || '');
+const deepseekApiKey = ref(localStorage.getItem('deepseek_api_key') || '');
+const groqApiKey = ref(localStorage.getItem('groq_api_key') || '');
+const openrouterApiKey = ref(localStorage.getItem('openrouter_api_key') || '');
 
 const isSavingKey = ref(false);
+const isSavingDeepSeek = ref(false);
+const isSavingGroq = ref(false);
+const isSavingOpenRouter = ref(false);
 
+// 1. Save Gemini Key
 async function saveGeminiKey() {
   const trimmedKey = geminiApiKey.value.trim();
   if (!trimmedKey) {
     localStorage.removeItem('gemini_api_key');
     try {
       await supabase.from('families').update({ gemini_api_key: null }).eq('id', authStore.familyId);
-      toast.success('API Key removed.');
+      toast.success(localeStore.t('settings.apiKeyRemoved') || 'API Key removed.');
     } catch (e) {
       console.error('Failed to remove key from database:', e);
       toast.error('Failed to remove key from database.');
@@ -166,7 +302,6 @@ async function saveGeminiKey() {
 
   isSavingKey.value = true;
   try {
-    // Perform a lightweight check request to verify the key is valid
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent?key=${trimmedKey}`,
       {
@@ -184,14 +319,121 @@ async function saveGeminiKey() {
     }
 
     localStorage.setItem('gemini_api_key', trimmedKey);
-    // Sync to database
     await supabase.from('families').update({ gemini_api_key: trimmedKey }).eq('id', authStore.familyId);
-    toast.success(localeStore.t('common.success') || 'Settings saved successfully!');
+    toast.success(localeStore.t('settings.apiKeySaved') || 'Gemini API Key saved!');
   } catch (err) {
     console.error('Gemini verification failed:', err);
-    toast.error(`Gemini verification failed: ${err.message || 'Invalid key or network issue.'}`);
+    toast.error(`Gemini verification failed: ${err.message || 'Invalid key.'}`);
   } finally {
     isSavingKey.value = false;
+  }
+}
+
+// 2. Save DeepSeek Key
+async function saveDeepSeekKey() {
+  const trimmedKey = deepseekApiKey.value.trim();
+  if (!trimmedKey) {
+    localStorage.removeItem('deepseek_api_key');
+    toast.success('DeepSeek API Key removed.');
+    return;
+  }
+
+  isSavingDeepSeek.value = true;
+  try {
+    // Check balance or test chat completions
+    const response = await fetch('https://api.deepseek.com/user/balance', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${trimmedKey}`,
+        'Accept': 'application/json'
+      }
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    if (response.status === 401 || response.status === 403) {
+      throw new Error('Authentication failed. Invalid DeepSeek API Key.');
+    }
+
+    // Always save the key if authenticated
+    localStorage.setItem('deepseek_api_key', trimmedKey);
+
+    if (data && data.is_available === false) {
+      toast.warning('DeepSeek key saved! Notice: Account balance is 0. Please top up at platform.deepseek.com or use Groq/Gemini.');
+    } else {
+      toast.success('DeepSeek API Key verified & saved!');
+    }
+  } catch (err) {
+    console.error('DeepSeek key verification error:', err);
+    // Still allow saving if user confirms
+    localStorage.setItem('deepseek_api_key', trimmedKey);
+    toast.warning(`DeepSeek Key saved with notice: ${err.message}`);
+  } finally {
+    isSavingDeepSeek.value = false;
+  }
+}
+
+// 3. Save Groq Key
+async function saveGroqKey() {
+  const trimmedKey = groqApiKey.value.trim();
+  if (!trimmedKey) {
+    localStorage.removeItem('groq_api_key');
+    toast.success('Groq API Key removed.');
+    return;
+  }
+
+  isSavingGroq.value = true;
+  try {
+    const response = await fetch('https://api.groq.com/openai/v1/models', {
+      headers: {
+        'Authorization': `Bearer ${trimmedKey}`
+      }
+    });
+
+    if (!response.ok) {
+      const errData = await response.json().catch(() => ({}));
+      throw new Error(errData.error?.message || `Groq returned status ${response.status}`);
+    }
+
+    localStorage.setItem('groq_api_key', trimmedKey);
+    toast.success('Groq API Key verified & saved!');
+  } catch (err) {
+    console.error('Groq verification error:', err);
+    toast.error(`Groq verification failed: ${err.message}`);
+  } finally {
+    isSavingGroq.value = false;
+  }
+}
+
+// 4. Save OpenRouter Key
+async function saveOpenRouterKey() {
+  const trimmedKey = openrouterApiKey.value.trim();
+  if (!trimmedKey) {
+    localStorage.removeItem('openrouter_api_key');
+    toast.success('OpenRouter API Key removed.');
+    return;
+  }
+
+  isSavingOpenRouter.value = true;
+  try {
+    const response = await fetch('https://openrouter.ai/api/v1/models', {
+      headers: {
+        'Authorization': `Bearer ${trimmedKey}`
+      }
+    });
+
+    if (!response.ok) {
+      const errData = await response.json().catch(() => ({}));
+      throw new Error(errData.error?.message || `OpenRouter returned status ${response.status}`);
+    }
+
+    localStorage.setItem('openrouter_api_key', trimmedKey);
+    toast.success('OpenRouter API Key verified & saved!');
+  } catch (err) {
+    console.error('OpenRouter verification error:', err);
+    toast.error(`OpenRouter verification failed: ${err.message}`);
+  } finally {
+    isSavingOpenRouter.value = false;
   }
 }
 

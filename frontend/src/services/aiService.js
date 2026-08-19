@@ -83,19 +83,23 @@ export const aiService = {
   },
 
   /**
-   * Send chat history and context to Gemini API
+   * Universal AI Coach Dispatcher
+   * Supports Gemini, DeepSeek (V3 & R1), Groq, OpenRouter, and OpenAI-compatible endpoints.
+   *
+   * @param {Array<{sender: string, text: string}>} messages - Chat history
+   * @param {string} locale - 'en' | 'id'
+   * @param {Object} options - Override provider/model/keys
+   * @returns {Promise<{reply: string, reasoning: string|null, modelUsed: string, provider: string}>}
    */
-  async chatWithCoach(messages, locale = 'en') {
-    const apiKey = localStorage.getItem('gemini_api_key') || import.meta.env.VITE_GEMINI_API_KEY;
-    if (!apiKey) {
-      throw new Error('Gemini API Key is missing. Please configure it in Settings or .env file.');
-    }
+  async chatWithCoach(messages, locale = 'en', options = {}) {
+    const provider = options.provider || localStorage.getItem('ai_provider') || 'gemini';
+    const model = options.model || localStorage.getItem('ai_model') || (provider === 'deepseek' ? 'deepseek-chat' : provider === 'groq' ? 'openai/gpt-oss-20b' : 'gemini-flash-lite-latest');
 
-    // 1. Get financial snapshot context
+    // 1. Fetch financial snapshot context
     const financeSnapshot = await this.getFinanceSnapshot();
 
     // 2. Build system instructions
-    const systemPrompt = `You are Aurora AI, a premium, friendly, and expert family financial advisor. 
+    const systemPrompt = `You are Aurora AI, a premium, friendly, and expert family financial advisor.
 You are coaching a family on how to manage their budgets, save money, and improve their financial health.
 
 CRITICAL INSTRUCTIONS:
@@ -109,13 +113,27 @@ CRITICAL INSTRUCTIONS:
 ${financeSnapshot}
 ---`;
 
-    // 3. Map conversation history to Gemini contents structure
+    if (provider === 'gemini') {
+      return this.chatWithGemini({ messages, systemPrompt, locale, options });
+    } else {
+      return this.chatWithOpenAiCompatible({ messages, systemPrompt, provider, model, options });
+    }
+  },
+
+  /**
+   * Gemini API client
+   */
+  async chatWithGemini({ messages, systemPrompt, options }) {
+    const apiKey = options.apiKey || localStorage.getItem('gemini_api_key') || import.meta.env.VITE_GEMINI_API_KEY;
+    if (!apiKey) {
+      throw new Error('Gemini API Key is missing. Please configure it in Settings or .env file.');
+    }
+
     const contents = messages.map(msg => ({
       role: msg.sender === 'user' ? 'user' : 'model',
       parts: [{ text: msg.text }]
     }));
 
-    // Prepend the system instructions to the very first user message for complete v1 compatibility
     if (contents.length > 0 && contents[0].role === 'user') {
       contents[0].parts[0].text = `${systemPrompt}\n\n[USER QUESTION]:\n${contents[0].parts[0].text}`;
     } else {
@@ -130,9 +148,7 @@ ${financeSnapshot}
         `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent?key=${apiKey}`,
         {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             contents: contents,
             generation_config: {
@@ -150,15 +166,120 @@ ${financeSnapshot}
 
       const resData = await response.json();
       const reply = resData.candidates?.[0]?.content?.parts?.[0]?.text;
-      
+
       if (!reply) {
         throw new Error('Empty response from Gemini API.');
       }
 
-      return reply;
+      return {
+        reply,
+        reasoning: null,
+        modelUsed: 'gemini-flash-lite',
+        provider: 'gemini'
+      };
     } catch (err) {
       console.error('Gemini chat coach error:', err);
       throw err;
     }
+  },
+
+  /**
+   * OpenAI-Compatible API client (DeepSeek, Groq, OpenRouter, Custom)
+   */
+  async chatWithOpenAiCompatible({ messages, systemPrompt, provider, model, options }) {
+    let apiKey = options.apiKey;
+    let endpoint = options.endpoint;
+
+    if (provider === 'deepseek') {
+      apiKey = apiKey || localStorage.getItem('deepseek_api_key') || import.meta.env.VITE_DEEPSEEK_API_KEY;
+      endpoint = endpoint || 'https://api.deepseek.com/chat/completions';
+    } else if (provider === 'groq') {
+      apiKey = apiKey || localStorage.getItem('groq_api_key') || import.meta.env.VITE_GROQ_API_KEY;
+      endpoint = endpoint || 'https://api.groq.com/openai/v1/chat/completions';
+    } else if (provider === 'openrouter') {
+      apiKey = apiKey || localStorage.getItem('openrouter_api_key') || import.meta.env.VITE_OPENROUTER_API_KEY;
+      endpoint = endpoint || 'https://openrouter.ai/api/v1/chat/completions';
+    } else {
+      apiKey = apiKey || localStorage.getItem('custom_ai_api_key');
+      endpoint = endpoint || localStorage.getItem('custom_ai_endpoint') || 'https://api.deepseek.com/chat/completions';
+    }
+
+    if (!apiKey) {
+      const providerNames = {
+        deepseek: 'DeepSeek',
+        groq: 'Groq',
+        openrouter: 'OpenRouter'
+      };
+      throw new Error(`${providerNames[provider] || 'AI'} API Key is missing. Please configure it in Settings.`);
+    }
+
+    // Build standard OpenAI messages array
+    const formattedMessages = [
+      { role: 'system', content: systemPrompt },
+      ...messages.map(msg => ({
+        role: msg.sender === 'user' ? 'user' : 'assistant',
+        content: msg.text
+      }))
+    ];
+
+    const bodyPayload = {
+      model: model || (provider === 'deepseek' ? 'deepseek-chat' : 'openai/gpt-oss-20b'),
+      messages: formattedMessages
+    };
+
+    // Only add temperature if model supports it (deepseek-reasoner rejects custom temperature)
+    if (!model?.includes('reasoner')) {
+      bodyPayload.temperature = 0.7;
+    }
+
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`
+        },
+        body: JSON.stringify(bodyPayload)
+      });
+
+      const resData = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        const errorMsg = resData.error?.message || `API returned status ${response.status}`;
+        if (errorMsg.toLowerCase().includes('insufficient balance')) {
+          throw new Error('DeepSeek account balance is insufficient. Please check billing at platform.deepseek.com or switch to Groq / Gemini in Settings.');
+        }
+        throw new Error(`${provider.toUpperCase()} API Error: ${errorMsg}`);
+      }
+
+      const choice = resData.choices?.[0];
+      const rawContent = choice?.message?.content || '';
+      let explicitReasoning = choice?.message?.reasoning_content || choice?.message?.reasoning || null;
+
+      // Also extract reasoning if embedded inside <think>...</think> tags (e.g. Qwen on Groq)
+      let cleanReply = rawContent;
+      if (!explicitReasoning && rawContent.includes('<think>')) {
+        const thinkMatch = rawContent.match(/<think>([\s\S]*?)<\/think>/i);
+        if (thinkMatch) {
+          explicitReasoning = thinkMatch[1].trim();
+          cleanReply = rawContent.replace(/<think>[\s\S]*?<\/think>/i, '').trim();
+        }
+      }
+
+      if (!cleanReply && !explicitReasoning) {
+        throw new Error('Empty response from AI API.');
+      }
+
+      return {
+        reply: cleanReply,
+        reasoning: explicitReasoning,
+        modelUsed: model || bodyPayload.model,
+        provider: provider
+      };
+    } catch (err) {
+      console.error(`${provider} chat error:`, err);
+      throw err;
+    }
   }
 };
+

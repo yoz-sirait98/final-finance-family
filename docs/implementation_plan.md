@@ -1,47 +1,54 @@
 # Implementation Plan
 
-## Repurpose Header Bell Icon into In-App Alerts Hub (August 2026)
+## Multi-AI Provider Integration: DeepSeek V3 & R1 Reasoner for Aurora AI Advisor (August 2026)
 
 ### Problem Area & Target Architecture
 
-Currently, the top header bar (`DashboardLayout.vue`) contains two confusing bell icons:
-1. `<PushNotificationToggle />` using `bi-bell-fill` / `bi-bell-slash` for PWA Web Push subscription.
-2. `#tour-bell-icon` using `bi-bell` strictly for Budget Overrun alerts.
-
-This creates visual redundancy and limits the bell dropdown from serving as a true in-app notification hub for other critical financial alerts (such as completed goals or pending shopping lists).
+Currently, the Aurora AI Financial Coach (`aiService.js` and `AiPage.vue`) is hardcoded to Google Gemini. With the emergence of DeepSeek (V3 and R1 Reasoner), we want to give users the freedom to select their preferred AI intelligence engine, experience DeepSeek-R1's step-by-step mathematical reasoning ("Chain of Thought"), and have seamless fallback across providers.
 
 | Feature Component | Current Implementation | Target Architecture |
 |---|---|---|
-| **Push Notification Toggle** | Standalone bell icon in top header bar next to theme toggle | Exclusively managed in Settings page (`SettingsPage.vue`) |
-| **Header Bell Icon** | Displays only Budget Overrun alerts | Multi-category **In-App Alerts Hub** (Budgets, Goals, Shopping) |
-| **Alert Filtering & Navigation** | Plain list of budget warnings | Tabbed filter bar (`Semua`, `Anggaran`, `Target`, `Belanja`), color-coded icons, and direct route navigation on click |
+| **AI Provider Support** | Google Gemini (`gemini-flash-lite-latest`) only | Multi-provider router: **Google Gemini**, **DeepSeek V3** (`deepseek-chat`), **DeepSeek R1** (`deepseek-reasoner`), and OpenAI-compatible endpoints |
+| **Model Switcher** | Fixed single model | Interactive quick-switch pill directly inside AI Advisor chat & default configuration in Settings |
+| **Reasoning / Thinking UI** | Plain single text stream | Dedicated collapsible accordion showing DeepSeek-R1's step-by-step reasoning process before the final advice |
+| **Settings & Key Management** | Gemini API Key only | Multi-key manager with live verification tests and balance diagnostics |
 
 ---
 
 ### Proposed Changes
 
-#### Top Navbar & Layout
+#### AI Service Layer
 
-##### `frontend/src/layouts/DashboardLayout.vue`
-- Remove `<PushNotificationToggle />` from top header elements.
-- Expand Bell dropdown into an interactive **Alerts Hub**:
-  - Combined active alert badge counter (`totalAlertsCount = budgetAlerts + goalAlerts + pendingShoppingCount`).
-  - Add tabbed filter bar inside dropdown header (`Semua` / `Anggaran` / `Target` / `Belanja`).
-  - Render categorized alert items with color-coded icons (danger for budget overruns, success/warning for goals, primary for shopping).
-  - Add clickable navigation handlers for each alert type to open `/budgets`, `/goals`, or `/shopping`.
-  - Add empty state message when no active alerts exist.
+##### `frontend/src/services/aiService.js`
+- Create a unified multi-provider chat dispatcher `chatWithCoach(messages, locale, providerOverride)`.
+- Implement `chatWithDeepSeek({ messages, model, locale, apiKey, baseUrl })` targeting `https://api.deepseek.com/chat/completions`.
+- Support extracting `reasoning_content` (for R1) alongside `content`.
+- Graceful error mapping for DeepSeek (handling `Insufficient Balance`, rate limits, quota issues).
+
+#### AI Advisor Chat Page
+
+##### `frontend/src/pages/AiPage.vue`
+- Add model switcher header bar (Gemini Flash vs DeepSeek V3 vs DeepSeek R1).
+- Add collapsible *💭 DeepSeek Thinking Process* accordion for messages containing `reasoning_content`.
+- Display dynamic API key missing banners tailored to the currently selected provider.
 
 #### Settings Page
 
 ##### `frontend/src/pages/SettingsPage.vue`
-- Verify and polish the PWA Push Notifications card section to ensure clear instructions and seamless toggle experience.
+- Add DeepSeek API Key configuration with test button and balance diagnostic feedback.
+- Add Active AI Provider selector for default chat coach experience.
 
 #### Localization
 
 ##### `frontend/src/locales/en.json` & `frontend/src/locales/id.json`
-- Add i18n keys for Alerts Hub headers, tab categories, and alert status labels.
+- Add translation keys for DeepSeek, provider switching, reasoning labels, and error states.
 
 ---
+
+## Past Features History
+
+### Repurpose Header Bell Icon into In-App Alerts Hub (August 2026)
+- Multi-category In-App Alerts Hub for Budgets, Goals, and Shopping with tabbed filter bar and direct routing.
 
 ## Past Features History
 

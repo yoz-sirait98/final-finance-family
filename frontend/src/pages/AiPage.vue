@@ -1,23 +1,59 @@
 <template>
   <div class="ai-page fade-in h-100 d-flex flex-column">
-    <div id="tour-ai-header" class="page-header mb-3">
-      <h4>{{ $t('ai.title') || 'Aurora AI Advisor' }}</h4>
-      <p class="text-muted mb-0">{{ $t('ai.subtitle') || 'Your personal family finance coach and budget advisor.' }}</p>
+    <!-- Header with Model Switcher Bar -->
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3">
+      <div id="tour-ai-header" class="page-header mb-0">
+        <h4 class="mb-1">{{ $t('ai.title') || 'Aurora AI Advisor' }}</h4>
+        <p class="text-muted mb-0 small">{{ $t('ai.subtitle') || 'Your personal family finance coach and budget advisor.' }}</p>
+      </div>
+
+      <!-- Engine Selector & Settings Quick Link -->
+      <div class="d-flex align-items-center gap-2">
+        <div class="engine-picker d-flex align-items-center gap-2 px-3 py-1.5 rounded-pill border shadow-sm">
+          <i class="bi bi-cpu-fill text-primary"></i>
+          <select 
+            v-model="selectedEngine" 
+            class="form-select form-select-sm border-0 bg-transparent py-0 ps-1 pe-4 fw-semibold text-color-custom"
+            style="cursor: pointer; width: auto; max-width: 220px;"
+            @change="handleEngineChange"
+          >
+            <option value="gemini:gemini-flash-lite-latest">⚡ Gemini 2.5 Flash</option>
+            <option value="deepseek:deepseek-chat">🧠 DeepSeek V3 (Chat)</option>
+            <option value="deepseek:deepseek-reasoner">💭 DeepSeek R1 (Reasoner)</option>
+            <option value="groq:openai/gpt-oss-20b">⚡ Groq GPT-OSS 20B</option>
+            <option value="groq:qwen/qwen3.6-27b">💭 Groq Qwen 3.6 (Thinking)</option>
+            <option value="openrouter:google/gemma-4-31b-it:free">🌐 OpenRouter Hub</option>
+          </select>
+        </div>
+        <button 
+          class="btn btn-sm btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center settings-quick-btn" 
+          style="width: 36px; height: 36px;" 
+          @click="router.push('/settings')"
+          title="Configure API Keys"
+        >
+          <i class="bi bi-gear"></i>
+        </button>
+      </div>
     </div>
 
-    <!-- API Key Missing State -->
-    <div v-if="!hasApiKey" class="flex-grow-1 d-flex align-items-center justify-content-center">
+    <!-- API Key Missing State for Active Provider -->
+    <div v-if="!hasKeyForActiveEngine" class="flex-grow-1 d-flex align-items-center justify-content-center">
       <div class="stat-card text-center p-5 border border-primary border-opacity-25" style="max-width: 500px;">
         <div class="ai-pulse-icon mx-auto mb-4">
           <i class="bi bi-stars text-primary fs-1"></i>
         </div>
-        <h5 class="fw-bold mb-3">Setup Aurora AI Coach</h5>
+        <h5 class="fw-bold mb-3">Setup {{ activeProviderName }}</h5>
         <p class="text-muted small mb-4">
-          To chat with your financial advisor, please configure your free Gemini API Key in the Settings page. This key stays locally in your browser.
+          To chat with the <strong>{{ selectedEngineLabel }}</strong> engine, please configure your {{ activeProviderName }} API Key in Settings.
         </p>
-        <button class="btn btn-primary-gradient px-4 rounded-pill" @click="router.push('/settings')">
-          <i class="bi bi-gear me-1"></i>Go to Settings
-        </button>
+        <div class="d-flex justify-content-center gap-2">
+          <button class="btn btn-primary-gradient px-4 rounded-pill" @click="router.push('/settings')">
+            <i class="bi bi-gear me-1"></i>Go to Settings
+          </button>
+          <button v-if="selectedEngine.startsWith('deepseek')" class="btn btn-outline-secondary px-3 rounded-pill" @click="switchEngine('groq:openai/gpt-oss-20b')">
+            Try Free Groq
+          </button>
+        </div>
       </div>
     </div>
 
@@ -30,7 +66,10 @@
         <div class="message-bubble assistant animate-slide-up">
           <div class="avatar"><i class="bi bi-stars"></i></div>
           <div class="message-content">
-            <h6 class="fw-bold mb-1">Aurora AI</h6>
+            <div class="d-flex align-items-center justify-content-between mb-1">
+              <h6 class="fw-bold mb-0">Aurora AI</h6>
+              <span class="badge bg-primary bg-opacity-10 text-primary x-small px-2 py-0.5 rounded-pill">{{ selectedEngineLabel }}</span>
+            </div>
             <p class="mb-0 small">
               {{ $t('ai.welcome') || 'Hello! I am Aurora, your family finance coach. I can analyze your budgets, spending history, savings goals, and accounts to give you personalized suggestions. How can I help you today?' }}
             </p>
@@ -46,7 +85,32 @@
         >
           <div v-if="msg.sender === 'assistant'" class="avatar"><i class="bi bi-stars"></i></div>
           <div class="message-content">
-            <h6 class="fw-bold mb-1">{{ msg.sender === 'user' ? ($t('common.you') || 'You') : 'Aurora AI' }}</h6>
+            <div class="d-flex align-items-center justify-content-between mb-1">
+              <h6 class="fw-bold mb-0">{{ msg.sender === 'user' ? ($t('common.you') || 'You') : 'Aurora AI' }}</h6>
+              <span v-if="msg.sender === 'assistant' && msg.modelUsed" class="badge bg-secondary bg-opacity-10 text-muted x-small px-2 py-0.5 rounded-pill">
+                {{ formatModelBadge(msg.modelUsed) }}
+              </span>
+            </div>
+
+            <!-- Expandable Chain of Thought / Reasoning Accordion (DeepSeek-R1 / Qwen / Groq) -->
+            <div v-if="msg.reasoning" class="reasoning-container my-2 rounded-3 border">
+              <button 
+                type="button" 
+                class="btn btn-sm reasoning-toggle d-flex align-items-center justify-content-between w-100 px-3 py-2"
+                @click="msg.showReasoning = !msg.showReasoning"
+              >
+                <span class="d-flex align-items-center gap-2 small fw-semibold text-primary">
+                  <i class="bi bi-lightbulb-fill text-warning"></i>
+                  <span>{{ msg.showReasoning ? ($t('ai.hideThinking') || 'Hide Thinking Process') : ($t('ai.showThinking') || '💭 View Thinking & Mathematical Logic') }}</span>
+                </span>
+                <i class="bi" :class="msg.showReasoning ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+              </button>
+              <div v-if="msg.showReasoning" class="reasoning-body p-3 pt-1 border-top">
+                <div class="reasoning-content small" v-html="formatMessage(msg.reasoning)"></div>
+              </div>
+            </div>
+
+            <!-- Formatted Final Answer Content -->
             <div class="mb-0 small" v-html="formatMessage(msg.text)"></div>
           </div>
         </div>
@@ -55,7 +119,10 @@
         <div v-if="loading" class="message-bubble assistant loading-state animate-fade-in">
           <div class="avatar"><i class="bi bi-stars spinner-glowing"></i></div>
           <div class="message-content">
-            <h6 class="fw-bold mb-1">Aurora AI</h6>
+            <div class="d-flex align-items-center gap-2 mb-1">
+              <h6 class="fw-bold mb-0">Aurora AI</h6>
+              <span class="text-muted x-small">Thinking with {{ selectedEngineLabel }}...</span>
+            </div>
             <div class="typing-dots d-flex gap-1 py-1">
               <span></span>
               <span></span>
@@ -84,7 +151,7 @@
             v-model="userInput" 
             type="text" 
             class="form-control rounded-pill px-4 chat-input-field" 
-            placeholder="Ask AI Advisor about your family budgets..."
+            :placeholder="`Ask AI Coach (${selectedEngineLabel})...`"
             required
             :disabled="loading"
           />
@@ -112,7 +179,59 @@ import { aiService } from '../services/aiService';
 const router = useRouter();
 const localeStore = useLocaleStore();
 
-const hasApiKey = ref(!!localStorage.getItem('gemini_api_key'));
+// Engine & Provider selection
+const savedProvider = localStorage.getItem('ai_provider') || 'gemini';
+const savedModel = localStorage.getItem('ai_model') || 'gemini-flash-lite-latest';
+const selectedEngine = ref(`${savedProvider}:${savedModel}`);
+
+const activeProvider = computed(() => selectedEngine.value.split(':')[0] || 'gemini');
+
+const activeProviderName = computed(() => {
+  const p = activeProvider.value;
+  if (p === 'deepseek') return 'DeepSeek';
+  if (p === 'groq') return 'Groq';
+  if (p === 'openrouter') return 'OpenRouter';
+  return 'Google Gemini';
+});
+
+const selectedEngineLabel = computed(() => {
+  const [provider, model] = selectedEngine.value.split(':');
+  if (provider === 'deepseek') return model.includes('reasoner') ? 'DeepSeek-R1' : 'DeepSeek-V3';
+  if (provider === 'groq') return model.includes('qwen') ? 'Groq Qwen 3.6' : 'Groq GPT-OSS';
+  if (provider === 'openrouter') return 'OpenRouter';
+  return 'Gemini Flash';
+});
+
+const hasKeyForActiveEngine = computed(() => {
+  const provider = activeProvider.value;
+  if (provider === 'gemini') return !!(localStorage.getItem('gemini_api_key') || import.meta.env.VITE_GEMINI_API_KEY);
+  if (provider === 'deepseek') return !!(localStorage.getItem('deepseek_api_key') || import.meta.env.VITE_DEEPSEEK_API_KEY);
+  if (provider === 'groq') return !!(localStorage.getItem('groq_api_key') || import.meta.env.VITE_GROQ_API_KEY);
+  if (provider === 'openrouter') return !!(localStorage.getItem('openrouter_api_key') || import.meta.env.VITE_OPENROUTER_API_KEY);
+  return true;
+});
+
+function handleEngineChange() {
+  const [provider, model] = selectedEngine.value.split(':');
+  localStorage.setItem('ai_provider', provider);
+  localStorage.setItem('ai_model', model);
+}
+
+function switchEngine(engineKey) {
+  selectedEngine.value = engineKey;
+  handleEngineChange();
+}
+
+function formatModelBadge(modelName) {
+  if (!modelName) return 'AI';
+  if (modelName.includes('reasoner') || modelName.includes('r1')) return 'DeepSeek-R1';
+  if (modelName.includes('deepseek-chat') || modelName.includes('v3')) return 'DeepSeek-V3';
+  if (modelName.includes('qwen')) return 'Qwen 3.6';
+  if (modelName.includes('gpt-oss')) return 'GPT-OSS';
+  if (modelName.includes('gemini')) return 'Gemini Flash';
+  return modelName;
+}
+
 const userInput = ref('');
 const loading = ref(false);
 const chatHistory = ref([]);
@@ -144,27 +263,45 @@ async function sendMessage() {
   const text = userInput.value;
   userInput.value = '';
 
+  const [provider, model] = selectedEngine.value.split(':');
+
   // 1. Add user message to history
   chatHistory.value.push({ sender: 'user', text });
   scrollToBottom();
 
   loading.value = true;
   try {
-    // 2. Query Gemini AI Coach
-    const response = await aiService.chatWithCoach(chatHistory.value, localeStore.currentLocale);
+    // 2. Query AI Coach with selected provider & model
+    const result = await aiService.chatWithCoach(
+      chatHistory.value, 
+      localeStore.currentLocale,
+      { provider, model }
+    );
     
-    // 3. Add AI response to history
-    chatHistory.value.push({ sender: 'assistant', text: response });
+    // 3. Add AI response to history (including reasoning if provided)
+    chatHistory.value.push({ 
+      sender: 'assistant', 
+      text: result.reply,
+      reasoning: result.reasoning,
+      showReasoning: false,
+      modelUsed: result.modelUsed,
+      provider: result.provider
+    });
   } catch (error) {
     const errorStr = error.message.toLowerCase();
-    const isTempLimit = errorStr.includes('demand') || errorStr.includes('quota') || errorStr.includes('503') || errorStr.includes('429') || errorStr.includes('limit') || errorStr.includes('unavailable') || errorStr.includes('exhausted');
-    const advice = isTempLimit
-      ? 'This is a temporary server rate limit or model demand spike. Please try again in a few moments.'
-      : 'Please verify your API Key in Settings.';
+    const isInsufficientBalance = errorStr.includes('insufficient balance');
+    const isRateLimit = errorStr.includes('429') || errorStr.includes('rate limit') || errorStr.includes('quota');
+
+    let advice = 'Please verify your API Key in Settings.';
+    if (isInsufficientBalance) {
+      advice = localeStore.t('ai.insufficientBalance') || 'DeepSeek balance is 0. Please top up at platform.deepseek.com or switch to Groq / Gemini in Settings.';
+    } else if (isRateLimit) {
+      advice = 'Temporary rate limit reached. Please try again in a few moments or switch to another model.';
+    }
 
     chatHistory.value.push({ 
       sender: 'assistant', 
-      text: `Failed to connect with Gemini: ${error.message}. ${advice}` 
+      text: `Error (${selectedEngineLabel.value}): ${error.message}. ${advice}` 
     });
   } finally {
     loading.value = false;
@@ -184,6 +321,7 @@ function scrollToBottom() {
  * Super lightweight markdown parser for clean chat formatting
  */
 function formatMessage(text) {
+  if (!text) return '';
   let html = text
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
@@ -443,12 +581,63 @@ onUnmounted(() => {
   }
 }
 
-.animate-fade-in {
-  animation: fade-in 0.3s ease both;
+.engine-picker {
+  background: var(--card-bg);
+  border-color: var(--card-border);
 }
 
-@keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.text-color-custom {
+  color: var(--text-color);
+}
+
+.reasoning-container {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: var(--input-border) !important;
+  overflow: hidden;
+}
+
+[data-theme="dark"] .reasoning-container {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.reasoning-toggle {
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  font-size: 0.82rem;
+  transition: background 0.2s ease;
+}
+
+.reasoning-toggle:hover {
+  background: rgba(102, 126, 234, 0.08);
+}
+
+.reasoning-body {
+  border-top-color: var(--input-border) !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .reasoning-body {
+  border-top-color: rgba(255, 255, 255, 0.08) !important;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.settings-quick-btn {
+  border-color: var(--input-border);
+  color: var(--text-color);
+}
+
+.settings-quick-btn:hover {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.x-small {
+  font-size: 0.72rem;
 }
 </style>

@@ -119,8 +119,20 @@
     "passwordSuccess": "Password updated successfully!",
     "languagePref": "Language Preference",
     "selectLanguage": "Select Language",
-    "aiConfig": "AI Configuration",
-    "geminiApiKey": "Gemini API Key"
+    "aiConfig": "AI & Model Configuration",
+    "activeAiModel": "Active AI Coach Engine",
+    "geminiApiKey": "Gemini API Key (Google)",
+    "deepseekApiKey": "DeepSeek API Key (Official)",
+    "groqApiKey": "Groq API Key (Free & Ultra Fast)",
+    "openrouterApiKey": "OpenRouter API Key",
+    "geminiDesc": "Get a free API key from Google AI Studio. Powers Receipt Vision OCR and fast advisor chat.",
+    "deepseekDesc": "Get your API key from platform.deepseek.com. Powers DeepSeek-V3 and DeepSeek-R1 Reasoner.",
+    "groqDesc": "Get a free API key from console.groq.com. Runs Qwen 3.6 and GPT-OSS models with instant reasoning.",
+    "openrouterDesc": "Get an API key from openrouter.ai to access open multi-model endpoints.",
+    "apiKeySaved": "API Key saved successfully!",
+    "apiKeyRemoved": "API Key removed.",
+    "testConnection": "Test Connection",
+    "insufficientBalanceWarning": "Key verified, but DeepSeek reports 0 balance. Top up at platform.deepseek.com or use Groq / Gemini."
   },
   "dashboard": {
     "period": "Period:",
@@ -353,7 +365,14 @@
   "ai": {
     "title": "Aurora AI Advisor",
     "subtitle": "Your personal family finance coach and budget advisor.",
-    "welcome": "Hello! I am Aurora, your family finance coach. I can analyze your budgets, spending history, savings goals, and accounts to give you personalized suggestions. How can I help you today?"
+    "welcome": "Hello! I am Aurora, your family finance coach. I can analyze your budgets, spending history, savings goals, and accounts to give you personalized suggestions. How can I help you today?",
+    "engine": "AI Engine",
+    "thinkingProcess": "Thinking Process & Logic Breakdown",
+    "showThinking": "Show Thinking",
+    "hideThinking": "Hide Thinking",
+    "setupKey": "Setup API Key",
+    "missingKey": "API Key is missing for {provider}. Please configure it in Settings.",
+    "insufficientBalance": "DeepSeek reports Insufficient Balance. Please top up at platform.deepseek.com or switch to Groq / Gemini in Settings."
   },
   "tours": {
     "btn": {
