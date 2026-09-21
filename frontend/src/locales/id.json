@@ -69,9 +69,20 @@
     "projectpockets": "Kantong Proyek",
     "aiadvisor": "Asisten AI",
     "calendar": "Kalender",
+    "scheduler": "Jadwal & Tugas",
     "iconsgem": "Ikon Gem",
     "shopping": "Belanja",
     "shoppingdetail": "Daftar Belanja"
+  },
+  "scheduler": {
+    "title": "Jadwal & Tugas Keluarga",
+    "subtitle": "Koordinasikan jadwal harian, tugas rumah tangga, dan pengingat keluarga",
+    "newTask": "Tugas Baru",
+    "categories": "Kategori",
+    "allDay": "Sepanjang Hari",
+    "today": "Hari Ini",
+    "tomorrow": "Besok",
+    "yesterday": "Kemarin"
   },
   "auth": {
     "login": {

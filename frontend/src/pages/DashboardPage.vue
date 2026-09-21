@@ -92,6 +92,67 @@
       </div>
     </div>
 
+    <!-- Today's Family Tasks & Schedule Widget -->
+    <div class="row g-3 mb-4">
+      <div class="col-12">
+        <div class="stat-card p-3">
+          <div class="d-flex align-items-center justify-content-between mb-2 flex-wrap gap-2">
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-calendar-check text-primary fs-5"></i>
+              <h6 class="fw-bold mb-0">Today's Family Schedule & Chores</h6>
+              <span class="badge bg-primary-subtle text-primary rounded-pill">
+                {{ todayTasks.length }}
+              </span>
+            </div>
+            <router-link to="/scheduler" class="btn btn-sm btn-outline-primary">
+              Open Scheduler <i class="bi bi-arrow-right ms-1"></i>
+            </router-link>
+          </div>
+
+          <div v-if="todayTasks.length === 0" class="text-muted small py-1">
+            <i class="bi bi-check2-circle text-success me-1"></i>
+            No tasks scheduled for today! Enjoy your day or add chores in the Scheduler.
+          </div>
+
+          <div v-else class="d-flex flex-column gap-2 mt-2">
+            <div
+              v-for="task in todayTasks.slice(0, 3)"
+              :key="task.id"
+              class="d-flex align-items-center justify-content-between p-2 rounded-2 border"
+              style="background: var(--card-bg);"
+            >
+              <div class="d-flex align-items-center gap-2">
+                <input
+                  type="checkbox"
+                  class="form-check-input mt-0"
+                  :checked="task.status === 'completed'"
+                  @change="toggleTodayTask(task)"
+                />
+                <span
+                  class="small fw-semibold"
+                  :class="{ 'text-decoration-line-through text-muted': task.status === 'completed' }"
+                >
+                  {{ task.title }}
+                </span>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <span v-if="task.start_time" class="badge bg-secondary-subtle text-secondary small">
+                  {{ task.start_time }}
+                </span>
+                <span
+                  v-if="task.category"
+                  class="badge small"
+                  :style="{ backgroundColor: task.category.color }"
+                >
+                  {{ task.category.name }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Charts Row -->
     <div id="tour-charts" class="row g-3 mb-4">
       <div class="col-lg-4">
@@ -155,10 +216,24 @@ import { useCountUp } from '../composables/useCountUp';
 import { useTour } from '../composables/useTour';
 import { dashboardTourSteps } from '../tours/dashboardTour';
 import { useLocaleStore } from '../stores/locale';
+import { useSchedulerTaskStore } from '../stores/schedulerTask';
+import { useAuthStore } from '../stores/auth';
+import { getTodayDateString } from '../utils/schedulerDate';
 
 const now = new Date();
 const showInsights = ref(false);
 const localeStore = useLocaleStore();
+const schedulerTaskStore = useSchedulerTaskStore();
+const authStore = useAuthStore();
+
+const todayTasks = computed(() => {
+  const today = getTodayDateString();
+  return (schedulerTaskStore.tasks || []).filter((t) => t.task_date === today && !t.is_deleted);
+});
+
+async function toggleTodayTask(task) {
+  await schedulerTaskStore.toggleStatus(task.id);
+}
 
 // Filter state
 const selectedMonth = ref(now.getMonth() + 1);
@@ -514,6 +589,9 @@ onMounted(() => {
   startAutoTour(dashboardTourSteps);
   window.addEventListener('start-dashboard-tour', () => startTour(dashboardTourSteps));
   window.addEventListener('theme-changed', handleThemeChanged);
+
+  // Load scheduler tasks for family
+  schedulerTaskStore.fetchTasks(authStore.familyId);
 });
 
 onUnmounted(() => {

@@ -1,0 +1,607 @@
+<template>
+  <div class="scheduler-page fade-in">
+    <!-- Page Header -->
+    <div class="page-header d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+      <div>
+        <h4 class="mb-1 fw-bold d-flex align-items-center gap-2">
+          <i class="bi bi-calendar-check text-primary"></i>
+          {{ $t('scheduler.title') || 'Family Scheduler & Chores' }}
+        </h4>
+        <p class="text-muted small mb-0">
+          {{ $t('scheduler.subtitle') || 'Coordinate daily schedules, household chores, and reminders for your family' }}
+        </p>
+      </div>
+
+      <div class="d-flex align-items-center gap-2 flex-wrap">
+        <!-- Manage Categories Button -->
+        <button class="btn btn-outline-secondary btn-sm" @click="isCategoryModalOpen = true">
+          <i class="bi bi-tags me-1"></i>
+          {{ $t('scheduler.categories') || 'Categories' }}
+        </button>
+
+        <!-- Sync Now Button -->
+        <button
+          class="btn btn-outline-primary btn-sm"
+          :disabled="syncStatus.state === 'syncing'"
+          @click="triggerManualSync"
+          :title="'Status: ' + syncStatus.state"
+        >
+          <i class="bi bi-arrow-repeat me-1" :class="{ 'spin-animation': syncStatus.state === 'syncing' }"></i>
+          <span class="d-none d-sm-inline">{{ syncStatus.state === 'syncing' ? 'Syncing...' : 'Sync Cloud' }}</span>
+        </button>
+
+        <!-- New Task Button -->
+        <button class="btn btn-primary btn-sm fw-bold shadow-sm" @click="openNewTaskModal()">
+          <i class="bi bi-plus-lg me-1"></i>
+          {{ $t('scheduler.newTask') || 'New Task' }}
+        </button>
+      </div>
+    </div>
+
+    <!-- KPI Summary Strip -->
+    <div class="row g-3 mb-3">
+      <div class="col-6 col-md-3">
+        <div class="stat-card text-center py-2.5">
+          <div class="text-muted small mb-1">Today's Tasks</div>
+          <div class="fw-bold fs-5 text-primary">{{ taskStore.todayTaskCount }}</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-card text-center py-2.5">
+          <div class="text-muted small mb-1">Completed Today</div>
+          <div class="fw-bold fs-5 text-success">{{ taskStore.todayCompletedCount }}</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-card text-center py-2.5">
+          <div class="text-muted small mb-1">Remaining</div>
+          <div class="fw-bold fs-5 text-warning">
+            {{ Math.max(0, taskStore.todayTaskCount - taskStore.todayCompletedCount) }}
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-card text-center py-2.5">
+          <div class="text-muted small mb-1">Cloud Sync</div>
+          <div class="fw-bold fs-6" :class="syncStatusClass">
+            <i class="bi" :class="syncStatusIcon"></i>
+            {{ syncStatusLabel }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- View Mode Selector & Date Navigator -->
+    <div class="card mb-3 border-0 shadow-xs control-panel-card">
+      <div class="card-body p-2 d-flex flex-wrap justify-content-between align-items-center gap-2">
+        <!-- View Switcher Tabs -->
+        <div class="btn-group btn-group-sm view-switcher-group" role="group">
+          <button
+            type="button"
+            class="btn"
+            :class="taskStore.viewMode === 'day' ? 'btn-primary' : 'btn-outline-secondary'"
+            @click="taskStore.setViewMode('day')"
+          >
+            <i class="bi bi-clock me-1"></i> Day
+          </button>
+          <button
+            type="button"
+            class="btn"
+            :class="taskStore.viewMode === 'week' ? 'btn-primary' : 'btn-outline-secondary'"
+            @click="taskStore.setViewMode('week')"
+          >
+            <i class="bi bi-calendar-week me-1"></i> Week
+          </button>
+          <button
+            type="button"
+            class="btn"
+            :class="taskStore.viewMode === 'month' ? 'btn-primary' : 'btn-outline-secondary'"
+            @click="taskStore.setViewMode('month')"
+          >
+            <i class="bi bi-calendar3 me-1"></i> Month
+          </button>
+          <button
+            type="button"
+            class="btn"
+            :class="taskStore.viewMode === 'agenda' ? 'btn-primary' : 'btn-outline-secondary'"
+            @click="taskStore.setViewMode('agenda')"
+          >
+            <i class="bi bi-view-list me-1"></i> Agenda
+          </button>
+          <button
+            type="button"
+            class="btn"
+            :class="taskStore.viewMode === 'list' ? 'btn-primary' : 'btn-outline-secondary'"
+            @click="taskStore.setViewMode('list')"
+          >
+            <i class="bi bi-check2-all me-1"></i> Filtered List
+          </button>
+        </div>
+
+        <!-- Date Controls (For Day/Week mode) -->
+        <div class="d-flex align-items-center gap-1">
+          <button class="btn btn-outline-secondary btn-sm" @click="changeDateBy(-1)">
+            <i class="bi bi-chevron-left"></i>
+          </button>
+          <span class="fw-semibold px-2 small">{{ currentDateDisplay }}</span>
+          <button class="btn btn-outline-secondary btn-sm" @click="changeDateBy(1)">
+            <i class="bi bi-chevron-right"></i>
+          </button>
+          <button class="btn btn-sm btn-outline-primary ms-1" @click="goToToday">
+            Today
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter Bar (When in List mode or to filter tasks) -->
+    <div class="card mb-3 border-0 shadow-xs filter-card">
+      <div class="card-body p-2.5">
+        <div class="row g-2 align-items-center">
+          <!-- Search -->
+          <div class="col-12 col-md-4">
+            <div class="input-group input-group-sm">
+              <span class="input-group-text bg-transparent border-end-0">
+                <i class="bi bi-search text-muted"></i>
+              </span>
+              <input
+                v-model="searchQuery"
+                type="text"
+                class="form-control border-start-0"
+                placeholder="Search tasks & chores..."
+                @input="handleSearch"
+              />
+            </div>
+          </div>
+
+          <!-- Category Filter -->
+          <div class="col-6 col-md-3">
+            <select
+              v-model="selectedCategoryId"
+              class="form-select form-select-sm"
+              @change="handleCategoryFilter"
+            >
+              <option :value="null">All Categories</option>
+              <option
+                v-for="cat in categoryStore.categories"
+                :key="cat.id"
+                :value="cat.id"
+              >
+                {{ cat.name }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Member Filter -->
+          <div class="col-6 col-md-3">
+            <select
+              v-model="selectedMemberId"
+              class="form-select form-select-sm"
+              @change="handleMemberFilter"
+            >
+              <option :value="null">All Family Members</option>
+              <option
+                v-for="m in memberStore.members"
+                :key="m.id"
+                :value="m.id"
+              >
+                {{ m.name }} ({{ m.role }})
+              </option>
+            </select>
+          </div>
+
+          <!-- Status Filter Tabs (For list mode) -->
+          <div v-if="taskStore.viewMode === 'list'" class="col-12 mt-2">
+            <div class="d-flex gap-1 flex-wrap">
+              <button
+                v-for="st in ['all', 'today', 'upcoming', 'overdue', 'completed']"
+                :key="st"
+                class="btn btn-sm text-capitalize filter-pill-btn"
+                :class="taskStore.activeFilter === st ? 'btn-primary' : 'btn-outline-secondary'"
+                @click="taskStore.setActiveFilter(st)"
+              >
+                {{ st }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active View Display -->
+    <div class="view-content-wrapper">
+      <!-- 1. Day View -->
+      <DayView
+        v-if="taskStore.viewMode === 'day'"
+        :tasks="taskStore.tasksForSelectedDate"
+        :selected-date="taskStore.selectedDate"
+        @select-task="handleSelectTask"
+        @click-slot="handleSlotClick"
+      />
+
+      <!-- 2. Week View -->
+      <WeekView
+        v-else-if="taskStore.viewMode === 'week'"
+        :tasks="taskStore.tasks"
+        :selected-date="taskStore.selectedDate"
+        :members="memberStore.members"
+        @select-task="handleSelectTask"
+        @toggle-task="handleToggleStatus"
+        @update:selected-date="taskStore.setSelectedDate"
+      />
+
+      <!-- 3. Month View -->
+      <MonthView
+        v-else-if="taskStore.viewMode === 'month'"
+        :tasks="taskStore.tasks"
+        :selected-date="taskStore.selectedDate"
+        :members="memberStore.members"
+        @select-task="handleSelectTask"
+        @toggle-task="handleToggleStatus"
+        @update:selected-date="taskStore.setSelectedDate"
+      />
+
+      <!-- 4. Agenda View -->
+      <AgendaView
+        v-else-if="taskStore.viewMode === 'agenda'"
+        :tasks="taskStore.filteredTasks"
+        :members="memberStore.members"
+        @select-task="handleSelectTask"
+        @toggle-task="handleToggleStatus"
+      />
+
+      <!-- 5. Filtered List View -->
+      <div v-else-if="taskStore.viewMode === 'list'" class="list-view-container">
+        <div v-if="taskStore.filteredTasks.length === 0" class="empty-card text-center p-5">
+          <i class="bi bi-clipboard2-x fs-1 text-muted mb-2 d-block"></i>
+          <h6 class="fw-bold text-muted">No tasks found</h6>
+          <p class="text-muted small mb-0">Try clearing your filters or create a new task.</p>
+        </div>
+        <div v-else class="task-list">
+          <TaskCard
+            v-for="task in taskStore.filteredTasks"
+            :key="task.id"
+            :task="task"
+            :members="memberStore.members"
+            @click="handleSelectTask(task)"
+            @toggle="handleToggleStatus(task)"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Modals -->
+    <TaskFormModal
+      :is-open="isFormModalOpen"
+      :initial-task="selectedTaskToEdit"
+      :default-date="taskStore.selectedDate"
+      :default-time="defaultSlotTime"
+      :categories="categoryStore.categories"
+      :members="memberStore.members"
+      @close="closeFormModal"
+      @submit="handleSaveTask"
+    />
+
+    <TaskDetailModal
+      :is-open="isDetailModalOpen"
+      :task="selectedTask"
+      :members="memberStore.members"
+      @close="isDetailModalOpen = false"
+      @edit="openEditTaskModal"
+      @delete="handleDeleteTask"
+      @toggle-status="handleToggleFromDetail"
+    />
+
+    <CategoryManageModal
+      :is-open="isCategoryModalOpen"
+      :categories="categoryStore.categories"
+      @close="isCategoryModalOpen = false"
+      @create="handleCreateCategory"
+      @delete="handleDeleteCategory"
+    />
+
+    <!-- Mobile Floating Action Button (FAB) -->
+    <button class="scheduler-fab d-md-none shadow-lg" @click="openNewTaskModal()">
+      <i class="bi bi-plus-lg"></i>
+    </button>
+  </div>
+</template>
+
+<script setup>
+import { ref, computed, onMounted, watch } from 'vue';
+import { format, addDays, subDays } from 'date-fns';
+import { useSchedulerTaskStore } from '../stores/schedulerTask';
+import { useSchedulerCategoryStore } from '../stores/schedulerCategory';
+import { useMemberStore } from '../stores/members';
+import { useAuthStore } from '../stores/auth';
+import { schedulerSyncService } from '../services/scheduler/schedulerSyncService';
+import { getTodayDateString, parseLocalDate, formatDateKey } from '../utils/schedulerDate';
+
+import DayView from '../components/scheduler/DayView.vue';
+import WeekView from '../components/scheduler/WeekView.vue';
+import MonthView from '../components/scheduler/MonthView.vue';
+import AgendaView from '../components/scheduler/AgendaView.vue';
+import TaskCard from '../components/scheduler/TaskCard.vue';
+import TaskFormModal from '../components/scheduler/TaskFormModal.vue';
+import TaskDetailModal from '../components/scheduler/TaskDetailModal.vue';
+import CategoryManageModal from '../components/scheduler/CategoryManageModal.vue';
+
+const taskStore = useSchedulerTaskStore();
+const categoryStore = useSchedulerCategoryStore();
+const memberStore = useMemberStore();
+const authStore = useAuthStore();
+
+// Modals State
+const isFormModalOpen = ref(false);
+const isDetailModalOpen = ref(false);
+const isCategoryModalOpen = ref(false);
+const selectedTask = ref(null);
+const selectedTaskToEdit = ref(null);
+const defaultSlotTime = ref(null);
+
+// Filter Form State
+const searchQuery = ref('');
+const selectedCategoryId = ref(null);
+const selectedMemberId = ref(null);
+
+// Cloud Sync State
+const syncStatus = ref(schedulerSyncService.getStatus());
+let unsubscribeSync = null;
+
+onMounted(async () => {
+  const familyId = authStore.familyId;
+
+  // Subscribe to sync status updates
+  unsubscribeSync = schedulerSyncService.onStatusChange((status) => {
+    syncStatus.value = status;
+  });
+
+  // Load categories and tasks from Dexie
+  await categoryStore.fetchCategories(familyId);
+  await taskStore.fetchTasks(familyId);
+
+  // Load family members
+  if (!memberStore.members.length) {
+    await memberStore.fetchMembers();
+  }
+
+  // Trigger background cloud sync
+  if (familyId) {
+    schedulerSyncService.triggerSync(familyId);
+  }
+});
+
+const currentDateDisplay = computed(() => {
+  const d = parseLocalDate(taskStore.selectedDate);
+  return format(d, 'EEE, d MMM yyyy');
+});
+
+const syncStatusClass = computed(() => {
+  switch (syncStatus.value.state) {
+    case 'synced':
+      return 'text-success';
+    case 'syncing':
+      return 'text-primary';
+    case 'offline':
+      return 'text-secondary';
+    case 'error':
+      return 'text-danger';
+    default:
+      return 'text-muted';
+  }
+});
+
+const syncStatusIcon = computed(() => {
+  switch (syncStatus.value.state) {
+    case 'synced':
+      return 'bi-cloud-check-fill me-1';
+    case 'syncing':
+      return 'bi-cloud-arrow-up-fill me-1 spin-animation';
+    case 'offline':
+      return 'bi-cloud-slash me-1';
+    case 'error':
+      return 'bi-cloud-exclamation-fill me-1';
+    default:
+      return 'bi-cloud me-1';
+  }
+});
+
+const syncStatusLabel = computed(() => {
+  switch (syncStatus.value.state) {
+    case 'synced':
+      return 'Synced';
+    case 'syncing':
+      return 'Syncing...';
+    case 'offline':
+      return 'Offline';
+    case 'error':
+      return 'Sync Error';
+    default:
+      return 'Ready';
+  }
+});
+
+function changeDateBy(delta) {
+  const current = parseLocalDate(taskStore.selectedDate);
+  const newDate = delta > 0 ? addDays(current, delta) : subDays(current, Math.abs(delta));
+  taskStore.setSelectedDate(formatDateKey(newDate));
+}
+
+function goToToday() {
+  taskStore.setSelectedDate(getTodayDateString());
+}
+
+function handleSearch() {
+  taskStore.setSearchQuery(searchQuery.value);
+}
+
+function handleCategoryFilter() {
+  taskStore.setCategoryId(selectedCategoryId.value);
+}
+
+function handleMemberFilter() {
+  taskStore.setMemberId(selectedMemberId.value);
+}
+
+function openNewTaskModal(timeString = null) {
+  selectedTaskToEdit.value = null;
+  defaultSlotTime.value = timeString;
+  isFormModalOpen.value = true;
+}
+
+function handleSlotClick(timeString) {
+  openNewTaskModal(timeString);
+}
+
+function handleSelectTask(task) {
+  selectedTask.value = task;
+  isDetailModalOpen.value = true;
+}
+
+function openEditTaskModal(task) {
+  isDetailModalOpen.value = false;
+  selectedTaskToEdit.value = task;
+  isFormModalOpen.value = true;
+}
+
+function closeFormModal() {
+  isFormModalOpen.value = false;
+  selectedTaskToEdit.value = null;
+  defaultSlotTime.value = null;
+}
+
+async function handleSaveTask(payload) {
+  const familyId = authStore.familyId;
+  const userId = authStore.user?.id;
+
+  if (selectedTaskToEdit.value) {
+    await taskStore.editTask(selectedTaskToEdit.value.id, payload);
+  } else {
+    await taskStore.addTask(payload, familyId, userId);
+  }
+
+  closeFormModal();
+
+  // Background sync
+  if (familyId) {
+    schedulerSyncService.triggerSync(familyId);
+  }
+}
+
+async function handleToggleStatus(task) {
+  await taskStore.toggleStatus(task.id);
+  if (authStore.familyId) {
+    schedulerSyncService.triggerSync(authStore.familyId);
+  }
+}
+
+async function handleToggleFromDetail(task) {
+  const updated = await taskStore.toggleStatus(task.id);
+  if (updated) {
+    selectedTask.value = updated;
+  }
+  if (authStore.familyId) {
+    schedulerSyncService.triggerSync(authStore.familyId);
+  }
+}
+
+async function handleDeleteTask(taskId) {
+  await taskStore.removeTask(taskId);
+  isDetailModalOpen.value = false;
+  selectedTask.value = null;
+  if (authStore.familyId) {
+    schedulerSyncService.triggerSync(authStore.familyId);
+  }
+}
+
+async function handleCreateCategory(categoryInput) {
+  await categoryStore.addCategory(categoryInput, authStore.familyId, authStore.user?.id);
+  if (authStore.familyId) {
+    schedulerSyncService.triggerSync(authStore.familyId);
+  }
+}
+
+async function handleDeleteCategory(categoryId) {
+  await categoryStore.removeCategory(categoryId);
+  if (authStore.familyId) {
+    schedulerSyncService.triggerSync(authStore.familyId);
+  }
+}
+
+function triggerManualSync() {
+  if (authStore.familyId) {
+    schedulerSyncService.triggerSync(authStore.familyId);
+  }
+}
+</script>
+
+<style scoped>
+.scheduler-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 5rem;
+}
+
+.control-panel-card,
+.filter-card {
+  background: var(--card-bg, #ffffff);
+  border: 1px solid var(--border-color, #e2e8f0) !important;
+  border-radius: 1rem;
+}
+
+.stat-card {
+  background: var(--card-bg, #ffffff);
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-radius: 1rem;
+}
+
+.filter-pill-btn {
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+}
+
+.empty-card {
+  background: var(--card-bg, #ffffff);
+  border: 1px dashed var(--border-color, #cbd5e1);
+  border-radius: 1.25rem;
+}
+
+.spin-animation {
+  animation: spin 1s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.scheduler-fab {
+  position: fixed;
+  bottom: 5rem;
+  right: 1.5rem;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary, #4f46e5);
+  color: #ffffff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  z-index: 1040;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scheduler-fab:hover {
+  transform: scale(1.08);
+}
+</style>

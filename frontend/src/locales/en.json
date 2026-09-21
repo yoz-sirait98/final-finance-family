@@ -69,9 +69,20 @@
     "projectpockets": "Project Pockets",
     "aiadvisor": "AI Advisor",
     "calendar": "Calendar",
+    "scheduler": "Scheduler & Chores",
     "iconsgem": "Icons Gem",
     "shopping": "Shopping",
     "shoppingdetail": "Shopping Detail"
+  },
+  "scheduler": {
+    "title": "Family Scheduler & Chores",
+    "subtitle": "Coordinate daily schedules, household chores, and reminders for your family",
+    "newTask": "New Task",
+    "categories": "Categories",
+    "allDay": "All Day",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "yesterday": "Yesterday"
   },
   "auth": {
     "login": {

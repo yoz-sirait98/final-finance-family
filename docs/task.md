@@ -1,28 +1,52 @@
-# Tasks Checklist: Multi-AI Provider & DeepSeek Integration for AI Advisor
+# Tasks Checklist: Family Scheduler Integration into Finance Family
 
-- [x] **1. AI Service Provider Layer (`frontend/src/services/aiService.js`)**
-  - [x] Implement `chatWithOpenAiCompatible` targeting DeepSeek, Groq, OpenRouter, and OpenAI-compatible completions.
-  - [x] Support DeepSeek-R1 `reasoning_content` and Groq `reasoning` / `<think>` tag extraction alongside standard `content`.
-  - [x] Build unified `chatWithCoach` routing mechanism supporting provider selection (`gemini`, `deepseek-chat`, `deepseek-reasoner`, `groq`, `openrouter`).
-  - [x] Implement error handling and diagnostic hints (Insufficient Balance, rate limits, network timeouts).
+- [x] **1. Phase 1: Planning & Dependencies**
+  - [x] Analyze `scheduler-family` architecture and repository structure
+  - [x] Archive previous `implementation_plan.md` to `scratch/old_plan_2026_09_21.md`
+  - [x] Obtain user approval on `implementation_plan.md`
+  - [x] Install required frontend dependencies (`dexie`, `date-fns`, `lucide-vue-next`)
 
-- [x] **2. AI Advisor Chat Interface (`frontend/src/pages/AiPage.vue`)**
-  - [x] Add model & provider selector toggle dropdown in the chat header.
-  - [x] Render expandable **💭 DeepSeek / Groq Reasoning & Thinking Process** accordion for reasoning responses.
-  - [x] Adapt API key missing state to dynamically check active provider keys.
+- [x] **2. Phase 2: Database Schema & Supabase Migration**
+  - [x] Create `supabase/migrations/000035_family_scheduler.sql`
+  - [x] Define `task_categories`, `tasks`, `task_reminders`, `task_recurrences` tables scoped to `family_id`
+  - [x] Add foreign key to `members` table (`assigned_member_id`)
+  - [x] Configure RLS policies using `public.get_auth_family_id()`
+  - [x] Add default category seeding trigger/function
 
-- [x] **3. Settings Page AI Configuration (`frontend/src/pages/SettingsPage.vue`)**
-  - [x] Add DeepSeek API key configuration card with save & remove handlers.
-  - [x] Add Groq and OpenRouter API key cards with live connection verification.
-  - [x] Add Default AI Advisor Provider preference selector.
-  - [x] Store preferences in `localStorage` with fallback family database sync.
+- [x] **3. Phase 3: Offline-First Storage & Service Engine**
+  - [x] Implement Dexie DB in `frontend/src/db/schedulerDatabase.js`
+  - [x] Create repositories (`taskRepository.js`, `categoryRepository.js`, `reminderRepository.js`)
+  - [x] Create date utilities in `frontend/src/utils/schedulerDate.js`
+  - [x] Implement `audioService.js` (Web Audio API synthesizer chimes)
+  - [x] Implement `reminderService.js` (interval checker & active alarm trigger)
+  - [x] Implement `schedulerSyncService.js` (Supabase background sync with Dexie)
 
-- [x] **4. Localization & i18n (`frontend/src/locales/en.json` & `id.json`)**
-  - [x] Add translation keys for DeepSeek models, reasoning accordion labels, and balance diagnostics.
+- [x] **4. Phase 4: Pinia State Stores**
+  - [x] Implement `schedulerTask.js` store (tasks, active view, filtering, CRUD)
+  - [x] Implement `schedulerCategory.js` store (categories, colors, icons)
+  - [x] Implement `schedulerAlarm.js` store (active alarms, snooze, dismiss)
 
-- [x] **5. Verification & Testing**
-  - [x] Run `npm run build` to ensure error-free compilation.
-  - [x] Test switching between Gemini, DeepSeek, Groq, and OpenRouter models.
-  - [x] Verify thought accordion rendering and response formatting.
-  - [x] Update knowledge graph (`graphify update .`).
+- [x] **5. Phase 5: UI Views & Components (`components/scheduler/`)**
+  - [x] Build `DayView.vue` (24-hour timeline + live "NOW" indicator)
+  - [x] Build `WeekView.vue` (7-day strip + task cards)
+  - [x] Build `MonthView.vue` (month calendar grid + category dots)
+  - [x] Build `AgendaView.vue` (chronological list)
+  - [x] Build `TaskCard.vue` (touch card, priority badge, member avatar, 1-tap checkbox)
+  - [x] Build `TaskFormModal.vue` (create/edit task with member assignment & reminders)
+  - [x] Build `TaskDetailModal.vue` (details modal)
+  - [x] Build `AlarmModal.vue` (Web Audio alarm alert with snooze)
+  - [x] Build `CategoryManageModal.vue` (category management)
+  - [x] Create `frontend/src/pages/SchedulerPage.vue` (unified hub with calendar & task tabs)
 
+- [x] **6. Phase 6: Layout, Navigation & Cross-App Integration**
+  - [x] Register `/scheduler` route in `frontend/src/router/index.js`
+  - [x] Add Scheduler item to `DashboardLayout.vue` sidebar & mobile navigation
+  - [x] Mount global `AlarmModal.vue` and start reminder watcher
+  - [x] Add "Today's Schedule & Chores" widget to `DashboardPage.vue`
+  - [x] Add i18n localization in `frontend/src/locales/en.json` and `id.json`
+
+- [x] **7. Phase 7: Verification & Documentation**
+  - [x] Run `npm run build` to verify clean build
+  - [x] Verify Dexie offline CRUD and alarm sounds
+  - [x] Create walkthrough artifact `docs/walkthrough_family_scheduler_integration.md`
+  - [x] Update knowledge graph (`graphify update .`)

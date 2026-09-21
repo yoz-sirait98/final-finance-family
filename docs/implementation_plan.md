@@ -1,56 +1,89 @@
 # Implementation Plan
 
-## Multi-AI Provider Integration: DeepSeek V3 & R1 Reasoner for Aurora AI Advisor (August 2026)
+## Family Scheduler Integration: Merging Task, Chore & Calendar Management into Finance Family (September 2026)
 
-### Problem Area & Target Architecture
+### Background & Architecture Overview
 
-Currently, the Aurora AI Financial Coach (`aiService.js` and `AiPage.vue`) is hardcoded to Google Gemini. With the emergence of DeepSeek (V3 and R1 Reasoner), we want to give users the freedom to select their preferred AI intelligence engine, experience DeepSeek-R1's step-by-step mathematical reasoning ("Chain of Thought"), and have seamless fallback across providers.
+Currently, the user maintains two separate projects:
+1. `final-finance-family`: Family finance management PWA (Vue 3, Vite, Bootstrap 5, Pinia, Supabase, Web Push).
+2. `scheduler-family`: Personal & family task scheduler PWA (Vue 3, Vite, Tailwind CSS, Dexie.js offline storage, Web Audio alarm synthesizer, Supabase).
 
-| Feature Component | Current Implementation | Target Architecture |
-|---|---|---|
-| **AI Provider Support** | Google Gemini (`gemini-flash-lite-latest`) only | Multi-provider router: **Google Gemini**, **DeepSeek V3** (`deepseek-chat`), **DeepSeek R1** (`deepseek-reasoner`), and OpenAI-compatible endpoints |
-| **Model Switcher** | Fixed single model | Interactive quick-switch pill directly inside AI Advisor chat & default configuration in Settings |
-| **Reasoning / Thinking UI** | Plain single text stream | Dedicated collapsible accordion showing DeepSeek-R1's step-by-step reasoning process before the final advice |
-| **Settings & Key Management** | Gemini API Key only | Multi-key manager with live verification tests and balance diagnostics |
+By merging Scheduler into Finance Family:
+- **Single Deployment & VPS Host**: One unified frontend build served on one domain (e.g. `yjsfinance.web.id`), requiring zero extra domains or servers.
+- **Single PWA & Auth**: Family members install a single app on their phones with shared login and single session.
+- **Family Member Synergy**: Tasks and chores can be assigned directly to household members (`members` table: Dad, Mom, Children).
+- **Financial & Schedule Cross-Linking**: Bill payment deadlines and shopping plans can be referenced on the schedule.
 
 ---
 
 ### Proposed Changes
 
-#### AI Service Layer
+#### Phase 1: Dependencies
+##### `frontend/package.json`
+- Add `dexie` (`^4.0.11`) for instant offline-first local storage.
+- Add `date-fns` (`^4.1.0`) for timeline, week strip, and calendar calculations.
+- Add `lucide-vue-next` (`^0.475.0`) for calendar, alarm, and chore icons.
 
-##### `frontend/src/services/aiService.js`
-- Create a unified multi-provider chat dispatcher `chatWithCoach(messages, locale, providerOverride)`.
-- Implement `chatWithDeepSeek({ messages, model, locale, apiKey, baseUrl })` targeting `https://api.deepseek.com/chat/completions`.
-- Support extracting `reasoning_content` (for R1) alongside `content`.
-- Graceful error mapping for DeepSeek (handling `Insufficient Balance`, rate limits, quota issues).
+#### Phase 2: Database Migration (Supabase)
+##### `supabase/migrations/000035_family_scheduler.sql`
+Create the family-scoped scheduler tables:
+- `public.task_categories`: Categories (Family & Kids, Home & Chores, Work, Finance, Health & Medical, Personal), scoped by `family_id`.
+- `public.tasks`: Family tasks with `task_date`, `start_time`, `end_time`, `priority`, `status`, `is_all_day`, `category_id`, and `assigned_member_id` referencing `public.members(id)`.
+- `public.task_reminders`: Alarms and notifications (`reminder_type`, `minutes_before`, `is_enabled`, `is_triggered`).
+- `public.task_recurrences`: Recurrence patterns (daily, weekly, monthly).
+- RLS Policies using `public.get_auth_family_id()`.
+- Default categories seeding function/trigger for new and existing families.
 
-#### AI Advisor Chat Page
+#### Phase 3: Offline Storage & Service Layer
+##### `frontend/src/db/schedulerDatabase.js`
+- Dexie IndexedDB setup (`tasks`, `categories`, `reminders`, `recurrences`, `syncQueue`, `settings`).
 
-##### `frontend/src/pages/AiPage.vue`
-- Add model switcher header bar (Gemini Flash vs DeepSeek V3 vs DeepSeek R1).
-- Add collapsible *💭 DeepSeek Thinking Process* accordion for messages containing `reasoning_content`.
-- Display dynamic API key missing banners tailored to the currently selected provider.
+##### `frontend/src/db/taskRepository.js`, `categoryRepository.js`, `reminderRepository.js`
+- Local repository pattern for offline-first CRUD and state queries.
 
-#### Settings Page
+##### `frontend/src/utils/schedulerDate.js`
+- Date formatting, local date parsers, week generation, and timeline interval calculations.
 
-##### `frontend/src/pages/SettingsPage.vue`
-- Add DeepSeek API Key configuration with test button and balance diagnostic feedback.
-- Add Active AI Provider selector for default chat coach experience.
+##### `frontend/src/services/scheduler/`
+- `audioService.js`: Web Audio synthesized chimes (C6/E6/G6 arpeggio alarm sequence with zero audio asset downloads).
+- `reminderService.js`: 15-second timer checking for due tasks, triggering browser notifications and audio alarms.
+- `schedulerSyncService.js`: Two-way synchronization between Dexie and Supabase PostgreSQL with conflict handling.
 
-#### Localization
+#### Phase 4: State Management (Pinia)
+##### `frontend/src/stores/schedulerTask.js`, `schedulerCategory.js`, `schedulerAlarm.js`
+- Pinia stores for tasks, active date/view filters, categories, and active alarm modals.
+
+#### Phase 5: UI Components & Page
+##### `frontend/src/components/scheduler/`
+- `DayView.vue`, `WeekView.vue`, `MonthView.vue`, `AgendaView.vue`, `TaskCard.vue`, `TaskFormModal.vue`, `TaskDetailModal.vue`, `AlarmModal.vue`, `CategoryManageModal.vue`.
+
+##### `frontend/src/pages/SchedulerPage.vue`
+- Main family scheduler hub featuring Date Navigator, View Selector, Member & Category filters, and task management.
+
+#### Phase 6: Layout & Cross-App Integration
+##### `frontend/src/router/index.js`
+- Register route `/scheduler` under `DashboardLayout`.
+
+##### `frontend/src/layouts/DashboardLayout.vue`
+- Add "Family Scheduler" item in sidebar navigation.
+- Mount `<AlarmModal />` globally.
+- Initialize `reminderService.start()` and `schedulerSyncService.triggerSync()` when authenticated.
+
+##### `frontend/src/pages/DashboardPage.vue`
+- Add a compact "Today's Family Schedule & Chores" widget to the main finance dashboard.
 
 ##### `frontend/src/locales/en.json` & `frontend/src/locales/id.json`
-- Add translation keys for DeepSeek, provider switching, reasoning labels, and error states.
+- Add bilingual English and Indonesian strings for Scheduler, tasks, categories, alarms, and views.
 
 ---
 
 ## Past Features History
 
+### Multi-AI Provider Integration: DeepSeek V3 & R1 Reasoner for Aurora AI Advisor (August 2026)
+- Multi-provider router for Google Gemini, DeepSeek V3/R1, Groq, and OpenRouter with reasoning accordion and settings key manager.
+
 ### Repurpose Header Bell Icon into In-App Alerts Hub (August 2026)
 - Multi-category In-App Alerts Hub for Budgets, Goals, and Shopping with tabbed filter bar and direct routing.
-
-## Past Features History
 
 ### Mobile View Redesign for Project Pockets Page (August 2026)
 - Touch-first mobile card list with status badges, progress bars, available/target balance displays, quick action drawers, and mobile KPI banner.

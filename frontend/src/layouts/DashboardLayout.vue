@@ -35,6 +35,12 @@
           </router-link>
         </div>
         <div class="nav-item">
+          <router-link to="/scheduler" class="nav-link" @click="closeMobile">
+            <i class="bi bi-calendar-check"></i>
+            <span class="nav-text">{{ $t('nav.scheduler') || 'Scheduler & Chores' }}</span>
+          </router-link>
+        </div>
+        <div class="nav-item">
           <router-link to="/accounts" class="nav-link" @click="closeMobile">
             <i class="bi bi-bank"></i>
             <span class="nav-text">{{ $t('nav.accounts') }}</span>
@@ -287,6 +293,7 @@
     </main>
 
     <GoalNotificationModal />
+    <AlarmModal />
   </div>
 </template>
 
@@ -298,9 +305,13 @@ import { useBudgetStore } from '../stores/budgets';
 import { useTourStore } from '../stores/tour';
 import { useLocaleStore } from '../stores/locale';
 import GoalNotificationModal from '../components/GoalNotificationModal.vue';
+import AlarmModal from '../components/scheduler/AlarmModal.vue';
 import InstallPwa from '../components/InstallPwa.vue';
 import { goalService } from '../services/goalService';
 import { supabase } from '../lib/supabase';
+import { useSchedulerAlarmStore } from '../stores/schedulerAlarm';
+import { reminderService } from '../services/scheduler/reminderService';
+import { schedulerSyncService } from '../services/scheduler/schedulerSyncService';
 
 const route = useRoute();
 const router = useRouter();
@@ -602,12 +613,20 @@ onMounted(async () => {
   startAlertsPolling();
   fetchPendingShopping();
   setupShoppingRealtime();
+
+  // Initialize Scheduler reminders and background sync
+  useSchedulerAlarmStore().init();
+  reminderService.start();
+  if (authStore.familyId) {
+    schedulerSyncService.triggerSync(authStore.familyId);
+  }
 });
 
 onUnmounted(() => {
   document.removeEventListener('mousedown', handleOutsideClick);
   window.removeEventListener('shopping-plans-updated', handleShoppingUpdated);
   stopAlertsPolling();
+  reminderService.stop();
   if (shoppingSub) supabase.removeChannel(shoppingSub);
 });
 </script>
