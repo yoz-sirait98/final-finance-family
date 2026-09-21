@@ -116,6 +116,34 @@ class ReminderService {
       triggerTime: snoozeUntil,
     });
   }
+
+  getNotificationPermission() {
+    if (typeof window !== 'undefined' && 'Notification' in window) {
+      return Notification.permission;
+    }
+    return 'unsupported';
+  }
+
+  async requestNotificationPermission() {
+    if (typeof window !== 'undefined' && 'Notification' in window) {
+      const res = await Notification.requestPermission();
+      return res;
+    }
+    return 'unsupported';
+  }
+
+  showNotification(title, options = {}) {
+    if (typeof window !== 'undefined' && 'Notification' in window && Notification.permission === 'granted') {
+      try {
+        return new Notification(title, {
+          icon: '/pwa-192x192.png',
+          ...options,
+        });
+      } catch (err) {
+        console.warn('Browser notification error:', err);
+      }
+    }
+  }
 }
 
 export const reminderService = new ReminderService();

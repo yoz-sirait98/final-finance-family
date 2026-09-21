@@ -82,7 +82,14 @@
     "allDay": "Sepanjang Hari",
     "today": "Hari Ini",
     "tomorrow": "Besok",
-    "yesterday": "Kemarin"
+    "yesterday": "Kemarin",
+    "googleCalendar": "Google Kalender",
+    "connectGoogleCalendar": "Hubungkan Google Kalender",
+    "enableRemindersTitle": "Aktifkan Pengingat & Alarm Tugas",
+    "enableRemindersDesc": "Izinkan notifikasi browser agar Anda tidak melewatkan agenda keluarga dan tugas terjadwal.",
+    "addToGoogle": "Tambah ke Google Kalender",
+    "downloadIcs": "Unduh .ics",
+    "syncGoogle": "Sinkronisasi ke Google Kalender"
   },
   "auth": {
     "login": {

@@ -65,10 +65,54 @@
                 {{ formatReminderText(task.reminders[0]) }}
               </span>
             </div>
+
+            <!-- Google Calendar Link -->
+            <div v-if="task.external_provider === 'google' || task.external_event_link" class="list-group-item d-flex align-items-center justify-content-between py-2.5">
+              <span class="text-muted small">
+                <i class="bi bi-google me-2 text-primary"></i>Google Calendar
+              </span>
+              <a
+                :href="task.external_event_link || 'https://calendar.google.com'"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn-sm btn-link p-0 text-decoration-none fw-semibold small d-flex align-items-center gap-1"
+              >
+                <span>Open in Google</span>
+                <i class="bi bi-box-arrow-up-right" style="font-size: 0.75rem;"></i>
+              </a>
+            </div>
           </div>
 
           <!-- Bottom Action Buttons -->
           <div class="d-flex flex-column gap-2">
+            <!-- Quick Export Tools -->
+            <div class="d-flex gap-2">
+              <a
+                :href="googleWebUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn-outline-secondary btn-sm flex-fill d-flex align-items-center justify-content-center gap-1"
+                title="Add to Google Calendar directly in browser"
+              >
+                <svg viewBox="0 0 24 24" width="13" height="13">
+                  <path fill="#EA4335" d="M12 5c1.54 0 2.93.57 4.02 1.5l3.01-3.01C17.2 1.77 14.77 1 12 1 7.42 1 3.53 3.59 1.63 7.36l3.66 2.84C6.18 7.35 8.84 5 12 5z" />
+                  <path fill="#4285F4" d="M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58l3.71 2.88c2.16-2 3.71-4.94 3.71-8.7z" />
+                  <path fill="#FBBC05" d="M5.29 14.8c-.24-.72-.38-1.49-.38-2.3s.14-1.58.38-2.3L1.63 7.36C.59 9.44 0 11.66 0 14s.59 4.56 1.63 6.64l3.66-2.84z" />
+                  <path fill="#34A853" d="M12 23c3.24 0 5.95-1.08 7.93-2.91l-3.71-2.88c-1.07.72-2.45 1.16-4.22 1.16-3.16 0-5.82-2.35-6.71-5.2L1.63 15.99C3.53 19.41 7.42 23 12 23z" />
+                </svg>
+                <span>Add to Google Cal</span>
+              </a>
+              <button
+                type="button"
+                class="btn btn-outline-secondary btn-sm flex-fill d-flex align-items-center justify-content-center gap-1"
+                @click="downloadIcs"
+                title="Download .ics for Outlook, Apple Calendar, or Google Calendar"
+              >
+                <i class="bi bi-file-earmark-arrow-down text-primary"></i>
+                <span>Download .ics</span>
+              </button>
+            </div>
+
             <!-- Toggle Complete Button -->
             <button
               class="btn btn-lg w-100 fw-bold"
@@ -98,6 +142,7 @@
 import { computed } from 'vue';
 import { format } from 'date-fns';
 import { parseLocalDate } from '../../utils/schedulerDate';
+import { googleCalendarService } from '../../services/scheduler/googleCalendarService';
 
 const props = defineProps({
   isOpen: {
@@ -148,6 +193,17 @@ function formatReminderText(reminder) {
   if (mins === 60) return '1 hour before';
   if (mins === 1440) return '1 day before';
   return `${mins}m before`;
+}
+
+const googleWebUrl = computed(() => {
+  if (!props.task) return '#';
+  return googleCalendarService.generateWebExportUrl(props.task);
+});
+
+function downloadIcs() {
+  if (props.task) {
+    googleCalendarService.downloadIcsFile(props.task);
+  }
 }
 
 function handleDelete() {

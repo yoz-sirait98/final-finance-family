@@ -169,6 +169,27 @@
             </div>
           </div>
 
+          <!-- Google Calendar Sync Option -->
+          <div v-if="googleStore.isConnected" class="mb-3 p-2.5 rounded-3 border d-flex align-items-center justify-content-between" style="background: rgba(66, 133, 244, 0.06);">
+            <div class="d-flex align-items-center gap-2">
+              <svg viewBox="0 0 24 24" width="16" height="16">
+                <path fill="#EA4335" d="M12 5c1.54 0 2.93.57 4.02 1.5l3.01-3.01C17.2 1.77 14.77 1 12 1 7.42 1 3.53 3.59 1.63 7.36l3.66 2.84C6.18 7.35 8.84 5 12 5z" />
+                <path fill="#4285F4" d="M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58l3.71 2.88c2.16-2 3.71-4.94 3.71-8.7z" />
+                <path fill="#FBBC05" d="M5.29 14.8c-.24-.72-.38-1.49-.38-2.3s.14-1.58.38-2.3L1.63 7.36C.59 9.44 0 11.66 0 14s.59 4.56 1.63 6.64l3.66-2.84z" />
+                <path fill="#34A853" d="M12 23c3.24 0 5.95-1.08 7.93-2.91l-3.71-2.88c-1.07.72-2.45 1.16-4.22 1.16-3.16 0-5.82-2.35-6.71-5.2L1.63 15.99C3.53 19.41 7.42 23 12 23z" />
+              </svg>
+              <span class="small fw-semibold">Sync with Google Calendar</span>
+            </div>
+            <div class="form-check form-switch mb-0">
+              <input
+                v-model="syncWithGoogle"
+                class="form-check-input"
+                type="checkbox"
+                id="syncGoogleSwitch"
+              />
+            </div>
+          </div>
+
           <!-- Actions -->
           <div class="d-flex justify-content-end gap-2 mt-4">
             <button type="button" class="btn btn-outline-secondary" @click="$emit('close')">
@@ -188,6 +209,7 @@
 <script setup>
 import { ref, watch, computed } from 'vue';
 import { getTodayDateString } from '../../utils/schedulerDate';
+import { useGoogleCalendarStore } from '../../stores/googleCalendar';
 
 const props = defineProps({
   isOpen: {
@@ -218,8 +240,10 @@ const props = defineProps({
 
 const emit = defineEmits(['close', 'submit']);
 
+const googleStore = useGoogleCalendarStore();
 const isEdit = computed(() => !!props.initialTask?.id);
 const isSubmitting = ref(false);
+const syncWithGoogle = ref(false);
 
 const form = ref({
   title: '',
@@ -254,6 +278,7 @@ watch(
           assigned_member_id: props.initialTask.assigned_member_id || null,
         };
 
+        syncWithGoogle.value = props.initialTask?.external_provider === 'google';
         const existingReminder = props.initialTask.reminders?.[0];
         if (existingReminder) {
           hasReminder.value = true;
@@ -275,6 +300,7 @@ watch(
           assigned_member_id: null,
         };
         hasReminder.value = false;
+        syncWithGoogle.value = googleStore.isConnected && googleStore.autoSyncEnabled;
       }
     }
   },
@@ -311,6 +337,7 @@ function handleSubmit() {
   const payload = {
     ...form.value,
     reminders,
+    external_provider: syncWithGoogle.value ? 'google' : null,
   };
 
   emit('submit', payload);

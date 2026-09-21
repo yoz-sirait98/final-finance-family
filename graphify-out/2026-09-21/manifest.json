@@ -20,8 +20,8 @@
     "semantic_hash": ""
   },
   "frontend/package.json": {
-    "mtime": 1785393461.3783665,
-    "ast_hash": "e363d143e3bfb7bd95fdd2dc4fa216be",
+    "mtime": 1789973842.94277,
+    "ast_hash": "68d7e06de0aaa81af8318dc6fe68b2e9",
     "semantic_hash": ""
   },
   "frontend/src/App.vue": {
@@ -65,8 +65,8 @@
     "semantic_hash": ""
   },
   "frontend/src/layouts/DashboardLayout.vue": {
-    "mtime": 1786422710.36698,
-    "ast_hash": "f1a1482799436e6e7bf4edf6321c2538",
+    "mtime": 1789973982.8756697,
+    "ast_hash": "d95e24a9bd8ce68faa3c8a2dd459d099",
     "semantic_hash": ""
   },
   "frontend/src/lib/realtime.js": {
@@ -80,13 +80,13 @@
     "semantic_hash": ""
   },
   "frontend/src/locales/en.json": {
-    "mtime": 1787131786.9955084,
-    "ast_hash": "d6ab4bd96c8b6574971b270adc754d0c",
+    "mtime": 1789973996.6798356,
+    "ast_hash": "2ff8778afb868248dc3e3a50f83b82b8",
     "semantic_hash": ""
   },
   "frontend/src/locales/id.json": {
-    "mtime": 1787131808.8933673,
-    "ast_hash": "35227b377c75b0cc8b8a92c7dea46e78",
+    "mtime": 1789974007.4321182,
+    "ast_hash": "4870ad55e4d61a4bec1a589891c5d7c3",
     "semantic_hash": ""
   },
   "frontend/src/main.js": {
@@ -110,8 +110,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/DashboardPage.vue": {
-    "mtime": 1785393461.3863652,
-    "ast_hash": "79e85a6ab6c512f8c53d7c85f4e50396",
+    "mtime": 1789974060.3527174,
+    "ast_hash": "18c0a053e6985fbd73628e98c3ea9559",
     "semantic_hash": ""
   },
   "frontend/src/pages/GoalsPage.vue": {
@@ -160,8 +160,8 @@
     "semantic_hash": ""
   },
   "frontend/src/router/index.js": {
-    "mtime": 1781145384.5287437,
-    "ast_hash": "b67596e43582d41d514abd50c696eb0a",
+    "mtime": 1789973953.2020357,
+    "ast_hash": "db3e471d81c7838a98bfcdd96e27e87b",
     "semantic_hash": ""
   },
   "frontend/src/services/accountService.js": {
@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "docs/implementation_plan.md": {
-    "mtime": 1787131036.7418199,
-    "ast_hash": "704cbd2f6df7c5e6143badf6ea2c49e8",
+    "mtime": 1789973633.5284173,
+    "ast_hash": "a77b3b35f539063a626000fa2c91efa5",
     "semantic_hash": ""
   },
   "docs/supabase-setup-guide.md": {
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "docs/task.md": {
-    "mtime": 1787131044.9841201,
-    "ast_hash": "bc187aff2c39deacd56743d39704d35d",
+    "mtime": 1789974118.6623273,
+    "ast_hash": "c9f6e5bcdd49668bea4279061f1e638e",
     "semantic_hash": ""
   },
   "docs/walkthrough_graphify.md": {
@@ -932,6 +932,126 @@
   "docs/walkthrough_alerts_hub.md": {
     "mtime": 1786422733.091852,
     "ast_hash": "41ac664c905eec2d80da97fce507d06f",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/scheduler/AgendaView.vue": {
+    "mtime": 1789973882.0635154,
+    "ast_hash": "859dca383d3b0a64c367d644fb8fcff4",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/scheduler/AlarmModal.vue": {
+    "mtime": 1789973830.914271,
+    "ast_hash": "d1e48cecedda2f2ad5dd278e714e7c14",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/scheduler/CategoryManageModal.vue": {
+    "mtime": 1789973915.0359967,
+    "ast_hash": "a2df0617b31b8e5a43c67d953bd38dcb",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/scheduler/DayView.vue": {
+    "mtime": 1789973854.4969091,
+    "ast_hash": "eca8f8b9690c2a0717febfa87db4013a",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/scheduler/MonthView.vue": {
+    "mtime": 1789973872.7193847,
+    "ast_hash": "552f9ebb0d1dfcc11035c04d1e1d17fa",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/scheduler/TaskCard.vue": {
+    "mtime": 1789973842.60615,
+    "ast_hash": "98005a22f63b88672c50e81a7bd87859",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/scheduler/TaskDetailModal.vue": {
+    "mtime": 1789973906.5364556,
+    "ast_hash": "7478e521be7aee6121fc935f99f8b00c",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/scheduler/TaskFormModal.vue": {
+    "mtime": 1789973894.943598,
+    "ast_hash": "946bb38b6e0c20f1e990243a90152017",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/scheduler/WeekView.vue": {
+    "mtime": 1789973864.4287553,
+    "ast_hash": "4a2705e8c2ddd45a859e25ec9c61a8f8",
+    "semantic_hash": ""
+  },
+  "frontend/src/db/categoryRepository.js": {
+    "mtime": 1789973739.3951066,
+    "ast_hash": "5b185733fb267e58cca8e9e222ebc983",
+    "semantic_hash": ""
+  },
+  "frontend/src/db/reminderRepository.js": {
+    "mtime": 1789973749.5716453,
+    "ast_hash": "36236f743238a41d089856ee3ae48641",
+    "semantic_hash": ""
+  },
+  "frontend/src/db/schedulerDatabase.js": {
+    "mtime": 1789973729.3466291,
+    "ast_hash": "1c4bf71db5beb615d6783f133c6afad2",
+    "semantic_hash": ""
+  },
+  "frontend/src/db/taskRepository.js": {
+    "mtime": 1789973763.3913326,
+    "ast_hash": "057e996faecbb177a66caf5ef2c4b5c6",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/SchedulerPage.vue": {
+    "mtime": 1789973940.3993273,
+    "ast_hash": "3e052976bfefdd0f3d9779068517c654",
+    "semantic_hash": ""
+  },
+  "frontend/src/services/scheduler/audioService.js": {
+    "mtime": 1789973770.6067374,
+    "ast_hash": "22b631158a8e5a4c6254d6cd8f2f7e94",
+    "semantic_hash": ""
+  },
+  "frontend/src/services/scheduler/reminderService.js": {
+    "mtime": 1789973778.1530495,
+    "ast_hash": "731e2d9d0cf05c03418ccf17d55644be",
+    "semantic_hash": ""
+  },
+  "frontend/src/services/scheduler/schedulerSyncService.js": {
+    "mtime": 1789973787.3089774,
+    "ast_hash": "54faaa3e7434ac4a656657a3db179774",
+    "semantic_hash": ""
+  },
+  "frontend/src/stores/schedulerAlarm.js": {
+    "mtime": 1789973802.3125975,
+    "ast_hash": "cc805e0a3313e812f537f59670770e13",
+    "semantic_hash": ""
+  },
+  "frontend/src/stores/schedulerCategory.js": {
+    "mtime": 1789973808.1598895,
+    "ast_hash": "c0b4fdd5a42d11f24e603519cdeb20e5",
+    "semantic_hash": ""
+  },
+  "frontend/src/stores/schedulerTask.js": {
+    "mtime": 1789973815.410623,
+    "ast_hash": "b8a64f2b3741097b7d0a98ba6a2ee2e7",
+    "semantic_hash": ""
+  },
+  "frontend/src/utils/schedulerDate.js": {
+    "mtime": 1789973722.4290125,
+    "ast_hash": "e3c8997a2db22407b52786020e5f2142",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/000035_family_scheduler.sql": {
+    "mtime": 1789973708.3977413,
+    "ast_hash": "8fa0a8561e23811253ea07b2427d78c5",
+    "semantic_hash": ""
+  },
+  "docs/walkthrough_deepseek_multi_ai.md": {
+    "mtime": 1787132012.9232187,
+    "ast_hash": "b04aefe853294825e543bdbab4f3fa0b",
+    "semantic_hash": ""
+  },
+  "docs/walkthrough_family_scheduler_integration.md": {
+    "mtime": 1789974096.309441,
+    "ast_hash": "b501f7a3a805b6efff1d5bbd25acfe97",
     "semantic_hash": ""
   }
 }

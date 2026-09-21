@@ -13,6 +13,22 @@
       </div>
 
       <div class="d-flex align-items-center gap-2 flex-wrap">
+        <!-- Google Calendar Button -->
+        <button
+          class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1.5"
+          @click="isGoogleModalOpen = true"
+          :title="googleStore.isConnected ? 'Google Calendar Connected' : 'Connect Google Calendar'"
+        >
+          <svg viewBox="0 0 24 24" width="14" height="14">
+            <path fill="#EA4335" d="M12 5c1.54 0 2.93.57 4.02 1.5l3.01-3.01C17.2 1.77 14.77 1 12 1 7.42 1 3.53 3.59 1.63 7.36l3.66 2.84C6.18 7.35 8.84 5 12 5z" />
+            <path fill="#4285F4" d="M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58l3.71 2.88c2.16-2 3.71-4.94 3.71-8.7z" />
+            <path fill="#FBBC05" d="M5.29 14.8c-.24-.72-.38-1.49-.38-2.3s.14-1.58.38-2.3L1.63 7.36C.59 9.44 0 11.66 0 14s.59 4.56 1.63 6.64l3.66-2.84z" />
+            <path fill="#34A853" d="M12 23c3.24 0 5.95-1.08 7.93-2.91l-3.71-2.88c-1.07.72-2.45 1.16-4.22 1.16-3.16 0-5.82-2.35-6.71-5.2L1.63 15.99C3.53 19.41 7.42 23 12 23z" />
+          </svg>
+          <span class="d-none d-sm-inline">Google Cal</span>
+          <span v-if="googleStore.isConnected" class="badge bg-success-subtle text-success p-1 rounded-pill" style="font-size: 0.6rem;">On</span>
+        </button>
+
         <!-- Manage Categories Button -->
         <button class="btn btn-outline-secondary btn-sm" @click="isCategoryModalOpen = true">
           <i class="bi bi-tags me-1"></i>
@@ -37,6 +53,9 @@
         </button>
       </div>
     </div>
+
+    <!-- Permission Banner -->
+    <NotificationBanner />
 
     <!-- KPI Summary Strip -->
     <div class="row g-3 mb-3">
@@ -300,6 +319,11 @@
       @delete="handleDeleteCategory"
     />
 
+    <GoogleCalendarModal
+      :is-open="isGoogleModalOpen"
+      @close="isGoogleModalOpen = false"
+    />
+
     <!-- Mobile Floating Action Button (FAB) -->
     <button class="scheduler-fab d-md-none shadow-lg" @click="openNewTaskModal()">
       <i class="bi bi-plus-lg"></i>
@@ -325,16 +349,21 @@ import TaskCard from '../components/scheduler/TaskCard.vue';
 import TaskFormModal from '../components/scheduler/TaskFormModal.vue';
 import TaskDetailModal from '../components/scheduler/TaskDetailModal.vue';
 import CategoryManageModal from '../components/scheduler/CategoryManageModal.vue';
+import GoogleCalendarModal from '../components/scheduler/GoogleCalendarModal.vue';
+import NotificationBanner from '../components/scheduler/NotificationBanner.vue';
+import { useGoogleCalendarStore } from '../stores/googleCalendar';
 
 const taskStore = useSchedulerTaskStore();
 const categoryStore = useSchedulerCategoryStore();
 const memberStore = useMemberStore();
 const authStore = useAuthStore();
+const googleStore = useGoogleCalendarStore();
 
 // Modals State
 const isFormModalOpen = ref(false);
 const isDetailModalOpen = ref(false);
 const isCategoryModalOpen = ref(false);
+const isGoogleModalOpen = ref(false);
 const selectedTask = ref(null);
 const selectedTaskToEdit = ref(null);
 const defaultSlotTime = ref(null);
@@ -365,9 +394,15 @@ onMounted(async () => {
     await memberStore.fetchMembers();
   }
 
+  // Init Google Calendar
+  await googleStore.init();
+
   // Trigger background cloud sync
   if (familyId) {
     schedulerSyncService.triggerSync(familyId);
+    if (googleStore.isConnected && googleStore.autoSyncEnabled) {
+      googleStore.sync(familyId, authStore.user?.id).catch((e) => console.warn('GCal auto-sync error:', e));
+    }
   }
 });
 
@@ -485,6 +520,9 @@ async function handleSaveTask(payload) {
   // Background sync
   if (familyId) {
     schedulerSyncService.triggerSync(familyId);
+    if (googleStore.isConnected && (googleStore.autoSyncEnabled || payload.external_provider === 'google')) {
+      googleStore.sync(familyId, userId).catch((e) => console.warn('GCal sync error:', e));
+    }
   }
 }
 

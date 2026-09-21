@@ -45,8 +45,16 @@
   - [x] Add "Today's Schedule & Chores" widget to `DashboardPage.vue`
   - [x] Add i18n localization in `frontend/src/locales/en.json` and `id.json`
 
-- [x] **7. Phase 7: Verification & Documentation**
+- [x] **7. Phase 7: Google Calendar 2-Way Synchronization**
+  - [x] Port `googleCalendarService.js` (GIS OAuth 2.0, event CRUD, 2-way sync, web export link, .ics export)
+  - [x] Port `googleCalendar.js` Pinia store (account state, calendars, auto-sync, simulator)
+  - [x] Create `GoogleCalendarModal.vue` configuration dialog (OAuth & Client ID setup)
+  - [x] Add Google Calendar toggle in `TaskFormModal.vue` and direct calendar export & badges in `TaskDetailModal.vue`
+  - [x] Add Google Calendar controls in `SchedulerPage.vue` and `SettingsPage.vue`
+  - [x] Add Notification permission banner (`NotificationBanner.vue`) & sound test controls
+  - [x] Add localization strings for Google Calendar in `en.json` and `id.json`
+
+- [x] **8. Phase 8: Verification & Documentation**
   - [x] Run `npm run build` to verify clean build
-  - [x] Verify Dexie offline CRUD and alarm sounds
-  - [x] Create walkthrough artifact `docs/walkthrough_family_scheduler_integration.md`
-  - [x] Update knowledge graph (`graphify update .`)
+  - [x] Test Google Calendar connection & sync workflow
+  - [x] Update walkthrough artifact and knowledge graph

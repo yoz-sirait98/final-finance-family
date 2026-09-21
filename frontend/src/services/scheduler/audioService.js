@@ -18,10 +18,24 @@ class AudioService {
     return this.audioCtx;
   }
 
+  isSoundEnabled() {
+    if (typeof localStorage !== 'undefined') {
+      return localStorage.getItem('yjs_scheduler_sound_enabled') !== 'false';
+    }
+    return true;
+  }
+
+  setSoundEnabled(enabled) {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('yjs_scheduler_sound_enabled', enabled ? 'true' : 'false');
+    }
+  }
+
   /**
    * Plays a single pleasant chime tone
    */
   playChime(frequency = 880, durationMs = 250, gainLevel = 0.3) {
+    if (!this.isSoundEnabled()) return;
     try {
       const ctx = this.getAudioContext();
       if (!ctx) return;

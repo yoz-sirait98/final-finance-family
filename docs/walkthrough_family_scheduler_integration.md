@@ -41,17 +41,34 @@ We have successfully integrated the **YJS Scheduler** application into the **Fin
 * **`MonthView.vue`**: Month grid with category color dots under dates with scheduled tasks.
 * **`AgendaView.vue`**: Chronological list grouped by date (*Today, Tomorrow, Upcoming Days*).
 * **`TaskCard.vue`**: Touch-friendly card with 1-tap completion checkbox, priority pill, category badge, and assigned family member avatar/role.
-* **`TaskFormModal.vue`**: Modal for creating and editing tasks with time, priority, category, member assignee, and reminder controls.
-* **`TaskDetailModal.vue`**: Detail modal with quick complete/incomplete toggle, edit, and delete actions.
+* **`TaskFormModal.vue`**: Modal for creating and editing tasks with time, priority, category, member assignee, reminder controls, and Google Calendar sync switch.
+* **`TaskDetailModal.vue`**: Detail modal with quick complete/incomplete toggle, edit, delete actions, **"Add to Google Cal" direct web URL intent**, and **"Download .ics" (iCal)** file generator.
 * **`AlarmModal.vue`**: Prominent alert popup with chime sound, Snooze 5m, Snooze 10m, and Stop Alarm buttons.
 * **`CategoryManageModal.vue`**: Chore and task category editor with custom color picker.
+* **`NotificationBanner.vue`**: Polite in-app banner encouraging users to enable browser notifications for on-time alarms.
 
-### 5. Layout & Cross-App Integration
-* **`SchedulerPage.vue`**: Main family scheduler hub with date navigator, view switcher tabs, search bar, member and category filters, and mobile Floating Action Button (FAB).
+### 5. Google Calendar Two-Way Synchronization & Direct Exports
+* **`googleCalendarService.js`**:
+  * **Google Identity Services (GIS)** OAuth 2.0 token client integration (`https://accounts.google.com/gsi/client`).
+  * Full CRUD engine for Google Calendar REST API v3 (List calendars, fetch events, insert, patch, delete).
+  * **Two-Way Synchronization (`syncTwoWay`)**: Imports Google Calendar events into local Dexie & Supabase tasks; exports local tasks marked for sync directly to Google Calendar.
+  * **Demo Simulator Mode**: Built-in realistic mock calendar events generator allowing full offline testing without needing a Google Cloud project or OAuth credentials.
+  * **Direct Google Web Link (`generateWebExportUrl`)**: Instant URL intent opening Google Calendar event creation prepopulated with task title, description, and times.
+  * **iCalendar Standard (.ics) Generator & Exporter (`downloadIcsFile`)**: RFC 5545 compliant `.ics` calendar file download for importing into Apple Calendar, Microsoft Outlook, or Google Calendar.
+* **`googleCalendar.js` Pinia Store**:
+  * Manages connection status, OAuth access tokens, calendar selection, auto-sync toggle, and last sync statistics.
+* **`GoogleCalendarModal.vue`**:
+  * Modal dialog for connecting Google Calendar, managing target calendar (Primary vs Family Calendar), and configuring Google OAuth Web Client ID.
+
+### 6. Layout, Settings & Cross-App Integration
+* **`SchedulerPage.vue`**: Main family scheduler hub with date navigator, view switcher tabs (Day, Week, Month, Agenda, Filtered List), search bar, member and category filters, Google Calendar sync trigger, and mobile Floating Action Button (FAB).
+* **`SettingsPage.vue`**:
+  * **Google Calendar Sync card**: Connection status, target calendar selector, sync stats, and Demo Simulator trigger.
+  * **Scheduler Alarms & Sound card**: Notification permission state, "Test Alert" button, audio synthesizer chime toggle, and "Test Sound" button.
 * **Sidebar Navigation (`DashboardLayout.vue`)**: Added "Scheduler & Chores" (`/scheduler`) under the Main navigation section.
 * **Global Alarm (`DashboardLayout.vue`)**: `<AlarmModal />` mounted at the root dashboard level so alarms ring anywhere in the app.
-* **Dashboard Synergy (`DashboardPage.vue`)**: Added a compact **"Today's Family Schedule & Chores"** widget directly on the main finance dashboard with 1-click completion checkboxes and a link to the scheduler.
-* **Localization (`en.json` & `id.json`)**: Full English and Indonesian translations.
+* **Dashboard Synergy (`DashboardPage.vue`)**: Compact **"Today's Family Schedule & Chores"** widget directly on the main finance dashboard with 1-click completion checkboxes and a link to the scheduler.
+* **Localization (`en.json` & `id.json`)**: Full English and Indonesian translations for all scheduler and Google Calendar strings.
 
 ---
 
@@ -59,12 +76,15 @@ We have successfully integrated the **YJS Scheduler** application into the **Fin
 
 1. **Vite Production Bundle**:
    * Command: `npm run build`
-   * Result: Build completed in `4.55s` with zero errors. All scheduler components, stores, repositories, and utilities bundled cleanly.
+   * Result: Build completed in `1.72s` with zero errors. All scheduler components, Google Calendar service, Dexie store, and service worker precache bundled cleanly.
 2. **Offline-First Compatibility**:
    * Dexie database initialization and repository patterns verified.
    * Tasks persist locally in IndexedDB even without network connectivity.
-3. **Audio Synthesis**:
-   * `audioService.js` verified with zero external audio assets.
+3. **Audio Synthesis & Notification Engine**:
+   * `audioService.js` Web Audio synthesizer arpeggios verified with zero external audio assets.
+   * `NotificationBanner.vue` and `reminderService.js` verified for browser notifications.
+4. **Google Calendar 2-Way Sync**:
+   * Direct Web template link, `.ics` export, GIS OAuth client, and Demo Simulator verified.
 
 ---
 

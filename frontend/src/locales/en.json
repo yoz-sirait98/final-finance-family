@@ -82,7 +82,14 @@
     "allDay": "All Day",
     "today": "Today",
     "tomorrow": "Tomorrow",
-    "yesterday": "Yesterday"
+    "yesterday": "Yesterday",
+    "googleCalendar": "Google Calendar",
+    "connectGoogleCalendar": "Connect Google Calendar",
+    "enableRemindersTitle": "Enable Task Reminders & Alarms",
+    "enableRemindersDesc": "Allow browser notifications so you never miss family events, chores, and scheduled tasks.",
+    "addToGoogle": "Add to Google Cal",
+    "downloadIcs": "Download .ics",
+    "syncGoogle": "Sync with Google Calendar"
   },
   "auth": {
     "login": {

@@ -198,6 +198,124 @@
           </div>
         </div>
 
+        <!-- Google Calendar Integration -->
+        <div id="tour-settings-google-calendar" class="stat-card mb-4">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <h6 class="fw-bold mb-0">
+              <i class="bi bi-google me-2 text-danger"></i>Google Calendar Sync
+            </h6>
+            <span class="badge" :class="googleStore.isConnected ? 'bg-success' : 'bg-secondary'">
+              {{ googleStore.isConnected ? 'Connected' : 'Not Connected' }}
+            </span>
+          </div>
+
+          <p class="text-muted small mb-3">
+            Synchronize family tasks, chores, and events with your Google Calendar account.
+          </p>
+
+          <div v-if="!googleStore.isConnected" class="d-flex gap-2 flex-wrap">
+            <button class="btn btn-primary btn-sm fw-bold shadow-sm" @click="isGoogleModalOpen = true">
+              <i class="bi bi-link-45deg me-1"></i> Connect Google Calendar
+            </button>
+            <button class="btn btn-outline-secondary btn-sm" @click="handleEnableGoogleMock">
+              <i class="bi bi-lightning-charge text-warning me-1"></i> Try Demo Simulator
+            </button>
+          </div>
+
+          <div v-else class="d-flex flex-column gap-2">
+            <div class="d-flex align-items-center justify-content-between p-2 rounded-2 border" style="background: var(--card-bg);">
+              <div class="d-flex align-items-center gap-2">
+                <img v-if="googleStore.account?.picture" :src="googleStore.account.picture" class="rounded-circle" width="28" height="28" alt="Avatar" />
+                <span class="small fw-semibold">{{ googleStore.account?.name }} ({{ googleStore.account?.email }})</span>
+              </div>
+              <button class="btn btn-sm btn-outline-danger p-1 px-2" @click="googleStore.disconnect">
+                Disconnect
+              </button>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mt-1">
+              <button class="btn btn-outline-primary btn-sm" @click="isGoogleModalOpen = true">
+                <i class="bi bi-gear me-1"></i> Calendar Settings
+              </button>
+              <button class="btn btn-primary btn-sm fw-bold" :disabled="googleStore.isSyncing" @click="triggerGoogleSync">
+                <i class="bi bi-arrow-repeat me-1" :class="{ 'spin-animation': googleStore.isSyncing }"></i>
+                Sync Now
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scheduler Notifications & Sound Settings -->
+        <div id="tour-settings-scheduler-alarms" class="stat-card mb-4">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <h6 class="fw-bold mb-0">
+              <i class="bi bi-bell-fill me-2 text-primary"></i>Scheduler Alarms & Sound
+            </h6>
+            <span
+              class="badge"
+              :class="schedulerNotifPermission === 'granted' ? 'bg-success' : 'bg-warning text-dark'"
+            >
+              {{ schedulerNotifPermission === 'granted' ? 'Alerts Enabled' : 'Alerts ' + schedulerNotifPermission }}
+            </span>
+          </div>
+
+          <p class="text-muted small mb-3">
+            Manage browser alerts, sound chimes, and reminders for scheduled family tasks and chores.
+          </p>
+
+          <div class="d-flex flex-column gap-3">
+            <!-- Browser Permission Row -->
+            <div class="d-flex align-items-center justify-content-between p-2 rounded-2 border" style="background: var(--card-bg);">
+              <div>
+                <span class="small fw-bold d-block">Browser Alerts</span>
+                <span class="x-small text-muted">Permission: {{ schedulerNotifPermission }}</span>
+              </div>
+              <div class="d-flex gap-2">
+                <button
+                  v-if="schedulerNotifPermission !== 'granted'"
+                  class="btn btn-primary btn-sm fw-bold"
+                  @click="handleRequestNotifPermission"
+                >
+                  Enable Alerts
+                </button>
+                <button
+                  v-else
+                  class="btn btn-outline-secondary btn-sm"
+                  @click="handleTestNotif"
+                >
+                  <i class="bi bi-bell me-1"></i> Test Alert
+                </button>
+              </div>
+            </div>
+
+            <!-- Audio Chime Row -->
+            <div class="d-flex align-items-center justify-content-between p-2 rounded-2 border" style="background: var(--card-bg);">
+              <div>
+                <span class="small fw-bold d-block">Alarm Audio Chime</span>
+                <span class="x-small text-muted">Synthesizer arpeggio when reminders trigger</span>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <button
+                  class="btn btn-sm btn-outline-secondary"
+                  @click="handleTestAudio"
+                  title="Test Sound"
+                >
+                  <i class="bi bi-volume-up me-1"></i> Test Sound
+                </button>
+                <div class="form-check form-switch mb-0">
+                  <input
+                    v-model="isSchedulerSoundEnabled"
+                    class="form-check-input"
+                    type="checkbox"
+                    id="schedulerSoundSwitch"
+                    @change="handleSoundToggle"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Change Password -->
         <div id="tour-settings-password" class="stat-card h-100">
           <h6 class="fw-bold mb-3"><i class="bi bi-lock me-2"></i>{{ $t('settings.changePassword') }}</h6>
@@ -224,6 +342,8 @@
         </div>
       </div>
     </div>
+
+    <GoogleCalendarModal :is-open="isGoogleModalOpen" @close="isGoogleModalOpen = false" />
   </div>
 </template>
 
@@ -240,9 +360,55 @@ import { useLocaleStore } from '../stores/locale';
 import { useToastStore } from '../stores/toast';
 import { authService } from '../services/authService';
 import PushNotificationToggle from '../components/PushNotificationToggle.vue';
+import GoogleCalendarModal from '../components/scheduler/GoogleCalendarModal.vue';
+import { useGoogleCalendarStore } from '../stores/googleCalendar';
+import { reminderService } from '../services/scheduler/reminderService';
+import { audioService } from '../services/scheduler/audioService';
 import { supabase } from '../lib/supabase';
 
 const authStore = useAuthStore();
+const googleStore = useGoogleCalendarStore();
+const isGoogleModalOpen = ref(false);
+
+const schedulerNotifPermission = ref(reminderService.getNotificationPermission());
+const isSchedulerSoundEnabled = ref(audioService.isSoundEnabled());
+
+async function handleRequestNotifPermission() {
+  const res = await reminderService.requestNotificationPermission();
+  schedulerNotifPermission.value = res;
+  if (res === 'granted') {
+    reminderService.showNotification('YJS Scheduler Alerts', {
+      body: 'Browser notifications are now enabled! 🎉',
+    });
+  }
+}
+
+function handleTestNotif() {
+  reminderService.showNotification('YJS Scheduler Alert Test', {
+    body: 'Browser notifications are working perfectly! 🎉',
+  });
+}
+
+function handleTestAudio() {
+  audioService.playConfirmSound();
+}
+
+function handleSoundToggle() {
+  audioService.setSoundEnabled(isSchedulerSoundEnabled.value);
+}
+
+function handleEnableGoogleMock() {
+  googleStore.connectMock();
+  triggerGoogleSync();
+}
+
+async function triggerGoogleSync() {
+  try {
+    await googleStore.sync(authStore.familyId, authStore.user?.id);
+  } catch (e) {
+    console.warn('Google Calendar sync error:', e);
+  }
+}
 const localeStore = useLocaleStore();
 const toast = useToastStore();
 
