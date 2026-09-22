@@ -170,20 +170,20 @@
             <div class="mb-3">
               <button
                 type="button"
-                class="btn btn-link btn-sm p-0 text-decoration-none small text-primary fw-medium"
+                class="btn-toggle-steps small fw-semibold d-inline-flex align-items-center gap-1"
                 @click="recipe._showSteps = !recipe._showSteps"
               >
                 <i class="bi" :class="recipe._showSteps ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
-                {{ recipe._showSteps ? (isId ? 'Sembunyikan Cara Masak' : 'Hide Instructions') : (isId ? 'Lihat Langkah Memasak' : 'View Cooking Steps') }}
+                <span>{{ recipe._showSteps ? (isId ? 'Sembunyikan Cara Masak' : 'Hide Instructions') : (isId ? 'Lihat Langkah Memasak' : 'View Cooking Steps') }}</span>
               </button>
 
-              <div v-if="recipe._showSteps" class="steps-box p-2 mt-2 rounded bg-body-tertiary small">
-                <ol class="mb-0 ps-3">
-                  <li v-for="(step, sIdx) in recipe.instructions" :key="sIdx" class="mb-1">
+              <div v-if="recipe._showSteps" class="steps-box p-3 mt-2 rounded-3 small">
+                <ol class="mb-0 ps-3 steps-list">
+                  <li v-for="(step, sIdx) in recipe.instructions" :key="sIdx" class="mb-2 step-item-text">
                     {{ step }}
                   </li>
                 </ol>
-                <div v-if="recipe.tips" class="mt-2 p-2 bg-info-subtle text-info-emphasis rounded border border-info-subtle">
+                <div v-if="recipe.tips" class="mt-3 p-2 rounded-3 recipe-tips-box small">
                   <i class="bi bi-lightbulb-fill me-1"></i><strong>Tips:</strong> {{ recipe.tips }}
                 </div>
               </div>
@@ -445,8 +445,62 @@ function close() {
   font-weight: 500;
 }
 
+.btn-toggle-steps {
+  background: transparent;
+  border: none;
+  color: var(--primary-color, #667eea);
+  padding: 4px 0;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.btn-toggle-steps:hover {
+  color: var(--primary-hover, #764ba2);
+  text-decoration: underline;
+}
+
+[data-theme="dark"] .btn-toggle-steps {
+  color: #a78bfa !important;
+}
+
+[data-theme="dark"] .btn-toggle-steps:hover {
+  color: #c4b5fd !important;
+}
+
 .steps-box {
+  background: var(--input-bg);
   border: 1px solid var(--card-border);
-  line-height: 1.5;
+  color: var(--text-color) !important;
+  line-height: 1.6;
+}
+
+.steps-list {
+  color: var(--text-color) !important;
+}
+
+.step-item-text {
+  color: var(--text-color) !important;
+}
+
+.step-item-text::marker {
+  color: #667eea;
+  font-weight: 700;
+}
+
+[data-theme="dark"] .step-item-text::marker {
+  color: #a78bfa;
+}
+
+.recipe-tips-box {
+  background: rgba(14, 165, 233, 0.1);
+  border: 1px solid rgba(14, 165, 233, 0.25);
+  color: #0369a1;
+}
+
+[data-theme="dark"] .recipe-tips-box {
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #7dd3fc !important;
 }
 </style>

@@ -274,10 +274,29 @@ function close() {
 .instructions-box {
   background: var(--input-bg);
   border-color: var(--card-border) !important;
+  color: var(--text-color);
 }
 
 .step-item {
   transition: opacity 0.2s ease;
+}
+
+.step-text {
+  color: var(--text-color);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+[data-theme="dark"] .step-text:not(.text-muted) {
+  color: var(--text-color) !important;
+}
+
+[data-theme="dark"] .step-text.text-muted {
+  color: var(--text-muted) !important;
+}
+
+[data-theme="dark"] .ingredients-box .form-check-label:not(.text-muted) {
+  color: var(--text-color) !important;
 }
 
 .step-badge {

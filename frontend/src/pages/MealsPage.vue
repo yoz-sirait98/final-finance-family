@@ -776,10 +776,11 @@
             </button>
             <button
               type="button"
-              class="btn btn-sm btn-link text-decoration-none"
+              class="btn btn-sm btn-link text-decoration-none text-primary fw-semibold d-inline-flex align-items-center gap-1"
               @click="openRecipeDetail(recipe)"
             >
-              {{ isId ? 'Detail Resep' : 'View' }} &rarr;
+              <span>{{ isId ? 'Detail Resep' : 'View Recipe' }}</span>
+              <i class="bi bi-arrow-right"></i>
             </button>
           </div>
         </div>
