@@ -312,16 +312,10 @@ async function generateRecipes() {
       _saved: false
     }));
 
-    toastStore.show({
-      type: 'success',
-      message: isId.value ? 'Resep berhasil diracik oleh Chef AI!' : 'Recipes successfully crafted by Chef AI!'
-    });
+    toastStore.success(isId.value ? 'Resep berhasil diracik oleh Chef AI!' : 'Recipes successfully crafted by Chef AI!');
   } catch (err) {
     console.error('Failed to generate recipes:', err);
-    toastStore.show({
-      type: 'error',
-      message: isId.value ? 'Gagal meracik resep: ' + (err.message || 'Error') : 'Failed to generate recipes'
-    });
+    toastStore.error(isId.value ? 'Gagal meracik resep: ' + (err.message || 'Error') : 'Failed to generate recipes');
   } finally {
     generating.value = false;
   }

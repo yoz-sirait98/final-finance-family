@@ -200,21 +200,15 @@ async function handleSubmit() {
     const itemsToExport = selectedItems.value.filter(i => i._selected);
     await mealPlanService.exportMissingIngredientsToShopping(itemsToExport, targetPlanId);
 
-    toastStore.show({
-      type: 'success',
-      message: isId.value
-        ? `Berhasil menambahkan ${itemsToExport.length} bahan ke daftar belanja!`
-        : `Successfully added ${itemsToExport.length} items to shopping plan!`
-    });
+    toastStore.success(isId.value
+      ? `Berhasil menambahkan ${itemsToExport.length} bahan ke daftar belanja!`
+      : `Successfully added ${itemsToExport.length} items to shopping plan!`);
 
     emit('success');
     close();
   } catch (err) {
     console.error('Failed to export ingredients:', err);
-    toastStore.show({
-      type: 'error',
-      message: isId.value ? 'Gagal mengirim bahan ke belanja' : 'Failed to export items'
-    });
+    toastStore.error(isId.value ? 'Gagal mengirim bahan ke belanja' : 'Failed to export items');
   } finally {
     saving.value = false;
   }

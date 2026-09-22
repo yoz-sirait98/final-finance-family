@@ -7,8 +7,18 @@ export const useToastStore = defineStore('toast', () => {
 
   function show(message, type = 'success', duration = 3000) {
     const id = nextId++;
-    toasts.value.push({ id, message, type });
-    setTimeout(() => remove(id), duration);
+    let msgText = message;
+    let msgType = type;
+    let msgDuration = duration;
+
+    if (typeof message === 'object' && message !== null) {
+      msgText = message.message || message.text || '';
+      msgType = message.type || type;
+      msgDuration = message.duration || duration;
+    }
+
+    toasts.value.push({ id, message: msgText, type: msgType });
+    setTimeout(() => remove(id), msgDuration);
   }
 
   function remove(id) {

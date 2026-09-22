@@ -947,12 +947,9 @@ function goToCurrentWeek() {
 async function copyWeekNext() {
   try {
     await mealPlanStore.copyWeekToNext();
-    toastStore.show({
-      type: 'success',
-      message: isId.value ? 'Menu berhasil disalin ke minggu depan!' : 'Meal plan copied to next week!'
-    });
+    toastStore.success(isId.value ? 'Menu berhasil disalin ke minggu depan!' : 'Meal plan copied to next week!');
   } catch (err) {
-    toastStore.show({ type: 'error', message: err.message || 'Error copying week' });
+    toastStore.error(err.message || 'Error copying week');
   }
 }
 
@@ -976,14 +973,14 @@ async function handleSaveMealPlan({ id, data }) {
   try {
     if (id) {
       await mealPlanStore.updateMealPlan(id, data);
-      toastStore.show({ type: 'success', message: isId.value ? 'Menu berhasil diperbarui!' : 'Meal updated!' });
+      toastStore.success(isId.value ? 'Menu berhasil diperbarui!' : 'Meal updated!');
     } else {
       await mealPlanStore.addMealPlan(data);
-      toastStore.show({ type: 'success', message: isId.value ? 'Menu berhasil dijadwalkan!' : 'Meal scheduled!' });
+      toastStore.success(isId.value ? 'Menu berhasil dijadwalkan!' : 'Meal scheduled!');
     }
     showMealPlanModal.value = false;
   } catch (err) {
-    toastStore.show({ type: 'error', message: err.message || 'Error saving meal' });
+    toastStore.error(err.message || 'Error saving meal');
   }
 }
 
@@ -991,7 +988,7 @@ async function toggleMealCompleted(meal) {
   try {
     await mealPlanStore.toggleCompleted(meal.id, !meal.is_completed);
   } catch (err) {
-    toastStore.show({ type: 'error', message: 'Failed to update meal status' });
+    toastStore.error('Failed to update meal status');
   }
 }
 
@@ -1021,14 +1018,14 @@ async function handleSavePantryItem({ id, data }) {
   try {
     if (id) {
       await pantryStore.updateItem(id, data);
-      toastStore.show({ type: 'success', message: isId.value ? 'Bahan dapur diperbarui!' : 'Item updated!' });
+      toastStore.success(isId.value ? 'Bahan dapur diperbarui!' : 'Item updated!');
     } else {
       await pantryStore.addItem(data);
-      toastStore.show({ type: 'success', message: isId.value ? 'Bahan dapur berhasil ditambahkan!' : 'Item added!' });
+      toastStore.success(isId.value ? 'Bahan dapur berhasil ditambahkan!' : 'Item added!');
     }
     showPantryModal.value = false;
   } catch (err) {
-    toastStore.show({ type: 'error', message: err.message || 'Error saving item' });
+    toastStore.error(err.message || 'Error saving item');
   }
 }
 
@@ -1036,7 +1033,7 @@ async function adjustQty(item, delta) {
   try {
     await pantryStore.adjustQuantity(item.id, delta);
   } catch (err) {
-    toastStore.show({ type: 'error', message: 'Failed to update quantity' });
+    toastStore.error('Failed to update quantity');
   }
 }
 
@@ -1086,12 +1083,9 @@ async function handleAiSaveRecipe(recipe) {
     };
     await recipeService.create(payload);
     await loadRecipes();
-    toastStore.show({
-      type: 'success',
-      message: isId.value ? 'Resep berhasil disimpan ke Buku Resep!' : 'Recipe saved to Recipe Box!'
-    });
+    toastStore.success(isId.value ? 'Resep berhasil disimpan ke Buku Resep!' : 'Recipe saved to Recipe Box!');
   } catch (err) {
-    toastStore.show({ type: 'error', message: err.message || 'Failed to save recipe' });
+    toastStore.error(err.message || 'Failed to save recipe');
   }
 }
 
@@ -1111,7 +1105,7 @@ async function toggleRecipeFav(recipe) {
     recipe.is_favorite = !recipe.is_favorite;
     await recipeService.toggleFavorite(recipe.id, recipe.is_favorite);
   } catch (err) {
-    toastStore.show({ type: 'error', message: 'Failed to update favorite' });
+    toastStore.error('Failed to update favorite');
   }
 }
 
@@ -1157,14 +1151,14 @@ async function executeDelete() {
   try {
     if (itemToDelete.value.type === 'pantry') {
       await pantryStore.deleteItem(itemToDelete.value.id);
-      toastStore.show({ type: 'success', message: isId.value ? 'Bahan dapur berhasil dihapus' : 'Item deleted' });
+      toastStore.success(isId.value ? 'Bahan dapur berhasil dihapus' : 'Item deleted');
     } else if (itemToDelete.value.type === 'meal') {
       await mealPlanStore.deleteMealPlan(itemToDelete.value.id);
-      toastStore.show({ type: 'success', message: isId.value ? 'Menu berhasil dihapus' : 'Meal deleted' });
+      toastStore.success(isId.value ? 'Menu berhasil dihapus' : 'Meal deleted');
     }
     showDeleteModal.value = false;
   } catch (err) {
-    toastStore.show({ type: 'error', message: err.message || 'Error deleting item' });
+    toastStore.error(err.message || 'Error deleting item');
   }
 }
 
