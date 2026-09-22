@@ -96,3 +96,37 @@ Create the family-scoped scheduler tables:
 
 ### Mobile View Style for Transactions Page (August 2026)
 - Dedicated touch-optimized mobile view (`d-md-none`) with mobile KPI banner, compact search chips, grouped date feed, and card touch drawers.
+
+---
+
+## Smart Meal Planner & Pantry Management (September 2026)
+
+### Background & Architecture Overview
+An all-in-one family life platform needs a dedicated solution to solve daily meal decision fatigue (*"Mau masak apa hari ini?"*), food waste in the fridge, and grocery shopping disconnects.
+
+### Proposed Changes
+
+#### Phase 1: Database Migration
+- `supabase/migrations/000036_smart_meal_planner_and_pantry.sql`:
+  - `pantry_items`: multi-zone inventory (Fridge, Freezer, Pantry) with expiry tracking, status, and units.
+  - `meal_plans`: 7-day visual meal matrix (Breakfast, Lunch, Dinner, Snack) with recipe details and member cook assignment.
+  - `recipes`: family favorite recipe box and AI-generated recipes.
+  - RLS policies scoped to `public.get_auth_family_id()`.
+
+#### Phase 2: Service & Store Layer
+- Services: `pantryService.js`, `mealPlanService.js`, `recipeService.js`.
+- Pinia stores: `pantry.js`, `mealPlan.js`.
+
+#### Phase 3: UI Components & Main Hub
+- Components: `PantryItemModal.vue`, `MealPlanModal.vue`, `AiRecipeModal.vue`, `RecipeDetailModal.vue`.
+- Page: `frontend/src/pages/MealsPage.vue` with 3 core tabs:
+  1. *Weekly Meal Board* (Jadwal Menu Mingguan)
+  2. *Pantry & Fridge Inventory* (Stok Kulkas & Dapur)
+  3. *Family Recipe Box* (Buku Resep)
+- Expiration alert banner (<3 days = warning, expired = alert) with 1-click AI cooking prompt.
+- 1-click export of missing meal ingredients to active Shopping Lists (`shopping_plans`).
+
+#### Phase 4: Navigation & Cross-App Synergy
+- Register `/meals` in `router/index.js` and add sidebar navigation item in `DashboardLayout.vue`.
+- Add compact "Today's Menu & Expiring Groceries" widget to `DashboardPage.vue`.
+- Localization in `en.json` and `id.json`.

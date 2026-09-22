@@ -92,60 +92,135 @@
       </div>
     </div>
 
-    <!-- Today's Family Tasks & Schedule Widget -->
+    <!-- Today's Family Tasks & Meal Planner Dual Widgets -->
     <div class="row g-3 mb-4">
-      <div class="col-12">
-        <div class="stat-card p-3">
-          <div class="d-flex align-items-center justify-content-between mb-2 flex-wrap gap-2">
-            <div class="d-flex align-items-center gap-2">
-              <i class="bi bi-calendar-check text-primary fs-5"></i>
-              <h6 class="fw-bold mb-0">Today's Family Schedule & Chores</h6>
-              <span class="badge bg-primary-subtle text-primary rounded-pill">
-                {{ todayTasks.length }}
-              </span>
-            </div>
-            <router-link to="/scheduler" class="btn btn-sm btn-outline-primary">
-              Open Scheduler <i class="bi bi-arrow-right ms-1"></i>
-            </router-link>
-          </div>
-
-          <div v-if="todayTasks.length === 0" class="text-muted small py-1">
-            <i class="bi bi-check2-circle text-success me-1"></i>
-            No tasks scheduled for today! Enjoy your day or add chores in the Scheduler.
-          </div>
-
-          <div v-else class="d-flex flex-column gap-2 mt-2">
-            <div
-              v-for="task in todayTasks.slice(0, 3)"
-              :key="task.id"
-              class="d-flex align-items-center justify-content-between p-2 rounded-2 border"
-              style="background: var(--card-bg);"
-            >
+      <!-- Col 1: Today's Schedule & Chores -->
+      <div class="col-12 col-lg-6">
+        <div class="stat-card p-3 h-100 d-flex flex-column justify-content-between">
+          <div>
+            <div class="d-flex align-items-center justify-content-between mb-2 flex-wrap gap-2">
               <div class="d-flex align-items-center gap-2">
-                <input
-                  type="checkbox"
-                  class="form-check-input mt-0"
-                  :checked="task.status === 'completed'"
-                  @change="toggleTodayTask(task)"
-                />
-                <span
-                  class="small fw-semibold"
-                  :class="{ 'text-decoration-line-through text-muted': task.status === 'completed' }"
-                >
-                  {{ task.title }}
+                <i class="bi bi-calendar-check text-primary fs-5"></i>
+                <h6 class="fw-bold mb-0">{{ localeStore.currentLocale === 'id' ? 'Jadwal & Tugas Hari Ini' : "Today's Schedule & Chores" }}</h6>
+                <span class="badge bg-primary-subtle text-primary rounded-pill">
+                  {{ todayTasks.length }}
                 </span>
               </div>
+              <router-link to="/scheduler" class="btn btn-sm btn-outline-primary">
+                {{ localeStore.currentLocale === 'id' ? 'Buka Jadwal' : 'Open Scheduler' }} <i class="bi bi-arrow-right ms-1"></i>
+              </router-link>
+            </div>
+
+            <div v-if="todayTasks.length === 0" class="text-muted small py-2">
+              <i class="bi bi-check2-circle text-success me-1"></i>
+              {{ localeStore.currentLocale === 'id' ? 'Tidak ada tugas terjadwal hari ini! Nikmati harimu.' : 'No tasks scheduled for today! Enjoy your day.' }}
+            </div>
+
+            <div v-else class="d-flex flex-column gap-2 mt-2">
+              <div
+                v-for="task in todayTasks.slice(0, 3)"
+                :key="task.id"
+                class="d-flex align-items-center justify-content-between p-2 rounded-2 border"
+                style="background: var(--card-bg);"
+              >
+                <div class="d-flex align-items-center gap-2 text-truncate">
+                  <input
+                    type="checkbox"
+                    class="form-check-input mt-0"
+                    :checked="task.status === 'completed'"
+                    @change="toggleTodayTask(task)"
+                  />
+                  <span
+                    class="small fw-semibold text-truncate"
+                    :class="{ 'text-decoration-line-through text-muted': task.status === 'completed' }"
+                  >
+                    {{ task.title }}
+                  </span>
+                </div>
+                <div class="d-flex align-items-center gap-1 flex-shrink-0">
+                  <span v-if="task.start_time" class="badge bg-secondary-subtle text-secondary small">
+                    {{ task.start_time }}
+                  </span>
+                  <span
+                    v-if="task.category"
+                    class="badge small"
+                    :style="{ backgroundColor: task.category.color }"
+                  >
+                    {{ task.category.name }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Col 2: Today's Menu & Expiring Groceries -->
+      <div class="col-12 col-lg-6">
+        <div class="stat-card p-3 h-100 d-flex flex-column justify-content-between">
+          <div>
+            <div class="d-flex align-items-center justify-content-between mb-2 flex-wrap gap-2">
               <div class="d-flex align-items-center gap-2">
-                <span v-if="task.start_time" class="badge bg-secondary-subtle text-secondary small">
-                  {{ task.start_time }}
+                <i class="bi bi-egg-fried text-warning fs-5"></i>
+                <h6 class="fw-bold mb-0">{{ localeStore.currentLocale === 'id' ? 'Menu Hari Ini & Dapur' : "Today's Menu & Pantry" }}</h6>
+                <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill">
+                  {{ mealPlanStore.todayMeals.length }} {{ localeStore.currentLocale === 'id' ? 'menu' : 'meals' }}
                 </span>
-                <span
-                  v-if="task.category"
-                  class="badge small"
-                  :style="{ backgroundColor: task.category.color }"
-                >
-                  {{ task.category.name }}
-                </span>
+              </div>
+              <router-link to="/meals" class="btn btn-sm btn-outline-warning">
+                {{ localeStore.currentLocale === 'id' ? 'Dapur & Menu' : 'Open Meals' }} <i class="bi bi-arrow-right ms-1"></i>
+              </router-link>
+            </div>
+
+            <!-- Expiring Alert Bar -->
+            <div v-if="pantryStore.expiringCount > 0" class="alert alert-warning py-1 px-2 mb-2 d-flex align-items-center justify-content-between gap-2 small">
+              <span class="text-truncate">
+                <i class="bi bi-alarm-fill text-warning me-1"></i>
+                <strong>{{ pantryStore.expiringCount }}</strong> {{ localeStore.currentLocale === 'id' ? 'bahan perlu segera dimasak!' : 'items expiring soon!' }}
+              </span>
+              <router-link to="/meals" class="btn btn-xs btn-dark py-0 px-2 small rounded-pill flex-shrink-0">
+                {{ localeStore.currentLocale === 'id' ? 'Cek Stok' : 'Check' }}
+              </router-link>
+            </div>
+
+            <!-- Today's Planned Meals List -->
+            <div v-if="mealPlanStore.todayMeals.length === 0" class="text-muted small py-2">
+              <i class="bi bi-cup-hot text-muted me-1"></i>
+              {{ localeStore.currentLocale === 'id' ? 'Belum ada menu makan yang dijadwalkan hari ini.' : 'No meals planned for today.' }}
+              <router-link to="/meals" class="text-primary text-decoration-none ms-1">
+                + {{ localeStore.currentLocale === 'id' ? 'Jadwalkan Menu' : 'Plan Meal' }}
+              </router-link>
+            </div>
+
+            <div v-else class="d-flex flex-column gap-2 mt-2">
+              <div
+                v-for="meal in mealPlanStore.todayMeals.slice(0, 3)"
+                :key="meal.id"
+                class="d-flex align-items-center justify-content-between p-2 rounded-2 border"
+                style="background: var(--card-bg);"
+              >
+                <div class="d-flex align-items-center gap-2 text-truncate">
+                  <input
+                    type="checkbox"
+                    class="form-check-input mt-0"
+                    :checked="meal.is_completed"
+                    @change="toggleTodayMeal(meal)"
+                  />
+                  <span
+                    class="small fw-semibold text-truncate"
+                    :class="{ 'text-decoration-line-through text-muted': meal.is_completed }"
+                  >
+                    {{ meal.recipe_title }}
+                  </span>
+                </div>
+                <div class="d-flex align-items-center gap-1 flex-shrink-0">
+                  <span class="badge rounded-pill bg-body-secondary text-body-secondary small text-capitalize">
+                    {{ meal.meal_type }}
+                  </span>
+                  <span v-if="meal.assigned_member" class="badge bg-danger-subtle text-danger small">
+                    {{ meal.assigned_member.name }}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -218,12 +293,16 @@ import { dashboardTourSteps } from '../tours/dashboardTour';
 import { useLocaleStore } from '../stores/locale';
 import { useSchedulerTaskStore } from '../stores/schedulerTask';
 import { useAuthStore } from '../stores/auth';
+import { useMealPlanStore } from '../stores/mealPlan';
+import { usePantryStore } from '../stores/pantry';
 import { getTodayDateString } from '../utils/schedulerDate';
 
 const now = new Date();
 const showInsights = ref(false);
 const localeStore = useLocaleStore();
 const schedulerTaskStore = useSchedulerTaskStore();
+const mealPlanStore = useMealPlanStore();
+const pantryStore = usePantryStore();
 const authStore = useAuthStore();
 
 const todayTasks = computed(() => {
@@ -233,6 +312,10 @@ const todayTasks = computed(() => {
 
 async function toggleTodayTask(task) {
   await schedulerTaskStore.toggleStatus(task.id);
+}
+
+async function toggleTodayMeal(meal) {
+  await mealPlanStore.toggleCompleted(meal.id, !meal.is_completed);
 }
 
 // Filter state
@@ -592,6 +675,10 @@ onMounted(() => {
 
   // Load scheduler tasks for family
   schedulerTaskStore.fetchTasks(authStore.familyId);
+
+  // Load today's meals & pantry stock
+  mealPlanStore.fetchCurrentWeek();
+  pantryStore.fetchItems();
 });
 
 onUnmounted(() => {

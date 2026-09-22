@@ -58,3 +58,39 @@
   - [x] Run `npm run build` to verify clean build
   - [x] Test Google Calendar connection & sync workflow
   - [x] Update walkthrough artifact and knowledge graph
+
+---
+
+# Tasks Checklist: Smart Meal Planner & Pantry Inventory System
+
+- [x] **1. Phase 1: Planning & Database Schema (Supabase)**
+  - [x] Create implementation plan & archive previous plan to `scratch/old_plan_2026_09_22.md`
+  - [x] Obtain user approval on implementation plan
+  - [x] Write migration `supabase/migrations/000036_smart_meal_planner_and_pantry.sql` (`pantry_items`, `meal_plans`, `recipes` with RLS)
+
+- [x] **2. Phase 2: Services & State Stores**
+  - [x] Create `pantryService.js` (CRUD, storage zone filters, low stock & expiry querying)
+  - [x] Create `mealPlanService.js` (week planner, meal slot CRUD, export missing ingredients to shopping list)
+  - [x] Create `recipeService.js` (favorites, AI recipe generation from pantry via `aiService`)
+  - [x] Create Pinia stores: `pantry.js` and `mealPlan.js`
+
+- [x] **3. Phase 3: UI Components (`components/meals/`)**
+  - [x] Build `PantryItemModal.vue` (add/edit pantry item with Fridge/Freezer/Pantry zones & expiry picker)
+  - [x] Build `MealPlanModal.vue` (slot modal with date, meal type, cook member, and ingredients)
+  - [x] Build `AiRecipeModal.vue` (*"Masak Apa Dari Kulkas?"* interactive recipe generator)
+  - [x] Build `RecipeDetailModal.vue` (cooking steps, servings, ingredients pantry status)
+  - [x] Build `ExportShoppingModal.vue` (1-click export missing meal ingredients to shopping plan)
+
+- [x] **4. Phase 4: Master Page & Cross-App Integration**
+  - [x] Create `frontend/src/pages/MealsPage.vue` (Weekly Meal Board, Pantry Inventory, Recipe Box, Expiry Alert Ribbon)
+  - [x] Register `/meals` route in `router/index.js`
+  - [x] Add sidebar navigation link in `DashboardLayout.vue`
+  - [x] Add "Today's Menu & Expiring Groceries" dual widget to `DashboardPage.vue`
+  - [x] Add 1-tap restock action in `ShoppingDetailPage.vue` (Shopping -> Pantry synergy)
+  - [x] Add localization strings in `en.json` and `id.json`
+
+- [x] **5. Phase 5: Verification, Walkthrough & Knowledge Graph**
+  - [x] Run `npm run build` to ensure clean build (100% successful bundle)
+  - [x] Execute automated background test suite (`frontend/scripts/test_meals_pure.js` - 5/5 tests passing)
+  - [x] Update knowledge graph (`graphify update . --force`)
+  - [x] Write walkthrough document (`docs/walkthrough_smart_meal_planner_and_pantry.md`)

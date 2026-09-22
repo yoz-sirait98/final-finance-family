@@ -53,6 +53,12 @@
             <span v-if="pendingShoppingCount > 0" class="badge rounded-pill bg-danger ms-auto" style="font-size: 0.65rem;">{{ pendingShoppingCount }}</span>
           </router-link>
         </div>
+        <div class="nav-item">
+          <router-link to="/meals" class="nav-link" @click="closeMobile">
+            <i class="bi bi-egg-fried"></i>
+            <span class="nav-text">{{ $t('nav.meals') || 'Meals & Pantry' }}</span>
+          </router-link>
+        </div>
 
         <span class="sidebar-section-title">{{ $t('nav.management') }}</span>
         <div class="nav-item">

@@ -72,7 +72,8 @@
     "scheduler": "Jadwal & Tugas",
     "iconsgem": "Ikon Gem",
     "shopping": "Belanja",
-    "shoppingdetail": "Daftar Belanja"
+    "shoppingdetail": "Daftar Belanja",
+    "meals": "Dapur & Menu"
   },
   "scheduler": {
     "title": "Jadwal & Tugas Keluarga",
@@ -676,6 +677,24 @@
         "title": "Hapus Riwayat",
         "description": "Hapus percakapan saat ini untuk memulai obrolan baru."
       }
+    },
+    "meals": {
+      "title": "Dapur & Menu Keluarga",
+      "subtitle": "Rencanakan menu makan lezat mingguan, kelola stok kulkas, dan kurangi pemborosan makanan dengan Chef AI.",
+      "weeklyPlanner": "Jadwal Menu Mingguan",
+      "pantryInventory": "Stok Bahan Dapur",
+      "recipeBox": "Buku Resep",
+      "aiChef": "Masak dari Kulkas",
+      "addItem": "Tambah Bahan Dapur",
+      "planMeal": "Jadwalkan Menu",
+      "fridge": "Kulkas",
+      "freezer": "Freezer",
+      "pantry": "Lemari Kering",
+      "expiringSoon": "Segera Kedaluwarsa",
+      "breakfast": "Sarapan",
+      "lunch": "Makan Siang",
+      "dinner": "Makan Malam",
+      "snack": "Camilan / Bekal"
     }
   }
 }

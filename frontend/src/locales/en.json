@@ -72,7 +72,8 @@
     "scheduler": "Scheduler & Chores",
     "iconsgem": "Icons Gem",
     "shopping": "Shopping",
-    "shoppingdetail": "Shopping Detail"
+    "shoppingdetail": "Shopping Detail",
+    "meals": "Meals & Pantry"
   },
   "scheduler": {
     "title": "Family Scheduler & Chores",
@@ -676,6 +677,24 @@
         "title": "Clear History",
         "description": "Wipe the current conversation to start fresh."
       }
+    },
+    "meals": {
+      "title": "Meals & Pantry Hub",
+      "subtitle": "Plan weekly family meals, track fridge freshness, and craft zero-waste recipes with Chef AI.",
+      "weeklyPlanner": "Weekly Meal Plan",
+      "pantryInventory": "Pantry & Fridge",
+      "recipeBox": "Recipe Box",
+      "aiChef": "AI Recipe Chef",
+      "addItem": "Add Pantry Item",
+      "planMeal": "Plan Meal",
+      "fridge": "Fridge",
+      "freezer": "Freezer",
+      "pantry": "Pantry",
+      "expiringSoon": "Expiring Soon",
+      "breakfast": "Breakfast",
+      "lunch": "Lunch",
+      "dinner": "Dinner",
+      "snack": "Snack"
     }
   }
 }

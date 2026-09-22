@@ -87,8 +87,12 @@
           <i class="bi bi-cart-check me-2"></i>{{ localeStore.currentLocale === 'id' ? 'Selesaikan' : 'Complete Plan' }}
         </button>
       </div>
-      <div v-else-if="plan?.status === 'done'" class="d-flex justify-content-end gap-2">
-        <button class="btn btn-dark px-4 rounded-pill shadow-sm" :disabled="isLocking" @click="lockPlan">
+      <div v-else-if="plan?.status === 'done' || plan?.status === 'locked'" class="d-flex justify-content-end gap-2">
+        <button class="btn btn-outline-primary px-4 rounded-pill shadow-sm" :disabled="isRestocking" @click="restockAllToPantry">
+          <span v-if="isRestocking" class="spinner-border spinner-border-sm me-2"></span>
+          <i v-else class="bi bi-box-arrow-in-down me-2"></i>{{ localeStore.currentLocale === 'id' ? 'Masukkan ke Dapur/Kulkas' : 'Restock to Pantry' }}
+        </button>
+        <button v-if="plan?.status === 'done'" class="btn btn-dark px-4 rounded-pill shadow-sm" :disabled="isLocking" @click="lockPlan">
           <span v-if="isLocking" class="spinner-border spinner-border-sm me-2"></span>
           <i v-else class="bi bi-lock me-2"></i>{{ localeStore.currentLocale === 'id' ? 'Kunci Rencana' : 'Lock Plan' }}
         </button>
@@ -214,7 +218,12 @@
             <i class="bi bi-cart-check me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Selesaikan' : 'Complete' }}
           </button>
 
-          <button v-else-if="plan?.status === 'done'" class="btn btn-sm btn-dark rounded-pill px-3 shadow-sm" :disabled="isLocking" @click="lockPlan">
+          <button v-else-if="plan?.status === 'done' || plan?.status === 'locked'" class="btn btn-sm btn-outline-primary rounded-pill px-2 shadow-sm" :disabled="isRestocking" @click="restockAllToPantry" title="Masukkan ke Dapur">
+            <span v-if="isRestocking" class="spinner-border spinner-border-sm"></span>
+            <i v-else class="bi bi-box-arrow-in-down"></i>
+          </button>
+
+          <button v-if="plan?.status === 'done'" class="btn btn-sm btn-dark rounded-pill px-3 shadow-sm" :disabled="isLocking" @click="lockPlan">
             <span v-if="isLocking" class="spinner-border spinner-border-sm me-1"></span>
             <i v-else class="bi bi-lock me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Kunci' : 'Lock' }}
           </button>
@@ -449,6 +458,7 @@ const showChoiceModal = ref(false);
 const selectedChoice = ref('');
 const isMarkingDone = ref(false);
 const isLocking = ref(false);
+const isRestocking = ref(false);
 
 // Receipt Lightbox state
 const showReceiptLightbox = ref(false);
@@ -666,6 +676,30 @@ async function lockPlan() {
     toast.error(localeStore.currentLocale === 'id' ? 'Gagal mengunci rencana: ' + (e.message || '') : 'Failed to lock plan: ' + (e.message || ''));
   } finally {
     isLocking.value = false;
+  }
+}
+
+async function restockAllToPantry() {
+  if (items.value.length === 0) return;
+  isRestocking.value = true;
+  try {
+    const { usePantryStore } = await import('../stores/pantry');
+    const pantryStore = usePantryStore();
+    for (const item of items.value) {
+      await pantryStore.restockFromShopping({
+        name: item.name,
+        category: 'other',
+        qty: 1,
+        unit: 'pcs',
+        notes: `Restocked from ${plan.value?.location || 'Shopping'}`
+      }, 'fridge');
+    }
+    toast.success(localeStore.currentLocale === 'id' ? 'Semua barang berhasil dimasukkan ke stok kulkas & dapur!' : 'All items added to pantry!');
+  } catch (err) {
+    console.error('Restock error:', err);
+    toast.error(localeStore.currentLocale === 'id' ? 'Gagal memasukkan barang ke dapur' : 'Failed to restock items');
+  } finally {
+    isRestocking.value = false;
   }
 }
 

@@ -20,8 +20,8 @@
     "semantic_hash": ""
   },
   "frontend/package.json": {
-    "mtime": 1790049069.8151674,
-    "ast_hash": "f9f4af7eb78203dc206795a5ff6dcfef",
+    "mtime": 1790051283.1423025,
+    "ast_hash": "c27c80ea28dc7d8c84d56ee14e6db961",
     "semantic_hash": ""
   },
   "frontend/src/App.vue": {
@@ -37,21 +37,6 @@
   "frontend/src/components/GoalNotificationModal.vue": {
     "mtime": 1780891690.5933585,
     "ast_hash": "ec58133f1349118f8269aebcc7067ad6",
-    "semantic_hash": ""
-  },
-  "frontend/src/components/HelloWorld.vue": {
-    "mtime": 1780644717.754099,
-    "ast_hash": "f85532874243f06d755df7fd78c98094",
-    "semantic_hash": ""
-  },
-  "frontend/src/components/VirtualScrollList.vue": {
-    "mtime": 1780644717.7600982,
-    "ast_hash": "0e3e3bbad0ab7b7a17767703d2a1edb8",
-    "semantic_hash": ""
-  },
-  "frontend/src/composables/useBootstrap.js": {
-    "mtime": 1780644717.7681,
-    "ast_hash": "d34430a0badae22314d3aa3dd8510092",
     "semantic_hash": ""
   },
   "frontend/src/composables/useDashboard.js": {
@@ -503,21 +488,6 @@
     "mtime": 1780644717.6950989,
     "ast_hash": "3b4fcfcf393eca4d264dca4a4663bc37",
     "semantic_hash": ""
-  },
-  "frontend/src/assets/hero.png": {
-    "mtime": 1780644717.7260993,
-    "ast_hash": "5cf2b0762834cdddc0dd3ec1397b5011",
-    "semantic_hash": "5cf2b0762834cdddc0dd3ec1397b5011"
-  },
-  "frontend/src/assets/vite.svg": {
-    "mtime": 1780644717.7320986,
-    "ast_hash": "9960a24288958394ac50e57ff638b036",
-    "semantic_hash": ""
-  },
-  "frontend/src/assets/vue.svg": {
-    "mtime": 1780644717.7380989,
-    "ast_hash": "081c348d068770af78fcd90980521318",
-    "semantic_hash": "081c348d068770af78fcd90980521318"
   },
   "frontend/src/pages/ShoppingDetailPage.vue": {
     "mtime": 1786419247.8539515,

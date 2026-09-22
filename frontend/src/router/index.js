@@ -28,6 +28,7 @@ const routes = [
       { path: 'scheduler', name: 'Scheduler', component: () => import('../pages/SchedulerPage.vue') },
       { path: 'shopping', name: 'Shopping', component: () => import('../pages/ShoppingPage.vue') },
       { path: 'shopping/:id', name: 'ShoppingDetail', component: () => import('../pages/ShoppingDetailPage.vue') },
+      { path: 'meals', name: 'Meals', component: () => import('../pages/MealsPage.vue') },
       { path: 'budgets', name: 'Budgets', component: () => import('../pages/BudgetsPage.vue') },
       { path: 'goals', name: 'Goals', component: () => import('../pages/GoalsPage.vue') },
       { path: 'projects', name: 'ProjectPockets', component: () => import('../pages/ProjectPocketsPage.vue') },
