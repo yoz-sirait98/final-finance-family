@@ -851,10 +851,10 @@ const isScanning = ref(false);
 const scanProgress = ref(0);
 const scanStatus = ref('');
 
-// OpenCV + Tesseract scan result state
+// AI Vision scan result state
 const scanConfidence     = ref(null);   // { merchant, amount, date } → 'high'|'medium'|'low'
 const scanRawText        = ref('');     // raw OCR output for review panel
-const scanProcessedImage = ref('');     // base64 thumbnail of OpenCV preprocessed image
+const scanProcessedImage = ref('');     // base64 thumbnail of preprocessed image
 const showRawOcrPanel    = ref(false);  // toggle for collapsible raw OCR panel
 const possibleDuplicate  = ref(null); // { description, amount, date } if duplicate detected
 const scannedItems       = ref([]);     // receipt line items extracted from scan

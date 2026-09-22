@@ -20,8 +20,8 @@
     "semantic_hash": ""
   },
   "frontend/package.json": {
-    "mtime": 1790049069.8151674,
-    "ast_hash": "f9f4af7eb78203dc206795a5ff6dcfef",
+    "mtime": 1789973842.94277,
+    "ast_hash": "68d7e06de0aaa81af8318dc6fe68b2e9",
     "semantic_hash": ""
   },
   "frontend/src/App.vue": {
@@ -155,8 +155,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/TransactionsPage.vue": {
-    "mtime": 1790049257.9321582,
-    "ast_hash": "2f928a3ea3a34c9028edd170434e4073",
+    "mtime": 1786415572.6169543,
+    "ast_hash": "2012419a40655de2bf0d05e83133d740",
     "semantic_hash": ""
   },
   "frontend/src/router/index.js": {
@@ -535,8 +535,8 @@
     "semantic_hash": ""
   },
   "frontend/src/utils/receiptScanner.js": {
-    "mtime": 1790049242.20448,
-    "ast_hash": "7004c382d820a66fdc43bc77fa7b7875",
+    "mtime": 1785393461.4013586,
+    "ast_hash": "b52224d20a09ec24738932bcaa2e8211",
     "semantic_hash": ""
   },
   "graphify-out/memory/query_20260609_044005_recurring.md": {
@@ -794,6 +794,11 @@
     "ast_hash": "a10fe4ff4bf460b493b70b6ae0f4e76f",
     "semantic_hash": ""
   },
+  "frontend/src/utils/opencvPreprocess.js": {
+    "mtime": 1785393461.400359,
+    "ast_hash": "994068aa2403b2f43771eaed503299af",
+    "semantic_hash": ""
+  },
   "supabase/.temp/linked-project.json": {
     "mtime": 1780971398.2793634,
     "ast_hash": "34de4f7614dbad18adec76c1eb9d73af",
@@ -859,9 +864,19 @@
     "ast_hash": "e3d8188147a878219653ccd789d872c0",
     "semantic_hash": ""
   },
+  "frontend/opencv.js": {
+    "mtime": 1785393461.3763592,
+    "ast_hash": "05fe2be4463f7447fea131a3c1e25687",
+    "semantic_hash": ""
+  },
   "frontend/test_ocr.js": {
     "mtime": 1785393461.402359,
     "ast_hash": "9b5def40776462063acb9427c4e30fc2",
+    "semantic_hash": ""
+  },
+  "frontend/test.html": {
+    "mtime": 1785393461.402359,
+    "ast_hash": "9dd5dc9a1f3456ce438c49793505304d",
     "semantic_hash": ""
   },
   "frontend/src/composables/useScannerMapping.js": {
@@ -1057,11 +1072,6 @@
   "frontend/src/stores/googleCalendar.js": {
     "mtime": 1789974915.6727884,
     "ast_hash": "934ae4b6f102529d7866e90b1a52d717",
-    "semantic_hash": ""
-  },
-  "frontend/src/utils/imagePreprocess.js": {
-    "mtime": 1790049235.9449604,
-    "ast_hash": "8d270620b5c16903085ea3626d7365b8",
     "semantic_hash": ""
   }
 }

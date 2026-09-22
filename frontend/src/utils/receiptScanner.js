@@ -1,4 +1,4 @@
-import { preprocessReceiptImage } from './opencvPreprocess';
+import { preprocessReceiptImage } from './imagePreprocess';
 import merchantsDb from './merchants.json';
 
 /**

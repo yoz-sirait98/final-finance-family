@@ -1,13 +1,9 @@
 /**
- * imagePreprocess.js (formerly opencvPreprocess.js)
+ * imagePreprocess.js
  *
- * Applies an advanced image-processing pipeline to a receipt photo
- * before passing it to Tesseract.js for OCR.
- *
+ * Image compressor & preprocessor for Gemini Vision API.
  * Uses 100% native HTML5 Canvas. Zero dependencies. Guaranteed instant execution.
  */
-
-const MIN_HEIGHT_PX = 1800; // Tesseract accuracy drops below this
 
 function fileToImageElement(file) {
   return new Promise((resolve, reject) => {
@@ -33,7 +29,7 @@ function fileToImageElement(file) {
  */
 export async function preprocessReceiptImage(file) {
   const img = await fileToImageElement(file);
-  
+
   const MAX_DIM = 1280;
   let width = img.naturalWidth;
   let height = img.naturalHeight;
