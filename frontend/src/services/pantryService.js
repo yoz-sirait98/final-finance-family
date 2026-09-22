@@ -10,7 +10,7 @@ export const pantryService = {
   list: async (params = {}) => {
     let query = supabase
       .from('pantry_items')
-      .select('*, created_by_user:created_by(id, email)')
+      .select('*')
       .order('expiration_date', { ascending: true, nullsFirst: false })
       .order('name', { ascending: true });
 
