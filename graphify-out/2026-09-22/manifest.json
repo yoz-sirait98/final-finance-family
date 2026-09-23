@@ -50,8 +50,8 @@
     "semantic_hash": ""
   },
   "frontend/src/layouts/DashboardLayout.vue": {
-    "mtime": 1789973982.8756697,
-    "ast_hash": "d95e24a9bd8ce68faa3c8a2dd459d099",
+    "mtime": 1790054911.5892732,
+    "ast_hash": "fbaf556dabb0dd810d6a791a2526b4aa",
     "semantic_hash": ""
   },
   "frontend/src/lib/realtime.js": {
@@ -65,13 +65,13 @@
     "semantic_hash": ""
   },
   "frontend/src/locales/en.json": {
-    "mtime": 1789975651.722524,
-    "ast_hash": "9177543ddf66bed68efc33f34fa61c8a",
+    "mtime": 1790055221.1090355,
+    "ast_hash": "018ccc5637667a4c1199ca631473572b",
     "semantic_hash": ""
   },
   "frontend/src/locales/id.json": {
-    "mtime": 1789975662.2163157,
-    "ast_hash": "9967588fa0c5bf6e215f8f03de5750c4",
+    "mtime": 1790055189.1611702,
+    "ast_hash": "002f293ed5af0773f08e9788c2126b36",
     "semantic_hash": ""
   },
   "frontend/src/main.js": {
@@ -95,8 +95,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/DashboardPage.vue": {
-    "mtime": 1789974060.3527174,
-    "ast_hash": "18c0a053e6985fbd73628e98c3ea9559",
+    "mtime": 1790055077.1175563,
+    "ast_hash": "31eea2340668f360f9719083c4a9721d",
     "semantic_hash": ""
   },
   "frontend/src/pages/GoalsPage.vue": {
@@ -145,8 +145,8 @@
     "semantic_hash": ""
   },
   "frontend/src/router/index.js": {
-    "mtime": 1789973953.2020357,
-    "ast_hash": "db3e471d81c7838a98bfcdd96e27e87b",
+    "mtime": 1790054877.3739443,
+    "ast_hash": "4bfcb26d4cf55e71bb10a09a5b5c7cc2",
     "semantic_hash": ""
   },
   "frontend/src/services/accountService.js": {
@@ -395,8 +395,8 @@
     "semantic_hash": ""
   },
   "docs/implementation_plan.md": {
-    "mtime": 1789973633.5284173,
-    "ast_hash": "a77b3b35f539063a626000fa2c91efa5",
+    "mtime": 1790052803.5961814,
+    "ast_hash": "b1524a32798dffbb14c660a45143ed7e",
     "semantic_hash": ""
   },
   "docs/supabase-setup-guide.md": {
@@ -405,8 +405,8 @@
     "semantic_hash": ""
   },
   "docs/task.md": {
-    "mtime": 1789975688.5929604,
-    "ast_hash": "762dbee9cb31f09f1bcfbb05e58cd149",
+    "mtime": 1790052816.4067147,
+    "ast_hash": "984bb9d8448e79bd8bf324a1cbc28fa5",
     "semantic_hash": ""
   },
   "docs/walkthrough_graphify.md": {
@@ -490,8 +490,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ShoppingDetailPage.vue": {
-    "mtime": 1786419247.8539515,
-    "ast_hash": "a6c9b507e33274bccf1f0948abc0e8c4",
+    "mtime": 1790055393.30547,
+    "ast_hash": "9bc09e00e98609900528c7df8b9c9a79",
     "semantic_hash": ""
   },
   "frontend/src/services/shoppingPlanService.js": {
@@ -1032,6 +1032,71 @@
   "frontend/src/utils/imagePreprocess.js": {
     "mtime": 1790049235.9449604,
     "ast_hash": "8d270620b5c16903085ea3626d7365b8",
+    "semantic_hash": ""
+  },
+  "frontend/scripts/test_meals_pure.js": {
+    "mtime": 1790059978.4796114,
+    "ast_hash": "2f7ec5a048c265681db6a75e21e73f18",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/meals/AiRecipeModal.vue": {
+    "mtime": 1790054801.2343652,
+    "ast_hash": "26b9476d13859176369b02040a95ee77",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/meals/ExportShoppingModal.vue": {
+    "mtime": 1790054821.7047265,
+    "ast_hash": "7a7462a14dbc2356404ac25c9092d078",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/meals/MealPlanModal.vue": {
+    "mtime": 1790054781.8093314,
+    "ast_hash": "4cf02a9a53124112c685f0d2a42bbe89",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/meals/PantryItemModal.vue": {
+    "mtime": 1790054767.0648282,
+    "ast_hash": "5337ed3b694b88c10d01958c4a1f39c2",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/meals/RecipeDetailModal.vue": {
+    "mtime": 1790054811.4589891,
+    "ast_hash": "f2577f4342a19c66689a0cbfc14d858e",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/MealsPage.vue": {
+    "mtime": 1790063097.881745,
+    "ast_hash": "5a6873a2a2888f6972de6f9751e93f9c",
+    "semantic_hash": ""
+  },
+  "frontend/src/services/mealPlanService.js": {
+    "mtime": 1790059531.223003,
+    "ast_hash": "5b06df34825139f138b8e2a43caaad51",
+    "semantic_hash": ""
+  },
+  "frontend/src/services/pantryService.js": {
+    "mtime": 1790059517.6956828,
+    "ast_hash": "40e3bdc67b0955d89f7270a11faf4492",
+    "semantic_hash": ""
+  },
+  "frontend/src/services/recipeService.js": {
+    "mtime": 1790059500.6629677,
+    "ast_hash": "44d5bfebb2084a9e5f310f270cbb2a83",
+    "semantic_hash": ""
+  },
+  "frontend/src/stores/mealPlan.js": {
+    "mtime": 1790054735.7156568,
+    "ast_hash": "e29983ec8c4192bfb52847e13d0f530d",
+    "semantic_hash": ""
+  },
+  "frontend/src/stores/pantry.js": {
+    "mtime": 1790054727.528013,
+    "ast_hash": "eef29d141a5de1794e4fe737c8534d40",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/000036_smart_meal_planner_and_pantry.sql": {
+    "mtime": 1790054645.1043186,
+    "ast_hash": "d2389d65292a8cf5a3ebaf8274ca5de8",
     "semantic_hash": ""
   }
 }
