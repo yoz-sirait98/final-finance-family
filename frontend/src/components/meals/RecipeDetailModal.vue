@@ -129,6 +129,12 @@
                 </div>
               </div>
             </div>
+
+            <!-- Chef Tips if available -->
+            <div v-if="recipe.tips" class="mt-3 p-3 rounded-3 recipe-tips-box small">
+              <i class="bi bi-lightbulb-fill text-warning me-2"></i>
+              <strong>{{ isId ? 'Tips Koki:' : 'Chef Tips:' }}</strong> {{ recipe.tips }}
+            </div>
           </div>
         </div>
 
@@ -242,7 +248,9 @@ function close() {
 <style scoped>
 .recipe-detail-container {
   max-width: 650px;
-  overflow: hidden;
+  max-height: 90vh;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
 }
 
 .recipe-hero {
@@ -320,5 +328,22 @@ function close() {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.recipe-tips-box {
+  background: rgba(14, 165, 233, 0.1);
+  border: 1px solid rgba(14, 165, 233, 0.25);
+  color: #0369a1;
+}
+
+[data-theme="dark"] .recipe-tips-box {
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #7dd3fc !important;
+}
+
+.modal-footer {
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
 }
 </style>

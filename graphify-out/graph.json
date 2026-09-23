@@ -887,7 +887,7 @@
       "label": "switch()",
       "file_type": "code",
       "source_file": "frontend/src/components/meals/RecipeDetailModal.vue",
-      "source_location": "L211",
+      "source_location": "L217",
       "_origin": "ast",
       "id": "meals_recipedetailmodal_switch",
       "community": 183,
@@ -5010,7 +5010,7 @@
       "source_location": "L385",
       "_origin": "ast",
       "id": "locales_en_ai_title",
-      "community": 51,
+      "community": 115,
       "norm_label": "title"
     },
     {
@@ -5590,7 +5590,7 @@
       "source_location": "L463",
       "_origin": "ast",
       "id": "locales_en_tours_accounts",
-      "community": 134,
+      "community": 170,
       "norm_label": "accounts"
     },
     {
@@ -5600,7 +5600,7 @@
       "source_location": "L464",
       "_origin": "ast",
       "id": "locales_en_accounts_header",
-      "community": 134,
+      "community": 170,
       "norm_label": "header"
     },
     {
@@ -5660,7 +5660,7 @@
       "source_location": "L478",
       "_origin": "ast",
       "id": "locales_en_budgets_header",
-      "community": 68,
+      "community": 134,
       "norm_label": "header"
     },
     {
@@ -5670,7 +5670,7 @@
       "source_location": "L482",
       "_origin": "ast",
       "id": "locales_en_budgets_add",
-      "community": 170,
+      "community": 68,
       "norm_label": "add"
     },
     {
@@ -5760,7 +5760,7 @@
       "source_location": "L509",
       "_origin": "ast",
       "id": "locales_en_tours_recurring",
-      "community": 134,
+      "community": 170,
       "norm_label": "recurring"
     },
     {
@@ -5770,7 +5770,7 @@
       "source_location": "L510",
       "_origin": "ast",
       "id": "locales_en_recurring_header",
-      "community": 134,
+      "community": 170,
       "norm_label": "header"
     },
     {
@@ -5930,7 +5930,7 @@
       "source_location": "L549",
       "_origin": "ast",
       "id": "locales_en_tours_calendar",
-      "community": 134,
+      "community": 107,
       "norm_label": "calendar"
     },
     {
@@ -5940,7 +5940,7 @@
       "source_location": "L550",
       "_origin": "ast",
       "id": "locales_en_calendar_header",
-      "community": 134,
+      "community": 107,
       "norm_label": "header"
     },
     {
@@ -5980,7 +5980,7 @@
       "source_location": "L558",
       "_origin": "ast",
       "id": "locales_en_calendar_add",
-      "community": 170,
+      "community": 107,
       "norm_label": "add"
     },
     {
@@ -5990,7 +5990,7 @@
       "source_location": "L563",
       "_origin": "ast",
       "id": "locales_en_tours_shopping",
-      "community": 51,
+      "community": 134,
       "norm_label": "shopping"
     },
     {
@@ -6000,7 +6000,7 @@
       "source_location": "L564",
       "_origin": "ast",
       "id": "locales_en_shopping_header",
-      "community": 51,
+      "community": 134,
       "norm_label": "header"
     },
     {
@@ -6010,7 +6010,7 @@
       "source_location": "L568",
       "_origin": "ast",
       "id": "locales_en_shopping_add",
-      "community": 170,
+      "community": 134,
       "norm_label": "add"
     },
     {
@@ -6020,7 +6020,7 @@
       "source_location": "L572",
       "_origin": "ast",
       "id": "locales_en_shopping_ai",
-      "community": 51,
+      "community": 115,
       "norm_label": "ai"
     },
     {
@@ -6030,7 +6030,7 @@
       "source_location": "L574",
       "_origin": "ast",
       "id": "locales_en_ai_description",
-      "community": 51,
+      "community": 115,
       "norm_label": "description"
     },
     {
@@ -10420,7 +10420,7 @@
       "source_location": "L554",
       "_origin": "ast",
       "id": "locales_id_calendar_grid",
-      "community": 125,
+      "community": 51,
       "norm_label": "grid"
     },
     {
@@ -10430,7 +10430,7 @@
       "source_location": "L555",
       "_origin": "ast",
       "id": "locales_id_grid_title",
-      "community": 125,
+      "community": 51,
       "norm_label": "title"
     },
     {
@@ -10440,7 +10440,7 @@
       "source_location": "L556",
       "_origin": "ast",
       "id": "locales_id_grid_description",
-      "community": 125,
+      "community": 51,
       "norm_label": "description"
     },
     {
@@ -40607,9 +40607,9 @@
       "source_file": "docs/walkthrough_smart_meal_planner_and_pantry.md",
       "source_location": "L89",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_walkthrough_smart_meal_planner_and_pantry_walkthrough_smart_meal_planner_pantry_inventory_system_dapur_menu_keluarga",
-      "target": "docs_walkthrough_smart_meal_planner_and_pantry_ui_accessibility_dark_mode_refinements",
-      "confidence_score": 1.0
+      "target": "docs_walkthrough_smart_meal_planner_and_pantry_ui_accessibility_dark_mode_refinements"
     },
     {
       "relation": "contains",
@@ -40697,9 +40697,9 @@
       "source_file": "docs/walkthrough_smart_meal_planner_and_pantry.md",
       "source_location": "L91",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_walkthrough_smart_meal_planner_and_pantry_ui_accessibility_dark_mode_refinements",
-      "target": "docs_walkthrough_smart_meal_planner_and_pantry_cooking_steps_instructions_contrast_fix",
-      "confidence_score": 1.0
+      "target": "docs_walkthrough_smart_meal_planner_and_pantry_cooking_steps_instructions_contrast_fix"
     },
     {
       "relation": "contains",
@@ -40993,5 +40993,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "ea3a1ea5b377eed7219d20b3b2bbb4d0aae5eded"
+  "built_at_commit": "35b380b7ad4f7766b279df91608658a83167d60e"
 }
