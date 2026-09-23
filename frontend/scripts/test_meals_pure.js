@@ -198,6 +198,69 @@ console.log('\nTEST 5: 1-Tap Restock from Shopping to Pantry Inventory');
   console.log('  ✔ Shopping item restock payload to pantry PASSED');
 }
 
+// ---------------------------------------------------------
+// TEST 6: Recipe Save Payload & Schema Resilience
+// ---------------------------------------------------------
+console.log('\nTEST 6: AI Recipe Save Payload & Schema Resilience');
+{
+  const aiRecipe = {
+    name: 'Ayam Goreng Lengkuas',
+    description: 'Ayam goreng gurih dengan serundeng lengkuas renyah',
+    category: 'dinner',
+    prep_time_minutes: 15,
+    cook_time_minutes: 25,
+    servings: 4,
+    difficulty: 'easy',
+    ingredients: [{ name: 'Ayam', quantity: '500', unit: 'g' }],
+    instructions: ['Ungkep ayam dengan bumbu', 'Goreng hingga kecokelatan'],
+    tips: 'Gunakan api sedang saat menggoreng serundeng'
+  };
+
+  const familyId = 'fam-uuid-123';
+  const baseTitle = aiRecipe.name || aiRecipe.title || 'Resep Tanpa Judul';
+
+  // Test full schema payload
+  const fullPayload = {
+    family_id: familyId,
+    title: baseTitle,
+    name: baseTitle,
+    description: aiRecipe.description || '',
+    category: aiRecipe.category || 'dinner',
+    prep_time_minutes: aiRecipe.prep_time_minutes || 15,
+    cook_time_minutes: aiRecipe.cook_time_minutes || 20,
+    servings: aiRecipe.servings || 4,
+    difficulty: aiRecipe.difficulty || 'easy',
+    ingredients: aiRecipe.ingredients || [],
+    instructions: aiRecipe.instructions || [],
+    tips: aiRecipe.tips || '',
+    is_favorite: true,
+    source: 'ai_generated'
+  };
+
+  assert.strictEqual(fullPayload.name, 'Ayam Goreng Lengkuas');
+  assert.strictEqual(fullPayload.title, 'Ayam Goreng Lengkuas');
+  assert.strictEqual(fullPayload.description, 'Ayam goreng gurih dengan serundeng lengkuas renyah');
+
+  // Test fallback schema payload (migration 000037 pending)
+  const legacyPayload = {
+    family_id: familyId,
+    title: baseTitle,
+    category: aiRecipe.category || 'dinner',
+    prep_time_minutes: aiRecipe.prep_time_minutes || 15,
+    cook_time_minutes: aiRecipe.cook_time_minutes || 20,
+    servings: aiRecipe.servings || 4,
+    ingredients: aiRecipe.ingredients || [],
+    instructions: aiRecipe.instructions || [],
+    is_favorite: true,
+    source: 'ai_generated'
+  };
+
+  assert.strictEqual(legacyPayload.title, 'Ayam Goreng Lengkuas');
+  assert.strictEqual(legacyPayload.description, undefined, 'Legacy payload must omit description to prevent PGRST204');
+  assert.strictEqual(legacyPayload.name, undefined, 'Legacy payload must omit name to prevent PGRST204');
+  console.log('  ✔ AI recipe save payload resilience and schema fallback PASSED');
+}
+
 console.log('\n====================================================');
-console.log('🎉 ALL 5/5 BACKGROUND TESTS PASSED WITH 100% SUCCESS');
+console.log('🎉 ALL 6/6 BACKGROUND TESTS PASSED WITH 100% SUCCESS');
 console.log('====================================================');

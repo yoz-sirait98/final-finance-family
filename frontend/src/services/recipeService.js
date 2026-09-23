@@ -7,12 +7,80 @@ const crud = createCrudService('recipes');
 export const recipeService = {
   ...crud,
 
+  create: async (payload) => {
+    const family_id = useAuthStore().familyId;
+    const baseTitle = payload.name || payload.title || 'Resep Tanpa Judul';
+
+    // Primary attempt: full payload with name, description, difficulty, tips
+    const fullPayload = {
+      family_id,
+      title: baseTitle,
+      name: baseTitle,
+      description: payload.description || '',
+      category: payload.category || 'dinner',
+      prep_time_minutes: payload.prep_time_minutes || 15,
+      cook_time_minutes: payload.cook_time_minutes || 20,
+      servings: payload.servings || 4,
+      difficulty: payload.difficulty || 'easy',
+      ingredients: payload.ingredients || [],
+      instructions: payload.instructions || [],
+      tips: payload.tips || '',
+      is_favorite: payload.is_favorite ?? false,
+      source: payload.source || 'ai_generated'
+    };
+
+    let { data, error } = await supabase
+      .from('recipes')
+      .insert([fullPayload])
+      .select()
+      .single();
+
+    // Fallback: If table does not yet have 'description'/'difficulty' (migration 000037 pending)
+    if (error && (error.code === 'PGRST204' || error.message?.includes('schema cache'))) {
+      console.warn('Falling back to basic recipe columns (migration 000037 not yet executed):', error.message);
+      const legacyPayload = {
+        family_id,
+        title: baseTitle,
+        category: payload.category || 'dinner',
+        prep_time_minutes: payload.prep_time_minutes || 15,
+        cook_time_minutes: payload.cook_time_minutes || 20,
+        servings: payload.servings || 4,
+        ingredients: payload.ingredients || [],
+        instructions: payload.instructions || [],
+        is_favorite: payload.is_favorite ?? false,
+        source: payload.source || 'ai_generated'
+      };
+
+      const fallbackResult = await supabase
+        .from('recipes')
+        .insert([legacyPayload])
+        .select()
+        .single();
+
+      if (fallbackResult.error) throw fallbackResult.error;
+      data = fallbackResult.data;
+    } else if (error) {
+      throw error;
+    }
+
+    // Normalize returned object
+    if (data) {
+      data.name = data.name || data.title || baseTitle;
+      data.title = data.title || data.name || baseTitle;
+      data.description = data.description || payload.description || '';
+      data.difficulty = data.difficulty || payload.difficulty || 'easy';
+      data.tips = data.tips || payload.tips || '';
+    }
+
+    return { data: { data } };
+  },
+
   list: async (params = {}) => {
     let query = supabase
       .from('recipes')
       .select('*')
       .order('is_favorite', { ascending: false })
-      .order('name', { ascending: true });
+      .order('created_at', { ascending: false });
 
     if (params.category && params.category !== 'all') {
       query = query.eq('category', params.category);
@@ -20,13 +88,29 @@ export const recipeService = {
     if (params.is_favorite !== undefined && params.is_favorite !== null) {
       query = query.eq('is_favorite', params.is_favorite);
     }
-    if (params.search) {
-      query = query.ilike('name', `%${params.search}%`);
-    }
 
     const { data, error } = await query;
     if (error) throw error;
-    return { data: { data: data || [] } };
+
+    let normalized = (data || []).map(r => ({
+      ...r,
+      name: r.name || r.title || 'Untitled Recipe',
+      title: r.title || r.name || 'Untitled Recipe',
+      description: r.description || '',
+      difficulty: r.difficulty || 'easy',
+      tips: r.tips || ''
+    }));
+
+    if (params.search && params.search.trim()) {
+      const q = params.search.trim().toLowerCase();
+      normalized = normalized.filter(r =>
+        (r.name && r.name.toLowerCase().includes(q)) ||
+        (r.title && r.title.toLowerCase().includes(q)) ||
+        (r.description && r.description.toLowerCase().includes(q))
+      );
+    }
+
+    return { data: { data: normalized } };
   },
 
   toggleFavorite: async (id, isFavorite) => {

@@ -1070,9 +1070,9 @@ function handleAiSchedule(recipe) {
 async function handleAiSaveRecipe(recipe) {
   try {
     const payload = {
-      family_id: mealPlanStore.currentMonday ? (await import('../stores/auth')).useAuthStore().familyId : null,
       name: recipe.name,
-      description: recipe.description,
+      title: recipe.name,
+      description: recipe.description || '',
       category: recipe.category || 'dinner',
       prep_time_minutes: recipe.prep_time_minutes || 15,
       cook_time_minutes: recipe.cook_time_minutes || 20,
@@ -1080,6 +1080,7 @@ async function handleAiSaveRecipe(recipe) {
       difficulty: recipe.difficulty || 'easy',
       ingredients: recipe.ingredients || [],
       instructions: recipe.instructions || [],
+      tips: recipe.tips || '',
       is_favorite: true
     };
     await recipeService.create(payload);
@@ -1156,6 +1157,10 @@ async function executeDelete() {
     } else if (itemToDelete.value.type === 'meal') {
       await mealPlanStore.deleteMealPlan(itemToDelete.value.id);
       toastStore.success(isId.value ? 'Menu berhasil dihapus' : 'Meal deleted');
+    } else if (itemToDelete.value.type === 'recipe') {
+      await recipeService.delete(itemToDelete.value.id);
+      await loadRecipes();
+      toastStore.success(isId.value ? 'Resep berhasil dihapus' : 'Recipe deleted');
     }
     showDeleteModal.value = false;
   } catch (err) {

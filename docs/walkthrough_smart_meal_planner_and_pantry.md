@@ -107,7 +107,12 @@ PWA v1.3.0 precache 79 entries (2636.12 KiB)
 ---
 
 ## Database Migration Instructions
-Due to office network port 5432 restrictions, run the SQL migration directly in your Supabase Web Dashboard:
-- File: [000036_smart_meal_planner_and_pantry.sql](file:///c:/Projects/final-finance-family/supabase/migrations/000036_smart_meal_planner_and_pantry.sql)
-- Contains: `pantry_items`, `meal_plans`, `recipes` tables, RLS policies scoped to `public.get_auth_family_id()`, performance indexes, and automatic triggers.
+Due to office network port 5432 restrictions, run the SQL migrations directly in your Supabase Web Dashboard:
+1. **Migration 000036** (Core Tables & RLS):
+   - File: [000036_smart_meal_planner_and_pantry.sql](file:///c:/Projects/final-finance-family/supabase/migrations/000036_smart_meal_planner_and_pantry.sql)
+   - Contains: `pantry_items`, `meal_plans`, `recipes` tables, RLS policies scoped to `public.get_auth_family_id()`, performance indexes, and automatic triggers.
+2. **Migration 000037** (Recipe Details & Schema Alignment):
+   - File: [000037_add_recipe_details.sql](file:///c:/Projects/final-finance-family/supabase/migrations/000037_add_recipe_details.sql)
+   - Adds `name`, `description`, `difficulty`, and `tips` columns to `public.recipes` so AI Chef recipes can be stored with full metadata.
+   - Note: The frontend service has built-in graceful schema fallback so recipes can be saved even before running Migration 000037.
 
