@@ -1095,13 +1095,13 @@
     "semantic_hash": ""
   },
   "supabase/migrations/000036_smart_meal_planner_and_pantry.sql": {
-    "mtime": 1790129284.1887608,
-    "ast_hash": "de5ed75329b2e1e2803ca54d24b38617",
+    "mtime": 1790129508.0587165,
+    "ast_hash": "1be31b2acfec3baed5afa44c272d2e43",
     "semantic_hash": ""
   },
   "docs/walkthrough_smart_meal_planner_and_pantry.md": {
-    "mtime": 1790072344.5806868,
-    "ast_hash": "8c8038a3bd88f7fd25d104b9625a526a",
+    "mtime": 1790129405.3926697,
+    "ast_hash": "3f5db3af7b5d8d8c33b062af4908a382",
     "semantic_hash": ""
   },
   "supabase/migrations/000037_add_recipe_details.sql": {

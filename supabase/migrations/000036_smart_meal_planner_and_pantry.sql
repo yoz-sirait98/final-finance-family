@@ -56,6 +56,17 @@ CREATE TABLE IF NOT EXISTS public.recipes (
     updated_at TIMESTAMPTZ DEFAULT now()
 );
 
+-- Ensure all columns exist even if public.recipes was already created previously
+ALTER TABLE public.recipes 
+  ADD COLUMN IF NOT EXISTS name TEXT,
+  ADD COLUMN IF NOT EXISTS description TEXT,
+  ADD COLUMN IF NOT EXISTS difficulty TEXT DEFAULT 'easy',
+  ADD COLUMN IF NOT EXISTS tips TEXT;
+
+-- Synchronize name and title if needed
+UPDATE public.recipes SET name = title WHERE name IS NULL AND title IS NOT NULL;
+UPDATE public.recipes SET title = name WHERE title IS NULL AND name IS NOT NULL;
+
 -- Indexes for optimal performance
 CREATE INDEX IF NOT EXISTS idx_pantry_items_family_location ON public.pantry_items(family_id, location, status);
 CREATE INDEX IF NOT EXISTS idx_pantry_items_expiry ON public.pantry_items(family_id, expiration_date);
@@ -67,53 +78,65 @@ ALTER TABLE public.pantry_items ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.meal_plans ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.recipes ENABLE ROW LEVEL SECURITY;
 
--- RLS Policies for pantry_items
+-- RLS Policies for pantry_items (Idempotent: DROP IF EXISTS first)
+DROP POLICY IF EXISTS "pantry_items_family_select" ON public.pantry_items;
 CREATE POLICY "pantry_items_family_select"
     ON public.pantry_items FOR SELECT
     USING (family_id = public.get_auth_family_id());
 
+DROP POLICY IF EXISTS "pantry_items_family_insert" ON public.pantry_items;
 CREATE POLICY "pantry_items_family_insert"
     ON public.pantry_items FOR INSERT
     WITH CHECK (family_id = public.get_auth_family_id());
 
+DROP POLICY IF EXISTS "pantry_items_family_update" ON public.pantry_items;
 CREATE POLICY "pantry_items_family_update"
     ON public.pantry_items FOR UPDATE
     USING (family_id = public.get_auth_family_id());
 
+DROP POLICY IF EXISTS "pantry_items_family_delete" ON public.pantry_items;
 CREATE POLICY "pantry_items_family_delete"
     ON public.pantry_items FOR DELETE
     USING (family_id = public.get_auth_family_id());
 
--- RLS Policies for meal_plans
+-- RLS Policies for meal_plans (Idempotent: DROP IF EXISTS first)
+DROP POLICY IF EXISTS "meal_plans_family_select" ON public.meal_plans;
 CREATE POLICY "meal_plans_family_select"
     ON public.meal_plans FOR SELECT
     USING (family_id = public.get_auth_family_id());
 
+DROP POLICY IF EXISTS "meal_plans_family_insert" ON public.meal_plans;
 CREATE POLICY "meal_plans_family_insert"
     ON public.meal_plans FOR INSERT
     WITH CHECK (family_id = public.get_auth_family_id());
 
+DROP POLICY IF EXISTS "meal_plans_family_update" ON public.meal_plans;
 CREATE POLICY "meal_plans_family_update"
     ON public.meal_plans FOR UPDATE
     USING (family_id = public.get_auth_family_id());
 
+DROP POLICY IF EXISTS "meal_plans_family_delete" ON public.meal_plans;
 CREATE POLICY "meal_plans_family_delete"
     ON public.meal_plans FOR DELETE
     USING (family_id = public.get_auth_family_id());
 
--- RLS Policies for recipes
+-- RLS Policies for recipes (Idempotent: DROP IF EXISTS first)
+DROP POLICY IF EXISTS "recipes_family_select" ON public.recipes;
 CREATE POLICY "recipes_family_select"
     ON public.recipes FOR SELECT
     USING (family_id = public.get_auth_family_id());
 
+DROP POLICY IF EXISTS "recipes_family_insert" ON public.recipes;
 CREATE POLICY "recipes_family_insert"
     ON public.recipes FOR INSERT
     WITH CHECK (family_id = public.get_auth_family_id());
 
+DROP POLICY IF EXISTS "recipes_family_update" ON public.recipes;
 CREATE POLICY "recipes_family_update"
     ON public.recipes FOR UPDATE
     USING (family_id = public.get_auth_family_id());
 
+DROP POLICY IF EXISTS "recipes_family_delete" ON public.recipes;
 CREATE POLICY "recipes_family_delete"
     ON public.recipes FOR DELETE
     USING (family_id = public.get_auth_family_id());
