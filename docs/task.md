@@ -91,6 +91,13 @@
 
 - [x] **5. Phase 5: Verification, Walkthrough & Knowledge Graph**
   - [x] Run `npm run build` to ensure clean build (100% successful bundle)
-  - [x] Execute automated background test suite (`frontend/scripts/test_meals_pure.js` - 5/5 tests passing)
-  - [x] Update knowledge graph (`graphify update . --force`)
+  - [x] Execute automated background test suite (`frontend/scripts/test_meals_pure.js` - 6/6 tests passing)
+  - [x] Update knowledge graph (`graphify update .`)
   - [x] Write walkthrough document (`docs/walkthrough_smart_meal_planner_and_pantry.md`)
+
+- [x] **6. Phase 6: Post-Launch Accessibility & Schema Refinements**
+  - [x] Fix dark mode contrast for "View Cooking Steps" button, instructions list, and chef tips
+  - [x] Fix recipe saving schema cache error via resilient fallback in `recipeService.js` and migration `000037_add_recipe_details.sql`
+  - [x] Make migration `000036_smart_meal_planner_and_pantry.sql` idempotent (`DROP POLICY IF EXISTS`)
+  - [x] Fix Recipe Detail modal scrolling (`overflow-y: auto !important`) and add chef tips display
+
