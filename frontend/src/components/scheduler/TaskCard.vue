@@ -144,8 +144,14 @@ const priorityClass = computed(() => {
 }
 
 .checkbox-wrapper {
-  padding: 0.25rem;
+  padding: 0.35rem;
+  min-width: 36px;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .custom-check {

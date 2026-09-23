@@ -283,6 +283,7 @@ function handleSlotClick(timeString) {
   cursor: pointer;
   transition: all 0.2s;
   color: var(--text-primary, #1e293b);
+  max-width: 100%;
 }
 
 .slot-task-pill:hover {
@@ -300,5 +301,11 @@ function handleSlotClick(timeString) {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+@media (max-width: 576px) {
+  .slot-task-title {
+    max-width: 160px;
+  }
 }
 </style>

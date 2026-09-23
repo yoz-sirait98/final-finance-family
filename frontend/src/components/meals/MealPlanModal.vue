@@ -404,4 +404,10 @@ async function handleSubmit() {
   align-items: center;
   justify-content: center;
 }
+
+@media (max-width: 420px) {
+  .slot-chips-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 </style>

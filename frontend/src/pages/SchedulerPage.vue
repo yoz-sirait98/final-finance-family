@@ -622,10 +622,10 @@ function triggerManualSync() {
 
 .scheduler-fab {
   position: fixed;
-  bottom: 5rem;
-  right: 1.5rem;
-  width: 56px;
-  height: 56px;
+  bottom: max(1.5rem, env(safe-area-inset-bottom, 1.5rem));
+  right: 1.25rem;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   background: var(--primary, #4f46e5);
   color: #ffffff;
@@ -633,13 +633,45 @@ function triggerManualSync() {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   z-index: 1040;
   cursor: pointer;
+  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4);
   transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .scheduler-fab:hover {
   transform: scale(1.08);
+}
+
+/* ===== Mobile Responsiveness & PWA Touch Optimizations ===== */
+@media (max-width: 768px) {
+  .view-switcher-group {
+    display: flex !important;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+
+  .view-switcher-group::-webkit-scrollbar {
+    display: none;
+  }
+
+  .view-switcher-group .btn {
+    flex-shrink: 0;
+    border-radius: 8px !important;
+    margin-right: 4px;
+    font-size: 0.8rem;
+    padding: 0.35rem 0.65rem;
+    white-space: nowrap;
+  }
+
+  .control-panel-card .card-body {
+    flex-direction: column;
+    align-items: stretch !important;
+    gap: 0.75rem !important;
+  }
 }
 </style>

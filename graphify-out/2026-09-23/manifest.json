@@ -1060,8 +1060,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/meals/RecipeDetailModal.vue": {
-    "mtime": 1790071916.6890929,
-    "ast_hash": "55431f8471ee94efd85064beafd047c5",
+    "mtime": 1790129866.3904283,
+    "ast_hash": "5e4320c242ad392d3789a0ab488f42db",
     "semantic_hash": ""
   },
   "frontend/src/pages/MealsPage.vue": {

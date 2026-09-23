@@ -223,10 +223,50 @@
         </div>
       </div>
 
+      <!-- Mobile Day Selector Strip (Visible on mobile only) -->
+      <div class="mobile-day-strip d-md-none mb-3">
+        <div class="d-flex align-items-center gap-1 overflow-x-auto pb-1 no-scrollbar">
+          <button
+            type="button"
+            class="btn btn-sm mobile-day-btn"
+            :class="{ active: selectedMobileDay === 'today' }"
+            @click="selectedMobileDay = 'today'"
+          >
+            <i class="bi bi-star-fill text-warning me-1"></i>
+            {{ isId ? 'Hari Ini' : 'Today' }}
+          </button>
+          <button
+            type="button"
+            class="btn btn-sm mobile-day-btn"
+            :class="{ active: selectedMobileDay === 'all' }"
+            @click="selectedMobileDay = 'all'"
+          >
+            {{ isId ? 'Semua Hari' : 'All Days' }}
+          </button>
+          <button
+            v-for="d in mealPlanStore.weekDaysMatrix"
+            :key="d.dateStr"
+            type="button"
+            class="btn btn-sm mobile-day-btn"
+            :class="{
+              active: selectedMobileDay === d.dateStr,
+              'border-primary': d.isToday
+            }"
+            @click="selectedMobileDay = d.dateStr"
+          >
+            <span>{{ isId ? d.dayNameId.slice(0, 3) : d.dayNameEn.slice(0, 3) }}</span>
+            <span class="day-badge-num ms-1">{{ d.dayNumber }}</span>
+            <span v-if="d.totalMeals > 0" class="badge rounded-pill bg-primary ms-1" style="font-size: 0.65rem;">
+              {{ d.totalMeals }}
+            </span>
+          </button>
+        </div>
+      </div>
+
       <!-- 7-Day Matrix Grid -->
       <div class="week-matrix-grid">
         <div
-          v-for="day in mealPlanStore.weekDaysMatrix"
+          v-for="day in displayedDays"
           :key="day.dateStr"
           class="day-column rounded-4 p-3"
           :class="{ 'is-today': day.isToday }"
@@ -855,7 +895,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useLocaleStore } from '../stores/locale';
 import { usePantryStore } from '../stores/pantry';
 import { useMealPlanStore } from '../stores/mealPlan';
@@ -876,6 +916,28 @@ const toastStore = useToastStore();
 const isId = computed(() => localeStore.currentLocale === 'id');
 
 const activeTab = ref('planner'); // 'planner' | 'pantry' | 'recipes'
+
+// Mobile Day Filter
+const selectedMobileDay = ref('today'); // 'today' | 'all' | 'YYYY-MM-DD'
+const isMobileScreen = ref(false);
+
+function checkMobileScreen() {
+  if (typeof window !== 'undefined') {
+    isMobileScreen.value = window.innerWidth <= 768;
+  }
+}
+
+const displayedDays = computed(() => {
+  if (!isMobileScreen.value || selectedMobileDay.value === 'all') {
+    return mealPlanStore.weekDaysMatrix;
+  }
+  if (selectedMobileDay.value === 'today') {
+    const todayCol = mealPlanStore.weekDaysMatrix.find((d) => d.isToday);
+    return todayCol ? [todayCol] : (mealPlanStore.weekDaysMatrix.length ? [mealPlanStore.weekDaysMatrix[0]] : []);
+  }
+  const found = mealPlanStore.weekDaysMatrix.find((d) => d.dateStr === selectedMobileDay.value);
+  return found ? [found] : mealPlanStore.weekDaysMatrix;
+});
 
 // Modals state
 const showPantryModal = ref(false);
@@ -905,11 +967,19 @@ const recipeFilterFav = ref(false);
 const recipeSearch = ref('');
 
 onMounted(async () => {
+  checkMobileScreen();
+  window.addEventListener('resize', checkMobileScreen);
   await Promise.all([
     pantryStore.fetchItems(),
     mealPlanStore.fetchCurrentWeek(),
     loadRecipes()
   ]);
+});
+
+onUnmounted(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('resize', checkMobileScreen);
+  }
 });
 
 async function loadRecipes() {
@@ -1550,5 +1620,104 @@ function getExpiryBadgeClass(dateStr) {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+/* ===== Mobile Responsiveness & PWA Touch Optimizations ===== */
+@media (max-width: 768px) {
+  .meals-hero {
+    padding: 1rem !important;
+  }
+
+  .meals-hero .btn {
+    font-size: 0.82rem;
+    padding: 0.45rem 0.75rem !important;
+  }
+
+  .custom-nav-pills {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    border-radius: 14px !important;
+    gap: 4px;
+    padding: 4px !important;
+  }
+
+  .custom-nav-pills::-webkit-scrollbar {
+    display: none;
+  }
+
+  .custom-nav-pills .nav-item {
+    flex-shrink: 0;
+  }
+
+  .custom-nav-pills .nav-link {
+    padding: 8px 14px !important;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  .planner-toolbar {
+    padding: 0.75rem !important;
+    gap: 0.5rem !important;
+  }
+
+  .pantry-filter-bar {
+    padding: 0.75rem !important;
+  }
+
+  .mobile-day-strip {
+    width: 100%;
+  }
+
+  .mobile-day-btn {
+    white-space: nowrap;
+    font-size: 0.8rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 9999px;
+    border: 1px solid var(--card-border);
+    background: var(--input-bg);
+    color: var(--text-muted);
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .mobile-day-btn.active {
+    background: var(--primary-color);
+    color: #ffffff;
+    border-color: var(--primary-color);
+    font-weight: 600;
+  }
+
+  .day-column {
+    min-height: auto !important;
+    padding: 1rem !important;
+    border-radius: 1rem !important;
+  }
+
+  .pantry-items-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .recipes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .btn-stepper {
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 1.05rem;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }
 </style>

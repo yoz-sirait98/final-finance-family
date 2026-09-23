@@ -101,3 +101,26 @@
   - [x] Make migration `000036_smart_meal_planner_and_pantry.sql` idempotent (`DROP POLICY IF EXISTS`)
   - [x] Fix Recipe Detail modal scrolling (`overflow-y: auto !important`) and add chef tips display
 
+- [x] **7. Phase 7: Mobile PWA Responsiveness & Touch UX Optimization**
+  - [x] Configure PWA safe-area viewport (`viewport-fit=cover` in `frontend/index.html`)
+  - [x] Add global safe-area inset padding and modal height constraints (`max-height: 94vh`) in `frontend/src/style.css`
+  - [x] Prevent iOS Safari auto-zoom by enforcing 16px font size on inputs
+  - [x] Optimize `MealsPage.vue`:
+    - [x] Add mobile day selector pill strip (`Hari Ini / Today`, `Semua Hari / All Days`, and day pills)
+    - [x] Eliminate 3,000px+ vertical scroll on mobile by defaulting to Today's meals and setting column height to `auto`
+    - [x] Convert navigation tabs into horizontal touch-scroll strip (`overflow-x: auto`)
+    - [x] Make pantry & recipe grids single-column on mobile viewports
+    - [x] Enlarge stepper touch targets to 34px for easy thumb tapping
+  - [x] Optimize `SchedulerPage.vue`:
+    - [x] Convert view switcher (`Day`, `Week`, `Month`, `Agenda`, `Filtered List`) into horizontal touch scroll strip
+    - [x] Adjust Floating Action Button (`.scheduler-fab`) to thumb-level with safe-area bottom support
+  - [x] Optimize Scheduler Sub-views:
+    - [x] Make DayView slot task titles responsive (`max-width: 160px` on small phones)
+    - [x] Enlarge TaskCard checkbox wrapper tap target to 36x36px to prevent accidental card navigation
+  - [x] Optimize Meals Modals:
+    - [x] Add 2-column grid fallback for MealPlan slot buttons on screens $\le 420px$
+    - [x] Add responsive button sizing in AiRecipe modal
+  - [x] Verify production bundle (`npm run build` exits 0 with 78 precached PWA items)
+  - [x] Verify automated background tests (`node frontend/scripts/test_meals_pure.js` passes 6/6)
+
+

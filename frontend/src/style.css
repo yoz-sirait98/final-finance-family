@@ -975,6 +975,27 @@ body {
   .page-header p {
     font-size: 0.78rem !important;
   }
+  .main-content {
+    padding: 12px !important;
+    padding-bottom: max(24px, env(safe-area-inset-bottom, 24px)) !important;
+  }
+  .vue-modal-backdrop,
+  .modal-backdrop-custom {
+    padding: 8px !important;
+    padding-bottom: max(16px, env(safe-area-inset-bottom, 16px)) !important;
+  }
+  .vue-modal,
+  .modal-dialog-custom {
+    max-height: 94vh !important;
+    border-radius: 16px !important;
+  }
+  .modal-body-custom {
+    padding: 1rem !important;
+  }
+  .form-control,
+  .form-select {
+    font-size: 16px !important; /* Prevents unwanted auto-zoom in iOS Safari */
+  }
 }
 
 /* ===== Toast Notification ===== */

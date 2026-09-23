@@ -503,4 +503,16 @@ function close() {
   border: 1px solid rgba(56, 189, 248, 0.3);
   color: #7dd3fc !important;
 }
+
+@media (max-width: 576px) {
+  .pref-chip-btn {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .recipe-card .btn-sm {
+    font-size: 0.78rem;
+    padding: 0.35rem 0.6rem;
+  }
+}
 </style>

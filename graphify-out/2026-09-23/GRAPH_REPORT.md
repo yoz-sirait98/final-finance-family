@@ -1,7 +1,7 @@
 # Graph Report - final-finance-family  (2026-09-23)
 
 ## Corpus Check
-- 204 files · ~152,797 words
+- 204 files · ~153,115 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `ea3a1ea5`
+- Built from commit: `35b380b7`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -373,8 +373,8 @@ Cohesion: 0.14
 Nodes (14): description, title, description, title, description, title, transactions, header (+6 more)
 
 ### Community 51 - "Community 51"
-Cohesion: 0.40
-Nodes (5): description, title, ai, header, shopping
+Cohesion: 0.67
+Nodes (3): grid, description, title
 
 ### Community 56 - "Goal Notification Modal"
 Cohesion: 0.20
@@ -386,7 +386,7 @@ Nodes (20): balance, expense, income, transfer, net, period, description, title 
 
 ### Community 68 - "Community 68"
 Cohesion: 0.40
-Nodes (5): description, title, alerts, header, budgets
+Nodes (5): description, title, add, alerts, budgets
 
 ### Community 78 - "Community 78"
 Cohesion: 0.40
@@ -405,8 +405,8 @@ Cohesion: 0.11
 Nodes (18): register, success, alreadyHaveAccount, confirmPassword, confirmPasswordPlaceholder, createAccount, creatingAccount, email (+10 more)
 
 ### Community 107 - "Community 107"
-Cohesion: 0.67
-Nodes (3): grid, description, title
+Cohesion: 0.33
+Nodes (6): add, grid, header, description, title, calendar
 
 ### Community 110 - "Community 110"
 Cohesion: 0.25
@@ -429,8 +429,8 @@ Cohesion: 0.25
 Nodes (7): 1. CSS & Styling System (`frontend/src/style.css`), 2. Project Pockets Page (`frontend/src/pages/ProjectPocketsPage.vue`), Automated Build Verification, Changes Implemented, Key Interactive Flows, Verification & Build Results, Walkthrough — Mobile View Redesign for Project Pockets Page
 
 ### Community 115 - "Community 115"
-Cohesion: 0.20
-Nodes (10): ai, engine, hideThinking, insufficientBalance, missingKey, setupKey, showThinking, subtitle (+2 more)
+Cohesion: 0.15
+Nodes (13): ai, description, engine, hideThinking, insufficientBalance, missingKey, setupKey, showThinking (+5 more)
 
 ### Community 116 - "Community 116"
 Cohesion: 0.50
@@ -461,8 +461,8 @@ Cohesion: 0.18
 Nodes (11): description, title, description, title, transactions, header, scan, swipe (+3 more)
 
 ### Community 125 - "Community 125"
-Cohesion: 0.13
-Nodes (28): add, header, description, title, add, header, add, grid (+20 more)
+Cohesion: 0.15
+Nodes (25): add, header, description, title, add, header, add, header (+17 more)
 
 ### Community 128 - "Community 128"
 Cohesion: 0.22
@@ -481,8 +481,8 @@ Cohesion: 0.09
 Nodes (27): description, title, description, title, charts, description, title, description (+19 more)
 
 ### Community 134 - "Community 134"
-Cohesion: 0.27
-Nodes (10): header, header, description, title, header, header, accounts, calendar (+2 more)
+Cohesion: 0.32
+Nodes (8): header, description, title, add, header, header, shopping, shoppingDetail
 
 ### Community 135 - "Community 135"
 Cohesion: 0.25
@@ -573,8 +573,8 @@ Cohesion: 0.15
 Nodes (13): goals, addGoal, completedManuallyError, currentAmount, deadline, editGoal, linkedAccount, linkedAccountInfo (+5 more)
 
 ### Community 170 - "Community 170"
-Cohesion: 0.39
-Nodes (9): add, description, title, add, add, add, add, add (+1 more)
+Cohesion: 0.27
+Nodes (10): add, header, description, title, add, header, add, accounts (+2 more)
 
 ### Community 171 - "Community 171"
 Cohesion: 0.60

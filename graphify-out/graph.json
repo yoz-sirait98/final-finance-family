@@ -10420,7 +10420,7 @@
       "source_location": "L554",
       "_origin": "ast",
       "id": "locales_id_calendar_grid",
-      "community": 51,
+      "community": 125,
       "norm_label": "grid"
     },
     {
@@ -10430,7 +10430,7 @@
       "source_location": "L555",
       "_origin": "ast",
       "id": "locales_id_grid_title",
-      "community": 51,
+      "community": 125,
       "norm_label": "title"
     },
     {
@@ -10440,7 +10440,7 @@
       "source_location": "L556",
       "_origin": "ast",
       "id": "locales_id_grid_description",
-      "community": 51,
+      "community": 125,
       "norm_label": "description"
     },
     {
@@ -10887,7 +10887,7 @@
       "label": "getCategoryEmoji()",
       "file_type": "code",
       "source_file": "frontend/src/pages/MealsPage.vue",
-      "source_location": "L612",
+      "source_location": "L652",
       "_origin": "ast",
       "id": "pages_mealspage_getcategoryemoji",
       "community": 178,
@@ -10897,7 +10897,7 @@
       "label": "if()",
       "file_type": "code",
       "source_file": "frontend/src/pages/MealsPage.vue",
-      "source_location": "L975",
+      "source_location": "L1045",
       "_origin": "ast",
       "id": "pages_mealspage_if",
       "community": 178,
@@ -10907,7 +10907,7 @@
       "label": "switch()",
       "file_type": "code",
       "source_file": "frontend/src/pages/MealsPage.vue",
-      "source_location": "L1183",
+      "source_location": "L1253",
       "_origin": "ast",
       "id": "pages_mealspage_switch",
       "community": 178,
@@ -40993,5 +40993,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "35b380b7ad4f7766b279df91608658a83167d60e"
+  "built_at_commit": "94673d8f64540b5a5102e1ee3e0c62fad606e3cc"
 }
