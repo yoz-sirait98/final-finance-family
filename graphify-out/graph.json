@@ -400,7 +400,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app",
-      "community": 0,
+      "community": 51,
       "norm_label": "app.vue"
     },
     {
@@ -410,7 +410,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "src_app_authstore",
-      "community": 0,
+      "community": 51,
       "norm_label": "authstore"
     },
     {
@@ -420,7 +420,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "src_app_themestore",
-      "community": 0,
+      "community": 51,
       "norm_label": "themestore"
     },
     {
@@ -1150,7 +1150,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "composables_usedashboard",
-      "community": 0,
+      "community": 36,
       "norm_label": "usedashboard.js"
     },
     {
@@ -1160,7 +1160,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "composables_usedashboard_usedashboard",
-      "community": 0,
+      "community": 36,
       "norm_label": "usedashboard()"
     },
     {
@@ -1190,7 +1190,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "composables_usetour",
-      "community": 23,
+      "community": 56,
       "norm_label": "usetour.js"
     },
     {
@@ -1200,7 +1200,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "composables_usetour_usetour",
-      "community": 23,
+      "community": 56,
       "norm_label": "usetour()"
     },
     {
@@ -1560,7 +1560,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_realtime",
-      "community": 0,
+      "community": 51,
       "norm_label": "realtime.js"
     },
     {
@@ -1570,7 +1570,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "lib_realtime_initializerealtime",
-      "community": 0,
+      "community": 51,
       "norm_label": "initializerealtime()"
     },
     {
@@ -1600,7 +1600,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "locales_en",
-      "community": 20,
+      "community": 110,
       "norm_label": "en.json"
     },
     {
@@ -1720,7 +1720,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "locales_en_common_name",
-      "community": 8,
+      "community": 130,
       "norm_label": "name"
     },
     {
@@ -1730,7 +1730,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "locales_en_common_amount",
-      "community": 8,
+      "community": 130,
       "norm_label": "amount"
     },
     {
@@ -1740,7 +1740,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "locales_en_common_category",
-      "community": 8,
+      "community": 130,
       "norm_label": "category"
     },
     {
@@ -1750,7 +1750,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "locales_en_common_account",
-      "community": 8,
+      "community": 130,
       "norm_label": "account"
     },
     {
@@ -1920,7 +1920,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "locales_en_common_income",
-      "community": 67,
+      "community": 20,
       "norm_label": "income"
     },
     {
@@ -1930,7 +1930,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "locales_en_common_expense",
-      "community": 67,
+      "community": 20,
       "norm_label": "expense"
     },
     {
@@ -1940,7 +1940,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "locales_en_common_transfer",
-      "community": 67,
+      "community": 20,
       "norm_label": "transfer"
     },
     {
@@ -1950,7 +1950,7 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "locales_en_common_role",
-      "community": 8,
+      "community": 130,
       "norm_label": "role"
     },
     {
@@ -1960,7 +1960,7 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "locales_en_common_member",
-      "community": 8,
+      "community": 130,
       "norm_label": "member"
     },
     {
@@ -2500,7 +2500,7 @@
       "source_location": "L95",
       "_origin": "ast",
       "id": "locales_en_auth",
-      "community": 20,
+      "community": 122,
       "norm_label": "auth"
     },
     {
@@ -2530,7 +2530,7 @@
       "source_location": "L98",
       "_origin": "ast",
       "id": "locales_en_login_subtitle",
-      "community": 142,
+      "community": 110,
       "norm_label": "subtitle"
     },
     {
@@ -3080,7 +3080,7 @@
       "source_location": "L157",
       "_origin": "ast",
       "id": "locales_en_dashboard_period",
-      "community": 67,
+      "community": 20,
       "norm_label": "period"
     },
     {
@@ -3100,7 +3100,7 @@
       "source_location": "L159",
       "_origin": "ast",
       "id": "locales_en_dashboard_insights",
-      "community": 111,
+      "community": 20,
       "norm_label": "insights"
     },
     {
@@ -3800,7 +3800,7 @@
       "source_location": "L232",
       "_origin": "ast",
       "id": "locales_en_transactions_validation",
-      "community": 120,
+      "community": 11,
       "norm_label": "validation"
     },
     {
@@ -3810,7 +3810,7 @@
       "source_location": "L233",
       "_origin": "ast",
       "id": "locales_en_validation_amount",
-      "community": 120,
+      "community": 11,
       "norm_label": "amount"
     },
     {
@@ -3820,7 +3820,7 @@
       "source_location": "L234",
       "_origin": "ast",
       "id": "locales_en_validation_category",
-      "community": 120,
+      "community": 11,
       "norm_label": "category"
     },
     {
@@ -3830,7 +3830,7 @@
       "source_location": "L235",
       "_origin": "ast",
       "id": "locales_en_validation_account",
-      "community": 120,
+      "community": 11,
       "norm_label": "account"
     },
     {
@@ -3840,7 +3840,7 @@
       "source_location": "L236",
       "_origin": "ast",
       "id": "locales_en_validation_member",
-      "community": 120,
+      "community": 11,
       "norm_label": "member"
     },
     {
@@ -3850,7 +3850,7 @@
       "source_location": "L237",
       "_origin": "ast",
       "id": "locales_en_validation_transfersame",
-      "community": 120,
+      "community": 11,
       "norm_label": "transfersame"
     },
     {
@@ -3970,7 +3970,7 @@
       "source_location": "L252",
       "_origin": "ast",
       "id": "locales_en_accounts_balance",
-      "community": 67,
+      "community": 20,
       "norm_label": "balance"
     },
     {
@@ -4000,7 +4000,7 @@
       "source_location": "L255",
       "_origin": "ast",
       "id": "locales_en_accounts_validation",
-      "community": 152,
+      "community": 11,
       "norm_label": "validation"
     },
     {
@@ -4010,7 +4010,7 @@
       "source_location": "L256",
       "_origin": "ast",
       "id": "locales_en_validation_name",
-      "community": 152,
+      "community": 11,
       "norm_label": "name"
     },
     {
@@ -4020,7 +4020,7 @@
       "source_location": "L257",
       "_origin": "ast",
       "id": "locales_en_validation_type",
-      "community": 152,
+      "community": 11,
       "norm_label": "type"
     },
     {
@@ -4160,7 +4160,7 @@
       "source_location": "L273",
       "_origin": "ast",
       "id": "locales_en_budgets_validation",
-      "community": 120,
+      "community": 11,
       "norm_label": "validation"
     },
     {
@@ -4170,7 +4170,7 @@
       "source_location": "L275",
       "_origin": "ast",
       "id": "locales_en_validation_limit",
-      "community": 120,
+      "community": 11,
       "norm_label": "limit"
     },
     {
@@ -4180,7 +4180,7 @@
       "source_location": "L276",
       "_origin": "ast",
       "id": "locales_en_validation_threshold",
-      "community": 120,
+      "community": 11,
       "norm_label": "threshold"
     },
     {
@@ -4260,7 +4260,7 @@
       "source_location": "L286",
       "_origin": "ast",
       "id": "locales_en_categories_validation",
-      "community": 152,
+      "community": 11,
       "norm_label": "validation"
     },
     {
@@ -4400,7 +4400,7 @@
       "source_location": "L304",
       "_origin": "ast",
       "id": "locales_en_goals_validation",
-      "community": 8,
+      "community": 130,
       "norm_label": "validation"
     },
     {
@@ -4410,7 +4410,7 @@
       "source_location": "L306",
       "_origin": "ast",
       "id": "locales_en_validation_target",
-      "community": 8,
+      "community": 130,
       "norm_label": "target"
     },
     {
@@ -4420,7 +4420,7 @@
       "source_location": "L307",
       "_origin": "ast",
       "id": "locales_en_validation_deadline",
-      "community": 8,
+      "community": 130,
       "norm_label": "deadline"
     },
     {
@@ -4540,7 +4540,7 @@
       "source_location": "L322",
       "_origin": "ast",
       "id": "locales_en_recurring_validation",
-      "community": 120,
+      "community": 11,
       "norm_label": "validation"
     },
     {
@@ -4550,7 +4550,7 @@
       "source_location": "L327",
       "_origin": "ast",
       "id": "locales_en_validation_interval",
-      "community": 120,
+      "community": 11,
       "norm_label": "interval"
     },
     {
@@ -4560,7 +4560,7 @@
       "source_location": "L328",
       "_origin": "ast",
       "id": "locales_en_validation_nextdue",
-      "community": 120,
+      "community": 11,
       "norm_label": "nextdue"
     },
     {
@@ -4570,7 +4570,7 @@
       "source_location": "L332",
       "_origin": "ast",
       "id": "locales_en_members",
-      "community": 142,
+      "community": 110,
       "norm_label": "members"
     },
     {
@@ -4580,7 +4580,7 @@
       "source_location": "L333",
       "_origin": "ast",
       "id": "locales_en_members_title",
-      "community": 142,
+      "community": 110,
       "norm_label": "title"
     },
     {
@@ -4590,7 +4590,7 @@
       "source_location": "L334",
       "_origin": "ast",
       "id": "locales_en_members_subtitle",
-      "community": 142,
+      "community": 110,
       "norm_label": "subtitle"
     },
     {
@@ -4600,7 +4600,7 @@
       "source_location": "L335",
       "_origin": "ast",
       "id": "locales_en_members_addmember",
-      "community": 142,
+      "community": 110,
       "norm_label": "addmember"
     },
     {
@@ -4610,7 +4610,7 @@
       "source_location": "L336",
       "_origin": "ast",
       "id": "locales_en_members_editmember",
-      "community": 142,
+      "community": 110,
       "norm_label": "editmember"
     },
     {
@@ -4620,7 +4620,7 @@
       "source_location": "L337",
       "_origin": "ast",
       "id": "locales_en_members_roles",
-      "community": 142,
+      "community": 110,
       "norm_label": "roles"
     },
     {
@@ -4630,7 +4630,7 @@
       "source_location": "L338",
       "_origin": "ast",
       "id": "locales_en_roles_father",
-      "community": 142,
+      "community": 110,
       "norm_label": "father"
     },
     {
@@ -4640,7 +4640,7 @@
       "source_location": "L339",
       "_origin": "ast",
       "id": "locales_en_roles_mother",
-      "community": 142,
+      "community": 110,
       "norm_label": "mother"
     },
     {
@@ -4650,7 +4650,7 @@
       "source_location": "L340",
       "_origin": "ast",
       "id": "locales_en_roles_child",
-      "community": 142,
+      "community": 110,
       "norm_label": "child"
     },
     {
@@ -4660,7 +4660,7 @@
       "source_location": "L342",
       "_origin": "ast",
       "id": "locales_en_members_validation",
-      "community": 152,
+      "community": 11,
       "norm_label": "validation"
     },
     {
@@ -4670,7 +4670,7 @@
       "source_location": "L344",
       "_origin": "ast",
       "id": "locales_en_validation_role",
-      "community": 152,
+      "community": 11,
       "norm_label": "role"
     },
     {
@@ -4760,7 +4760,7 @@
       "source_location": "L355",
       "_origin": "ast",
       "id": "locales_en_reports_validation",
-      "community": 8,
+      "community": 130,
       "norm_label": "validation"
     },
     {
@@ -4770,7 +4770,7 @@
       "source_location": "L356",
       "_origin": "ast",
       "id": "locales_en_validation_dates",
-      "community": 8,
+      "community": 130,
       "norm_label": "dates"
     },
     {
@@ -4780,7 +4780,7 @@
       "source_location": "L357",
       "_origin": "ast",
       "id": "locales_en_validation_order",
-      "community": 8,
+      "community": 130,
       "norm_label": "order"
     },
     {
@@ -4990,7 +4990,7 @@
       "source_location": "L380",
       "_origin": "ast",
       "id": "locales_en_shopping_validation",
-      "community": 152,
+      "community": 11,
       "norm_label": "validation"
     },
     {
@@ -5110,7 +5110,7 @@
       "source_location": "L396",
       "_origin": "ast",
       "id": "locales_en_tours",
-      "community": 20,
+      "community": 124,
       "norm_label": "tours"
     },
     {
@@ -5160,7 +5160,7 @@
       "source_location": "L402",
       "_origin": "ast",
       "id": "locales_en_tours_progress",
-      "community": 20,
+      "community": 124,
       "norm_label": "progress"
     },
     {
@@ -5180,7 +5180,7 @@
       "source_location": "L405",
       "_origin": "ast",
       "id": "locales_en_period_title",
-      "community": 67,
+      "community": 20,
       "norm_label": "title"
     },
     {
@@ -5190,7 +5190,7 @@
       "source_location": "L406",
       "_origin": "ast",
       "id": "locales_en_period_description",
-      "community": 67,
+      "community": 20,
       "norm_label": "description"
     },
     {
@@ -5290,7 +5290,7 @@
       "source_location": "L420",
       "_origin": "ast",
       "id": "locales_en_dashboard_net",
-      "community": 67,
+      "community": 20,
       "norm_label": "net"
     },
     {
@@ -5300,7 +5300,7 @@
       "source_location": "L421",
       "_origin": "ast",
       "id": "locales_en_net_title",
-      "community": 67,
+      "community": 20,
       "norm_label": "title"
     },
     {
@@ -5310,7 +5310,7 @@
       "source_location": "L422",
       "_origin": "ast",
       "id": "locales_en_net_description",
-      "community": 67,
+      "community": 20,
       "norm_label": "description"
     },
     {
@@ -5320,7 +5320,7 @@
       "source_location": "L425",
       "_origin": "ast",
       "id": "locales_en_insights_title",
-      "community": 111,
+      "community": 20,
       "norm_label": "title"
     },
     {
@@ -5330,7 +5330,7 @@
       "source_location": "L426",
       "_origin": "ast",
       "id": "locales_en_insights_description",
-      "community": 111,
+      "community": 20,
       "norm_label": "description"
     },
     {
@@ -5340,7 +5340,7 @@
       "source_location": "L428",
       "_origin": "ast",
       "id": "locales_en_dashboard_charts",
-      "community": 34,
+      "community": 111,
       "norm_label": "charts"
     },
     {
@@ -5350,7 +5350,7 @@
       "source_location": "L429",
       "_origin": "ast",
       "id": "locales_en_charts_title",
-      "community": 34,
+      "community": 111,
       "norm_label": "title"
     },
     {
@@ -5360,7 +5360,7 @@
       "source_location": "L430",
       "_origin": "ast",
       "id": "locales_en_charts_description",
-      "community": 34,
+      "community": 111,
       "norm_label": "description"
     },
     {
@@ -5390,7 +5390,7 @@
       "source_location": "L435",
       "_origin": "ast",
       "id": "locales_en_header_title",
-      "community": 134,
+      "community": 124,
       "norm_label": "title"
     },
     {
@@ -5400,7 +5400,7 @@
       "source_location": "L436",
       "_origin": "ast",
       "id": "locales_en_header_description",
-      "community": 134,
+      "community": 124,
       "norm_label": "description"
     },
     {
@@ -5410,7 +5410,7 @@
       "source_location": "L438",
       "_origin": "ast",
       "id": "locales_en_transactions_add",
-      "community": 170,
+      "community": 124,
       "norm_label": "add"
     },
     {
@@ -5420,7 +5420,7 @@
       "source_location": "L439",
       "_origin": "ast",
       "id": "locales_en_add_title",
-      "community": 170,
+      "community": 124,
       "norm_label": "title"
     },
     {
@@ -5430,7 +5430,7 @@
       "source_location": "L440",
       "_origin": "ast",
       "id": "locales_en_add_description",
-      "community": 170,
+      "community": 124,
       "norm_label": "description"
     },
     {
@@ -5470,7 +5470,7 @@
       "source_location": "L446",
       "_origin": "ast",
       "id": "locales_en_transactions_filters",
-      "community": 34,
+      "community": 4,
       "norm_label": "filters"
     },
     {
@@ -5480,7 +5480,7 @@
       "source_location": "L447",
       "_origin": "ast",
       "id": "locales_en_filters_title",
-      "community": 34,
+      "community": 4,
       "norm_label": "title"
     },
     {
@@ -5490,7 +5490,7 @@
       "source_location": "L448",
       "_origin": "ast",
       "id": "locales_en_filters_description",
-      "community": 34,
+      "community": 4,
       "norm_label": "description"
     },
     {
@@ -5500,7 +5500,7 @@
       "source_location": "L450",
       "_origin": "ast",
       "id": "locales_en_transactions_table",
-      "community": 67,
+      "community": 4,
       "norm_label": "table"
     },
     {
@@ -5510,7 +5510,7 @@
       "source_location": "L451",
       "_origin": "ast",
       "id": "locales_en_table_title",
-      "community": 67,
+      "community": 4,
       "norm_label": "title"
     },
     {
@@ -5520,7 +5520,7 @@
       "source_location": "L452",
       "_origin": "ast",
       "id": "locales_en_table_description",
-      "community": 67,
+      "community": 4,
       "norm_label": "description"
     },
     {
@@ -5590,7 +5590,7 @@
       "source_location": "L463",
       "_origin": "ast",
       "id": "locales_en_tours_accounts",
-      "community": 170,
+      "community": 124,
       "norm_label": "accounts"
     },
     {
@@ -5600,7 +5600,7 @@
       "source_location": "L464",
       "_origin": "ast",
       "id": "locales_en_accounts_header",
-      "community": 170,
+      "community": 124,
       "norm_label": "header"
     },
     {
@@ -5610,7 +5610,7 @@
       "source_location": "L468",
       "_origin": "ast",
       "id": "locales_en_accounts_add",
-      "community": 170,
+      "community": 124,
       "norm_label": "add"
     },
     {
@@ -5620,7 +5620,7 @@
       "source_location": "L472",
       "_origin": "ast",
       "id": "locales_en_accounts_list",
-      "community": 175,
+      "community": 124,
       "norm_label": "list"
     },
     {
@@ -5630,7 +5630,7 @@
       "source_location": "L473",
       "_origin": "ast",
       "id": "locales_en_list_title",
-      "community": 175,
+      "community": 124,
       "norm_label": "title"
     },
     {
@@ -5640,7 +5640,7 @@
       "source_location": "L474",
       "_origin": "ast",
       "id": "locales_en_list_description",
-      "community": 175,
+      "community": 124,
       "norm_label": "description"
     },
     {
@@ -5650,7 +5650,7 @@
       "source_location": "L477",
       "_origin": "ast",
       "id": "locales_en_tours_budgets",
-      "community": 68,
+      "community": 124,
       "norm_label": "budgets"
     },
     {
@@ -5660,7 +5660,7 @@
       "source_location": "L478",
       "_origin": "ast",
       "id": "locales_en_budgets_header",
-      "community": 134,
+      "community": 124,
       "norm_label": "header"
     },
     {
@@ -5670,7 +5670,7 @@
       "source_location": "L482",
       "_origin": "ast",
       "id": "locales_en_budgets_add",
-      "community": 68,
+      "community": 124,
       "norm_label": "add"
     },
     {
@@ -5680,7 +5680,7 @@
       "source_location": "L486",
       "_origin": "ast",
       "id": "locales_en_budgets_list",
-      "community": 175,
+      "community": 124,
       "norm_label": "list"
     },
     {
@@ -5690,7 +5690,7 @@
       "source_location": "L490",
       "_origin": "ast",
       "id": "locales_en_budgets_alerts",
-      "community": 68,
+      "community": 24,
       "norm_label": "alerts"
     },
     {
@@ -5700,7 +5700,7 @@
       "source_location": "L491",
       "_origin": "ast",
       "id": "locales_en_alerts_title",
-      "community": 68,
+      "community": 24,
       "norm_label": "title"
     },
     {
@@ -5710,7 +5710,7 @@
       "source_location": "L492",
       "_origin": "ast",
       "id": "locales_en_alerts_description",
-      "community": 68,
+      "community": 24,
       "norm_label": "description"
     },
     {
@@ -5720,7 +5720,7 @@
       "source_location": "L495",
       "_origin": "ast",
       "id": "locales_en_tours_goals",
-      "community": 67,
+      "community": 20,
       "norm_label": "goals"
     },
     {
@@ -5730,7 +5730,7 @@
       "source_location": "L496",
       "_origin": "ast",
       "id": "locales_en_goals_header",
-      "community": 67,
+      "community": 20,
       "norm_label": "header"
     },
     {
@@ -5740,7 +5740,7 @@
       "source_location": "L500",
       "_origin": "ast",
       "id": "locales_en_goals_add",
-      "community": 67,
+      "community": 20,
       "norm_label": "add"
     },
     {
@@ -5750,7 +5750,7 @@
       "source_location": "L504",
       "_origin": "ast",
       "id": "locales_en_goals_list",
-      "community": 67,
+      "community": 20,
       "norm_label": "list"
     },
     {
@@ -5760,7 +5760,7 @@
       "source_location": "L509",
       "_origin": "ast",
       "id": "locales_en_tours_recurring",
-      "community": 170,
+      "community": 124,
       "norm_label": "recurring"
     },
     {
@@ -5770,7 +5770,7 @@
       "source_location": "L510",
       "_origin": "ast",
       "id": "locales_en_recurring_header",
-      "community": 170,
+      "community": 124,
       "norm_label": "header"
     },
     {
@@ -5780,7 +5780,7 @@
       "source_location": "L514",
       "_origin": "ast",
       "id": "locales_en_recurring_add",
-      "community": 170,
+      "community": 124,
       "norm_label": "add"
     },
     {
@@ -5790,7 +5790,7 @@
       "source_location": "L518",
       "_origin": "ast",
       "id": "locales_en_recurring_list",
-      "community": 175,
+      "community": 124,
       "norm_label": "list"
     },
     {
@@ -5800,7 +5800,7 @@
       "source_location": "L523",
       "_origin": "ast",
       "id": "locales_en_tours_reports",
-      "community": 34,
+      "community": 124,
       "norm_label": "reports"
     },
     {
@@ -5810,7 +5810,7 @@
       "source_location": "L524",
       "_origin": "ast",
       "id": "locales_en_reports_header",
-      "community": 34,
+      "community": 124,
       "norm_label": "header"
     },
     {
@@ -5820,7 +5820,7 @@
       "source_location": "L528",
       "_origin": "ast",
       "id": "locales_en_reports_filters",
-      "community": 34,
+      "community": 4,
       "norm_label": "filters"
     },
     {
@@ -5830,7 +5830,7 @@
       "source_location": "L532",
       "_origin": "ast",
       "id": "locales_en_reports_charts",
-      "community": 34,
+      "community": 111,
       "norm_label": "charts"
     },
     {
@@ -5840,7 +5840,7 @@
       "source_location": "L536",
       "_origin": "ast",
       "id": "locales_en_reports_export",
-      "community": 67,
+      "community": 34,
       "norm_label": "export"
     },
     {
@@ -5850,7 +5850,7 @@
       "source_location": "L537",
       "_origin": "ast",
       "id": "locales_en_export_title",
-      "community": 67,
+      "community": 34,
       "norm_label": "title"
     },
     {
@@ -5860,7 +5860,7 @@
       "source_location": "L538",
       "_origin": "ast",
       "id": "locales_en_export_description",
-      "community": 67,
+      "community": 34,
       "norm_label": "description"
     },
     {
@@ -5870,7 +5870,7 @@
       "source_location": "L540",
       "_origin": "ast",
       "id": "locales_en_reports_csv",
-      "community": 34,
+      "community": 124,
       "norm_label": "csv"
     },
     {
@@ -5880,7 +5880,7 @@
       "source_location": "L541",
       "_origin": "ast",
       "id": "locales_en_csv_title",
-      "community": 34,
+      "community": 124,
       "norm_label": "title"
     },
     {
@@ -5890,7 +5890,7 @@
       "source_location": "L542",
       "_origin": "ast",
       "id": "locales_en_csv_description",
-      "community": 34,
+      "community": 124,
       "norm_label": "description"
     },
     {
@@ -5900,7 +5900,7 @@
       "source_location": "L544",
       "_origin": "ast",
       "id": "locales_en_reports_pdf",
-      "community": 34,
+      "community": 124,
       "norm_label": "pdf"
     },
     {
@@ -5910,7 +5910,7 @@
       "source_location": "L545",
       "_origin": "ast",
       "id": "locales_en_pdf_title",
-      "community": 34,
+      "community": 124,
       "norm_label": "title"
     },
     {
@@ -5920,7 +5920,7 @@
       "source_location": "L546",
       "_origin": "ast",
       "id": "locales_en_pdf_description",
-      "community": 34,
+      "community": 124,
       "norm_label": "description"
     },
     {
@@ -5930,7 +5930,7 @@
       "source_location": "L549",
       "_origin": "ast",
       "id": "locales_en_tours_calendar",
-      "community": 107,
+      "community": 124,
       "norm_label": "calendar"
     },
     {
@@ -5940,7 +5940,7 @@
       "source_location": "L550",
       "_origin": "ast",
       "id": "locales_en_calendar_header",
-      "community": 107,
+      "community": 124,
       "norm_label": "header"
     },
     {
@@ -5950,7 +5950,7 @@
       "source_location": "L554",
       "_origin": "ast",
       "id": "locales_en_calendar_grid",
-      "community": 107,
+      "community": 124,
       "norm_label": "grid"
     },
     {
@@ -5960,7 +5960,7 @@
       "source_location": "L555",
       "_origin": "ast",
       "id": "locales_en_grid_title",
-      "community": 107,
+      "community": 124,
       "norm_label": "title"
     },
     {
@@ -5970,7 +5970,7 @@
       "source_location": "L556",
       "_origin": "ast",
       "id": "locales_en_grid_description",
-      "community": 107,
+      "community": 124,
       "norm_label": "description"
     },
     {
@@ -5980,7 +5980,7 @@
       "source_location": "L558",
       "_origin": "ast",
       "id": "locales_en_calendar_add",
-      "community": 107,
+      "community": 124,
       "norm_label": "add"
     },
     {
@@ -5990,7 +5990,7 @@
       "source_location": "L563",
       "_origin": "ast",
       "id": "locales_en_tours_shopping",
-      "community": 134,
+      "community": 124,
       "norm_label": "shopping"
     },
     {
@@ -6000,7 +6000,7 @@
       "source_location": "L564",
       "_origin": "ast",
       "id": "locales_en_shopping_header",
-      "community": 134,
+      "community": 124,
       "norm_label": "header"
     },
     {
@@ -6010,7 +6010,7 @@
       "source_location": "L568",
       "_origin": "ast",
       "id": "locales_en_shopping_add",
-      "community": 134,
+      "community": 124,
       "norm_label": "add"
     },
     {
@@ -6040,7 +6040,7 @@
       "source_location": "L577",
       "_origin": "ast",
       "id": "locales_en_tours_shoppingdetail",
-      "community": 134,
+      "community": 124,
       "norm_label": "shoppingdetail"
     },
     {
@@ -6050,7 +6050,7 @@
       "source_location": "L578",
       "_origin": "ast",
       "id": "locales_en_shoppingdetail_header",
-      "community": 134,
+      "community": 124,
       "norm_label": "header"
     },
     {
@@ -6060,7 +6060,7 @@
       "source_location": "L582",
       "_origin": "ast",
       "id": "locales_en_shoppingdetail_add",
-      "community": 170,
+      "community": 124,
       "norm_label": "add"
     },
     {
@@ -6070,7 +6070,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "locales_id",
-      "community": 30,
+      "community": 68,
       "norm_label": "id.json"
     },
     {
@@ -6970,7 +6970,7 @@
       "source_location": "L95",
       "_origin": "ast",
       "id": "locales_id_auth",
-      "community": 30,
+      "community": 68,
       "norm_label": "auth"
     },
     {
@@ -6980,7 +6980,7 @@
       "source_location": "L96",
       "_origin": "ast",
       "id": "locales_id_auth_login",
-      "community": 36,
+      "community": 106,
       "norm_label": "login"
     },
     {
@@ -6990,7 +6990,7 @@
       "source_location": "L97",
       "_origin": "ast",
       "id": "locales_id_login_title",
-      "community": 36,
+      "community": 106,
       "norm_label": "title"
     },
     {
@@ -7000,7 +7000,7 @@
       "source_location": "L98",
       "_origin": "ast",
       "id": "locales_id_login_subtitle",
-      "community": 30,
+      "community": 67,
       "norm_label": "subtitle"
     },
     {
@@ -7010,7 +7010,7 @@
       "source_location": "L99",
       "_origin": "ast",
       "id": "locales_id_login_email",
-      "community": 36,
+      "community": 106,
       "norm_label": "email"
     },
     {
@@ -7020,7 +7020,7 @@
       "source_location": "L100",
       "_origin": "ast",
       "id": "locales_id_login_emailplaceholder",
-      "community": 36,
+      "community": 106,
       "norm_label": "emailplaceholder"
     },
     {
@@ -7030,7 +7030,7 @@
       "source_location": "L101",
       "_origin": "ast",
       "id": "locales_id_login_password",
-      "community": 36,
+      "community": 106,
       "norm_label": "password"
     },
     {
@@ -7040,7 +7040,7 @@
       "source_location": "L102",
       "_origin": "ast",
       "id": "locales_id_login_passwordplaceholder",
-      "community": 36,
+      "community": 106,
       "norm_label": "passwordplaceholder"
     },
     {
@@ -7050,7 +7050,7 @@
       "source_location": "L103",
       "_origin": "ast",
       "id": "locales_id_login_signin",
-      "community": 36,
+      "community": 106,
       "norm_label": "signin"
     },
     {
@@ -7060,7 +7060,7 @@
       "source_location": "L104",
       "_origin": "ast",
       "id": "locales_id_login_signingin",
-      "community": 36,
+      "community": 106,
       "norm_label": "signingin"
     },
     {
@@ -7070,7 +7070,7 @@
       "source_location": "L105",
       "_origin": "ast",
       "id": "locales_id_login_newhere",
-      "community": 36,
+      "community": 106,
       "norm_label": "newhere"
     },
     {
@@ -7080,7 +7080,7 @@
       "source_location": "L106",
       "_origin": "ast",
       "id": "locales_id_login_createaccount",
-      "community": 36,
+      "community": 106,
       "norm_label": "createaccount"
     },
     {
@@ -7090,7 +7090,7 @@
       "source_location": "L107",
       "_origin": "ast",
       "id": "locales_id_login_failed",
-      "community": 36,
+      "community": 106,
       "norm_label": "failed"
     },
     {
@@ -8470,7 +8470,7 @@
       "source_location": "L255",
       "_origin": "ast",
       "id": "locales_id_accounts_validation",
-      "community": 9,
+      "community": 120,
       "norm_label": "validation"
     },
     {
@@ -8480,7 +8480,7 @@
       "source_location": "L256",
       "_origin": "ast",
       "id": "locales_id_validation_name",
-      "community": 9,
+      "community": 120,
       "norm_label": "name"
     },
     {
@@ -8490,7 +8490,7 @@
       "source_location": "L257",
       "_origin": "ast",
       "id": "locales_id_validation_type",
-      "community": 9,
+      "community": 120,
       "norm_label": "type"
     },
     {
@@ -8660,7 +8660,7 @@
       "source_location": "L279",
       "_origin": "ast",
       "id": "locales_id_categories",
-      "community": 9,
+      "community": 68,
       "norm_label": "categories"
     },
     {
@@ -8670,7 +8670,7 @@
       "source_location": "L280",
       "_origin": "ast",
       "id": "locales_id_categories_title",
-      "community": 9,
+      "community": 68,
       "norm_label": "title"
     },
     {
@@ -8680,7 +8680,7 @@
       "source_location": "L281",
       "_origin": "ast",
       "id": "locales_id_categories_subtitle",
-      "community": 9,
+      "community": 68,
       "norm_label": "subtitle"
     },
     {
@@ -8690,7 +8690,7 @@
       "source_location": "L282",
       "_origin": "ast",
       "id": "locales_id_categories_addcategory",
-      "community": 9,
+      "community": 68,
       "norm_label": "addcategory"
     },
     {
@@ -8700,7 +8700,7 @@
       "source_location": "L283",
       "_origin": "ast",
       "id": "locales_id_categories_editcategory",
-      "community": 9,
+      "community": 68,
       "norm_label": "editcategory"
     },
     {
@@ -8710,7 +8710,7 @@
       "source_location": "L284",
       "_origin": "ast",
       "id": "locales_id_categories_icon",
-      "community": 9,
+      "community": 68,
       "norm_label": "icon"
     },
     {
@@ -8720,7 +8720,7 @@
       "source_location": "L285",
       "_origin": "ast",
       "id": "locales_id_categories_color",
-      "community": 9,
+      "community": 68,
       "norm_label": "color"
     },
     {
@@ -8730,7 +8730,7 @@
       "source_location": "L286",
       "_origin": "ast",
       "id": "locales_id_categories_validation",
-      "community": 9,
+      "community": 120,
       "norm_label": "validation"
     },
     {
@@ -9040,7 +9040,7 @@
       "source_location": "L332",
       "_origin": "ast",
       "id": "locales_id_members",
-      "community": 30,
+      "community": 67,
       "norm_label": "members"
     },
     {
@@ -9050,7 +9050,7 @@
       "source_location": "L333",
       "_origin": "ast",
       "id": "locales_id_members_title",
-      "community": 30,
+      "community": 67,
       "norm_label": "title"
     },
     {
@@ -9060,7 +9060,7 @@
       "source_location": "L334",
       "_origin": "ast",
       "id": "locales_id_members_subtitle",
-      "community": 30,
+      "community": 67,
       "norm_label": "subtitle"
     },
     {
@@ -9070,7 +9070,7 @@
       "source_location": "L335",
       "_origin": "ast",
       "id": "locales_id_members_addmember",
-      "community": 30,
+      "community": 67,
       "norm_label": "addmember"
     },
     {
@@ -9080,7 +9080,7 @@
       "source_location": "L336",
       "_origin": "ast",
       "id": "locales_id_members_editmember",
-      "community": 30,
+      "community": 67,
       "norm_label": "editmember"
     },
     {
@@ -9090,7 +9090,7 @@
       "source_location": "L337",
       "_origin": "ast",
       "id": "locales_id_members_roles",
-      "community": 30,
+      "community": 67,
       "norm_label": "roles"
     },
     {
@@ -9100,7 +9100,7 @@
       "source_location": "L338",
       "_origin": "ast",
       "id": "locales_id_roles_father",
-      "community": 30,
+      "community": 67,
       "norm_label": "father"
     },
     {
@@ -9110,7 +9110,7 @@
       "source_location": "L339",
       "_origin": "ast",
       "id": "locales_id_roles_mother",
-      "community": 30,
+      "community": 67,
       "norm_label": "mother"
     },
     {
@@ -9120,7 +9120,7 @@
       "source_location": "L340",
       "_origin": "ast",
       "id": "locales_id_roles_child",
-      "community": 30,
+      "community": 67,
       "norm_label": "child"
     },
     {
@@ -9130,7 +9130,7 @@
       "source_location": "L342",
       "_origin": "ast",
       "id": "locales_id_members_validation",
-      "community": 9,
+      "community": 120,
       "norm_label": "validation"
     },
     {
@@ -9140,7 +9140,7 @@
       "source_location": "L344",
       "_origin": "ast",
       "id": "locales_id_validation_role",
-      "community": 9,
+      "community": 120,
       "norm_label": "role"
     },
     {
@@ -9460,7 +9460,7 @@
       "source_location": "L380",
       "_origin": "ast",
       "id": "locales_id_shopping_validation",
-      "community": 9,
+      "community": 120,
       "norm_label": "validation"
     },
     {
@@ -9970,7 +9970,7 @@
       "source_location": "L450",
       "_origin": "ast",
       "id": "locales_id_transactions_table",
-      "community": 47,
+      "community": 15,
       "norm_label": "table"
     },
     {
@@ -9980,7 +9980,7 @@
       "source_location": "L451",
       "_origin": "ast",
       "id": "locales_id_table_title",
-      "community": 47,
+      "community": 15,
       "norm_label": "title"
     },
     {
@@ -9990,7 +9990,7 @@
       "source_location": "L452",
       "_origin": "ast",
       "id": "locales_id_table_description",
-      "community": 47,
+      "community": 15,
       "norm_label": "description"
     },
     {
@@ -10120,7 +10120,7 @@
       "source_location": "L477",
       "_origin": "ast",
       "id": "locales_id_tours_budgets",
-      "community": 125,
+      "community": 171,
       "norm_label": "budgets"
     },
     {
@@ -10160,7 +10160,7 @@
       "source_location": "L490",
       "_origin": "ast",
       "id": "locales_id_budgets_alerts",
-      "community": 153,
+      "community": 171,
       "norm_label": "alerts"
     },
     {
@@ -10170,7 +10170,7 @@
       "source_location": "L491",
       "_origin": "ast",
       "id": "locales_id_alerts_title",
-      "community": 153,
+      "community": 171,
       "norm_label": "title"
     },
     {
@@ -10180,7 +10180,7 @@
       "source_location": "L492",
       "_origin": "ast",
       "id": "locales_id_alerts_description",
-      "community": 153,
+      "community": 171,
       "norm_label": "description"
     },
     {
@@ -10220,7 +10220,7 @@
       "source_location": "L504",
       "_origin": "ast",
       "id": "locales_id_goals_list",
-      "community": 15,
+      "community": 171,
       "norm_label": "list"
     },
     {
@@ -10280,7 +10280,7 @@
       "source_location": "L524",
       "_origin": "ast",
       "id": "locales_id_reports_header",
-      "community": 132,
+      "community": 125,
       "norm_label": "header"
     },
     {
@@ -11000,7 +11000,7 @@
       "source_location": "L459",
       "_origin": "ast",
       "id": "pages_schedulerpage_changedateby",
-      "community": 35,
+      "community": 19,
       "norm_label": "changedateby()"
     },
     {
@@ -11310,7 +11310,7 @@
       "source_location": "L682",
       "_origin": "ast",
       "id": "pages_shoppingdetailpage_restockalltopantry",
-      "community": 0,
+      "community": 142,
       "norm_label": "restockalltopantry()"
     },
     {
@@ -11370,7 +11370,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "router_index",
-      "community": 0,
+      "community": 36,
       "norm_label": "index.js"
     },
     {
@@ -11380,7 +11380,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "router_index_routes",
-      "community": 0,
+      "community": 36,
       "norm_label": "routes"
     },
     {
@@ -11390,7 +11390,7 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "router_index_router",
-      "community": 0,
+      "community": 36,
       "norm_label": "router"
     },
     {
@@ -11400,7 +11400,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_accountservice",
-      "community": 0,
+      "community": 23,
       "norm_label": "accountservice.js"
     },
     {
@@ -11410,7 +11410,7 @@
       "source_location": "L2",
       "_origin": "ast",
       "id": "services_accountservice_accountservice",
-      "community": 0,
+      "community": 23,
       "norm_label": "accountservice"
     },
     {
@@ -11420,7 +11420,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_aiservice",
-      "community": 0,
+      "community": 23,
       "norm_label": "aiservice.js"
     },
     {
@@ -11460,7 +11460,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_budgetservice",
-      "community": 0,
+      "community": 23,
       "norm_label": "budgetservice.js"
     },
     {
@@ -11470,7 +11470,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "services_budgetservice_crud",
-      "community": 0,
+      "community": 23,
       "norm_label": "crud"
     },
     {
@@ -11480,7 +11480,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "services_budgetservice_budgetservice",
-      "community": 0,
+      "community": 23,
       "norm_label": "budgetservice"
     },
     {
@@ -11510,7 +11510,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_crud",
-      "community": 0,
+      "community": 23,
       "norm_label": "crud.js"
     },
     {
@@ -11520,7 +11520,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "services_crud_createcrudservice",
-      "community": 0,
+      "community": 23,
       "norm_label": "createcrudservice()"
     },
     {
@@ -11530,7 +11530,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_dashboardservice",
-      "community": 0,
+      "community": 36,
       "norm_label": "dashboardservice.js"
     },
     {
@@ -11540,7 +11540,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "services_dashboardservice_dashboardservice",
-      "community": 0,
+      "community": 36,
       "norm_label": "dashboardservice"
     },
     {
@@ -11550,7 +11550,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_goalservice",
-      "community": 0,
+      "community": 23,
       "norm_label": "goalservice.js"
     },
     {
@@ -11560,7 +11560,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "services_goalservice_crud",
-      "community": 0,
+      "community": 23,
       "norm_label": "crud"
     },
     {
@@ -11570,7 +11570,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "services_goalservice_goalservice",
-      "community": 0,
+      "community": 23,
       "norm_label": "goalservice"
     },
     {
@@ -11580,7 +11580,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_mealplanservice",
-      "community": 0,
+      "community": 134,
       "norm_label": "mealplanservice.js"
     },
     {
@@ -11590,7 +11590,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "services_mealplanservice_crud",
-      "community": 0,
+      "community": 134,
       "norm_label": "crud"
     },
     {
@@ -11600,7 +11600,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "services_mealplanservice_mealplanservice",
-      "community": 0,
+      "community": 134,
       "norm_label": "mealplanservice"
     },
     {
@@ -11610,7 +11610,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_memberservice",
-      "community": 0,
+      "community": 23,
       "norm_label": "memberservice.js"
     },
     {
@@ -11620,7 +11620,7 @@
       "source_location": "L2",
       "_origin": "ast",
       "id": "services_memberservice_memberservice",
-      "community": 0,
+      "community": 23,
       "norm_label": "memberservice"
     },
     {
@@ -11630,7 +11630,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_pantryservice",
-      "community": 0,
+      "community": 142,
       "norm_label": "pantryservice.js"
     },
     {
@@ -11640,7 +11640,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "services_pantryservice_crud",
-      "community": 0,
+      "community": 142,
       "norm_label": "crud"
     },
     {
@@ -11650,7 +11650,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "services_pantryservice_pantryservice",
-      "community": 0,
+      "community": 142,
       "norm_label": "pantryservice"
     },
     {
@@ -11700,7 +11700,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_pushnotificationservice",
-      "community": 0,
+      "community": 56,
       "norm_label": "pushnotificationservice.js"
     },
     {
@@ -12240,7 +12240,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scheduler_reminderservice",
-      "community": 39,
+      "community": 35,
       "norm_label": "reminderservice.js"
     },
     {
@@ -12460,7 +12460,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_shoppingplanservice",
-      "community": 0,
+      "community": 45,
       "norm_label": "shoppingplanservice.js"
     },
     {
@@ -12470,7 +12470,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "services_shoppingplanservice_crud",
-      "community": 0,
+      "community": 45,
       "norm_label": "crud"
     },
     {
@@ -12490,7 +12490,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_shoppingservice",
-      "community": 0,
+      "community": 36,
       "norm_label": "shoppingservice.js"
     },
     {
@@ -12500,7 +12500,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "services_shoppingservice_crud",
-      "community": 0,
+      "community": 36,
       "norm_label": "crud"
     },
     {
@@ -12510,7 +12510,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "services_shoppingservice_shoppingservice",
-      "community": 0,
+      "community": 36,
       "norm_label": "shoppingservice"
     },
     {
@@ -12570,7 +12570,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_syncservice",
-      "community": 0,
+      "community": 23,
       "norm_label": "syncservice.js"
     },
     {
@@ -12580,7 +12580,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "services_syncservice_syncservice",
-      "community": 0,
+      "community": 23,
       "norm_label": "syncservice"
     },
     {
@@ -12590,7 +12590,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "services_transactionservice",
-      "community": 0,
+      "community": 23,
       "norm_label": "transactionservice.js"
     },
     {
@@ -12600,7 +12600,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "services_transactionservice_crud",
-      "community": 0,
+      "community": 23,
       "norm_label": "crud"
     },
     {
@@ -12610,7 +12610,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "services_transactionservice_transactionservice",
-      "community": 0,
+      "community": 23,
       "norm_label": "transactionservice"
     },
     {
@@ -12620,7 +12620,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "stores_accounts",
-      "community": 0,
+      "community": 51,
       "norm_label": "accounts.js"
     },
     {
@@ -12630,7 +12630,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "stores_accounts_useaccountstore",
-      "community": 0,
+      "community": 51,
       "norm_label": "useaccountstore"
     },
     {
@@ -12640,7 +12640,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "stores_auth",
-      "community": 0,
+      "community": 36,
       "norm_label": "auth.js"
     },
     {
@@ -12650,7 +12650,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "stores_auth_useauthstore",
-      "community": 0,
+      "community": 36,
       "norm_label": "useauthstore"
     },
     {
@@ -12660,7 +12660,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "stores_budgets",
-      "community": 0,
+      "community": 23,
       "norm_label": "budgets.js"
     },
     {
@@ -12670,7 +12670,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "stores_budgets_usebudgetstore",
-      "community": 0,
+      "community": 51,
       "norm_label": "usebudgetstore"
     },
     {
@@ -12700,7 +12700,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "stores_goals",
-      "community": 0,
+      "community": 23,
       "norm_label": "goals.js"
     },
     {
@@ -12710,7 +12710,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "stores_goals_usegoalstore",
-      "community": 0,
+      "community": 51,
       "norm_label": "usegoalstore"
     },
     {
@@ -12740,7 +12740,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "stores_locale",
-      "community": 23,
+      "community": 56,
       "norm_label": "locale.js"
     },
     {
@@ -12750,7 +12750,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "stores_locale_uselocalestore",
-      "community": 23,
+      "community": 56,
       "norm_label": "uselocalestore"
     },
     {
@@ -12760,7 +12760,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "stores_mealplan",
-      "community": 0,
+      "community": 134,
       "norm_label": "mealplan.js"
     },
     {
@@ -12770,7 +12770,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "stores_mealplan_getmonday",
-      "community": 0,
+      "community": 134,
       "norm_label": "getmonday()"
     },
     {
@@ -12780,7 +12780,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "stores_mealplan_todatestr",
-      "community": 0,
+      "community": 134,
       "norm_label": "todatestr()"
     },
     {
@@ -12790,7 +12790,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "stores_mealplan_usemealplanstore",
-      "community": 0,
+      "community": 134,
       "norm_label": "usemealplanstore"
     },
     {
@@ -12820,7 +12820,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "stores_pantry",
-      "community": 0,
+      "community": 142,
       "norm_label": "pantry.js"
     },
     {
@@ -12830,7 +12830,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "stores_pantry_usepantrystore",
-      "community": 0,
+      "community": 142,
       "norm_label": "usepantrystore"
     },
     {
@@ -12880,7 +12880,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "stores_schedulertask",
-      "community": 138,
+      "community": 35,
       "norm_label": "schedulertask.js"
     },
     {
@@ -12890,7 +12890,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "stores_schedulertask_useschedulertaskstore",
-      "community": 138,
+      "community": 35,
       "norm_label": "useschedulertaskstore"
     },
     {
@@ -12900,7 +12900,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "stores_theme",
-      "community": 0,
+      "community": 51,
       "norm_label": "theme.js"
     },
     {
@@ -12910,7 +12910,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "stores_theme_usethemestore",
-      "community": 0,
+      "community": 51,
       "norm_label": "usethemestore"
     },
     {
@@ -12920,7 +12920,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "stores_toast",
-      "community": 56,
+      "community": 45,
       "norm_label": "toast.js"
     },
     {
@@ -12930,7 +12930,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "stores_toast_usetoaststore",
-      "community": 56,
+      "community": 45,
       "norm_label": "usetoaststore"
     },
     {
@@ -12940,7 +12940,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "stores_tour",
-      "community": 23,
+      "community": 56,
       "norm_label": "tour.js"
     },
     {
@@ -12950,7 +12950,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "stores_tour_loadseen",
-      "community": 23,
+      "community": 56,
       "norm_label": "loadseen()"
     },
     {
@@ -12960,7 +12960,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "stores_tour_usetourstore",
-      "community": 23,
+      "community": 56,
       "norm_label": "usetourstore"
     },
     {
@@ -12980,7 +12980,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "stores_transactions_usetransactionstore",
-      "community": 0,
+      "community": 51,
       "norm_label": "usetransactionstore"
     },
     {
@@ -13430,7 +13430,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "utils_pushutils",
-      "community": 0,
+      "community": 56,
       "norm_label": "pushutils.js"
     },
     {
@@ -13440,7 +13440,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "utils_pushutils_urlbase64touint8array",
-      "community": 0,
+      "community": 56,
       "norm_label": "urlbase64touint8array()"
     },
     {
@@ -13540,7 +13540,7 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "utils_schedulerdate_formatdatekey",
-      "community": 35,
+      "community": 19,
       "norm_label": "formatdatekey()"
     },
     {
@@ -15212,6 +15212,76 @@
       "id": "docs_walkthrough_magic_ui_readme_modernization",
       "community": 21,
       "norm_label": "\ud83d\udcdd readme modernization"
+    },
+    {
+      "label": "walkthrough_mobile_pwa_scheduler_and_meals.md",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_mobile_pwa_scheduler_and_meals.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_walkthrough_mobile_pwa_scheduler_and_meals",
+      "community": 107,
+      "norm_label": "walkthrough_mobile_pwa_scheduler_and_meals.md"
+    },
+    {
+      "label": "Mobile PWA Responsiveness & Touch UX Walkthrough",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_mobile_pwa_scheduler_and_meals.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_walkthrough_mobile_pwa_scheduler_and_meals_mobile_pwa_responsiveness_touch_ux_walkthrough",
+      "community": 107,
+      "norm_label": "mobile pwa responsiveness & touch ux walkthrough"
+    },
+    {
+      "label": "Executive Summary",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_mobile_pwa_scheduler_and_meals.md",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "docs_walkthrough_mobile_pwa_scheduler_and_meals_executive_summary",
+      "community": 107,
+      "norm_label": "executive summary"
+    },
+    {
+      "label": "1. Global PWA Viewport & Mobile Architecture",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_mobile_pwa_scheduler_and_meals.md",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "docs_walkthrough_mobile_pwa_scheduler_and_meals_1_global_pwa_viewport_mobile_architecture",
+      "community": 107,
+      "norm_label": "1. global pwa viewport & mobile architecture"
+    },
+    {
+      "label": "2. Meals & Pantry Module Mobile Enhancements ([`MealsPage.vue`](file:///c:/Projects/final-finance-family/frontend/src/pages/MealsPage.vue))",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_mobile_pwa_scheduler_and_meals.md",
+      "source_location": "L25",
+      "_origin": "ast",
+      "id": "docs_walkthrough_mobile_pwa_scheduler_and_meals_2_meals_pantry_module_mobile_enhancements_mealspage_vue_file_c_projects_final_finance_family_frontend_src_pages_mealspage_vue",
+      "community": 107,
+      "norm_label": "2. meals & pantry module mobile enhancements ([`mealspage.vue`](file:///c:/projects/final-finance-family/frontend/src/pages/mealspage.vue))"
+    },
+    {
+      "label": "3. Scheduler & Chores Module Mobile Enhancements ([`SchedulerPage.vue`](file:///c:/Projects/final-finance-family/frontend/src/pages/SchedulerPage.vue))",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_mobile_pwa_scheduler_and_meals.md",
+      "source_location": "L37",
+      "_origin": "ast",
+      "id": "docs_walkthrough_mobile_pwa_scheduler_and_meals_3_scheduler_chores_module_mobile_enhancements_schedulerpage_vue_file_c_projects_final_finance_family_frontend_src_pages_schedulerpage_vue",
+      "community": 107,
+      "norm_label": "3. scheduler & chores module mobile enhancements ([`schedulerpage.vue`](file:///c:/projects/final-finance-family/frontend/src/pages/schedulerpage.vue))"
+    },
+    {
+      "label": "4. Verification Results",
+      "file_type": "document",
+      "source_file": "docs/walkthrough_mobile_pwa_scheduler_and_meals.md",
+      "source_location": "L48",
+      "_origin": "ast",
+      "id": "docs_walkthrough_mobile_pwa_scheduler_and_meals_4_verification_results",
+      "community": 107,
+      "norm_label": "4. verification results"
     },
     {
       "label": "walkthrough_mobile_shopping_plan.md",
@@ -39404,6 +39474,66 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_mobile_pwa_scheduler_and_meals.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_walkthrough_mobile_pwa_scheduler_and_meals",
+      "target": "docs_walkthrough_mobile_pwa_scheduler_and_meals_mobile_pwa_responsiveness_touch_ux_walkthrough",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_mobile_pwa_scheduler_and_meals.md",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "docs_walkthrough_mobile_pwa_scheduler_and_meals_mobile_pwa_responsiveness_touch_ux_walkthrough",
+      "target": "docs_walkthrough_mobile_pwa_scheduler_and_meals_1_global_pwa_viewport_mobile_architecture",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_mobile_pwa_scheduler_and_meals.md",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "docs_walkthrough_mobile_pwa_scheduler_and_meals_mobile_pwa_responsiveness_touch_ux_walkthrough",
+      "target": "docs_walkthrough_mobile_pwa_scheduler_and_meals_2_meals_pantry_module_mobile_enhancements_mealspage_vue_file_c_projects_final_finance_family_frontend_src_pages_mealspage_vue",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_mobile_pwa_scheduler_and_meals.md",
+      "source_location": "L37",
+      "weight": 1.0,
+      "source": "docs_walkthrough_mobile_pwa_scheduler_and_meals_mobile_pwa_responsiveness_touch_ux_walkthrough",
+      "target": "docs_walkthrough_mobile_pwa_scheduler_and_meals_3_scheduler_chores_module_mobile_enhancements_schedulerpage_vue_file_c_projects_final_finance_family_frontend_src_pages_schedulerpage_vue",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_mobile_pwa_scheduler_and_meals.md",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "docs_walkthrough_mobile_pwa_scheduler_and_meals_mobile_pwa_responsiveness_touch_ux_walkthrough",
+      "target": "docs_walkthrough_mobile_pwa_scheduler_and_meals_4_verification_results",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/walkthrough_mobile_pwa_scheduler_and_meals.md",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "docs_walkthrough_mobile_pwa_scheduler_and_meals_mobile_pwa_responsiveness_touch_ux_walkthrough",
+      "target": "docs_walkthrough_mobile_pwa_scheduler_and_meals_executive_summary",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "docs/walkthrough_mobile_shopping_plan.md",
       "source_location": "L1",
       "weight": 1.0,
@@ -40993,5 +41123,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "94673d8f64540b5a5102e1ee3e0c62fad606e3cc"
+  "built_at_commit": "c3ee99682df780c729faccc0c31b6797990eee7a"
 }

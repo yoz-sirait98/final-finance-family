@@ -1326,6 +1326,7 @@ function getExpiryBadgeClass(dateStr) {
 .text-gradient {
   background: linear-gradient(135deg, var(--primary-color) 0%, #0dcaf0 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -1591,6 +1592,7 @@ function getExpiryBadgeClass(dateStr) {
 .text-truncate-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }

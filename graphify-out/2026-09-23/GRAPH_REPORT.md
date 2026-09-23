@@ -1,16 +1,16 @@
 # Graph Report - final-finance-family  (2026-09-23)
 
 ## Corpus Check
-- 204 files · ~153,115 words
+- 204 files · ~153,725 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1721 nodes · 2337 edges · 181 communities (134 shown, 47 thin omitted)
+- 1721 nodes · 2337 edges · 180 communities (133 shown, 47 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `35b380b7`
+- Built from commit: `94673d8f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -63,7 +63,6 @@
 - [[_COMMUNITY_Community 46|Community 46]]
 - [[_COMMUNITY_Budget Tour Steps|Budget Tour Steps]]
 - [[_COMMUNITY_Dashboard Tour Steps|Dashboard Tour Steps]]
-- [[_COMMUNITY_Community 51|Community 51]]
 - [[_COMMUNITY_Goal Notification Modal|Goal Notification Modal]]
 - [[_COMMUNITY_Hello World Component|Hello World Component]]
 - [[_COMMUNITY_Bootstrap Integration|Bootstrap Integration]]
@@ -190,7 +189,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (181 total, 47 thin omitted)
+## Communities (180 total, 47 thin omitted)
 
 ### Community 0 - "Common UI Actions"
 Cohesion: 0.05
@@ -372,10 +371,6 @@ Nodes (18): activeProvider, activeProviderName, chatHistory, handleEngineChange(
 Cohesion: 0.14
 Nodes (14): description, title, description, title, description, title, transactions, header (+6 more)
 
-### Community 51 - "Community 51"
-Cohesion: 0.67
-Nodes (3): grid, description, title
-
 ### Community 56 - "Goal Notification Modal"
 Cohesion: 0.20
 Nodes (9): checkSubscriptionState(), isId, isSubscribed, isSupported, loading, localeStore, toast, pushNotificationService (+1 more)
@@ -461,8 +456,8 @@ Cohesion: 0.18
 Nodes (11): description, title, description, title, transactions, header, scan, swipe (+3 more)
 
 ### Community 125 - "Community 125"
-Cohesion: 0.15
-Nodes (25): add, header, description, title, add, header, add, header (+17 more)
+Cohesion: 0.13
+Nodes (28): add, header, description, title, add, header, add, grid (+20 more)
 
 ### Community 128 - "Community 128"
 Cohesion: 0.22

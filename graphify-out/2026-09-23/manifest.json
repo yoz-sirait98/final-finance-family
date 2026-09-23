@@ -405,8 +405,8 @@
     "semantic_hash": ""
   },
   "docs/task.md": {
-    "mtime": 1790063148.796149,
-    "ast_hash": "56066d50419c0b0c5a7a4228352dcbf3",
+    "mtime": 1790130076.8047235,
+    "ast_hash": "b323cbed636a89b7d44948ac09c59461",
     "semantic_hash": ""
   },
   "docs/walkthrough_graphify.md": {
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "frontend/index.html": {
-    "mtime": 1784608237.8042946,
-    "ast_hash": "70a5bba348194e7aa662262a09dbd62e",
+    "mtime": 1790130382.06228,
+    "ast_hash": "eed68bac3e11e1f166c63ef438103f1e",
     "semantic_hash": ""
   },
   "frontend/public/404.html": {
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/scheduler/DayView.vue": {
-    "mtime": 1789973854.4969091,
-    "ast_hash": "eca8f8b9690c2a0717febfa87db4013a",
+    "mtime": 1790130712.0325575,
+    "ast_hash": "65a2d7a1ed03f5611fc1316dd23bd24f",
     "semantic_hash": ""
   },
   "frontend/src/components/scheduler/MonthView.vue": {
@@ -915,8 +915,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/scheduler/TaskCard.vue": {
-    "mtime": 1789973842.60615,
-    "ast_hash": "98005a22f63b88672c50e81a7bd87859",
+    "mtime": 1790130720.9793737,
+    "ast_hash": "198172702a845d1fbfb73fa0006f1de2",
     "semantic_hash": ""
   },
   "frontend/src/components/scheduler/TaskDetailModal.vue": {
@@ -955,8 +955,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/SchedulerPage.vue": {
-    "mtime": 1789975559.2077384,
-    "ast_hash": "11629006f8b9dbe1afb6c93d2f19aed6",
+    "mtime": 1790130701.2161906,
+    "ast_hash": "1d9aae0509167542de3ac4afcea516f7",
     "semantic_hash": ""
   },
   "frontend/src/services/scheduler/audioService.js": {
@@ -1040,8 +1040,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/meals/AiRecipeModal.vue": {
-    "mtime": 1790071901.802916,
-    "ast_hash": "690f72829fb7141bebcc5ceef9790c28",
+    "mtime": 1790130749.2193122,
+    "ast_hash": "f3e5b67f4c14d15bd256c168392758fc",
     "semantic_hash": ""
   },
   "frontend/src/components/meals/ExportShoppingModal.vue": {
@@ -1050,8 +1050,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/meals/MealPlanModal.vue": {
-    "mtime": 1790054781.8093314,
-    "ast_hash": "4cf02a9a53124112c685f0d2a42bbe89",
+    "mtime": 1790130736.5429308,
+    "ast_hash": "7495d22b2d52a62e20b89dbd770e0403",
     "semantic_hash": ""
   },
   "frontend/src/components/meals/PantryItemModal.vue": {
@@ -1065,8 +1065,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/MealsPage.vue": {
-    "mtime": 1790129324.020469,
-    "ast_hash": "9e85f2b3e928503e948737269fec698e",
+    "mtime": 1790130689.4742286,
+    "ast_hash": "9a4862fe26db0c397a7536839d3c1e49",
     "semantic_hash": ""
   },
   "frontend/src/services/mealPlanService.js": {
