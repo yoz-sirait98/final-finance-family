@@ -86,7 +86,28 @@ PWA v1.3.0 precache 79 entries (2636.12 KiB)
 
 ---
 
+## UI Accessibility & Dark Mode Refinements
+
+### Cooking Steps & Instructions Contrast Fix
+- **Issue**: Cooking steps text and the toggle button ("View Cooking Steps" / "Lihat Langkah Memasak") were unreadable in dark mode due to default link coloring and unstyled text inheriting dark backgrounds.
+- **Remediations**:
+  1. **`AiRecipeModal.vue`**:
+     - Introduced `.btn-toggle-steps` with bright primary color in dark mode (`#a78bfa`) and distinct hover styles.
+     - Redesigned `.steps-box` with explicit `background: var(--input-bg)` and `color: var(--text-color) !important`.
+     - Explicitly styled ordered list items (`.step-item-text`) and markers (`::marker`) to ensure step numbers and text are vibrant.
+     - Added `.recipe-tips-box` with high-contrast cyan styling in dark mode.
+  2. **`RecipeDetailModal.vue`**:
+     - Ensured `.instructions-box` and `.step-text` explicitly render `color: var(--text-color)` in dark mode.
+     - Preserved readable muted styling for checked steps (`.text-muted`).
+  3. **`MealsPage.vue`**:
+     - Upgraded recipe card "View Recipe" link to `.btn-link.text-primary.fw-semibold` with chevron indicator.
+  4. **`style.css`**:
+     - Added global dark mode rules for `.btn-link`, `a`, `.bg-body-tertiary`, and Bootstrap `-subtle` / `-emphasis` utilities across the application.
+
+---
+
 ## Database Migration Instructions
 Due to office network port 5432 restrictions, run the SQL migration directly in your Supabase Web Dashboard:
 - File: [000036_smart_meal_planner_and_pantry.sql](file:///c:/Projects/final-finance-family/supabase/migrations/000036_smart_meal_planner_and_pantry.sql)
 - Contains: `pantry_items`, `meal_plans`, `recipes` tables, RLS policies scoped to `public.get_auth_family_id()`, performance indexes, and automatic triggers.
+
