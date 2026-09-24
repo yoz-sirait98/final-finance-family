@@ -135,13 +135,13 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/SettingsPage.vue": {
-    "mtime": 1790212569.9364407,
-    "ast_hash": "a0bdd86cc7b137aa582d633a141b3ccb",
+    "mtime": 1789975602.611157,
+    "ast_hash": "e097c2ddd2231fb8d33ab08e745eb0fc",
     "semantic_hash": ""
   },
   "frontend/src/pages/TransactionsPage.vue": {
-    "mtime": 1790212558.0024288,
-    "ast_hash": "ad0b16fbd86bcd467ec64761bfad0e8c",
+    "mtime": 1790049257.9321582,
+    "ast_hash": "2f928a3ea3a34c9028edd170434e4073",
     "semantic_hash": ""
   },
   "frontend/src/router/index.js": {
@@ -310,8 +310,8 @@
     "semantic_hash": ""
   },
   "frontend/vite.config.js": {
-    "mtime": 1790212605.3609078,
-    "ast_hash": "324dfcb07cdfe249155d0ffafd09ca6f",
+    "mtime": 1785393461.4033587,
+    "ast_hash": "af08cb35c7bded7a5387fe910e89abfb",
     "semantic_hash": ""
   },
   "skills-lock.json": {
@@ -395,8 +395,8 @@
     "semantic_hash": ""
   },
   "docs/implementation_plan.md": {
-    "mtime": 1790212671.5954342,
-    "ast_hash": "1013212ad8f68f616c9597833e998848",
+    "mtime": 1790052803.5961814,
+    "ast_hash": "b1524a32798dffbb14c660a45143ed7e",
     "semantic_hash": ""
   },
   "docs/supabase-setup-guide.md": {
@@ -405,8 +405,8 @@
     "semantic_hash": ""
   },
   "docs/task.md": {
-    "mtime": 1790212682.5299597,
-    "ast_hash": "f352f378a0d09c40abdb226b13a6a3ce",
+    "mtime": 1790130802.4880135,
+    "ast_hash": "7277e8125b3b597adb5af9971f2b9144",
     "semantic_hash": ""
   },
   "docs/walkthrough_graphify.md": {
@@ -605,8 +605,8 @@
     "semantic_hash": ""
   },
   "frontend/src/services/storageService.js": {
-    "mtime": 1790212545.8358576,
-    "ast_hash": "81ffcc3353c695b710315b1599ff9028",
+    "mtime": 1785393461.3963661,
+    "ast_hash": "b1ad19ffe67a5d2f94b5f81054dd3fbc",
     "semantic_hash": ""
   },
   "supabase/migrations/000022_add_receipt_url_to_transactions.sql": {
@@ -1112,16 +1112,6 @@
   "docs/walkthrough_mobile_pwa_scheduler_and_meals.md": {
     "mtime": 1790130810.6919713,
     "ast_hash": "5cecaf91491ac1b762da6cc36e5f3469",
-    "semantic_hash": ""
-  },
-  "supabase/migrations/000038_security_hardening.sql": {
-    "mtime": 1790212534.1282544,
-    "ast_hash": "de63fb5c7ef5058e4c6081d0635e6242",
-    "semantic_hash": ""
-  },
-  "docs/walkthrough_security_audit_prelaunch.md": {
-    "mtime": 1790212640.1800728,
-    "ast_hash": "8c29f45993814d5f77f3016fcebee18d",
     "semantic_hash": ""
   }
 }

@@ -33,6 +33,24 @@ async function compressImage(file, maxWidth = 1200, quality = 0.82) {
   });
 }
 
+const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/jpg'];
+const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024; // 10 MB client limit
+
+/**
+ * Validate an uploaded receipt file for allowed MIME types and max file size.
+ * @param {File} file
+ */
+export function validateReceiptFile(file) {
+  if (!file) throw new Error('No file provided.');
+  if (file.type && !ALLOWED_MIME_TYPES.includes(file.type.toLowerCase()) && !file.type.startsWith('image/')) {
+    throw new Error('Invalid file type. Only image files (JPEG, PNG, WebP) are allowed.');
+  }
+  if (file.size && file.size > MAX_FILE_SIZE_BYTES) {
+    throw new Error('File size exceeds the 10 MB limit.');
+  }
+  return true;
+}
+
 /**
  * Upload a receipt image to Supabase Storage.
  *
@@ -44,6 +62,7 @@ async function compressImage(file, maxWidth = 1200, quality = 0.82) {
  */
 export async function uploadReceipt(file, familyId) {
   if (!file || !familyId) throw new Error('File and familyId are required.');
+  validateReceiptFile(file);
 
   const compressed = await compressImage(file);
   const ext = 'jpg';

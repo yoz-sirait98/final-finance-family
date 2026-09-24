@@ -6,10 +6,10 @@
 //
 // SETUP:
 //   1. npm install web-push
-//   2. Add these env vars to Heroku:
-//      VAPID_PUBLIC_KEY=BFZVN5aWgdI7hAiFH162fQkadhHwewq1WKrcCVN7BaCcRCLGPztolIQTAy3FqlYo6SEiNaIrKSIzN1LDrIBO804
-//      VAPID_PRIVATE_KEY=8ptjAazSzen3COa3HMtaUQMdg_DVoHzR5bcmVKbBU0U
-//      VAPID_EMAIL=mailto:yosua@famfin.app
+//   2. Add these env vars to Heroku / your production host:
+//      VAPID_PUBLIC_KEY=YOUR_VAPID_PUBLIC_KEY
+//      VAPID_PRIVATE_KEY=YOUR_VAPID_PRIVATE_KEY
+//      VAPID_EMAIL=mailto:admin@yourdomain.com
 //   3. Add the route to your Express app (see below)
 // ---------------------------------------------------------------------------
 

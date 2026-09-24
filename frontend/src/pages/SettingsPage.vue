@@ -604,6 +604,18 @@ async function saveOpenRouterKey() {
 }
 
 async function changePassword() {
+  if (form.value.password !== form.value.password_confirmation) {
+    error.value = localeStore.currentLocale === 'id'
+      ? 'Konfirmasi password baru tidak cocok.'
+      : 'New password confirmation does not match.';
+    return;
+  }
+  if (form.value.password.length < 8) {
+    error.value = localeStore.currentLocale === 'id'
+      ? 'Password minimal harus 8 karakter.'
+      : 'Password must be at least 8 characters.';
+    return;
+  }
   loading.value = true;
   success.value = '';
   error.value = '';
@@ -612,7 +624,7 @@ async function changePassword() {
     success.value = localeStore.t('settings.passwordSuccess');
     form.value = { current_password: '', password: '', password_confirmation: '' };
   } catch (e) {
-    error.value = e.response?.data?.message || 'Failed';
+    error.value = e.message || e.response?.data?.message || 'Failed';
   } finally {
     loading.value = false;
   }

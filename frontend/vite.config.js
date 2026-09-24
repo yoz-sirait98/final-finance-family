@@ -5,7 +5,10 @@ import { VitePWA } from 'vite-plugin-pwa'
 import { compression } from 'vite-plugin-compression2'
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
+  esbuild: {
+    drop: mode === 'production' ? ['console', 'debugger'] : [],
+  },
   plugins: [
     vue(),
     compression(),
@@ -99,4 +102,4 @@ export default defineConfig({
     port: 4173,
     strictPort: true,
   },
-})
+}))

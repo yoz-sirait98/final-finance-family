@@ -123,4 +123,27 @@
   - [x] Verify production bundle (`npm run build` exits 0 with 78 precached PWA items)
   - [x] Verify automated background tests (`node frontend/scripts/test_meals_pure.js` passes 6/6)
 
+- [x] **8. Phase 8: 20 Pre-Launch Security Checks & Hardening**
+  - [x] 1. API key aman (Supabase publishable key on client, Gemini keys isolated in DB per family)
+  - [x] 2. env jangan public (`.env` & `.env.production` ignored in git; only `VITE_` exposed in bundle)
+  - [x] 3. No hardcode secret (Scanned codebase; sanitized VAPID private key in `deploy/push-endpoint.js`)
+  - [x] 4. Cek secret di Git (Git history and `git ls-files` verified clean of secrets)
+  - [x] 5. Debug mode OFF (`sourcemap: false` and esbuild drop `console` & `debugger` on production build)
+  - [x] 6. Error jangan bocor (Clean toast errors; no database schema or raw stack leaks)
+  - [x] 7. Validasi input (HTML5 constraints + database `CHECK (amount > 0)` on transactions & budgets)
+  - [x] 8. Sanitasi input (String trimming, safe escaping, PostgREST parameterization)
+  - [x] 9. Anti SQL injection (PostgREST parameterized queries, static PL/pgSQL triggers)
+  - [x] 10. Anti XSS (Vue mustache auto-escaping; HTML entities sanitized before markdown in `AiPage.vue`)
+  - [x] 11. Server-side auth (Supabase Auth JWT verification enforced at PostgREST API gateway)
+  - [x] 12. Cek akses user (Enforced RLS across all tables; added `trg_protect_profile_fields` against family_id tampering)
+  - [x] 13. Role admin aman (Immutable profile role trigger prevents privilege escalation)
+  - [x] 14. DB jangan public (Direct DB port 5432 blocked/restricted; HTTPS 443 API only)
+  - [x] 15. DB permission ketat (Revoked `system_settings` client access; set `search_path = public, pg_temp` on RPCs)
+  - [x] 16. Hash password (Supabase Auth industry-standard bcrypt/Argon2id hashing)
+  - [x] 17. Session aman (JWT with automatic background refresh token rotation)
+  - [x] 18. Reset password aman (PKCE one-time token email flow + password confirmation matching)
+  - [x] 19. Batasi upload file (10MB client limit, 5MB Supabase Storage limit, image MIME whitelist)
+  - [x] 20. Scan upload file (HTML5 Canvas re-encoding to JPEG strips EXIF and executes clean re-serialization)
+
+
 

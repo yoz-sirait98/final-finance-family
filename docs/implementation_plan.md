@@ -130,3 +130,39 @@ An all-in-one family life platform needs a dedicated solution to solve daily mea
 - Register `/meals` in `router/index.js` and add sidebar navigation item in `DashboardLayout.vue`.
 - Add compact "Today's Menu & Expiring Groceries" widget to `DashboardPage.vue`.
 - Localization in `en.json` and `id.json`.
+
+---
+
+## Pre-Launch 20 Security Checks & Hardening (September 2026)
+
+### Background & Objective
+Perform an exhaustive security check and apply defensive protections across all 20 critical pre-launch security domains:
+1. API Key Protection
+2. Environment Variables Privacy
+3. No Hardcoded Secrets
+4. Git History Audit
+5. Debug Mode Off (Stripping console/debugger & sourcemap disabled)
+6. Error Information Leakage Suppression
+7. Client & Database Input Validation
+8. Input Sanitization & Parameterization
+9. Anti SQL Injection (PostgREST & PL/pgSQL validation)
+10. Anti XSS (Vue escaping & markdown sanitizer audit)
+11. Server-Side Authentication
+12. User Access & Multi-Tenant Family Isolation
+13. Admin & Member Role Tamper Prevention
+14. Database Non-Public Exposure
+15. Strict Database Permissions & Search Path
+16. Cryptographic Password Hashing (Supabase Auth)
+17. Secure Session & Token Lifecycle
+18. Secure Password Reset Flow
+19. File Upload Size & MIME Type Limits
+20. Safe Upload Processing & Pixel Re-encoding
+
+### Applied Changes
+- `supabase/migrations/000038_security_hardening.sql`: Profile immutability trigger (`family_id`, `role`), restricted `system_settings`, secured RPCs (`get_dashboard_summary`, `check_budget_guardrail`), positive amount DB constraints (`transactions`, `budgets`), and storage bucket restrictions (5MB, image types).
+- `frontend/src/services/storageService.js`: MIME type and 10MB file limit validation function.
+- `frontend/src/pages/TransactionsPage.vue`: File validation on receipt picker.
+- `frontend/src/pages/SettingsPage.vue`: Password confirmation match validation.
+- `frontend/vite.config.js`: Production esbuild drop console/debugger.
+- `deploy/push-endpoint.js`: Neutralized plain text VAPID credentials in comments.
+

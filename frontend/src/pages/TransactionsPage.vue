@@ -1201,6 +1201,23 @@ async function onReceiptSelected(event) {
   const file = event.target.files[0];
   if (!file) return;
 
+  // Security: File size & MIME type validation
+  const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/jpg'];
+  if (file.type && !ALLOWED_TYPES.includes(file.type.toLowerCase()) && !file.type.startsWith('image/')) {
+    toast.error(localeStore.currentLocale === 'id' 
+      ? 'Format file tidak didukung. Harap pilih gambar (JPG, PNG, WebP).'
+      : 'Unsupported file format. Please select an image (JPG, PNG, WebP).');
+    event.target.value = '';
+    return;
+  }
+  if (file.size > 10 * 1024 * 1024) {
+    toast.error(localeStore.currentLocale === 'id' 
+      ? 'Ukuran foto struk terlalu besar (maksimal 10 MB).'
+      : 'Receipt image is too large (maximum 10 MB).');
+    event.target.value = '';
+    return;
+  }
+
   isScanning.value = true;
   scanProgress.value = 0;
   scanStatus.value = 'Starting scanner...';
