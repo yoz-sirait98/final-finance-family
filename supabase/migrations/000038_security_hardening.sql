@@ -39,6 +39,7 @@ CREATE TRIGGER trg_protect_profile_fields
 -- System settings contains server-side secrets (e.g. WhatsApp Bot API key).
 -- Regular authenticated client apps should NEVER read these secrets directly.
 DROP POLICY IF EXISTS "Allow authenticated read" ON public.system_settings;
+DROP POLICY IF EXISTS "Allow service_role full access on system_settings" ON public.system_settings;
 
 -- Allow only service_role (backend/cron) or family owners if specifically required
 CREATE POLICY "Allow service_role full access on system_settings"
@@ -319,15 +320,22 @@ END;
 $$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public, pg_temp;
 
 
--- ── 5. Enforce Positive Financial Amounts (DB Constraints) ───────
+-- ── 5. Enforce Valid Transaction & Budget Amounts (DB Constraints) ──
+-- In this dual-entry architecture, transfers utilize two synchronized legs:
+--   - Outgoing leg: amount < 0 (automatically deducts source account balance via trigger)
+--   - Incoming leg: amount > 0 (automatically increases destination account balance via trigger)
+-- Income and Expense transactions must be strictly positive (amount > 0).
 DO $$
 BEGIN
-    IF NOT EXISTS (
-        SELECT 1 FROM pg_constraint WHERE conname = 'chk_transactions_positive_amount'
-    ) THEN
-        ALTER TABLE public.transactions 
-            ADD CONSTRAINT chk_transactions_positive_amount CHECK (amount > 0);
-    END IF;
+    ALTER TABLE public.transactions DROP CONSTRAINT IF EXISTS chk_transactions_positive_amount;
+    ALTER TABLE public.transactions DROP CONSTRAINT IF EXISTS chk_transactions_valid_amount;
+
+    ALTER TABLE public.transactions 
+        ADD CONSTRAINT chk_transactions_valid_amount 
+        CHECK (
+            (type IN ('income', 'expense') AND amount > 0) OR
+            (type = 'transfer' AND amount <> 0)
+        );
 
     IF NOT EXISTS (
         SELECT 1 FROM pg_constraint WHERE conname = 'chk_budgets_positive_amount'
