@@ -405,8 +405,8 @@
     "semantic_hash": ""
   },
   "docs/task.md": {
-    "mtime": 1790319786.5364914,
-    "ast_hash": "609a8dc7fcbfb001a61090e3748e143d",
+    "mtime": 1790212682.5299597,
+    "ast_hash": "f352f378a0d09c40abdb226b13a6a3ce",
     "semantic_hash": ""
   },
   "docs/walkthrough_graphify.md": {
@@ -415,8 +415,8 @@
     "semantic_hash": ""
   },
   "frontend/README.md": {
-    "mtime": 1790319750.6583169,
-    "ast_hash": "180add07b6f575e660f70320b820d33f",
+    "mtime": 1781145384.5237322,
+    "ast_hash": "8bc5335bc7276c3f0afe8e8d465bdd60",
     "semantic_hash": ""
   },
   "frontend/index.html": {

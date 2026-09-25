@@ -1,95 +1,142 @@
-# Aplikasi Web Frontend Family Finance
+# Aplikasi Web Frontend Family Finance (FamFin)
 
-Direktori ini berisi dashboard **Single Page Application (SPA)** untuk sistem Family Finance, yang dibangun menggunakan **Vue 3 (Composition API)** dan **Vite**.
+Direktori ini berisi aplikasi web dashboard **Single Page Application (SPA)** dan **Progressive Web App (PWA)** untuk sistem Final Finance Family, yang dibangun menggunakan **Vue 3 (Composition API)**, **Vite**, dan **Pinia**.
 
-## Technology Stack
+---
 
-- **Framework**: Vue 3 (Script Setup syntax)
-- **Bundler**: Vite
-- **Routing**: Vue Router
-- **State Management**: Pinia
-- **Backend Client**: `@supabase/supabase-js`
-- **UI/Styling**: CSS standar yang memanfaatkan grid dan utility classes dari Bootstrap 5
-- **Data Visualization**: Chart.js yang dibungkus dengan `vue-chartjs` dengan Dynamic Golden Ratio Colors
+## 🛠️ Technology Stack
 
-## Setup Pengembangan Lokal
+| Kategori | Teknologi | Deskripsi |
+| :--- | :--- | :--- |
+| **Framework** | [Vue 3](https://vuejs.org/) (v3.5) | Composition API dengan sintaks `<script setup>` murni |
+| **Build Tool & Bundler** | [Vite](https://vitejs.dev/) (v8.0) | Hot Module Replacement (HMR) kilat & bundling Rollup modern |
+| **Routing** | [Vue Router](https://router.vuejs.org/) (v4.6) | Client-side routing dengan lazy-loaded page components |
+| **Global State** | [Pinia](https://pinia.vuejs.org/) (v3.0) | State management modular, type-safe, dan reaktif |
+| **Offline Storage** | [Dexie.js](https://dexie.com/) (v4.4) | Abstraksi IndexedDB lokal untuk kapabilitas offline-first |
+| **PWA & Caching** | [Vite Plugin PWA](https://vite-pwa-org.netlify.app/) (v1.3) | Service Worker kustom (`InjectManifest`), auto-update, & offline asset precache |
+| **Backend Client** | [@supabase/supabase-js](https://supabase.com/) (v2.107) | REST API, Realtime subscriptions, Auth, dan RPC caller |
+| **UI Framework & Grid** | Bootstrap 5 (v5.3) & Bootstrap Icons | Utility classes, grid system, dan custom design system tanpa plugin JS eksternal |
+| **Data Visualization** | Chart.js 4 & vue-chartjs | Grafik keuangan interaktif dengan *Dynamic Golden Ratio Palette* |
+| **Client-Side OCR** | Tesseract.js | Ekstraksi teks struk belanja secara offline di browser |
+| **Eksport Dokumen** | jsPDF & jspdf-autotable | Generator PDF dan CSV 100% client-side via Native File System Access API |
+| **Date & Calendar** | date-fns (v4.4) | Manipulasi dan formatting tanggal modular |
+| **Onboarding Guide** | driver.js (v1.4) | Tur interaktif pengenalan fitur untuk pengguna baru |
 
-1.  **Install dependencies:**
-    Pastikan Anda menggunakan versi Node.js terbaru (v18+).
+---
 
-    ```bash
-    npm install
-    ```
+## 📂 Struktur Direktori Frontend
 
-2.  **Pengaturan Environment:**
-    Buat file `.env` pada root direktori `frontend/` untuk terhubung ke Supabase.
+```
+frontend/
+├── public/                 # Aset statis, manifest.webmanifest, audio alarms, ikon PWA
+├── scripts/                # Background test suite mandiri (test_meals_pure.js)
+├── src/
+│   ├── assets/             # Gambar, ilustrasi SVG, dan aset styling
+│   ├── components/         # Komponen UI modular
+│   │   ├── meals/          # Modal Dapur (PantryItem, MealPlan, AiRecipe, RecipeDetail, ExportShopping)
+│   │   ├── scheduler/      # Tampilan Kalender (DayView, WeekView, MonthView, AgendaView, TaskCard, TaskModal)
+│   │   ├── AppToast.vue    # Notifikasi toast global
+│   │   ├── InstallPwa.vue  # Prompt instalasi PWA ke homescreen
+│   │   └── PushToggle.vue  # Kontrol aktivasi Web Push Notifications
+│   ├── db/
+│   │   └── schedulerDatabase.js # Skema IndexedDB (Dexie.js) untuk jadwal & sinkronisasi offline
+│   ├── locales/            # Kamus multibahasa (id.json & en.json)
+│   ├── pages/              # 15 halaman tampilan utama aplikasi
+│   ├── router/             # Konfigurasi rute URL dan navigation guards
+│   ├── services/           # Abstraksi pemanggilan API Supabase, Google Cal, Dexie, & AI
+│   │   ├── scheduler/      # Services audio, googleCalendar, reminder, dan schedulerSync
+│   │   ├── aiService.js    # Kompilasi prompt snapshot finansial & koki resep
+│   │   ├── mealPlanService.js
+│   │   ├── pantryService.js
+│   │   ├── recipeService.js
+│   │   └── receiptScanner.js
+│   ├── stores/             # Pinia store modules (auth, pantry, mealPlan, schedulerTask, budget, toast)
+│   ├── utils/              # Helper tanggal, formatting mata uang IDR, sanitasi input
+│   ├── App.vue             # Root component dengan global toast & PWA banner
+│   ├── main.js             # Entry point inisialisasi Vue, Pinia, Router, & I18n
+│   ├── style.css           # Global design system, glassmorphism, dark/light theme, PWA safe areas
+│   └── sw.js               # Service Worker PWA (Push notification & cache handlers)
+├── index.html              # HTML shell dengan viewport-fit=cover untuk iOS notch
+├── package.json
+└── vite.config.js          # Konfigurasi plugin Vue, PWA, Gzip, dan Brotli
+```
 
-    ```env
-    VITE_SUPABASE_URL=https://your-project-id.supabase.co
-    VITE_SUPABASE_ANON_KEY=your-anon-key
-    ```
+---
 
-3.  **Menjalankan dev server:**
+## ⚡ Setup Pengembangan Lokal
 
-    ```bash
-    npm run dev
-    ```
+1. **Instal Dependensi:**
+   ```bash
+   npm install
+   ```
+2. **Konfigurasi Environment (`.env`):**
+   Buat file `.env` di folder `frontend/`:
+   ```env
+   VITE_SUPABASE_URL=https://your-project-id.supabase.co
+   VITE_SUPABASE_ANON_KEY=your-anon-key
+   
+   # Opsional: Google Calendar Sync
+   VITE_GOOGLE_CLIENT_ID=your-client-id.apps.googleusercontent.com
+   ```
+3. **Jalankan Development Server:**
+   ```bash
+   npm run dev
+   ```
+   Aplikasi akan terbuka di `http://localhost:5173`.
+4. **Build Bundle Produksi & Service Worker PWA:**
+   ```bash
+   npm run build
+   ```
 
-    Aplikasi biasanya akan berjalan di `http://localhost:5173`.
+---
 
-## Catatan Arsitektur & Desain
+## 🧠 Catatan Arsitektur & Rekayasa Perangkat Lunak
 
-### Penanganan Event Native Vue
+### 1. Pola Native Vue (Zero Bootstrap JS)
+Aplikasi ini secara sengaja **tidak menggunakan Bootstrap Javascript** (`bootstrap.bundle.js` atau jQuery). Semua modal, dropdown, tooltip, dan transisi UI dikendalikan 100% oleh reaktivitas native Vue (`v-if`, `v-show`, transition hooks). Hal ini mengeliminasi masalah *zombie event listeners* dan *DOM desynchronization* yang kerap terjadi pada integrasi jQuery/Bootstrap JS dengan Virtual DOM.
 
-Aplikasi ini secara sengaja **tidak menggunakan Bootstrap Javascript** (`bootstrap.bundle.js` atau jQuery).
+### 2. Global State Management (Pinia Stores)
+Penyimpanan state aplikasi dibagi berdasarkan domain tanggung jawab:
+- `auth.js`: Data user aktif, status keluarga (`familyId`), peran anggota, dan auto-sync Gemini API Key.
+- `toast.js`: Antrean notifikasi toast global real-time (success, error, warning, info).
+- `budget.js`: State agregasi limit anggaran dan penanda *warning bell*.
+- `schedulerTask.js`: State filter kategori, tanggal aktif, dan daftar tugas jadwal harian/mingguan.
+- `pantry.js`: State inventaris kulkas/freezer/pantry, filter zona, pencarian, dan bahan kedaluwarsa.
+- `mealPlan.js`: Matriks perencana menu mingguan 7 hari (sarapan, siang, malam, camilan).
+- `shoppingPlan.js`: State daftar belanja kolaboratif, checklist toko, dan alur checkout.
+- `locale.js`: Bahasa aktif aplikasi (Bahasa Indonesia `id` dan English `en`).
 
-Karena Virtual DOM milik Vue mengontrol siklus render, penggunaan plugin JavaScript imperatif sering menyebabkan race condition dan event listener yang tertinggal ("zombie"). Semua modal, dropdown, alert, dan toast dalam aplikasi ini dibangun sepenuhnya menggunakan directive native Vue (`v-if`, `v-show`, `@click`, modifier `.self`) serta CSS kustom.
+### 3. Arsitektur Offline-First (Dexie.js / IndexedDB)
+Untuk modul jadwal dan tugas keluarga (`/scheduler`), sistem menerapkan pola **Offline-First Resilience**:
+- Database lokal di browser dikelola oleh class `SchedulerDatabase` (`frontend/src/db/schedulerDatabase.js`) menggunakan **Dexie.js**.
+- Koleksi data lokal meliputi: `tasks`, `categories`, `reminders`, `recurrences`, `syncQueue`, dan `settings`.
+- Saat perangkat offline, pengguna tetap dapat menambahkan, mengubah, atau menyelesaikan tugas. Mutasi data dicatat ke dalam antrean `syncQueue`.
+- Service `schedulerSyncService.js` secara otomatis memantau konektivitas internet (`window.addEventListener('online')`) dan mendorong (*push*) antrean lokal ke Supabase serta menarik (*pull*) data terbaru saat koneksi pulih.
 
-### Notifikasi Toast Real-Time
+### 4. Progressive Web App (PWA) & Mobile Viewport Ergonomics
+- **Service Worker (`vite-plugin-pwa` + `InjectManifest`)**:
+  Menyimpan cache 78+ bundle aset statis ke dalam CacheStorage browser untuk kecepatan buka instan (*instant load*) dan fallback offline.
+- **Safe-Area Inset Support**:
+  Menggunakan `viewport-fit=cover` pada meta viewport dan utilitas CSS `env(safe-area-inset-bottom)` pada container utama dan modal dialog, memastikan tampilan tidak tertutup oleh tombol navigasi sistem atau *home indicator* iPhone.
+- **Pencegahan Zoom Otomatis iOS Safari**:
+  Menerapkan `font-size: 16px !important` pada elemen input dan select di mobile ($\le 768px$) untuk mencegah Safari melakukan auto-zoom saat form difokuskan.
+- **Mobile Day Selector Pill Strip**:
+  Pada modul Dapur (`/meals`), tampilan grid 7 hari yang sebelumnya memanjang 3,000px di layar ponsel diringkas menjadi bilah pil hari horizontal yang secara *default* langsung menampilkan menu **Hari Ini**, dengan opsi memilih hari tertentu dalam 1 ketukan.
 
-Umpan balik untuk operasi Create, Update, dan Delete disediakan melalui sistem **Toast Notification global** yang dibuat secara kustom.
+### 5. Modul Dapur & Menu Makanan Cerdas (*Meals & Pantry*)
+- **Matriks 7 Hari & 4 Slot**: Mengelola alokasi menu mingguan terstruktur per slot sarapan, makan siang, makan malam, dan camilan.
+- **Multi-Zona Stok**: Memisahkan stok bahan makanan pada **Fridge (Kulkas)**, **Freezer (Pembeku)**, dan **Pantry (Lemari Kering)** dengan pelacak tanggal batas konsumsi.
+- **Chef AI Zero-Waste**: Layanan `recipeService.js` mengirimkan daftar bahan yang tersedia (dengan memprioritaskan bahan mendekati kedaluwarsa) ke model Google Gemini untuk meracik ide resep masakan bernutrisi tanpa menghasilkan sampah makanan.
+- **Sinergi 1-Tap Belanja & Restock**:
+  - Resep yang kekurangan bahan dapat langsung diekspor ke modul Belanja melalui `ExportShoppingModal.vue`.
+  - Item belanjaan yang selesai di-checkout di `/shopping` memiliki tombol *1-Tap Restock to Pantry* untuk langsung memasukkan bahan belanjaan ke lemari dapur tanpa input ulang manual.
 
-Sistem ini dikelola secara terpusat oleh store Pinia `toast.js` dan komponen `AppToast.vue` pada layer root aplikasi.
+### 6. Modul Jadwal & Tugas Keluarga (*Family Scheduler*)
+- **Multi-View Modes**: Tampilan kalender fleksibel: *Day Timeline (24 Jam)* dengan garis penunjuk waktu nyata (*real-time NOW marker*), *Week Strip*, *Month View* dengan indikator titik warna kategori, *Agenda View*, dan *Filtered List*.
+- **Integrasi Google Calendar**: Sinkronisasi dua arah via OAuth 2.0 PKCE resmi melalui `googleCalendarService.js`.
+- **Notifikasi Push & Audio**: Mendukung Web Push Notifications di latar belakang serta alarm suara in-app (`audioService.js`) sebelum tugas jatuh tempo.
 
-### Global State (Pinia)
-
-Pola standar yang digunakan di sini adalah:
-
-- **State lokal komponen** untuk data form yang reaktif
-- **Global state Pinia** khusus untuk:
-  - Authentication (`auth.js`)
-  - Notifikasi Toast real-time (`toast.js`)
-  - State notifikasi peringatan anggaran/bell (`budget.js`)
-
-Pemanggilan database dilakukan langsung di dalam komponen secara berurutan menggunakan layer service tersentralisasi (`frontend/src/services/*`) yang membungkus SDK `@supabase/supabase-js`. Eksekusi fungsi _RPC (Remote Procedure Call)_ tingkat lanjut digunakan untuk mengeliminasi latensi saat mengambil rangkuman Dashboard secara besar-besaran.
-
-### Eksport Laporan Client-Side
-
-Fungsi unduh laporan analitik bulanan ke **PDF** (menggunakan `jsPDF` + `jspdf-autotable`) maupun **CSV** dilakukan murni eksplisit dengan 100% Javascript di sisi _browser_ untuk mencegah kelebihan muatan di sisi _backend_.
-
-Pendekatannya menggunakan _Native File System Access API_ (`window.showSaveFilePicker`), sehingga dapat membypass total ekstensi _Download Manager_ (seperti IDM) yang kerap merusak dan membajak ekspor web menjadi _file random UUID Blob_. Hal ini menjamin file yang diunduh pasti mendarat secara sempurna sesuai namanya.
-
-### Integritas Sistem & Visual Guardrail
-
-Komponen transaksi dirancang sangat proaktif dalam menjaga ketertiban pencatatan finansial. Fitur andalannya meliputi:
-
-1. **Budget Guardrail** – Memblokir user (melalui _confirmation modal_) jika input pengeluaran melebih sisa anggaran, lalu mengekskalasi _badge bell_ notifikasi secara _real-time_.
-2. **Linked Sinking Fund** – Mengikat target tabungan (_goals_) untuk sinkron mengambil sisa rasio _balance_ asli dari sub-akun bank terkait.
-3. **Audit Trail** – Seluruh perubahan data (_Create, Update, Delete_) dari modul utama secara otomatis terekam jejaknya (beserta datanya) ke _Activity Log System_ backend, memastikan kontrol akuntabilitas untuk setiap member keluarga yang menggunakannya.
-
-### Scan Struk Offline (Tesseract.js OCR)
-
-Untuk mempercepat pencatatan pengeluaran, sistem menyediakan fitur **Scan Struk** yang memproses gambar secara offline (sisi client) langsung di dalam browser menggunakan `Tesseract.js`.
-
-- **Heuristik & Regex (`receiptScanner.js`)**: Mengekstrak teks dari foto struk dan mencari pola nama toko/merchant (dengan menyaring metadata kasir/alamat/no telp), tanggal transaksi (mendukung parsing format lokal Indonesia seperti "Jan", "Juni", "Okt"), dan total nominal transaksi terbesar.
-- **Pemetaan Otomatis (Auto-Mapping)**: Melakukan pencarian kata kunci secara case-insensitive pada daftar akun dan kategori aktif yang ada di database untuk meng-autofill dropdown transaksi secara cerdas.
-- **Kamera Mobile**: Memanfaatkan parameter `capture="environment"` pada input file guna membuka kamera utama ponsel secara instan saat tombol scan ditekan.
-
-### Asisten Keuangan AI & Sinkronisasi API Key (Gemini & Supabase)
-
-Fitur **Aurora AI Advisor** menghadirkan asisten keuangan pribadi yang responsif dan interaktif.
-
-- **Antarmuka Premium (`AiPage.vue`)**: Mengusung desain kaca buram (glassmorphic) bertekstur Aurora dengan efek bayangan dan partikel bersinar. Mendukung penyesuaian kontras warna untuk mode terang/gelap, scrolling kustom, animasi gelembung chat, dan tombol pintasan (chips) pertanyaan.
-- **Snapshot Konteks Otomatis (`aiService.js`)**: Sebelum pesan dikirim ke model Gemini, service ini secara otomatis mengompilasi snapshot terstruktur yang bersumber dari database lokal: sisa saldo rekening, progress budget bulanan, target tabungan, dan riwayat transaksi terbaru.
-- **Optimasi Model**: Menggunakan model `gemini-flash-lite-latest` (`gemini-3.1-flash-lite`) yang andal, hemat token, dan kebal dari error 503 (Service Unavailable) yang sering melanda model Flash standar saat beban token tinggi.
-- **Sinkronisasi Kolaboratif**: API Key disimpan di database Supabase pada tabel `families` (kolom `gemini_api_key`) yang aman di bawah perlindungan Row-Level Security (RLS). Store Pinia `auth.js` secara otomatis mengunduh dan menyalin key tersebut ke `localStorage` saat login, sehingga key langsung tersinkronisasi di semua perangkat anggota keluarga tanpa perlu input manual berkali-kali.
+### 7. Keamanan & Eksport Dokumen Mandiri
+- **Eksport Laporan Client-Side**: Laporan PDF (`jsPDF`) dan CSV dibuat secara lokal menggunakan *Native File System Access API* (`window.showSaveFilePicker`). Cara ini mengeliminasi masalah umum di mana ekstensi Download Manager (seperti IDM) merusak unduhan menjadi file Blob acak.
+- **Scan Struk Offline**: Pemrosesan gambar struk belanja dilakukan sepenuhnya di dalam memori browser menggunakan `Tesseract.js` tanpa mengunggah foto struk ke server pihak ketiga yang tidak tepercaya.
+- **Sinkronisasi Kunci API Terenkripsi**: API Key Google Gemini disimpan di database Supabase yang dilindungi kebijakan *Row-Level Security (RLS)* dan disinkronkan otomatis ke penyimpanan lokal anggota keluarga yang terotorisasi.
