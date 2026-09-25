@@ -1115,8 +1115,8 @@
     "semantic_hash": ""
   },
   "supabase/migrations/000038_security_hardening.sql": {
-    "mtime": 1790212534.1282544,
-    "ast_hash": "de63fb5c7ef5058e4c6081d0635e6242",
+    "mtime": 1790212807.4362075,
+    "ast_hash": "e3e99d6f9c0556fa1a2d6ad51fad12bc",
     "semantic_hash": ""
   },
   "docs/walkthrough_security_audit_prelaunch.md": {
