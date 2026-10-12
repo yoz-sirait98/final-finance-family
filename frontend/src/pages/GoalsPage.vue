@@ -228,6 +228,7 @@ function openContribute(g) {
 }
 
 async function save() {
+  if (saving.value) return;
   formError.value = '';
   saving.value = true;
   
@@ -263,6 +264,7 @@ async function save() {
 }
 
 async function doContribute() {
+  if (saving.value) return;
   saving.value = true;
   try {
     await goalService.contribute(contributingGoal.value.id, contributeForm.value);
@@ -291,6 +293,7 @@ async function confirmDelete(g) {
 }
 
 async function doDelete() {
+  if (deleting.value) return;
   if (!deletingItem.value) return;
   deleting.value = true;
   try {

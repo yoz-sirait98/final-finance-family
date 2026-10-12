@@ -551,6 +551,7 @@ function openEditItem(item) {
 }
 
 async function saveItem() {
+  if (saving.value) return;
   saving.value = true;
   try {
     const payload = {
@@ -605,6 +606,7 @@ function confirmDeleteItem(item) {
 }
 
 async function doDeleteItem() {
+  if (deleting.value) return;
   if (!itemToDelete.value) return;
   deleting.value = true;
   try {
@@ -641,6 +643,7 @@ async function proceedWithChoice() {
 }
 
 async function markAsDoneOnly() {
+  if (isMarkingDone.value) return;
   isMarkingDone.value = true;
   try {
     await shoppingPlanService.markAsDone(planId);
@@ -661,6 +664,7 @@ async function markAsDoneOnly() {
 }
 
 async function lockPlan() {
+  if (isLocking.value) return;
   isLocking.value = true;
   try {
     await shoppingPlanService.lock(planId);
@@ -680,6 +684,7 @@ async function lockPlan() {
 }
 
 async function restockAllToPantry() {
+  if (isRestocking.value) return;
   if (items.value.length === 0) return;
   isRestocking.value = true;
   try {
@@ -711,6 +716,7 @@ function openCheckoutModal() {
 }
 
 async function processCheckout() {
+  if (isCheckingOut.value) return;
   isCheckingOut.value = true;
   try {
     await shoppingPlanService.checkout(planId, {

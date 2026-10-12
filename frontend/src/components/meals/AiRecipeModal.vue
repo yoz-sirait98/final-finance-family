@@ -351,6 +351,7 @@ function scheduleRecipe(recipe) {
 }
 
 function saveToRecipeBox(recipe) {
+  if (recipe._saved) return;
   recipe._saved = true;
   emit('save-recipe', recipe);
 }

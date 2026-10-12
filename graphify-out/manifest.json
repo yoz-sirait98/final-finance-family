@@ -80,18 +80,18 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/AccountsPage.vue": {
-    "mtime": 1781249919.4386482,
-    "ast_hash": "5733d7cacb218f348ff23549820b58cf",
+    "mtime": 1791797478.0649922,
+    "ast_hash": "6e9d57bd30240520bb590566755ec4f5",
     "semantic_hash": ""
   },
   "frontend/src/pages/BudgetsPage.vue": {
-    "mtime": 1781249921.5137172,
-    "ast_hash": "37c82413c43eb9f92d69bf94d87342c8",
+    "mtime": 1791797662.4535012,
+    "ast_hash": "7fd0bc2bcffafaa7bdc6eafcb09a0240",
     "semantic_hash": ""
   },
   "frontend/src/pages/CategoriesPage.vue": {
-    "mtime": 1784608237.8092957,
-    "ast_hash": "9088224e9063113a38ada578f976afcd",
+    "mtime": 1791797517.9163184,
+    "ast_hash": "b19b81a10138fd02092ddbd88fa9a4d2",
     "semantic_hash": ""
   },
   "frontend/src/pages/DashboardPage.vue": {
@@ -100,8 +100,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/GoalsPage.vue": {
-    "mtime": 1781249925.5535514,
-    "ast_hash": "6fad371b5ee9a0039516e8cd96d81b42",
+    "mtime": 1791797679.901114,
+    "ast_hash": "40df045ea4f25721e86767e38395610d",
     "semantic_hash": ""
   },
   "frontend/src/pages/IconsGemPage.vue": {
@@ -110,23 +110,23 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/LoginPage.vue": {
-    "mtime": 1781064608.6095486,
-    "ast_hash": "3e896c45985e7066bdda7cd8acd15502",
+    "mtime": 1791797984.5593581,
+    "ast_hash": "944094d9d5926654628c62d9b40aed9c",
     "semantic_hash": ""
   },
   "frontend/src/pages/MembersPage.vue": {
-    "mtime": 1784608237.8101711,
-    "ast_hash": "8ca869f949e52a2c840f941a83493131",
+    "mtime": 1791797918.7882214,
+    "ast_hash": "8ac5392bb7cdce05e99127eb0b089f50",
     "semantic_hash": ""
   },
   "frontend/src/pages/RecurringPage.vue": {
-    "mtime": 1786420253.3549182,
-    "ast_hash": "6819c7eeaf2772190ea9528f3462e0e5",
+    "mtime": 1791797763.0534184,
+    "ast_hash": "24f736946f8c5e9fb47e51131a0c2dd8",
     "semantic_hash": ""
   },
   "frontend/src/pages/RegisterPage.vue": {
-    "mtime": 1781064608.6100595,
-    "ast_hash": "8a8081f816d4a789709e2710ea77c0e4",
+    "mtime": 1791797996.2256444,
+    "ast_hash": "b5a6b794b2338dd8ef7c7a29890031a8",
     "semantic_hash": ""
   },
   "frontend/src/pages/ReportsPage.vue": {
@@ -135,13 +135,13 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/SettingsPage.vue": {
-    "mtime": 1790212569.9364407,
-    "ast_hash": "a0bdd86cc7b137aa582d633a141b3ccb",
+    "mtime": 1791797970.228074,
+    "ast_hash": "16289fbef25806b2a3315689efa813aa",
     "semantic_hash": ""
   },
   "frontend/src/pages/TransactionsPage.vue": {
-    "mtime": 1790212558.0024288,
-    "ast_hash": "ad0b16fbd86bcd467ec64761bfad0e8c",
+    "mtime": 1791797437.385884,
+    "ast_hash": "c6a88e81084a7245bee15b0f997fa611",
     "semantic_hash": ""
   },
   "frontend/src/router/index.js": {
@@ -380,8 +380,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ShoppingPage.vue": {
-    "mtime": 1786419234.9121249,
-    "ast_hash": "5094d380fb04596117b632c88913501f",
+    "mtime": 1791797783.7869704,
+    "ast_hash": "f820837f4fe4e637442bd03b79289f5b",
     "semantic_hash": ""
   },
   "frontend/src/services/shoppingService.js": {
@@ -395,8 +395,8 @@
     "semantic_hash": ""
   },
   "docs/implementation_plan.md": {
-    "mtime": 1790212671.5954342,
-    "ast_hash": "1013212ad8f68f616c9597833e998848",
+    "mtime": 1791797384.3219197,
+    "ast_hash": "011fef92dd96d9c9ccd51e7889cc8c6a",
     "semantic_hash": ""
   },
   "docs/supabase-setup-guide.md": {
@@ -405,8 +405,8 @@
     "semantic_hash": ""
   },
   "docs/task.md": {
-    "mtime": 1790319786.5364914,
-    "ast_hash": "609a8dc7fcbfb001a61090e3748e143d",
+    "mtime": 1791797360.0305283,
+    "ast_hash": "9e8e2ad96925f5bf48d650a993429cca",
     "semantic_hash": ""
   },
   "docs/walkthrough_graphify.md": {
@@ -490,8 +490,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ShoppingDetailPage.vue": {
-    "mtime": 1790055393.30547,
-    "ast_hash": "9bc09e00e98609900528c7df8b9c9a79",
+    "mtime": 1791797870.0281022,
+    "ast_hash": "7c1a27333e9d7b236ab73acc68488046",
     "semantic_hash": ""
   },
   "frontend/src/services/shoppingPlanService.js": {
@@ -530,8 +530,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectPocketsPage.vue": {
-    "mtime": 1786421248.5971642,
-    "ast_hash": "d6a9de6ef13fc991ed62c40a066f6f2f",
+    "mtime": 1791797712.532792,
+    "ast_hash": "bf474e2cc0a3d117a12d6948cf256874",
     "semantic_hash": ""
   },
   "supabase/migrations/000016_project_pockets_schema.sql": {
@@ -900,8 +900,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/scheduler/CategoryManageModal.vue": {
-    "mtime": 1789973915.0359967,
-    "ast_hash": "a2df0617b31b8e5a43c67d953bd38dcb",
+    "mtime": 1791798054.033252,
+    "ast_hash": "b75e160fc02eb6def0749a269b9d0292",
     "semantic_hash": ""
   },
   "frontend/src/components/scheduler/DayView.vue": {
@@ -925,8 +925,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/scheduler/TaskFormModal.vue": {
-    "mtime": 1789975102.1660023,
-    "ast_hash": "5f06073a57d8f2b9ac430cd9c69d76bc",
+    "mtime": 1791798034.58177,
+    "ast_hash": "b20914f7f15e0ecdf0c764e653a67aec",
     "semantic_hash": ""
   },
   "frontend/src/components/scheduler/WeekView.vue": {
@@ -955,8 +955,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/SchedulerPage.vue": {
-    "mtime": 1790130701.2161906,
-    "ast_hash": "1d9aae0509167542de3ac4afcea516f7",
+    "mtime": 1791798125.4228394,
+    "ast_hash": "b82ea292e38cf6b79a061e83dd07ea15",
     "semantic_hash": ""
   },
   "frontend/src/services/scheduler/audioService.js": {
@@ -1040,23 +1040,23 @@
     "semantic_hash": ""
   },
   "frontend/src/components/meals/AiRecipeModal.vue": {
-    "mtime": 1790143350.2572343,
-    "ast_hash": "5ae370bde8e05774f3b0a4bc06ee87df",
+    "mtime": 1791798222.846709,
+    "ast_hash": "9f4162b9b21581a1245c94ff212a62f2",
     "semantic_hash": ""
   },
   "frontend/src/components/meals/ExportShoppingModal.vue": {
-    "mtime": 1790070701.4801486,
-    "ast_hash": "2d0400c283ee50c43e1cb9482f959698",
+    "mtime": 1791798209.3141377,
+    "ast_hash": "4de1e4fb90718a6216ec64eba9625b2d",
     "semantic_hash": ""
   },
   "frontend/src/components/meals/MealPlanModal.vue": {
-    "mtime": 1790130736.5429308,
-    "ast_hash": "7495d22b2d52a62e20b89dbd770e0403",
+    "mtime": 1791798195.1568549,
+    "ast_hash": "e4d7161d15d52f2c41d87364adfade56",
     "semantic_hash": ""
   },
   "frontend/src/components/meals/PantryItemModal.vue": {
-    "mtime": 1790054767.0648282,
-    "ast_hash": "5337ed3b694b88c10d01958c4a1f39c2",
+    "mtime": 1791798160.839688,
+    "ast_hash": "2092a063ea23334cbd993d19dc449a68",
     "semantic_hash": ""
   },
   "frontend/src/components/meals/RecipeDetailModal.vue": {
@@ -1065,8 +1065,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/MealsPage.vue": {
-    "mtime": 1790143338.0441675,
-    "ast_hash": "1334dbd5f9b28947ba1e8c12ca0e2150",
+    "mtime": 1791798439.2488644,
+    "ast_hash": "8dc53396ce5370978445a1d2d81bc15f",
     "semantic_hash": ""
   },
   "frontend/src/services/mealPlanService.js": {
@@ -1122,6 +1122,16 @@
   "docs/walkthrough_security_audit_prelaunch.md": {
     "mtime": 1790212640.1800728,
     "ast_hash": "8c29f45993814d5f77f3016fcebee18d",
+    "semantic_hash": ""
+  },
+  "docs/skill_set_gap_plan.md": {
+    "mtime": 1791536470.8786638,
+    "ast_hash": "8ec0277f7be6536bb4e897da15a52403",
+    "semantic_hash": ""
+  },
+  "docs/walkthrough_double_submit_protection.md": {
+    "mtime": 1791799910.162652,
+    "ast_hash": "6b3a33d5884fd52c9a78da74923c66a3",
     "semantic_hash": ""
   }
 }

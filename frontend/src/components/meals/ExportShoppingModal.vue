@@ -181,6 +181,7 @@ function close() {
 }
 
 async function handleSubmit() {
+  if (saving.value) return;
   if (activeSelectedCount.value === 0) return;
   saving.value = true;
   try {

@@ -265,6 +265,7 @@ watch(
   () => props.isOpen,
   (open) => {
     if (open) {
+      isSubmitting.value = false;
       if (props.initialTask) {
         form.value = {
           title: props.initialTask.title || '',
@@ -323,7 +324,9 @@ function getPriorityBtnClass(priority) {
 }
 
 function handleSubmit() {
+  if (isSubmitting.value) return;
   if (!form.value.title.trim()) return;
+  isSubmitting.value = true;
 
   const reminders = hasReminder.value
     ? [

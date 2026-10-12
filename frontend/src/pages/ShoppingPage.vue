@@ -466,6 +466,7 @@ function onCreatorChange() {
 }
 
 async function savePlan() {
+  if (saving.value) return;
   if (!planForm.value.location || !planForm.value.location.trim()) {
     toast.error(localeStore.currentLocale === 'id' ? 'Lokasi belanja harus diisi.' : 'Shopping location is required.');
     return;
@@ -531,6 +532,7 @@ function confirmDeletePlan(plan) {
 }
 
 async function doDeletePlan() {
+  if (deleting.value) return;
   if (!planToDelete.value) return;
   deleting.value = true;
   try {

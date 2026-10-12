@@ -143,6 +143,7 @@ const loading = ref(false);
 const showPassword = ref(false);
 
 async function handleLogin() {
+  if (loading.value) return;
   loading.value = true;
   error.value = '';
   try {

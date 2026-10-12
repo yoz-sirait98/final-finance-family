@@ -453,6 +453,7 @@ const isSavingOpenRouter = ref(false);
 
 // 1. Save Gemini Key
 async function saveGeminiKey() {
+  if (isSavingKey.value) return;
   const trimmedKey = geminiApiKey.value.trim();
   if (!trimmedKey) {
     localStorage.removeItem('gemini_api_key');
@@ -497,6 +498,7 @@ async function saveGeminiKey() {
 
 // 2. Save DeepSeek Key
 async function saveDeepSeekKey() {
+  if (isSavingDeepSeek.value) return;
   const trimmedKey = deepseekApiKey.value.trim();
   if (!trimmedKey) {
     localStorage.removeItem('deepseek_api_key');
@@ -541,6 +543,7 @@ async function saveDeepSeekKey() {
 
 // 3. Save Groq Key
 async function saveGroqKey() {
+  if (isSavingGroq.value) return;
   const trimmedKey = groqApiKey.value.trim();
   if (!trimmedKey) {
     localStorage.removeItem('groq_api_key');
@@ -573,6 +576,7 @@ async function saveGroqKey() {
 
 // 4. Save OpenRouter Key
 async function saveOpenRouterKey() {
+  if (isSavingOpenRouter.value) return;
   const trimmedKey = openrouterApiKey.value.trim();
   if (!trimmedKey) {
     localStorage.removeItem('openrouter_api_key');
@@ -604,6 +608,7 @@ async function saveOpenRouterKey() {
 }
 
 async function changePassword() {
+  if (loading.value) return;
   if (form.value.password !== form.value.password_confirmation) {
     error.value = localeStore.currentLocale === 'id'
       ? 'Konfirmasi password baru tidak cocok.'
@@ -646,6 +651,7 @@ onMounted(async () => {
 });
 
 async function saveWhatsAppGroupId() {
+  if (isSavingGroupId.value) return;
   isSavingGroupId.value = true;
   try {
     const trimmedId = whatsappGroupId.value.trim();

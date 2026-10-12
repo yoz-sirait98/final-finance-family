@@ -36,8 +36,9 @@
                 />
               </div>
               <div class="col-2">
-                <button type="submit" class="btn btn-primary btn-sm w-100" :disabled="!newCategoryName.trim()">
-                  <i class="bi bi-plus-lg"></i>
+                <button type="submit" class="btn btn-primary btn-sm w-100" :disabled="!newCategoryName.trim() || isSubmitting">
+                  <span v-if="isSubmitting" class="spinner-border spinner-border-sm"></span>
+                  <i v-else class="bi bi-plus-lg"></i>
                 </button>
               </div>
             </div>
@@ -61,6 +62,7 @@
                 <button
                   v-if="!cat.is_default"
                   class="btn btn-sm btn-link text-danger p-0 px-1"
+                  :disabled="isDeleting"
                   @click="handleDelete(cat)"
                   title="Delete category"
                 >
@@ -100,9 +102,13 @@ const emit = defineEmits(['close', 'create', 'delete']);
 
 const newCategoryName = ref('');
 const newCategoryColor = ref('#6366f1');
+const isSubmitting = ref(false);
+const isDeleting = ref(false);
 
 function handleAddCategory() {
+  if (isSubmitting.value) return;
   if (!newCategoryName.value.trim()) return;
+  isSubmitting.value = true;
 
   emit('create', {
     name: newCategoryName.value.trim(),
@@ -111,11 +117,15 @@ function handleAddCategory() {
   });
 
   newCategoryName.value = '';
+  setTimeout(() => { isSubmitting.value = false; }, 600);
 }
 
 function handleDelete(cat) {
+  if (isDeleting.value) return;
   if (confirm(`Delete category "${cat.name}"?`)) {
+    isDeleting.value = true;
     emit('delete', cat.id);
+    setTimeout(() => { isDeleting.value = false; }, 600);
   }
 }
 </script>

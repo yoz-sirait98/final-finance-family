@@ -67,8 +67,11 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="showModal = false">{{ $t('common.cancel') }}</button>
-            <button type="submit" class="btn btn-primary-gradient">{{ $t('common.save') }}</button>
+            <button type="button" class="btn btn-secondary" :disabled="saving" @click="showModal = false">{{ $t('common.cancel') }}</button>
+            <button type="submit" class="btn btn-primary-gradient" :disabled="saving">
+              <span v-if="saving" class="spinner-border spinner-border-sm me-1"></span>
+              {{ $t('common.save') }}
+            </button>
           </div>
         </form>
       </div>
@@ -85,8 +88,11 @@
           <p class="mb-0">{{ $t('common.confirmDelete') }}</p>
         </div>
         <div class="modal-footer border-0 pt-0">
-          <button class="btn btn-secondary" @click="showDeleteModal = false">{{ $t('common.cancel') }}</button>
-          <button class="btn btn-danger" @click="doDelete">{{ $t('common.delete') }}</button>
+          <button class="btn btn-secondary" :disabled="deleting" @click="showDeleteModal = false">{{ $t('common.cancel') }}</button>
+          <button class="btn btn-danger" :disabled="deleting" @click="doDelete">
+            <span v-if="deleting" class="spinner-border spinner-border-sm me-1"></span>
+            {{ $t('common.delete') }}
+          </button>
         </div>
       </div>
     </div>
@@ -114,6 +120,9 @@ const localeStore = useLocaleStore();
 const showModal = ref(false);
 const showDeleteModal = ref(false);
 const deletingItem = ref(null);
+const saving = ref(false);
+const deleting = ref(false);
+const updatingId = ref(null);
 const toast = useToastStore();
 
 async function fetchData() {
@@ -141,6 +150,8 @@ function openEdit(m) {
 }
 
 async function save() {
+  if (saving.value) return;
+  saving.value = true;
   formError.value = '';
   try {
     if (editingId.value) {
@@ -155,16 +166,22 @@ async function save() {
   } catch(e) {
     formError.value = e.message || localeStore.t('common.error');
     toast.error(formError.value);
+  } finally {
+    saving.value = false;
   }
 }
 
 async function toggleActive(m) {
+  if (updatingId.value === m.id) return;
+  updatingId.value = m.id;
   try {
     await memberService.update(m.id, { is_active: !m.is_active });
     toast.success(localeStore.t('common.success'));
     fetchData();
   } catch (e) {
     toast.error(e.message || localeStore.t('common.error'));
+  } finally {
+    updatingId.value = null;
   }
 }
 
@@ -174,7 +191,9 @@ function confirmDelete(m) {
 }
 
 async function doDelete() {
+  if (deleting.value) return;
   if (!deletingItem.value) return;
+  deleting.value = true;
   try {
     await memberService.delete(deletingItem.value.id);
     toast.success(localeStore.t('common.success'));
@@ -183,6 +202,8 @@ async function doDelete() {
     fetchData();
   } catch (e) {
     toast.error(e.message || localeStore.t('common.error'));
+  } finally {
+    deleting.value = false;
   }
 }
 

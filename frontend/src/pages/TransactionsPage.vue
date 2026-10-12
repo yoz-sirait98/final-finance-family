@@ -1388,6 +1388,7 @@ function openDuplicate(tx) {
 // Called when user clicks Save button — runs budget pre-check for new expenses
 async function saveTransaction() {
   if (saving.value) return;
+  saving.value = true;
   formError.value = '';
 
   // Budget pre-check: only for new expenses with a category
@@ -1417,6 +1418,7 @@ async function saveTransaction() {
           };
           wasBudgetExceeded.value = true;
           showBudgetConfirm.value = true;
+          saving.value = false; // release lock to allow confirmation modal action
           return; // Stop here — wait for user to confirm
         }
       }
@@ -1570,6 +1572,7 @@ function openTransfer() {
 }
 
 async function saveTransfer() {
+  if (saving.value) return;
   saving.value = true;
   transferError.value = '';
   try {

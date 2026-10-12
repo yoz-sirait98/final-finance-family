@@ -249,6 +249,7 @@ watch(
   () => props.show,
   (val) => {
     if (val) {
+      saving.value = false;
       if (props.planData) {
         planForm.value = {
           ...props.planData,
@@ -294,10 +295,12 @@ function getSlotIcon(type) {
 }
 
 function close() {
+  saving.value = false;
   emit('close');
 }
 
 async function handleSubmit() {
+  if (saving.value) return;
   saving.value = true;
   try {
     const payload = {
@@ -312,7 +315,7 @@ async function handleSubmit() {
     };
 
     emit('save', { id: props.planData?.id, data: payload });
-  } finally {
+  } catch (e) {
     saving.value = false;
   }
 }

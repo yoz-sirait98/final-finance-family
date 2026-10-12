@@ -565,6 +565,7 @@ function openLogExpense(pocket) {
 }
 
 async function saveExpense() {
+  if (saving.value) return;
   if (form.value.amount > activePocket.value.remaining) {
     formError.value = localeStore.currentLocale === 'id' 
       ? 'Jumlah pengeluaran tidak boleh melebihi sisa saldo kantong.' 
@@ -606,6 +607,7 @@ function openViewExpenses(pocket) {
 }
 
 async function deleteExpense(tx) {
+  if (deletingTx.value) return;
   if (!confirm(localeStore.t('common.confirmDelete'))) return;
   deletingTx.value = true;
   try {
@@ -628,6 +630,7 @@ async function deleteExpense(tx) {
 }
 
 async function markPocketAsDone(pocket) {
+  if (saving.value) return;
   if (pocket.spent <= 0) {
     toast.error(localeStore.currentLocale === 'id' 
       ? 'Tidak dapat menyelesaikan kantong proyek ini karena belum ada pengeluaran yang dicatat.' 

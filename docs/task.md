@@ -149,6 +149,92 @@
   - [x] Update root `README.md` with full product ecosystem, Scheduler & Chores, Smart Meal Planner & Pantry Hub, PWA offline capabilities, route navigation map, and deployment setup
   - [x] Update `frontend/README.md` with modern tech stack table, complete directory map, Pinia state stores reference, Dexie.js offline-first sync architecture, and client-side integrity patterns
 
+---
+
+# Tasks Checklist: Full Audit & Double-Submit Protection on All CRUD Buttons
+
+- [x] **1. Audit & Protect Core Financial Modules**
+  - [x] `TransactionsPage.vue`: Guard `saveTransaction()` synchronously before budget pre-check; guard `saveTransfer()`; guard `doSaveTransaction()`.
+  - [x] `AccountsPage.vue`: Add `saving` and `deleting` refs; guard `save()` and `doDelete()`; bind `:disabled` with spinners on submit and delete buttons.
+  - [x] `CategoriesPage.vue`: Add `saving` and `deleting` refs; guard `save()` and `doDelete()`; bind `:disabled` with spinners.
+  - [x] `BudgetsPage.vue`: Add `saving` and `deleting` refs; guard `save()` and `doDelete()`; bind `:disabled` with spinners.
+  - [x] `GoalsPage.vue`: Guard `save()`, `doContribute()`, and `doDelete()` with early returns; bind `:disabled` states.
+  - [x] `ProjectPocketsPage.vue`: Guard `saveExpense()`, `deleteExpense()`, and `markPocketAsDone()`; bind `:disabled="saving"` on actions.
+  - [x] `RecurringPage.vue`: Add `saving`, `deleting`, and `updatingId` refs; guard `save()`, `doDelete()`, and `toggleActive()`.
+- [x] **2. Audit & Protect Shopping & Life Management Modules**
+  - [x] `ShoppingPage.vue`: Guard `savePlan()` and `doDeletePlan()` with early returns.
+  - [x] `ShoppingDetailPage.vue`: Guard `saveItem()`, `doDeleteItem()`, `processCheckout()`, and `restockAllToPantry()`.
+  - [x] `MembersPage.vue`: Add `saving` and `deleting` refs; guard `save()` and `doDelete()`; bind `:disabled` states.
+  - [x] `SettingsPage.vue`: Guard all key save functions (`saveGeminiKey`, `saveDeepSeekKey`, `saveGroqKey`, `saveOpenRouterKey`, `saveWhatsAppGroupId`, `changePassword`).
+  - [x] `LoginPage.vue` & `RegisterPage.vue`: Guard `handleLogin()` and `handleRegister()` with early return guards.
+- [x] **3. Audit & Protect Scheduler & Meals Hub**
+  - [x] `TaskFormModal.vue`: Set `isSubmitting.value = true` in `handleSubmit()`; add early return guard.
+  - [x] `CategoryManageModal.vue`: Add `isSubmitting` / `isDeleting` guards to `handleAddCategory()` and `handleDelete()`.
+  - [x] `SchedulerPage.vue`: Guard `handleSaveTask()`, `handleCreateCategory()`, and `handleDeleteTask()`.
+  - [x] `PantryItemModal.vue`: Guard `handleSubmit()` against double submit.
+  - [x] `MealPlanModal.vue`: Guard `handleSubmit()` against double submit.
+  - [x] `ExportShoppingModal.vue`: Guard `handleSubmit()` against double submit.
+  - [x] `AiRecipeModal.vue`: Guard `saveToRecipeBox()` with early return.
+  - [x] `MealsPage.vue`: Add `isDeleting` ref and guard to `executeDelete()`; bind `:disabled="isDeleting"`; guard `handleAiSaveRecipe()`, `handleSavePantryItem()`, and `handleSaveMealPlan()`.
+- [x] **4. Verification & Build Integrity**
+  - [x] Run `npm run build` to verify clean compilation with zero bundling errors.
+  - [x] Update knowledge graph (`graphify update .`).
+
+---
+
+# Tasks Checklist: Household Assets, Vehicle/Home Maintenance & Warranty Tracker
+
+- [ ] **1. Phase 1: Planning, Schema Design & Database Migration**
+  - [/] Archive previous `implementation_plan.md` to `scratch/old_plan_2026_09_28.md`
+  - [/] Create detailed implementation plan in `docs/implementation_plan.md`
+  - [ ] Obtain user approval on implementation plan
+  - [ ] Write migration `supabase/migrations/000039_household_assets_and_maintenance.sql`:
+    - [ ] `public.assets` table (vehicles, appliances, electronics, furniture, property fixtures)
+    - [ ] `public.asset_warranties` table (warranty policies, expiration dates, proof documents)
+    - [ ] `public.asset_maintenance_schedules` table (recurring service rules by time/odometer)
+    - [ ] `public.asset_maintenance_logs` table (service logs, costs, invoices, linked transaction)
+    - [ ] Row Level Security (RLS) policies scoped to `public.get_auth_family_id()`
+    - [ ] Auto-advance schedule trigger `trg_update_maintenance_schedule_on_log`
+
+- [ ] **2. Phase 2: Service & State Stores**
+  - [ ] Implement `frontend/src/services/assetService.js` (CRUD, expense cross-posting, scheduler sync)
+  - [ ] Implement `frontend/src/stores/assets.js` (Pinia store, KPIs, filters, computed queries)
+
+- [ ] **3. Phase 3: UI Components (`components/assets/`)**
+  - [ ] Build `AssetCard.vue` (visual card with specs, custodian, warranty status, maintenance preview)
+  - [ ] Build `AssetModal.vue` (asset create/edit modal with vehicle-specific fields and image upload)
+  - [ ] Build `AssetDetailModal.vue` (360° asset overview with specs, warranty, maintenance timeline, total spend)
+  - [ ] Build `MaintenanceScheduleModal.vue` (define recurring service intervals, costs, assignees)
+  - [ ] Build `MaintenanceLogModal.vue` (service log with invoice upload & 1-tap ledger expense integration)
+  - [ ] Build `WarrantyModal.vue` (warranty policy form with document upload)
+  - [ ] Build `AssetFilterBar.vue` (category chips, search, and status filters)
+
+- [ ] **4. Phase 4: Master Page & Mobile Touch Layout**
+  - [ ] Create `frontend/src/pages/AssetsPage.vue` with 4 core tabs:
+    - [ ] Tab 1: All Assets (Inventory grid/list with filters)
+    - [ ] Tab 2: Maintenance Schedules (Due soon, overdue, upcoming)
+    - [ ] Tab 3: Service History (Chronological service logs with costs & invoices)
+    - [ ] Tab 4: Warranties Hub (Active, expiring soon, expired, claim docs)
+  - [ ] Implement mobile-responsive touch layout (`d-md-none`) with touch pills and action drawers
+
+- [ ] **5. Phase 5: Navigation, Dashboard & Alerts Hub Integration**
+  - [ ] Register `/assets` route in `frontend/src/router/index.js`
+  - [ ] Add "Assets & Maintenance" nav item in `frontend/src/layouts/DashboardLayout.vue` sidebar & mobile drawer
+  - [ ] Add compact "Maintenance Due & Expiring Warranties" card to `frontend/src/pages/DashboardPage.vue`
+  - [ ] Extend `pushDispatcherService.js` with `MAINTENANCE_DUE` and `WARRANTY_EXPIRING` templates
+  - [ ] Add comprehensive bilingual localization in `frontend/src/locales/en.json` and `id.json`
+
+- [ ] **6. Phase 6: Cross-App Synergy Verification**
+  - [ ] Test maintenance-to-expense ledger integration (posting transaction with account deduction)
+  - [ ] Test maintenance-to-scheduler sync (generating chore/task for family member)
+  - [ ] Test warranty expiration calculation and alerts
+
+- [ ] **7. Phase 7: Verification, Documentation & Knowledge Graph**
+  - [ ] Run `npm run build` to verify clean bundle
+  - [ ] Create automated test script (`frontend/scripts/test_assets_pure.js`) to verify domain invariants
+  - [ ] Update knowledge graph (`graphify update .`)
+  - [ ] Create walkthrough documentation (`docs/walkthrough_household_assets_and_maintenance.md`)
+
 
 
 

@@ -367,6 +367,9 @@ const isGoogleModalOpen = ref(false);
 const selectedTask = ref(null);
 const selectedTaskToEdit = ref(null);
 const defaultSlotTime = ref(null);
+const isSavingTask = ref(false);
+const isDeletingTask = ref(false);
+const isProcessingCategory = ref(false);
 
 // Filter Form State
 const searchQuery = ref('');
@@ -506,23 +509,29 @@ function closeFormModal() {
 }
 
 async function handleSaveTask(payload) {
-  const familyId = authStore.familyId;
-  const userId = authStore.user?.id;
+  if (isSavingTask.value) return;
+  isSavingTask.value = true;
+  try {
+    const familyId = authStore.familyId;
+    const userId = authStore.user?.id;
 
-  if (selectedTaskToEdit.value) {
-    await taskStore.editTask(selectedTaskToEdit.value.id, payload);
-  } else {
-    await taskStore.addTask(payload, familyId, userId);
-  }
-
-  closeFormModal();
-
-  // Background sync
-  if (familyId) {
-    schedulerSyncService.triggerSync(familyId);
-    if (googleStore.isConnected && (googleStore.autoSyncEnabled || payload.external_provider === 'google')) {
-      googleStore.sync(familyId, userId).catch((e) => console.warn('GCal sync error:', e));
+    if (selectedTaskToEdit.value) {
+      await taskStore.editTask(selectedTaskToEdit.value.id, payload);
+    } else {
+      await taskStore.addTask(payload, familyId, userId);
     }
+
+    closeFormModal();
+
+    // Background sync
+    if (familyId) {
+      schedulerSyncService.triggerSync(familyId);
+      if (googleStore.isConnected && (googleStore.autoSyncEnabled || payload.external_provider === 'google')) {
+        googleStore.sync(familyId, userId).catch((e) => console.warn('GCal sync error:', e));
+      }
+    }
+  } finally {
+    isSavingTask.value = false;
   }
 }
 
@@ -544,25 +553,43 @@ async function handleToggleFromDetail(task) {
 }
 
 async function handleDeleteTask(taskId) {
-  await taskStore.removeTask(taskId);
-  isDetailModalOpen.value = false;
-  selectedTask.value = null;
-  if (authStore.familyId) {
-    schedulerSyncService.triggerSync(authStore.familyId);
+  if (isDeletingTask.value) return;
+  isDeletingTask.value = true;
+  try {
+    await taskStore.removeTask(taskId);
+    isDetailModalOpen.value = false;
+    selectedTask.value = null;
+    if (authStore.familyId) {
+      schedulerSyncService.triggerSync(authStore.familyId);
+    }
+  } finally {
+    isDeletingTask.value = false;
   }
 }
 
 async function handleCreateCategory(categoryInput) {
-  await categoryStore.addCategory(categoryInput, authStore.familyId, authStore.user?.id);
-  if (authStore.familyId) {
-    schedulerSyncService.triggerSync(authStore.familyId);
+  if (isProcessingCategory.value) return;
+  isProcessingCategory.value = true;
+  try {
+    await categoryStore.addCategory(categoryInput, authStore.familyId, authStore.user?.id);
+    if (authStore.familyId) {
+      schedulerSyncService.triggerSync(authStore.familyId);
+    }
+  } finally {
+    isProcessingCategory.value = false;
   }
 }
 
 async function handleDeleteCategory(categoryId) {
-  await categoryStore.removeCategory(categoryId);
-  if (authStore.familyId) {
-    schedulerSyncService.triggerSync(authStore.familyId);
+  if (isProcessingCategory.value) return;
+  isProcessingCategory.value = true;
+  try {
+    await categoryStore.removeCategory(categoryId);
+    if (authStore.familyId) {
+      schedulerSyncService.triggerSync(authStore.familyId);
+    }
+  } finally {
+    isProcessingCategory.value = false;
   }
 }
 

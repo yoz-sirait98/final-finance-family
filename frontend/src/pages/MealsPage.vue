@@ -882,10 +882,11 @@
           </p>
         </div>
         <div class="d-flex gap-2 justify-content-center">
-          <button type="button" class="btn btn-secondary px-3" @click="showDeleteModal = false">
+          <button type="button" class="btn btn-secondary px-3" :disabled="isDeleting" @click="showDeleteModal = false">
             {{ isId ? 'Batal' : 'Cancel' }}
           </button>
-          <button type="button" class="btn btn-danger px-4" @click="executeDelete">
+          <button type="button" class="btn btn-danger px-4" :disabled="isDeleting" @click="executeDelete">
+            <span v-if="isDeleting" class="spinner-border spinner-border-sm me-1"></span>
             {{ isId ? 'Hapus' : 'Delete' }}
           </button>
         </div>
@@ -959,6 +960,10 @@ const exportIngredientsList = ref([]);
 // Delete modal state
 const showDeleteModal = ref(false);
 const itemToDelete = ref(null); // { type: 'pantry' | 'meal' | 'recipe', id, title }
+const isDeleting = ref(false);
+const isSavingMeal = ref(false);
+const isSavingPantry = ref(false);
+const isSavingRecipe = ref(false);
 
 // Recipes tab state
 const recipes = ref([]);
@@ -1041,6 +1046,8 @@ function openMealPlanModal(meal = null, date = '', slot = 'dinner') {
 }
 
 async function handleSaveMealPlan({ id, data }) {
+  if (isSavingMeal.value) return;
+  isSavingMeal.value = true;
   try {
     if (id) {
       await mealPlanStore.updateMealPlan(id, data);
@@ -1052,6 +1059,8 @@ async function handleSaveMealPlan({ id, data }) {
     showMealPlanModal.value = false;
   } catch (err) {
     toastStore.error(err.message || 'Error saving meal');
+  } finally {
+    isSavingMeal.value = false;
   }
 }
 
@@ -1086,6 +1095,8 @@ function openPantryModal(item = null) {
 }
 
 async function handleSavePantryItem({ id, data }) {
+  if (isSavingPantry.value) return;
+  isSavingPantry.value = true;
   try {
     if (id) {
       await pantryStore.updateItem(id, data);
@@ -1097,6 +1108,8 @@ async function handleSavePantryItem({ id, data }) {
     showPantryModal.value = false;
   } catch (err) {
     toastStore.error(err.message || 'Error saving item');
+  } finally {
+    isSavingPantry.value = false;
   }
 }
 
@@ -1138,6 +1151,8 @@ function handleAiSchedule(recipe) {
 }
 
 async function handleAiSaveRecipe(recipe) {
+  if (isSavingRecipe.value) return;
+  isSavingRecipe.value = true;
   try {
     const payload = {
       name: recipe.name,
@@ -1158,6 +1173,8 @@ async function handleAiSaveRecipe(recipe) {
     toastStore.success(isId.value ? 'Resep berhasil disimpan ke Buku Resep!' : 'Recipe saved to Recipe Box!');
   } catch (err) {
     toastStore.error(err.message || 'Failed to save recipe');
+  } finally {
+    isSavingRecipe.value = false;
   }
 }
 
@@ -1219,7 +1236,8 @@ function handleExportSuccess() {
 
 // Delete execution
 async function executeDelete() {
-  if (!itemToDelete.value) return;
+  if (!itemToDelete.value || isDeleting.value) return;
+  isDeleting.value = true;
   try {
     if (itemToDelete.value.type === 'pantry') {
       await pantryStore.deleteItem(itemToDelete.value.id);
@@ -1235,6 +1253,8 @@ async function executeDelete() {
     showDeleteModal.value = false;
   } catch (err) {
     toastStore.error(err.message || 'Error deleting item');
+  } finally {
+    isDeleting.value = false;
   }
 }
 

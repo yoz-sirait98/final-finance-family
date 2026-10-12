@@ -260,6 +260,7 @@ watch(
   () => props.show,
   (val) => {
     if (val) {
+      saving.value = false;
       if (props.itemData) {
         itemForm.value = {
           ...props.itemData,
@@ -321,10 +322,12 @@ function getLocationIcon(loc) {
 }
 
 function close() {
+  saving.value = false;
   emit('close');
 }
 
 async function handleSubmit() {
+  if (saving.value) return;
   saving.value = true;
   try {
     const payload = {
@@ -340,7 +343,7 @@ async function handleSubmit() {
     };
 
     emit('save', { id: props.itemData?.id, data: payload });
-  } finally {
+  } catch (e) {
     saving.value = false;
   }
 }

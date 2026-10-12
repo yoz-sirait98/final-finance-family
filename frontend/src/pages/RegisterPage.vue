@@ -180,6 +180,7 @@ const loading = ref(false);
 const showPassword = ref(false);
 
 async function handleRegister() {
+  if (loading.value) return;
   if (form.value.password !== form.value.password_confirmation) {
     error.value = localeStore.t('auth.register.passwordMismatch');
     return;
