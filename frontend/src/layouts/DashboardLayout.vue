@@ -59,6 +59,13 @@
             <span class="nav-text">{{ $t('nav.meals') || 'Meals & Pantry' }}</span>
           </router-link>
         </div>
+        <div class="nav-item">
+          <router-link to="/assets" class="nav-link" @click="closeMobile">
+            <i class="bi bi-house-gear"></i>
+            <span class="nav-text">{{ $t('nav.assets') || 'Assets & Maintenance' }}</span>
+            <span v-if="overdueAssetsCount > 0" class="badge rounded-pill bg-danger ms-auto" style="font-size: 0.65rem;">{{ overdueAssetsCount }}</span>
+          </router-link>
+        </div>
 
         <span class="sidebar-section-title">{{ $t('nav.management') }}</span>
         <div class="nav-item">
@@ -238,6 +245,15 @@
               >
                 {{ $t('nav.shoppingAlerts') }} ({{ shoppingAlertsList.length }})
               </button>
+              <button 
+                type="button"
+                class="btn btn-xs rounded-pill flex-fill text-nowrap"
+                :class="alertTab === 'maintenance' ? 'btn-primary text-white' : 'btn-outline-secondary'"
+                style="font-size: 0.7rem; padding: 2px 6px;"
+                @click.stop="alertTab = 'maintenance'"
+              >
+                {{ $t('nav.maintenanceAlerts') || 'Servis' }} ({{ maintenanceAlertsList.length }})
+              </button>
             </div>
 
             <!-- Alerts Feed -->
@@ -318,6 +334,7 @@ import { supabase } from '../lib/supabase';
 import { useSchedulerAlarmStore } from '../stores/schedulerAlarm';
 import { reminderService } from '../services/scheduler/reminderService';
 import { schedulerSyncService } from '../services/scheduler/schedulerSyncService';
+import { useAssetStore } from '../stores/assets';
 
 const route = useRoute();
 const router = useRouter();
@@ -325,6 +342,7 @@ const authStore = useAuthStore();
 const budgetStore = useBudgetStore();
 const tourStore = useTourStore();
 const localeStore = useLocaleStore();
+const assetStore = useAssetStore();
 
 // Map route names to the eventBus key used by each page
 const PAGE_TOUR_EVENTS = {
@@ -403,15 +421,73 @@ const budgetAlertsList = computed(() => {
   }));
 });
 
+const overdueAssetsCount = computed(() => {
+  return assetStore.overdueSchedulesCount || 0;
+});
+
+const maintenanceAlertsList = computed(() => {
+  const isId = localeStore.currentLocale === 'id';
+  const today = new Date().toISOString().split('T')[0];
+  const nextWeek = new Date(Date.now() + 7 * 86400000).toISOString().split('T')[0];
+  const nextMonth = new Date(Date.now() + 30 * 86400000).toISOString().split('T')[0];
+  const list = [];
+
+  (assetStore.schedules || []).forEach(s => {
+    if (!s.is_active || !s.next_due_date) return;
+    if (s.next_due_date < today) {
+      list.push({
+        category: 'maintenance',
+        categoryLabel: isId ? 'Servis Terlambat' : 'Overdue Service',
+        title: s.title,
+        message: `${s.asset?.name || 'Aset'} — ${isId ? 'Jatuh tempo:' : 'Due:'} ${s.next_due_date}`,
+        iconClass: 'bi-exclamation-triangle-fill text-danger',
+        titleClass: 'text-danger',
+        badgeClass: 'bg-danger-subtle text-danger border border-danger-subtle',
+        route: '/assets'
+      });
+    } else if (s.next_due_date <= nextWeek) {
+      list.push({
+        category: 'maintenance',
+        categoryLabel: isId ? 'Jadwal Servis' : 'Service Due Soon',
+        title: s.title,
+        message: `${s.asset?.name || 'Aset'} — ${isId ? 'Segera jatuh tempo:' : 'Due soon:'} ${s.next_due_date}`,
+        iconClass: 'bi-clock-history text-warning',
+        titleClass: 'text-warning-emphasis',
+        badgeClass: 'bg-warning-subtle text-warning-emphasis border border-warning-subtle',
+        route: '/assets'
+      });
+    }
+  });
+
+  (assetStore.warranties || []).forEach(w => {
+    if (!w.end_date || w.status === 'expired') return;
+    if (w.end_date <= nextMonth) {
+      list.push({
+        category: 'maintenance',
+        categoryLabel: isId ? 'Garansi Segera Habis' : 'Expiring Warranty',
+        title: w.provider_name || 'Garansi',
+        message: `${w.asset?.name || 'Aset'} — ${isId ? 'Berakhir pada:' : 'Expires:'} ${w.end_date}`,
+        iconClass: 'bi-shield-exclamation text-warning',
+        titleClass: 'text-warning-emphasis',
+        badgeClass: 'bg-warning-subtle text-warning border border-warning-subtle',
+        route: '/assets'
+      });
+    }
+  });
+
+  return list;
+});
+
 const totalAlertsCount = computed(() => {
-  return budgetAlertsList.value.length + goalAlertsList.value.length + shoppingAlertsList.value.length;
+  return budgetAlertsList.value.length + goalAlertsList.value.length + shoppingAlertsList.value.length + maintenanceAlertsList.value.length;
 });
 
 const filteredAlerts = computed(() => {
   const all = [
     ...budgetAlertsList.value,
     ...goalAlertsList.value,
-    ...shoppingAlertsList.value
+    ...shoppingAlertsList.value,
+    ...maintenanceAlertsList.value
   ];
   if (alertTab.value === 'all') return all;
   return all.filter(item => item.category === alertTab.value);
@@ -503,7 +579,9 @@ async function refreshAlerts() {
     await Promise.all([
       budgetStore.fetchAlerts(),
       fetchGoalAlerts(),
-      fetchPendingShopping()
+      fetchPendingShopping(),
+      assetStore.fetchSchedules(),
+      assetStore.fetchWarranties()
     ]);
   } catch {}
 }

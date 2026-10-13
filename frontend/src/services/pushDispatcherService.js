@@ -99,6 +99,28 @@ export const PUSH_TEMPLATES = {
       body: 'Congratulations! Saving goal {goal} has reached 100%!',
     },
   },
+
+  // 🔧 Household Assets & Maintenance Templates
+  MAINTENANCE_DUE: {
+    id: {
+      title: '🔧 Pengingat Jadwal Servis',
+      body: 'Jadwal servis {title} untuk {asset} jatuh tempo pada {date}.',
+    },
+    en: {
+      title: '🔧 Maintenance Due Reminder',
+      body: 'Maintenance {title} for {asset} is due on {date}.',
+    },
+  },
+  WARRANTY_EXPIRING: {
+    id: {
+      title: '🛡️ Garansi Segera Berakhir',
+      body: 'Garansi {asset} ({provider}) akan berakhir pada {date}.',
+    },
+    en: {
+      title: '🛡️ Warranty Expiring Soon',
+      body: 'Warranty for {asset} ({provider}) will expire on {date}.',
+    },
+  },
 };
 
 /**

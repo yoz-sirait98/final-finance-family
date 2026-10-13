@@ -228,6 +228,35 @@
       </div>
     </div>
 
+    <!-- Maintenance & Warranty Alert Ribbon -->
+    <div v-if="assetStore.overdueSchedulesCount > 0 || assetStore.dueSoonSchedulesCount > 0 || assetStore.expiringWarrantiesCount > 0" class="stat-card mb-4 p-3 border-start border-4 border-warning shadow-sm">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div class="d-flex align-items-center gap-2">
+          <i class="bi bi-house-gear-fill text-warning fs-4"></i>
+          <div>
+            <h6 class="fw-bold mb-0">
+              {{ localeStore.currentLocale === 'id' ? 'Perhatian Pemeliharaan & Garansi Aset' : 'Asset Maintenance & Warranty Alert' }}
+            </h6>
+            <div class="small text-muted mt-1">
+              <span v-if="assetStore.overdueSchedulesCount > 0" class="badge bg-danger-subtle text-danger border border-danger-subtle me-2">
+                <i class="bi bi-exclamation-triangle-fill me-1"></i>{{ assetStore.overdueSchedulesCount }} {{ localeStore.currentLocale === 'id' ? 'servis terlambat' : 'overdue service' }}
+              </span>
+              <span v-if="assetStore.dueSoonSchedulesCount > 0" class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle me-2">
+                <i class="bi bi-clock-history me-1"></i>{{ assetStore.dueSoonSchedulesCount }} {{ localeStore.currentLocale === 'id' ? 'servis jatuh tempo minggu ini' : 'due soon this week' }}
+              </span>
+              <span v-if="assetStore.expiringWarrantiesCount > 0" class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle">
+                <i class="bi bi-shield-exclamation me-1"></i>{{ assetStore.expiringWarrantiesCount }} {{ localeStore.currentLocale === 'id' ? 'garansi segera habis (<30 hari)' : 'warranties expiring soon' }}
+              </span>
+            </div>
+          </div>
+        </div>
+        <router-link to="/assets" class="btn btn-sm btn-outline-warning d-flex align-items-center gap-1">
+          <span>{{ localeStore.currentLocale === 'id' ? 'Buka Aset & Servis' : 'Open Assets' }}</span>
+          <i class="bi bi-arrow-right"></i>
+        </router-link>
+      </div>
+    </div>
+
     <!-- Charts Row -->
     <div id="tour-charts" class="row g-3 mb-4">
       <div class="col-lg-4">
@@ -295,6 +324,7 @@ import { useSchedulerTaskStore } from '../stores/schedulerTask';
 import { useAuthStore } from '../stores/auth';
 import { useMealPlanStore } from '../stores/mealPlan';
 import { usePantryStore } from '../stores/pantry';
+import { useAssetStore } from '../stores/assets';
 import { getTodayDateString } from '../utils/schedulerDate';
 
 const now = new Date();
@@ -303,6 +333,7 @@ const localeStore = useLocaleStore();
 const schedulerTaskStore = useSchedulerTaskStore();
 const mealPlanStore = useMealPlanStore();
 const pantryStore = usePantryStore();
+const assetStore = useAssetStore();
 const authStore = useAuthStore();
 
 const todayTasks = computed(() => {
@@ -679,6 +710,10 @@ onMounted(() => {
   // Load today's meals & pantry stock
   mealPlanStore.fetchCurrentWeek();
   pantryStore.fetchItems();
+
+  // Load maintenance schedules & warranties
+  assetStore.fetchSchedules();
+  assetStore.fetchWarranties();
 });
 
 onUnmounted(() => {

@@ -184,56 +184,56 @@
 
 # Tasks Checklist: Household Assets, Vehicle/Home Maintenance & Warranty Tracker
 
-- [ ] **1. Phase 1: Planning, Schema Design & Database Migration**
-  - [/] Archive previous `implementation_plan.md` to `scratch/old_plan_2026_09_28.md`
-  - [/] Create detailed implementation plan in `docs/implementation_plan.md`
-  - [ ] Obtain user approval on implementation plan
-  - [ ] Write migration `supabase/migrations/000039_household_assets_and_maintenance.sql`:
-    - [ ] `public.assets` table (vehicles, appliances, electronics, furniture, property fixtures)
-    - [ ] `public.asset_warranties` table (warranty policies, expiration dates, proof documents)
-    - [ ] `public.asset_maintenance_schedules` table (recurring service rules by time/odometer)
-    - [ ] `public.asset_maintenance_logs` table (service logs, costs, invoices, linked transaction)
-    - [ ] Row Level Security (RLS) policies scoped to `public.get_auth_family_id()`
-    - [ ] Auto-advance schedule trigger `trg_update_maintenance_schedule_on_log`
+- [x] **1. Phase 1: Planning, Schema Design & Database Migration**
+  - [x] Archive previous `implementation_plan.md` to `scratch/old_plan_2026_09_28.md`
+  - [x] Create detailed implementation plan in `docs/implementation_plan.md`
+  - [x] Obtain user approval on implementation plan
+  - [x] Write migration `supabase/migrations/000039_household_assets_and_maintenance.sql`:
+    - [x] `public.assets` table (vehicles, appliances, electronics, furniture, property fixtures)
+    - [x] `public.asset_warranties` table (warranty policies, expiration dates, proof documents)
+    - [x] `public.asset_maintenance_schedules` table (recurring service rules by time/odometer)
+    - [x] `public.asset_maintenance_logs` table (service logs, costs, invoices, linked transaction)
+    - [x] Row Level Security (RLS) policies scoped to `public.get_auth_family_id()`
+    - [x] Auto-advance schedule trigger `trg_update_maintenance_schedule_on_log`
 
-- [ ] **2. Phase 2: Service & State Stores**
-  - [ ] Implement `frontend/src/services/assetService.js` (CRUD, expense cross-posting, scheduler sync)
-  - [ ] Implement `frontend/src/stores/assets.js` (Pinia store, KPIs, filters, computed queries)
+- [x] **2. Phase 2: Service & State Stores**
+  - [x] Implement `frontend/src/services/assetService.js` (CRUD, expense cross-posting, scheduler sync)
+  - [x] Implement `frontend/src/stores/assets.js` (Pinia store, KPIs, filters, computed queries)
 
-- [ ] **3. Phase 3: UI Components (`components/assets/`)**
-  - [ ] Build `AssetCard.vue` (visual card with specs, custodian, warranty status, maintenance preview)
-  - [ ] Build `AssetModal.vue` (asset create/edit modal with vehicle-specific fields and image upload)
-  - [ ] Build `AssetDetailModal.vue` (360° asset overview with specs, warranty, maintenance timeline, total spend)
-  - [ ] Build `MaintenanceScheduleModal.vue` (define recurring service intervals, costs, assignees)
-  - [ ] Build `MaintenanceLogModal.vue` (service log with invoice upload & 1-tap ledger expense integration)
-  - [ ] Build `WarrantyModal.vue` (warranty policy form with document upload)
-  - [ ] Build `AssetFilterBar.vue` (category chips, search, and status filters)
+- [x] **3. Phase 3: UI Components (`components/assets/`)**
+  - [x] Build `AssetCard.vue` (visual card with specs, custodian, warranty status, maintenance preview)
+  - [x] Build `AssetModal.vue` (asset create/edit modal with vehicle-specific fields and image upload)
+  - [x] Build `AssetDetailModal.vue` (360° asset overview with specs, warranty, maintenance timeline, total spend)
+  - [x] Build `MaintenanceScheduleModal.vue` (define recurring service intervals, costs, assignees)
+  - [x] Build `MaintenanceLogModal.vue` (service log with invoice upload & 1-tap ledger expense integration)
+  - [x] Build `WarrantyModal.vue` (warranty policy form with document upload)
+  - [x] Build `AssetFilterBar.vue` (category chips, search, and status filters)
 
-- [ ] **4. Phase 4: Master Page & Mobile Touch Layout**
-  - [ ] Create `frontend/src/pages/AssetsPage.vue` with 4 core tabs:
-    - [ ] Tab 1: All Assets (Inventory grid/list with filters)
-    - [ ] Tab 2: Maintenance Schedules (Due soon, overdue, upcoming)
-    - [ ] Tab 3: Service History (Chronological service logs with costs & invoices)
-    - [ ] Tab 4: Warranties Hub (Active, expiring soon, expired, claim docs)
-  - [ ] Implement mobile-responsive touch layout (`d-md-none`) with touch pills and action drawers
+- [x] **4. Phase 4: Master Page & Mobile Touch Layout**
+  - [x] Create `frontend/src/pages/AssetsPage.vue` with 4 core tabs:
+    - [x] Tab 1: All Assets (Inventory grid/list with filters)
+    - [x] Tab 2: Maintenance Schedules (Due soon, overdue, upcoming)
+    - [x] Tab 3: Service History (Chronological service logs with costs & invoices)
+    - [x] Tab 4: Warranties Hub (Active, expiring soon, expired, claim docs)
+  - [x] Implement mobile-responsive touch layout (`d-md-none`) with touch pills and action drawers
 
-- [ ] **5. Phase 5: Navigation, Dashboard & Alerts Hub Integration**
-  - [ ] Register `/assets` route in `frontend/src/router/index.js`
-  - [ ] Add "Assets & Maintenance" nav item in `frontend/src/layouts/DashboardLayout.vue` sidebar & mobile drawer
-  - [ ] Add compact "Maintenance Due & Expiring Warranties" card to `frontend/src/pages/DashboardPage.vue`
-  - [ ] Extend `pushDispatcherService.js` with `MAINTENANCE_DUE` and `WARRANTY_EXPIRING` templates
-  - [ ] Add comprehensive bilingual localization in `frontend/src/locales/en.json` and `id.json`
+- [x] **5. Phase 5: Navigation, Dashboard & Alerts Hub Integration**
+  - [x] Register `/assets` route in `frontend/src/router/index.js`
+  - [x] Add "Assets & Maintenance" nav item in `frontend/src/layouts/DashboardLayout.vue` sidebar & mobile drawer
+  - [x] Add compact "Maintenance Due & Expiring Warranties" card to `frontend/src/pages/DashboardPage.vue`
+  - [x] Extend `pushDispatcherService.js` with `MAINTENANCE_DUE` and `WARRANTY_EXPIRING` templates
+  - [x] Add comprehensive bilingual localization in `frontend/src/locales/en.json` and `id.json`
 
-- [ ] **6. Phase 6: Cross-App Synergy Verification**
-  - [ ] Test maintenance-to-expense ledger integration (posting transaction with account deduction)
-  - [ ] Test maintenance-to-scheduler sync (generating chore/task for family member)
-  - [ ] Test warranty expiration calculation and alerts
+- [x] **6. Phase 6: Cross-App Synergy Verification**
+  - [x] Test maintenance-to-expense ledger integration (posting transaction with account deduction)
+  - [x] Test maintenance-to-scheduler sync (generating chore/task for family member)
+  - [x] Test warranty expiration calculation and alerts
 
-- [ ] **7. Phase 7: Verification, Documentation & Knowledge Graph**
-  - [ ] Run `npm run build` to verify clean bundle
-  - [ ] Create automated test script (`frontend/scripts/test_assets_pure.js`) to verify domain invariants
-  - [ ] Update knowledge graph (`graphify update .`)
-  - [ ] Create walkthrough documentation (`docs/walkthrough_household_assets_and_maintenance.md`)
+- [x] **7. Phase 7: Verification, Documentation & Knowledge Graph**
+  - [x] Run `npm run build` to verify clean bundle
+  - [x] Create automated test script (`frontend/scripts/test_assets_pure.js`) to verify domain invariants (6/6 passing)
+  - [x] Update knowledge graph (`graphify update .`)
+  - [x] Create walkthrough documentation (`docs/walkthrough_household_assets_and_maintenance.md`)
 
 
 

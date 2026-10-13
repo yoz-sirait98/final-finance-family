@@ -50,8 +50,8 @@
     "semantic_hash": ""
   },
   "frontend/src/layouts/DashboardLayout.vue": {
-    "mtime": 1790054911.5892732,
-    "ast_hash": "fbaf556dabb0dd810d6a791a2526b4aa",
+    "mtime": 1791866400.294673,
+    "ast_hash": "eab62d16c24dba61387dc59ea314c3e6",
     "semantic_hash": ""
   },
   "frontend/src/lib/realtime.js": {
@@ -65,13 +65,13 @@
     "semantic_hash": ""
   },
   "frontend/src/locales/en.json": {
-    "mtime": 1790055221.1090355,
-    "ast_hash": "018ccc5637667a4c1199ca631473572b",
+    "mtime": 1791866548.1236935,
+    "ast_hash": "9ac6a04f565b9a859f3b8d95f8906b5e",
     "semantic_hash": ""
   },
   "frontend/src/locales/id.json": {
-    "mtime": 1790055189.1611702,
-    "ast_hash": "002f293ed5af0773f08e9788c2126b36",
+    "mtime": 1791866566.6641057,
+    "ast_hash": "f7799329cad871a034d75ae5f5384600",
     "semantic_hash": ""
   },
   "frontend/src/main.js": {
@@ -95,8 +95,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/DashboardPage.vue": {
-    "mtime": 1790055077.1175563,
-    "ast_hash": "31eea2340668f360f9719083c4a9721d",
+    "mtime": 1791866477.0879638,
+    "ast_hash": "b6bec47ece99ff2c472ddcff152a8680",
     "semantic_hash": ""
   },
   "frontend/src/pages/GoalsPage.vue": {
@@ -145,8 +145,8 @@
     "semantic_hash": ""
   },
   "frontend/src/router/index.js": {
-    "mtime": 1790054877.3739443,
-    "ast_hash": "4bfcb26d4cf55e71bb10a09a5b5c7cc2",
+    "mtime": 1791866321.206792,
+    "ast_hash": "cbebb54b872d2823a9dabccae9820340",
     "semantic_hash": ""
   },
   "frontend/src/services/accountService.js": {
@@ -405,8 +405,8 @@
     "semantic_hash": ""
   },
   "docs/task.md": {
-    "mtime": 1791797360.0305283,
-    "ast_hash": "9e8e2ad96925f5bf48d650a993429cca",
+    "mtime": 1791800046.3043494,
+    "ast_hash": "e035062f0fcc187c2bf84b2f8d6b2e1f",
     "semantic_hash": ""
   },
   "docs/walkthrough_graphify.md": {
@@ -795,8 +795,8 @@
     "semantic_hash": ""
   },
   "frontend/src/services/pushDispatcherService.js": {
-    "mtime": 1785393461.39336,
-    "ast_hash": "41f066a06040742e3e9792e6474c99d4",
+    "mtime": 1791866506.650849,
+    "ast_hash": "adbdacb49be23b1dff1c00f296a1deef",
     "semantic_hash": ""
   },
   "frontend/src/services/pushNotificationService.js": {
@@ -1132,6 +1132,71 @@
   "docs/walkthrough_double_submit_protection.md": {
     "mtime": 1791799910.162652,
     "ast_hash": "6b3a33d5884fd52c9a78da74923c66a3",
+    "semantic_hash": ""
+  },
+  "frontend/scripts/test_assets_pure.js": {
+    "mtime": 1791866595.0289059,
+    "ast_hash": "c7add54532ff22109b982f31b2f847fb",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/assets/AssetCard.vue": {
+    "mtime": 1791866742.58577,
+    "ast_hash": "00d9368b1694a6954fd07fe100d32cf6",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/assets/AssetDetailModal.vue": {
+    "mtime": 1791866763.0479631,
+    "ast_hash": "d98e5f5008cac43ec0b48404e64898f5",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/assets/AssetFilterBar.vue": {
+    "mtime": 1791866728.019222,
+    "ast_hash": "40cb7388748f7e7565896a61c2457b5a",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/assets/AssetModal.vue": {
+    "mtime": 1791866105.149069,
+    "ast_hash": "3e93dcb9c2ede75b46b8ad4d71e0d103",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/assets/MaintenanceLogModal.vue": {
+    "mtime": 1791866210.0451508,
+    "ast_hash": "cf9a738acdba492447974599524e6e38",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/assets/MaintenanceScheduleModal.vue": {
+    "mtime": 1791866170.0953524,
+    "ast_hash": "3fb10db5710e838e34e67458a8370de0",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/assets/WarrantyModal.vue": {
+    "mtime": 1791866233.077693,
+    "ast_hash": "6f9f10e421da67a6ce912583655f0da6",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/AssetsPage.vue": {
+    "mtime": 1791866715.700792,
+    "ast_hash": "f2da8b6bc6f7089e99f5dcb577c3943d",
+    "semantic_hash": ""
+  },
+  "frontend/src/services/assetService.js": {
+    "mtime": 1791865980.2037723,
+    "ast_hash": "4b67c6c5cb5159325db528236c2372c3",
+    "semantic_hash": ""
+  },
+  "frontend/src/stores/assets.js": {
+    "mtime": 1791866004.9664955,
+    "ast_hash": "09a62a625f89a86c9961dac9feb50cfe",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/000039_household_assets_and_maintenance.sql": {
+    "mtime": 1791865916.048781,
+    "ast_hash": "2826ea074746593696f9e63203a6cbbc",
+    "semantic_hash": ""
+  },
+  "docs/walkthrough_household_assets_and_maintenance.md": {
+    "mtime": 1791866643.5740688,
+    "ast_hash": "d1498729b47cf7ab2630db93bcf30575",
     "semantic_hash": ""
   }
 }
