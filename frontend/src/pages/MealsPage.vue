@@ -641,10 +641,10 @@
             'border-warning-subtle bg-warning-subtle bg-opacity-10': isExpiring(item.expiration_date)
           }"
         >
-          <!-- Zone & Category Badges -->
-          <div class="d-flex justify-content-between align-items-start mb-2">
-            <div class="d-flex align-items-center gap-1">
-              <span class="badge rounded-pill zone-tag" :class="item.location">
+          <!-- Zone & Category Badges + Expiry -->
+          <div class="pantry-card-badges d-flex align-items-center justify-content-between flex-wrap gap-1 mb-2">
+            <div class="d-flex align-items-center flex-wrap gap-1 min-w-0">
+              <span class="badge rounded-pill zone-tag xsmall" :class="item.location">
                 <i class="bi" :class="getLocationIcon(item.location)"></i>
                 {{ getLocationName(item.location) }}
               </span>
@@ -654,7 +654,11 @@
             </div>
 
             <!-- Expiry indicator -->
-            <span v-if="item.expiration_date" class="badge rounded-pill xsmall" :class="getExpiryBadgeClass(item.expiration_date)">
+            <span
+              v-if="item.expiration_date"
+              class="badge rounded-pill xsmall ms-auto flex-shrink-0"
+              :class="getExpiryBadgeClass(item.expiration_date)"
+            >
               <i class="bi bi-clock-history me-1"></i>
               {{ formatExpiryText(item.expiration_date) }}
             </span>
@@ -1511,8 +1515,8 @@ function getExpiryBadgeClass(dateStr) {
 /* Pantry Inventory Grid */
 .pantry-items-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
+  gap: 16px;
 }
 
 .pantry-card {
@@ -1521,6 +1525,25 @@ function getExpiryBadgeClass(dateStr) {
   border: var(--card-border);
   box-shadow: var(--card-shadow);
   transition: all 0.2s ease;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+.pantry-card .item-name {
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.pantry-card-badges {
+  min-height: 24px;
+}
+
+.zone-tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
 }
 
 .pantry-card:hover {

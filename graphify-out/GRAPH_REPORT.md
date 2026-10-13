@@ -1,7 +1,7 @@
 # Graph Report - final-finance-family  (2026-10-13)
 
 ## Corpus Check
-- 222 files · ~180,616 words
+- 222 files · ~180,657 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `a4dbbc45`
+- Built from commit: `6bc0b8ec`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -482,8 +482,8 @@ Cohesion: 0.18
 Nodes (11): login, createAccount, email, emailPlaceholder, failed, newHere, password, passwordPlaceholder (+3 more)
 
 ### Community 124 - "Community 124"
-Cohesion: 0.22
-Nodes (11): description, title, add, grid, header, description, title, add (+3 more)
+Cohesion: 0.19
+Nodes (13): description, title, add, header, add, grid, header, description (+5 more)
 
 ### Community 125 - "Community 125"
 Cohesion: 0.13
@@ -507,7 +507,7 @@ Nodes (27): description, title, description, title, charts, description, title, 
 
 ### Community 134 - "Community 134"
 Cohesion: 0.27
-Nodes (10): add, header, description, title, header, header, add, header (+2 more)
+Nodes (10): add, header, description, title, add, header, header, header (+2 more)
 
 ### Community 135 - "Community 135"
 Cohesion: 0.25
@@ -518,8 +518,8 @@ Cohesion: 0.20
 Nodes (3): AudioService, useSchedulerAlarmStore, useSchedulerTaskStore
 
 ### Community 142 - "Community 142"
-Cohesion: 0.17
-Nodes (12): ai, engine, hideThinking, insufficientBalance, missingKey, setupKey, showThinking, subtitle (+4 more)
+Cohesion: 0.15
+Nodes (13): ai, engine, hideThinking, insufficientBalance, missingKey, setupKey, showThinking, subtitle (+5 more)
 
 ### Community 143 - "Community 143"
 Cohesion: 0.17
@@ -614,8 +614,8 @@ Cohesion: 0.29
 Nodes (7): Background & Architecture Overview, Phase 1: Database Migration, Phase 2: Service & Store Layer, Phase 3: UI Components & Main Hub, Phase 4: Navigation & Cross-App Synergy, Proposed Changes, Smart Meal Planner & Pantry Management (September 2026)
 
 ### Community 176 - "Community 176"
-Cohesion: 0.32
-Nodes (8): list, add, header, list, description, title, list, budgets
+Cohesion: 0.60
+Nodes (5): list, list, description, title, list
 
 ### Community 177 - "Community 177"
 Cohesion: 0.18
@@ -681,7 +681,7 @@ _Questions this graph is uniquely positioned to answer:_
   _High betweenness centrality (0.054) - this node is a cross-community bridge._
 - **Why does `common` connect `Dashboard Layout Components` to `Community 120`, `Community 169`, `Account and Recurring Management`, `Community 196`?**
   _High betweenness centrality (0.042) - this node is a cross-community bridge._
-- **Why does `tours` connect `Community 169` to `Community 193`, `Family Member Roles`, `Community 196`, `Authentication Forms`, `Community 134`, `Dashboard Layout Components`, `Community 120`, `Community 110`, `Community 176`, `Report Generation and Export`, `Virtual Scroll Component`, `Savings Goals Management`, `Community 124`, `Community 152`?**
+- **Why does `tours` connect `Community 169` to `Community 193`, `Family Member Roles`, `Community 196`, `Authentication Forms`, `Community 134`, `Dashboard Layout Components`, `Community 120`, `Community 110`, `Community 142`, `Report Generation and Export`, `Virtual Scroll Component`, `Savings Goals Management`, `Community 124`, `Community 152`?**
   _High betweenness centrality (0.034) - this node is a cross-community bridge._
 - **What connects `recommendations`, `name`, `private` to the rest of the system?**
   _970 weakly-connected nodes found - possible documentation gaps or missing edges._

@@ -1065,8 +1065,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/MealsPage.vue": {
-    "mtime": 1791798439.2488644,
-    "ast_hash": "8dc53396ce5370978445a1d2d81bc15f",
+    "mtime": 1791884703.9173765,
+    "ast_hash": "57a80f12f55cf6e0472b5c5998261b65",
     "semantic_hash": ""
   },
   "frontend/src/services/mealPlanService.js": {

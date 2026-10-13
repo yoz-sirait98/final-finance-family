@@ -5890,7 +5890,7 @@
       "source_location": "L484",
       "_origin": "ast",
       "id": "locales_en_tours_budgets",
-      "community": 176,
+      "community": 124,
       "norm_label": "budgets"
     },
     {
@@ -5900,7 +5900,7 @@
       "source_location": "L485",
       "_origin": "ast",
       "id": "locales_en_budgets_header",
-      "community": 176,
+      "community": 124,
       "norm_label": "header"
     },
     {
@@ -5910,7 +5910,7 @@
       "source_location": "L489",
       "_origin": "ast",
       "id": "locales_en_budgets_add",
-      "community": 176,
+      "community": 124,
       "norm_label": "add"
     },
     {
@@ -6000,7 +6000,7 @@
       "source_location": "L516",
       "_origin": "ast",
       "id": "locales_en_tours_recurring",
-      "community": 124,
+      "community": 134,
       "norm_label": "recurring"
     },
     {
@@ -6020,7 +6020,7 @@
       "source_location": "L521",
       "_origin": "ast",
       "id": "locales_en_recurring_add",
-      "community": 124,
+      "community": 134,
       "norm_label": "add"
     },
     {
@@ -6230,7 +6230,7 @@
       "source_location": "L570",
       "_origin": "ast",
       "id": "locales_en_tours_shopping",
-      "community": 134,
+      "community": 142,
       "norm_label": "shopping"
     },
     {
@@ -6250,7 +6250,7 @@
       "source_location": "L575",
       "_origin": "ast",
       "id": "locales_en_shopping_add",
-      "community": 134,
+      "community": 124,
       "norm_label": "add"
     },
     {
@@ -11307,7 +11307,7 @@
       "label": "if()",
       "file_type": "code",
       "source_file": "frontend/src/pages/MealsPage.vue",
-      "source_location": "L1052",
+      "source_location": "L1056",
       "_origin": "ast",
       "id": "pages_mealspage_if",
       "community": 178,
@@ -11317,7 +11317,7 @@
       "label": "switch()",
       "file_type": "code",
       "source_file": "frontend/src/pages/MealsPage.vue",
-      "source_location": "L1273",
+      "source_location": "L1277",
       "_origin": "ast",
       "id": "pages_mealspage_switch",
       "community": 178,
@@ -21786,9 +21786,9 @@
       "source_file": "frontend/src/locales/en.json",
       "source_location": "L42",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "locales_en_common",
-      "target": "locales_en_common_cost",
-      "confidence_score": 1.0
+      "target": "locales_en_common_cost"
     },
     {
       "relation": "contains",
@@ -21956,9 +21956,9 @@
       "source_file": "frontend/src/locales/en.json",
       "source_location": "L43",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "locales_en_common",
-      "target": "locales_en_common_savechanges",
-      "confidence_score": 1.0
+      "target": "locales_en_common_savechanges"
     },
     {
       "relation": "contains",
@@ -22016,9 +22016,9 @@
       "source_file": "frontend/src/locales/en.json",
       "source_location": "L44",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "locales_en_common",
-      "target": "locales_en_common_transaction",
-      "confidence_score": 1.0
+      "target": "locales_en_common_transaction"
     },
     {
       "relation": "contains",
@@ -25136,9 +25136,9 @@
       "source_file": "frontend/src/locales/en.json",
       "source_location": "L264",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "locales_en_accounts",
-      "target": "locales_en_accounts_account",
-      "confidence_score": 1.0
+      "target": "locales_en_accounts_account"
     },
     {
       "relation": "contains",
@@ -25696,9 +25696,9 @@
       "source_file": "frontend/src/locales/en.json",
       "source_location": "L296",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "locales_en_categories",
-      "target": "locales_en_categories_category",
-      "confidence_score": 1.0
+      "target": "locales_en_categories_category"
     },
     {
       "relation": "contains",
@@ -28727,9 +28727,9 @@
       "source_file": "frontend/src/locales/id.json",
       "source_location": "L42",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "locales_id_common",
-      "target": "locales_id_common_cost",
-      "confidence_score": 1.0
+      "target": "locales_id_common_cost"
     },
     {
       "relation": "contains",
@@ -28897,9 +28897,9 @@
       "source_file": "frontend/src/locales/id.json",
       "source_location": "L43",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "locales_id_common",
-      "target": "locales_id_common_savechanges",
-      "confidence_score": 1.0
+      "target": "locales_id_common_savechanges"
     },
     {
       "relation": "contains",
@@ -28957,9 +28957,9 @@
       "source_file": "frontend/src/locales/id.json",
       "source_location": "L44",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "locales_id_common",
-      "target": "locales_id_common_transaction",
-      "confidence_score": 1.0
+      "target": "locales_id_common_transaction"
     },
     {
       "relation": "contains",
@@ -31757,9 +31757,9 @@
       "source_file": "frontend/src/locales/id.json",
       "source_location": "L264",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "locales_id_accounts",
-      "target": "locales_id_accounts_account",
-      "confidence_score": 1.0
+      "target": "locales_id_accounts_account"
     },
     {
       "relation": "contains",
@@ -32317,9 +32317,9 @@
       "source_file": "frontend/src/locales/id.json",
       "source_location": "L296",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "locales_id_categories",
-      "target": "locales_id_categories_category",
-      "confidence_score": 1.0
+      "target": "locales_id_categories_category"
     },
     {
       "relation": "contains",
@@ -43287,5 +43287,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "a4dbbc4598b836002e2155da961dd4c42f8aaf56"
+  "built_at_commit": "6bc0b8ec7c8faab1f7850d35115630e021019998"
 }
