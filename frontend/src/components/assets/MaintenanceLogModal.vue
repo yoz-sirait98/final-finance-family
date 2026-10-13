@@ -131,7 +131,7 @@
 
               <div :class="selectedAsset?.category === 'vehicle' ? 'col-12 col-md-6' : 'col-12 col-md-6'">
                 <label class="form-label small fw-semibold">
-                  {{ $t('common.cost') || 'Biaya Servis & Suku Cadang (Rp)' }} <span class="text-danger">*</span>
+                  {{ $t('assets.serviceCost') || 'Biaya Servis & Suku Cadang (Rp)' }} <span class="text-danger">*</span>
                 </label>
                 <div class="input-group">
                   <span class="input-group-text">Rp</span>
