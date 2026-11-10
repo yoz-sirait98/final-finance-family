@@ -641,7 +641,7 @@
                     </div>
                   </div>
                 </div>
-                <button type="button" class="btn btn-sm btn-outline-primary mt-2" @click="scannedItems.push({ name: '', price: 0, qty: 1 })">
+                <button type="button" class="btn btn-sm btn-outline-primary mt-2" @click="scannedItems.push({ name: '', price: 0, qty: 1, unit: 'pcs' })">
                   <i class="bi bi-plus me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Tambah Item' : 'Add Item' }}
                 </button>
               </div>
@@ -1304,7 +1304,8 @@ async function onReceiptSelected(event) {
           parsedItems.push({
             name: localeStore.currentLocale === 'id' ? 'Diskon / Potongan' : 'Discount / Promo',
             price: -diff,
-            qty: 1
+            qty: 1,
+            unit: 'pcs'
           });
         }
       }

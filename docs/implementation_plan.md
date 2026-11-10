@@ -1,5 +1,39 @@
 # Implementation Plan
 
+## Shopping Plan Quantity (Qty) & Unit Support (November 2026)
+
+### Problem Area & Target Architecture
+
+| Problem Area | Current State | Target State |
+|---|---|---|
+| **Quantity Tracking** | `shopping_items` only has `name` and `price`. Qty is squeezed into the name string or missing. | Dedicated `qty` (NUMERIC, default 1) and `unit` (VARCHAR, default 'pcs') columns. |
+| **Pantry Integration** | 1-click pantry restock hardcoded `shoppingItem.qty || 1` because `shopping_items` lacked `qty`. | Seamless restock using real quantities and units from shopping trip. |
+| **WhatsApp Checkout Notification** | Checkout message shows `✅ Tomato - Rp 20.000` without volume/quantity. | Message displays `✅ Tomato (1 kg) - Rp 20.000`. |
+| **Mobile & Desktop Item UI** | No quantity or unit input/badge on items list or modal. | Quantity and unit badge in lists, responsive inputs in Add/Edit item modal with quick unit pills. |
+
+### Proposed Changes
+
+#### Database Migration
+- `supabase/migrations/000040_add_qty_and_unit_to_shopping_items.sql`: Add `qty NUMERIC DEFAULT 1` and `unit VARCHAR(50) DEFAULT 'pcs'` to `public.shopping_items`.
+- `docs/finance-family.sql`: Update unified reference schema with new columns.
+
+#### Frontend Services
+- `frontend/src/services/shoppingService.js`: Support `qty` and `unit` in `create` and `update` with automatic schema fallback.
+- `frontend/src/services/shoppingPlanService.js`: In `createFromReceipt`, forward `qty` and `unit`.
+- `frontend/src/services/mealPlanService.js`: Ensure ingredient export maps `qty`, `unit`, and `is_checked: false`.
+
+#### Frontend UI & Pages
+- `frontend/src/pages/ShoppingDetailPage.vue`:
+  - Add quantity and unit inputs in Add/Edit Item Modal with quick unit pills (`kg`, `gr`, `pcs`, `pack`, `ikat`, `liter`, `botol`, `dus`).
+  - Add smart name parser (autofilling qty/unit if entered in item name).
+  - Display quantity badges in both desktop table/list and mobile card views.
+  - Format WhatsApp checkout summary message to show `(qty unit)`.
+
+#### Locales
+- `frontend/src/locales/en.json` & `id.json`: Add translation strings for quantity and unit.
+
+---
+
 ## Family Scheduler Integration: Merging Task, Chore & Calendar Management into Finance Family (September 2026)
 
 ### Background & Architecture Overview

@@ -1,3 +1,27 @@
+# Tasks Checklist: Shopping Plan Quantity (Qty) & Unit Support
+
+- [x] **1. Database Schema & Migration**
+  - [x] Create `supabase/migrations/000040_add_qty_and_unit_to_shopping_items.sql`
+  - [x] Update unified migration reference
+
+- [x] **2. Frontend Service Layer & Graceful Fallback**
+  - [x] Update `shoppingService.js` to support `qty` and `unit` with automatic fallback if column does not exist
+  - [x] Update `shoppingPlanService.js` `createFromReceipt` to forward `qty` and `unit`
+  - [x] Verify `mealPlanService.js` and `pantryService.js` quantity integration
+
+- [x] **3. UI Components & Pages**
+  - [x] Add Quantity & Unit inputs with quick unit pills to Add/Edit Item modal in `ShoppingDetailPage.vue`
+  - [x] Add smart item name parser for quantity/unit detection (e.g. "Tomato 1kg" -> Name: Tomato, Qty: 1, Unit: kg)
+  - [x] Render Quantity & Unit badges in Desktop list and Mobile cards view
+  - [x] Format WhatsApp checkout summary message to include item quantity and unit
+
+- [x] **4. Localization & Verification**
+  - [x] Add bilingual translation strings in `en.json` and `id.json`
+  - [x] Run `npm run build` to verify frontend compilation
+  - [x] Verify functionality on desktop and mobile viewports
+
+---
+
 # Tasks Checklist: Family Scheduler Integration into Finance Family
 
 - [x] **1. Phase 1: Planning & Dependencies**

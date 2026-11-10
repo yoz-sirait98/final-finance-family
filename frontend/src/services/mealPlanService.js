@@ -91,14 +91,12 @@ export const mealPlanService = {
     if (!ingredients || ingredients.length === 0) return [];
 
     const itemsToInsert = ingredients.map((ing) => ({
-      family_id: authStore.familyId,
       shopping_plan_id: shoppingPlanId,
       name: typeof ing === 'string' ? ing : ing.name,
       qty: (ing.quantity && !isNaN(parseFloat(ing.quantity))) ? parseFloat(ing.quantity) : 1,
       unit: ing.unit || 'pcs',
       price: 0,
-      is_bought: false,
-      notes: 'Added from Meal Planner',
+      is_checked: false
     }));
 
     const { data, error } = await supabase

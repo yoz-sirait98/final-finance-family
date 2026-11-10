@@ -44,8 +44,16 @@
               <div class="d-flex align-items-center gap-3">
                 <input type="checkbox" class="form-check-input mt-0 cursor-pointer" style="width: 1.5em; height: 1.5em;" v-model="item.is_checked" @change="toggleCheck(item)" :disabled="plan?.status === 'locked' || plan?.status === 'done'">
                 <div>
-                  <h6 class="mb-0 fw-bold" :class="{'text-decoration-line-through text-muted': plan?.status === 'locked' || item.is_checked}">{{ item.name }}</h6>
-                  <small class="text-muted">Added by {{ item.added_by_member?.name || 'Unknown' }}</small>
+                  <div class="d-flex align-items-center gap-2">
+                    <h6 class="mb-0 fw-bold" :class="{'text-decoration-line-through text-muted': plan?.status === 'locked' || item.is_checked}">{{ item.name }}</h6>
+                    <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25" style="font-size: 0.72rem; font-weight: 600;">
+                      {{ (item.qty !== undefined && item.qty !== null ? item.qty : 1) }} {{ item.unit || 'pcs' }}
+                    </span>
+                  </div>
+                  <div class="d-flex align-items-center gap-2 text-muted" style="font-size: 0.75rem;">
+                    <span>Added by {{ item.added_by_member?.name || 'Unknown' }}</span>
+                    <span v-if="item.price > 0 && parseFloat(item.qty) > 1">• @ Rp {{ Math.round(item.price / item.qty).toLocaleString('id-ID') }} / {{ item.unit || 'pcs' }}</span>
+                  </div>
                 </div>
               </div>
               <div class="d-flex align-items-center gap-3">
@@ -165,11 +173,17 @@
             <div class="d-flex align-items-center gap-3 flex-grow-1 min-w-0 me-2">
               <input type="checkbox" class="mobile-item-checkbox" v-model="item.is_checked" @change="toggleCheck(item)" :disabled="plan?.status === 'locked' || plan?.status === 'done'">
               <div class="text-truncate">
-                <h6 class="mb-0 fw-semibold text-truncate" :class="{'text-decoration-line-through text-muted': plan?.status === 'locked' || item.is_checked}">
-                  {{ item.name }}
-                </h6>
+                <div class="d-flex align-items-center gap-1 text-truncate">
+                  <h6 class="mb-0 fw-semibold text-truncate" :class="{'text-decoration-line-through text-muted': plan?.status === 'locked' || item.is_checked}">
+                    {{ item.name }}
+                  </h6>
+                  <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-1 py-0 flex-shrink-0" style="font-size: 0.68rem; font-weight: 600;">
+                    {{ (item.qty !== undefined && item.qty !== null ? item.qty : 1) }} {{ item.unit || 'pcs' }}
+                  </span>
+                </div>
                 <small class="text-muted d-block" style="font-size: 0.72rem;">
                   {{ item.added_by_member?.name || 'Unknown' }}
+                  <span v-if="item.price > 0 && parseFloat(item.qty) > 1"> • @ Rp {{ Math.round(item.price / item.qty).toLocaleString('id-ID') }}</span>
                 </small>
               </div>
             </div>
@@ -288,22 +302,63 @@
         <form @submit.prevent="saveItem">
           <div class="modal-body">
             <div class="mb-3">
-              <label class="form-label">Member Requesting</label>
+              <label class="form-label fw-semibold">Member Requesting</label>
               <select v-model="itemForm.added_by" class="form-select" required>
                 <option value="" disabled>- Select Member -</option>
                 <option v-for="m in members" :key="m.id" :value="m.id">{{ m.name }}</option>
               </select>
             </div>
             <div class="mb-3">
-              <label class="form-label">Item Name</label>
-              <input v-model="itemForm.name" class="form-control" placeholder="e.g. Milk, Eggs..." required />
+              <label class="form-label fw-semibold">Item Name</label>
+              <input v-model="itemForm.name" @blur="onNameInput" class="form-control" placeholder="e.g. Tomato, Milk, Eggs..." required autofocus />
+              <small class="text-muted" style="font-size: 0.72rem;">
+                <i class="bi bi-info-circle me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Ketik contoh "Tomat 1kg" untuk deteksi jumlah otomatis' : 'Type e.g. "Tomato 1kg" to auto-detect quantity' }}
+              </small>
             </div>
+
+            <!-- Quantity & Unit Row -->
+            <div class="row g-2 mb-3">
+              <div class="col-6">
+                <label class="form-label fw-semibold">{{ localeStore.currentLocale === 'id' ? 'Jumlah (Qty)' : 'Quantity (Qty)' }}</label>
+                <div class="input-group">
+                  <button type="button" class="btn btn-outline-secondary px-2" @click="itemForm.qty = Math.max(1, (parseFloat(itemForm.qty) || 1) - 1)">
+                    <i class="bi bi-dash"></i>
+                  </button>
+                  <input type="number" step="any" min="0.01" v-model.number="itemForm.qty" class="form-control text-center fw-bold" placeholder="1" required />
+                  <button type="button" class="btn btn-outline-secondary px-2" @click="itemForm.qty = (parseFloat(itemForm.qty) || 0) + 1">
+                    <i class="bi bi-plus"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="col-6">
+                <label class="form-label fw-semibold">{{ localeStore.currentLocale === 'id' ? 'Satuan (Unit)' : 'Unit' }}</label>
+                <input v-model="itemForm.unit" list="unit-suggestions" class="form-control" placeholder="e.g. kg, pcs, pack" />
+                <datalist id="unit-suggestions">
+                  <option v-for="u in commonUnits" :key="u" :value="u"></option>
+                </datalist>
+              </div>
+              <!-- Quick Unit Badges -->
+              <div class="col-12 mt-1">
+                <div class="d-flex flex-wrap gap-1">
+                  <button type="button" v-for="u in ['kg', 'gr', 'pcs', 'pack', 'ikat', 'liter', 'botol']" :key="u" 
+                    class="btn btn-xs py-0 px-2" 
+                    :class="itemForm.unit === u ? 'btn-primary' : 'btn-outline-secondary'"
+                    @click="itemForm.unit = u" style="font-size: 0.72rem;">
+                    {{ u }}
+                  </button>
+                </div>
+              </div>
+            </div>
+
             <div class="mb-3">
-              <label class="form-label">Estimated Price (Optional)</label>
+              <label class="form-label fw-semibold">{{ localeStore.currentLocale === 'id' ? 'Perkiraan / Total Harga' : 'Estimated / Total Price' }}</label>
               <div class="input-group">
                 <span class="input-group-text">Rp</span>
-                <input type="number" v-model="itemForm.price" class="form-control" />
+                <input type="number" v-model.number="itemForm.price" class="form-control" placeholder="0" />
               </div>
+              <small v-if="itemForm.price > 0 && parseFloat(itemForm.qty) > 1" class="text-muted mt-1 d-block" style="font-size: 0.75rem;">
+                <i class="bi bi-calculator me-1"></i>{{ localeStore.currentLocale === 'id' ? 'Setara' : 'Approx.' }} Rp {{ Math.round(itemForm.price / itemForm.qty).toLocaleString('id-ID') }} / {{ itemForm.unit || 'pcs' }}
+              </small>
             </div>
           </div>
           <div class="modal-footer border-0 pt-0">
@@ -446,7 +501,8 @@ const isEditingItem = ref(false);
 const showDeleteModal = ref(false);
 const itemToDelete = ref(null);
 const deleting = ref(false);
-const itemForm = ref({ id: null, name: '', price: '', added_by: '' });
+const commonUnits = ['kg', 'gr', 'g', 'pcs', 'pack', 'ikat', 'liter', 'botol', 'dus', 'butir', 'buah'];
+const itemForm = ref({ id: null, name: '', qty: 1, unit: 'pcs', price: '', added_by: '' });
 const saving = ref(false);
 
 const showCheckoutModal = ref(false);
@@ -540,14 +596,48 @@ async function fetchDropdowns() {
 
 function openAddItem() {
   isEditingItem.value = false;
-  itemForm.value = { id: null, name: '', price: '', added_by: authStore.user?.id || '' };
+  itemForm.value = {
+    id: null,
+    name: '',
+    qty: 1,
+    unit: 'pcs',
+    price: '',
+    added_by: authStore.user?.id || ''
+  };
   showItemModal.value = true;
 }
 
 function openEditItem(item) {
   isEditingItem.value = true;
-  itemForm.value = { id: item.id, name: item.name, price: item.price || '', added_by: item.added_by || '' };
+  itemForm.value = {
+    id: item.id,
+    name: item.name,
+    qty: (item.qty !== undefined && item.qty !== null) ? item.qty : 1,
+    unit: item.unit || 'pcs',
+    price: item.price || '',
+    added_by: item.added_by || ''
+  };
   showItemModal.value = true;
+}
+
+function onNameInput() {
+  if (!itemForm.value.name) return;
+  // Match e.g. "Tomato 1kg" or "Susu 2 pcs" or "Tomat 500gr" or "Gula 0.5 kg"
+  const regex = /^(.*?)\s+(\d+(?:[.,]\d+)?)\s*([a-zA-Z]+)$/;
+  const match = itemForm.value.name.match(regex);
+  if (match) {
+    const rawName = match[1].trim();
+    const rawQty = parseFloat(match[2].replace(',', '.'));
+    const rawUnit = match[3].toLowerCase();
+
+    if (rawName && !isNaN(rawQty) && rawQty > 0 && (commonUnits.includes(rawUnit) || rawUnit.length <= 6)) {
+      if (Number(itemForm.value.qty) === 1 && (itemForm.value.unit === 'pcs' || !itemForm.value.unit)) {
+        itemForm.value.name = rawName;
+        itemForm.value.qty = rawQty;
+        itemForm.value.unit = rawUnit;
+      }
+    }
+  }
 }
 
 async function saveItem() {
@@ -556,26 +646,30 @@ async function saveItem() {
   try {
     const payload = {
       shopping_plan_id: planId,
-      name: itemForm.value.name,
+      name: itemForm.value.name.trim(),
+      qty: (itemForm.value.qty !== undefined && itemForm.value.qty !== null && !isNaN(parseFloat(itemForm.value.qty))) ? parseFloat(itemForm.value.qty) : 1,
+      unit: itemForm.value.unit ? itemForm.value.unit.trim() : 'pcs',
       price: itemForm.value.price || 0,
       added_by: itemForm.value.added_by
     };
 
     if (isEditingItem.value) {
       await shoppingService.update(itemForm.value.id, payload);
-      toast.success('Item updated');
+      toast.success(localeStore.currentLocale === 'id' ? 'Barang berhasil diperbarui' : 'Item updated');
       showItemModal.value = false;
     } else {
       await shoppingService.create(payload);
-      toast.success('Item added');
+      toast.success(localeStore.currentLocale === 'id' ? 'Barang berhasil ditambahkan' : 'Item added');
       // Keep modal open to add more items, just reset fields
       itemForm.value.name = '';
+      itemForm.value.qty = 1;
+      itemForm.value.unit = 'pcs';
       itemForm.value.price = '';
     }
     
     fetchItems();
   } catch (e) {
-    toast.error('Failed to save item');
+    toast.error(localeStore.currentLocale === 'id' ? 'Gagal menyimpan barang' : 'Failed to save item');
   } finally {
     saving.value = false;
   }
@@ -759,7 +853,8 @@ async function sendCheckoutNotification() {
 
     items.value.forEach(item => {
       const priceStr = formatCurrency(parseFloat(item.price) || 0);
-      message += "✅ " + item.name + " - " + priceStr + "\n";
+      const qtyStr = (item.qty !== undefined && item.qty !== null) ? ` (${item.qty} ${item.unit || 'pcs'})` : '';
+      message += "✅ " + item.name + qtyStr + " - " + priceStr + "\n";
     });
 
     const totalStr = formatCurrency(totalAmount.value);

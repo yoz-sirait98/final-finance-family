@@ -110,14 +110,33 @@ export const shoppingPlanService = {
       shopping_plan_id: plan.id,
       name: item.name,
       price: item.price,
+      qty: (item.qty !== undefined && item.qty !== null && !isNaN(parseFloat(item.qty))) ? parseFloat(item.qty) : 1,
+      unit: item.unit ? item.unit.trim() : 'pcs',
       added_by: createdBy,
       is_checked: true
     }));
 
-    const { data: insertedItems, error: itemsErr } = await supabase.from('shopping_items')
+    let insertedItems;
+    const { data: insertedData, error: itemsErr } = await supabase.from('shopping_items')
       .insert(itemRows)
       .select();
-    if (itemsErr) throw itemsErr;
+
+    if (itemsErr && (itemsErr.code === '42703' || itemsErr.code === 'PGRST204' || itemsErr.message?.includes('column'))) {
+      console.warn('[shoppingPlanService] Falling back without qty/unit in createFromReceipt:', itemsErr.message);
+      const fallbackRows = itemRows.map(r => {
+        const copy = { ...r };
+        delete copy.qty;
+        delete copy.unit;
+        return copy;
+      });
+      const fallbackRes = await supabase.from('shopping_items').insert(fallbackRows).select();
+      if (fallbackRes.error) throw fallbackRes.error;
+      insertedItems = fallbackRes.data;
+    } else if (itemsErr) {
+      throw itemsErr;
+    } else {
+      insertedItems = insertedData;
+    }
 
     return { data: { plan, items: insertedItems } };
   },
